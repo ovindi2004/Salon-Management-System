@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pink Beauty Salon - Login</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 20%,
+                            rgba(255, 105, 180, 0.18),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(212, 175, 55, 0.16),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #0b0b0f,
+                            #151218,
+                            #0e0e12
+                    );
+
+            color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+        }
+
+        /* Main Container */
+
+        .auth-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        /* Card */
+
+        .auth-card {
+            position: relative;
+
+            width: 100%;
+
+            padding: 42px 38px;
+
+            background:
+                    linear-gradient(
+                            145deg,
+                            rgba(31, 24, 32, 0.97),
+                            rgba(14, 14, 18, 0.98)
+                    );
+
+            border: 1px solid rgba(255, 182, 193, 0.18);
+
+            border-radius: 28px;
+
+            box-shadow:
+                    0 30px 80px rgba(0, 0, 0, 0.65),
+                    inset 0 1px 0 rgba(255,255,255,0.05);
+
+            overflow: hidden;
+        }
+
+        /* Top Glow */
+
+        .auth-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: -100px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 250px;
+            height: 180px;
+
+            background: rgba(255, 105, 180, 0.12);
+
+            filter: blur(60px);
+
+            pointer-events: none;
+        }
+
+        /* Logo */
+
+        .logo {
+            text-align: center;
+
+            margin-bottom: 25px;
+
+            position: relative;
+        }
+
+        .logo h1 {
+            font-family: Georgia, serif;
+
+            font-size: 25px;
+
+            letter-spacing: 5px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #d4af37,
+                            #f5d6e6,
+                            #ff9fc8
+                    );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+        }
+
+        .logo span {
+            display: block;
+
+            margin-top: 7px;
+
+            font-size: 10px;
+
+            letter-spacing: 7px;
+
+            color: #d9a7b8;
+        }
+
+        /* Title */
+
+        .auth-card h2 {
+            text-align: center;
+
+            font-family: Georgia, serif;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+            color: #fff;
+        }
+
+        .sub-text {
+            text-align: center;
+
+            color: #96939b;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        /* Input */
+
+        .input-group {
+            position: relative;
+
+            margin-bottom: 22px;
+        }
+
+        .input-group input {
+            width: 100%;
+
+            height: 54px;
+
+            padding: 16px;
+
+            background: rgba(255,255,255,0.035);
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 12px;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .input-group input:hover {
+            border-color: rgba(255,182,193,0.3);
+        }
+
+        .input-group input:focus {
+            border-color: #d4af37;
+
+            background: rgba(212,175,55,0.035);
+
+            box-shadow:
+                    0 0 0 3px rgba(212,175,55,0.07);
+        }
+
+        .input-group label {
+            position: absolute;
+
+            left: 16px;
+            top: 18px;
+
+            color: #89858e;
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            transition: 0.25s ease;
+
+            background: transparent;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:valid + label {
+            top: -8px;
+
+            left: 12px;
+
+            padding: 0 6px;
+
+            background: #1b171d;
+
+            color: #e6c8a3;
+
+            font-size: 11px;
+
+            border-radius: 5px;
+        }
+
+        /* Login Options */
+
+        .login-options {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            font-size: 13px;
+        }
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #bbb8bf;
+
+            cursor: pointer;
+        }
+
+        .remember input {
+            width: 15px;
+            height: 15px;
+
+            accent-color: #d4af37;
+
+            cursor: pointer;
+        }
+
+        .login-options a {
+            color: #d4af37;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+        .login-options a:hover {
+            color: #f5d6e6;
+
+            text-decoration: underline;
+        }
+
+        /* Login Button */
+
+        .auth-btn {
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #d4af37,
+                            #e6c8a3,
+                            #f5d6e6,
+                            #ff9fc8
+                    );
+
+            background-size: 200% 200%;
+
+            color: #191216;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition: 0.4s ease;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+
+            background-position: 100% 50%;
+
+            box-shadow:
+                    0 12px 30px rgba(212,175,55,0.25),
+                    0 5px 20px rgba(255,105,180,0.12);
+        }
+
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Message */
+
+        .message {
+            text-align: center;
+
+            font-size: 13px;
+
+            min-height: 20px;
+
+            margin-top: 12px;
+        }
+
+        .success {
+            color: #7fd1a3;
+        }
+
+        .error {
+            color: #e88b9a;
+        }
+
+        /* Divider */
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 27px 0;
+
+            color: #77747c;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background:
+                    linear-gradient(
+                            to right,
+                            transparent,
+                            rgba(255,255,255,0.12)
+                    );
+        }
+
+        .divider::after {
+            background:
+                    linear-gradient(
+                            to left,
+                            transparent,
+                            rgba(255,255,255,0.12)
+                    );
+        }
+
+        /* Social Buttons */
+
+        .social-buttons {
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .social-buttons button {
+            flex: 1;
+
+            height: 45px;
+
+            background: rgba(255,255,255,0.035);
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 11px;
+
+            color: #ddd;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .social-buttons button:hover {
+            border-color: rgba(212,175,55,0.6);
+
+            background: rgba(212,175,55,0.06);
+
+            transform: translateY(-2px);
+        }
+
+        /* Register */
+
+        .switch-text {
+            text-align: center;
+
+            color: #85818a;
+
+            font-size: 14px;
+
+            margin-top: 25px;
+        }
+
+        .switch-text a {
+            color: #d4af37;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            margin-left: 4px;
+
+            transition: 0.3s;
+        }
+
+        .switch-text a:hover {
+            color: #f5d6e6;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .auth-card {
+                padding: 32px 22px;
+                border-radius: 22px;
+            }
+
+            .logo h1 {
+                font-size: 21px;
+            }
+
+            .auth-card h2 {
+                font-size: 26px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+
+            .login-options {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 12px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <!-- Logo -->
+        <div class="logo">
+            <h1>PINK BEAUTY</h1>
+            <span>SALON</span>
+        </div>
+
+        <!-- Title -->
+        <h2>Welcome Back</h2>
+
+        <p class="sub-text">
+            Sign in to your beauty account
+        </p>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleLogin(); return false;">
+
+            <!-- Email -->
+            <div class="input-group">
+                <input
+                        type="email"
+                        id="userEmail"
+                        placeholder="Enter your email"
+                        required
+                >
+                <label>Email</label>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+                <input
+                        type="password"
+                        id="password"
+                        required
+                >
+                <label>Password</label>
+            </div>
+
+            <!-- Options -->
+            <div class="login-options">
+
+                <label class="remember">
+                    <input type="checkbox">
+                    <span>Remember Me</span>
+                </label>
+
+                <a href="#">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+            <!-- Login -->
+            <button
+                    type="submit"
+                    class="auth-btn"
+            >
+                LOGIN
+            </button>
+
+            <!-- Message -->
+            <p
+                    id="loginMessage"
+                    class="message"
+            ></p>
+
+        </form>
+
+        <!-- Register -->
+        <p class="switch-text">
+            Don't have an account?
+            <a href="registion.html">
+                Register
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    function handleLogin(){
+        let userEmail = $("#userEmail").val().trim();
+        let password = $("#password").val().trim();
+
+        if (!userEmail || !password){
+            alert("Please enter email and password");
+            return;
+        }
+
+        const obj = JSON.stringify({
+            "userEmail": userEmail,
+            "password": password
+        });
+
+        $.ajax({
+          url: "http://localhost:8080/api/v1/user/login",
+          method: "POST",
+          contentType: "application/json",
+          data: obj,
+            success: function(response) {
+                console.log(response);
+                alert(response.message || "Login successful");
+                window.location.href = "index.html";
+            },
+          error: function (response){
+            console.log(response);
+            alert(response.message || "Login failed");
+          }
+        })
+    }
+</script>
+</body>
+</html>
