@@ -1,6 +1,7 @@
 package com.example.Salon_Management_System.entity;
 
 import com.example.Salon_Management_System.enumiration.UserRole;
+import com.example.Salon_Management_System.enumiration.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,4 +27,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Customer customer;
+
+
 }

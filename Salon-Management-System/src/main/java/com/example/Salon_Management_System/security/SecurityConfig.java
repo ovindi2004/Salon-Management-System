@@ -58,7 +58,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/search").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/user/update").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/user/delete").permitAll()
-                        // Student APIs
+                        // Customer
+
+                        .requestMatchers(HttpMethod.POST,"/api/v1/customers/save").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/customers/all").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/customers/update").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/customers/delete/*").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/customers/search").permitAll()
 
 
                         // Other APIs require JWT
