@@ -3,6 +3,8 @@ package com.example.Salon_Management_System.service.impl;
 import com.example.Salon_Management_System.dto.CustomerDTO;
 import com.example.Salon_Management_System.entity.Customer;
 import com.example.Salon_Management_System.entity.User;
+import com.example.Salon_Management_System.enumiration.UserRole;
+import com.example.Salon_Management_System.enumiration.UserStatus;
 import com.example.Salon_Management_System.repository.CustomerRepository;
 import com.example.Salon_Management_System.repository.UserRepository;
 import com.example.Salon_Management_System.service.CustomerService;
@@ -19,13 +21,28 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
+
     @Override
     public void saveCustomer(CustomerDTO customerDTO) {
         log.info("Saving customer: {}", customerDTO);
-         User user = userRepository.findById(customerDTO.getUserId())
-                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + customerDTO.getUserId()));
+
         try{
-            Customer customer = new Customer();
+           User user =new User();
+           user.setUserName(customerDTO.getCustomerName());
+           user.setUserEmail(customerDTO.getCustomerEmail());
+           user.setUserPhone(customerDTO.getCustomerPhone());
+           user.setUserDob(customerDTO.getDateOfBirth());
+           user.setUserAddress(customerDTO.getAddress());
+            user.setUserGender(customerDTO.getGender());
+            user.setRole(UserRole.CUSTOMER);
+            user.setStatus(UserStatus.Active);
+            user.setUserPassword(null);
+
+            User savedUser = userRepository.save(user);
+
+            log.info("User saved successfully: User ID:{}", savedUser.getUserId());
+
+            Customer customer=new Customer();
             customer.setCustomerName(customerDTO.getCustomerName());
             customer.setCustomerEmail(customerDTO.getCustomerEmail());
             customer.setCustomerPhone(customerDTO.getCustomerPhone());
@@ -33,17 +50,17 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setDateOfBirth(customerDTO.getDateOfBirth());
             customer.setGender(customerDTO.getGender());
             customer.setCustomerNotes(customerDTO.getNotes());
+            customer.setTotalVisits(0);
+            customer.setLastVisitDate(null);
+            customer.setCustomerStatus("Active");
+            customer.setUser(savedUser);
 
-            customer.setTotalVisits(customerDTO.getTotalVisits()!=null
-                    ?customerDTO.getTotalVisits():0);
-
-            customer.setLastVisitDate(customerDTO.getLastVisit());
-
-            customer.setCustomerStatus(customerDTO.getStatus()!=null
-            ?customerDTO.getStatus():"Active");
-
-            customer.setUser(user);
             customerRepository.save(customer);
+
+            log.info("Customer saved successfully Customer ID:{} | User ID:{}",
+            customer.getCustomerId(), savedUser.getUserId());
+
+
 
 
         }catch (Exception e){
