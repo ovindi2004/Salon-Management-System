@@ -1,8 +1,11 @@
 package com.example.Salon_Management_System.service.impl;
 
 import com.example.Salon_Management_System.dto.UserDTO;
+import com.example.Salon_Management_System.entity.Customer;
 import com.example.Salon_Management_System.entity.User;
 import com.example.Salon_Management_System.enumiration.UserRole;
+import com.example.Salon_Management_System.enumiration.UserStatus;
+import com.example.Salon_Management_System.repository.CustomerRepository;
 import com.example.Salon_Management_System.repository.UserRepository;
 import com.example.Salon_Management_System.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     @Override
     public void saveUser(UserDTO userDTO) {
         log.info("Saving user: {}", userDTO);
@@ -34,16 +38,44 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("Email already exists");
             }
             User user = new User();
+
             user.setUserName(userDTO.getUserName());
             user.setUserEmail(userDTO.getUserEmail());
             user.setUserPhone(userDTO.getUserPhone());
             user.setUserPassword(userDTO.getUserPassword());
+            user.setUserAddress(userDTO.getUserAddress());
+            user.setUserDob(userDTO.getUserDob());
+            user.setUserGender(userDTO.getUserGender());
+
 
             user.setRole(UserRole.CUSTOMER);
+            user.setStatus(UserStatus. Active);
 
-            userRepository.save(user);
+            User SaveUser = userRepository.save(user);
 
             log.info("User saved successfully: {}", user);
+
+            Customer customer = new Customer();
+
+            customer.setCustomerName(userDTO.getUserName());
+            customer.setCustomerEmail(userDTO.getUserEmail());
+            customer.setCustomerPhone(userDTO.getUserPhone());
+
+            customer.setCustomerAddress(userDTO.getUserAddress());
+            customer.setDateOfBirth(userDTO.getUserDob());
+            customer.setGender(userDTO.getUserGender());
+
+            customer.setCustomerNotes(null);
+
+            customer.setTotalVisits(0);
+            customer.setLastVisitDate(null);
+            customer.setCustomerStatus("Active");
+
+            customer.setUser(SaveUser);
+
+            customerRepository.save(customer);
+
+            log.info("Customer saved successfully: {}", customer.getCustomerId());
 
         }catch (Exception e){
             log.error("Failed to save user: {}", userDTO, e);
@@ -67,9 +99,14 @@ public class UserServiceImpl implements UserService {
             return new UserDTO(user.getUserId(),
                     user.getUserName(),
                     user.getUserEmail(),
-                    user.getUserPassword(),
                     user.getUserPhone(),
-                    user.getRole());
+                    user.getUserPassword(),
+                    user.getUserDob(),
+                    user.getUserAddress(),
+                    user.getUserGender(),
+                    user.getStatus(),
+                    user.getRole()
+                    );
     }catch (Exception e){
             log.error("Failed to fetch user by userEmail: {}", userEmail, e);
             throw new RuntimeException("Failed to fetch user by userEmail");

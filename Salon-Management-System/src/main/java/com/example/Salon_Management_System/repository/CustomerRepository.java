@@ -4,6 +4,7 @@ import com.example.Salon_Management_System.dto.CustomerDTO;
 import com.example.Salon_Management_System.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -49,5 +50,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
         WHERE LOWER(c.customerName)
         LIKE LOWER(CONCAT('%', :name, '%'))
         """)
-    List<CustomerDTO> searchCustomers(String name);
+    List<CustomerDTO> searchCustomers( @Param("name") String name);
 }

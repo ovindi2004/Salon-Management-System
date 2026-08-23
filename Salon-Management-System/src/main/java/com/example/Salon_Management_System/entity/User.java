@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -23,7 +25,13 @@ public class User {
 
     private String userPassword;
 
-    private int userPhone;
+    private String userPhone;
+
+    private LocalDate userDob;
+
+    private String userAddress;
+
+    private String userGender;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;

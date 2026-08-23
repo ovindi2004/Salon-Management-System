@@ -20,7 +20,7 @@ public class UserController {
     @PostMapping(value = "/save",produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse saveUser(@RequestBody UserDTO userDTO) {
         userService.saveUser(userDTO);
-        return new CommonResponse(0, "User saved successfully");
+        return new CommonResponse(0,userDTO ,"User saved successfully");
     }
     @PostMapping(value = "/login",produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse login(@RequestBody AuthDTO authDTO) {

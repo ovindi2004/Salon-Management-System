@@ -5,20 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b96d63c-3fb9-4a1b-9a78-74d50568a5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/CustomerDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/enumiration/UserStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/CustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/CustomerServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/Customermangemnt.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/adminDashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/CustomerManagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/UserDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/registion.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/registion.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,41 +74,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Maven.Salon-Management-System [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Salon-Management-System [install].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Spring Boot.SalonManagementSystemApplication.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Maven.Salon-Management-System [clean].executor": "Run",
+    "Maven.Salon-Management-System [install].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.SalonManagementSystemApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/dunij/Downloads/Salon-Management-System/Salon-Management-System/src/main/resources/static",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.example.Salon_Management_System.security" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dunij\Downloads\Salon-Management-System\Salon-Management-System\src\main\resources\static" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.Salon_Management_System.dto" />
@@ -155,7 +153,7 @@
       <workItem from="1786693024373" duration="5656000" />
       <workItem from="1786703395028" duration="412000" />
       <workItem from="1786857181201" duration="628000" />
-      <workItem from="1787117239635" duration="16658000" />
+      <workItem from="1787117239635" duration="38246000" />
     </task>
     <servers />
   </component>
