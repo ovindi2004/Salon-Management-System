@@ -132,21 +132,19 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
 
-            if (customerDTO.getUserId() != null) {
-
-                User user = userRepository
-                        .findById(customerDTO.getUserId())
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "User not found with ID: "
-                                                + customerDTO.getUserId()
-                                )
-                        );
-
-                customer.setUser(user);
+           User user = customer.getUser();
+            if(user!=null){
+                user.setUserName(customerDTO.getCustomerName());
+                user.setUserEmail(customerDTO.getCustomerEmail());
+                user.setUserPhone(customerDTO.getCustomerPhone());
+                user.setUserDob(customerDTO.getDateOfBirth());
+                user.setUserAddress(customerDTO.getAddress());
+                user.setUserGender(customerDTO.getGender());
+                userRepository.save(user);
             }
-
             customerRepository.save(customer);
+
+            log.info("Customer updated successfully",customer.getCustomerId(),customer.getUser()!=null?customer.getUser().getUserId():null);
 
         } catch (Exception e) {
 
