@@ -17,6 +17,7 @@ public class UserDTO {
     private String userName;
     private String userEmail;
     private String userPassword;
+    private Boolean passwordChanged;
     private String userPhone;
     private LocalDate userDob;
     private String userAddress;

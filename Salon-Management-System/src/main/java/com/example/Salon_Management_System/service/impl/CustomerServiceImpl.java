@@ -10,8 +10,10 @@ import com.example.Salon_Management_System.repository.UserRepository;
 import com.example.Salon_Management_System.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,23 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private String  generateTemporaryPassword(){
+        String chars =
+                "ABCDEFGHJKLMNPQRSTUVWXYZ" +
+                        "abcdefghijkmnopqrstuvwxyz" +
+                        "23456789" +
+                        "@#$";
+        SecureRandom random = new SecureRandom();
+    StringBuilder password = new StringBuilder();
+
+    for(int i =0;i<10;i++){
+        int index = random.nextInt(chars.length());
+        password.append(chars.charAt(index));
+    }
+    return password.toString();
+    }
 
     @Override
     public void saveCustomer(CustomerDTO customerDTO) {
@@ -36,7 +55,13 @@ public class CustomerServiceImpl implements CustomerService {
             user.setUserGender(customerDTO.getGender());
             user.setRole(UserRole.CUSTOMER);
             user.setStatus(UserStatus.Active);
-            user.setUserPassword(null);
+
+            String temporaryPassword = generateTemporaryPassword();
+            user.setUserPassword(passwordEncoder.encode(temporaryPassword));
+            user.setPasswordChanged(false);
+
+
+
 
             User savedUser = userRepository.save(user);
 
