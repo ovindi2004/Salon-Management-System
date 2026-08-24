@@ -25,6 +25,8 @@ public class User {
 
     private String userPassword;
 
+    private boolean passwordChanged;
+
     private String userPhone;
 
     private LocalDate userDob;
@@ -42,10 +44,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 
-    private boolean passwordChanged;
 
 
-    public void setPasswordChanged(boolean passwordChanged) {
-        this.passwordChanged = passwordChanged;
-    }
+
+
 }

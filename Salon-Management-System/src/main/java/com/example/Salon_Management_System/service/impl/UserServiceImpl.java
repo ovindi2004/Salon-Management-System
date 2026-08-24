@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
                     user.getUserName(),
                     user.getUserEmail(),
                     user.getUserPhone(),
+                    user.isPasswordChanged(),
                     user.getUserPassword(),
                     user.getUserDob(),
                     user.getUserAddress(),

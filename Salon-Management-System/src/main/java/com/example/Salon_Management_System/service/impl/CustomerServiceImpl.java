@@ -1,6 +1,7 @@
 package com.example.Salon_Management_System.service.impl;
 
 import com.example.Salon_Management_System.dto.CustomerDTO;
+import com.example.Salon_Management_System.dto.CustomerSaveResponseDTO;
 import com.example.Salon_Management_System.entity.Customer;
 import com.example.Salon_Management_System.entity.User;
 import com.example.Salon_Management_System.enumiration.UserRole;
@@ -25,49 +26,44 @@ public class CustomerServiceImpl implements CustomerService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private String  generateTemporaryPassword(){
-        String chars =
-                "ABCDEFGHJKLMNPQRSTUVWXYZ" +
-                        "abcdefghijkmnopqrstuvwxyz" +
-                        "23456789" +
-                        "@#$";
-        SecureRandom random = new SecureRandom();
-    StringBuilder password = new StringBuilder();
-
-    for(int i =0;i<10;i++){
-        int index = random.nextInt(chars.length());
-        password.append(chars.charAt(index));
-    }
-    return password.toString();
-    }
-
     @Override
-    public void saveCustomer(CustomerDTO customerDTO) {
+    public CustomerSaveResponseDTO saveCustomer(CustomerDTO customerDTO) {
+
         log.info("Saving customer: {}", customerDTO);
 
-        try{
-           User user =new User();
-           user.setUserName(customerDTO.getCustomerName());
-           user.setUserEmail(customerDTO.getCustomerEmail());
-           user.setUserPhone(customerDTO.getCustomerPhone());
-           user.setUserDob(customerDTO.getDateOfBirth());
-           user.setUserAddress(customerDTO.getAddress());
+        try {
+
+            User user = new User();
+
+            user.setUserName(customerDTO.getCustomerName());
+            user.setUserEmail(customerDTO.getCustomerEmail());
+            user.setUserPhone(customerDTO.getCustomerPhone());
+            user.setUserDob(customerDTO.getDateOfBirth());
+            user.setUserAddress(customerDTO.getAddress());
             user.setUserGender(customerDTO.getGender());
+
             user.setRole(UserRole.CUSTOMER);
             user.setStatus(UserStatus.Active);
 
             String temporaryPassword = generateTemporaryPassword();
-            user.setUserPassword(passwordEncoder.encode(temporaryPassword));
+
+
+            user.setUserPassword(
+                    passwordEncoder.encode(temporaryPassword)
+            );
+
             user.setPasswordChanged(false);
-
-
-
 
             User savedUser = userRepository.save(user);
 
-            log.info("User saved successfully: User ID:{}", savedUser.getUserId());
+            log.info(
+                    "User saved successfully: User ID: {}",
+                    savedUser.getUserId()
+            );
 
-            Customer customer=new Customer();
+
+            Customer customer = new Customer();
+
             customer.setCustomerName(customerDTO.getCustomerName());
             customer.setCustomerEmail(customerDTO.getCustomerEmail());
             customer.setCustomerPhone(customerDTO.getCustomerPhone());
@@ -75,25 +71,39 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setDateOfBirth(customerDTO.getDateOfBirth());
             customer.setGender(customerDTO.getGender());
             customer.setCustomerNotes(customerDTO.getNotes());
+
             customer.setTotalVisits(0);
             customer.setLastVisitDate(null);
             customer.setCustomerStatus("Active");
+
             customer.setUser(savedUser);
 
             customerRepository.save(customer);
 
-            log.info("Customer saved successfully Customer ID:{} | User ID:{}",
-            customer.getCustomerId(), savedUser.getUserId());
+            log.info(
+                    "Customer saved successfully Customer ID: {} | User ID: {}",
+                    customer.getCustomerId(),
+                    savedUser.getUserId()
+            );
 
+            return new CustomerSaveResponseDTO(
+                    customer.getCustomerId(),
+                    savedUser.getUserId(),
+                    customer.getCustomerName(),
+                    savedUser.getUserEmail(),
+                    temporaryPassword
+            );
 
+        } catch (Exception e) {
 
+            log.error(
+                    "Error saving customer: {}",
+                    e.getMessage()
+            );
 
-        }catch (Exception e){
-            log.error("Error saving customer: {}", e.getMessage());
             throw e;
         }
     }
-
     @Override
     public List<CustomerDTO> getAllCustomers() {
         log.info("Getting all customers");
@@ -195,5 +205,21 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCustomerStatus("InActive");
         customerRepository.save(customer);
 
+    }
+
+    private String  generateTemporaryPassword(){
+        String chars =
+                "ABCDEFGHJKLMNPQRSTUVWXYZ" +
+                        "abcdefghijkmnopqrstuvwxyz" +
+                        "23456789" +
+                        "@#$";
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+
+        for(int i =0;i<10;i++){
+            int index = random.nextInt(chars.length());
+            password.append(chars.charAt(index));
+        }
+        return password.toString();
     }
 }
