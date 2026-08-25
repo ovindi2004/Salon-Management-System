@@ -35,9 +35,20 @@ public class UserController {
         return new CommonResponse(0, userDataDTO, "Login successful");
 
     }
-    @PutMapping(value = "change-password",produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+    @PutMapping(
+            value = "/change-password",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public CommonResponse changePassword(
+            @RequestBody ChangePasswordDTO changePasswordDTO
+    ) {
+
         userService.changePassword(changePasswordDTO);
-        return new CommonResponse(0, changePasswordDTO, "Password changed successfully");
+
+        return new CommonResponse(
+                0,
+                changePasswordDTO,
+                "Password changed successfully"
+        );
     }
 }

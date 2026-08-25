@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
             user.setUserEmail(userDTO.getUserEmail());
             user.setUserPhone(userDTO.getUserPhone());
             user.setUserPassword(passwordEncoder.encode(userDTO.getUserPassword()));
-            user.isPasswordChanged();
+            user.setPasswordChanged(false);
             user.setUserAddress(userDTO.getUserAddress());
             user.setUserDob(userDTO.getUserDob());
             user.setUserGender(userDTO.getUserGender());
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
         log.info("Changing password for user: {}", changePasswordDTO.getUserId());
-        try{
+
         if(changePasswordDTO.getUserId() == null){
             throw new RuntimeException("User id is required");
         }
@@ -167,9 +167,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         log.info("Password changed successfully for user: {}", user.getUserId());
 
-    }catch (Exception e){
-        log.error("Failed to change password for user: {}", changePasswordDTO.getUserId(), e);
-        throw new RuntimeException("Failed to change password");
-    }
+
     }
 }
