@@ -58,6 +58,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/search").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/user/update").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/user/delete").permitAll()
+
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/user/change-password").authenticated()
                         // Customer
 
                         .requestMatchers(HttpMethod.POST,"/api/v1/customers/save").permitAll()

@@ -1,9 +1,6 @@
 package com.example.Salon_Management_System.controller;
 
-import com.example.Salon_Management_System.dto.AuthDTO;
-import com.example.Salon_Management_System.dto.CommonResponse;
-import com.example.Salon_Management_System.dto.UserDTO;
-import com.example.Salon_Management_System.dto.UserDataDTO;
+import com.example.Salon_Management_System.dto.*;
 import com.example.Salon_Management_System.security.JwtUtil;
 import com.example.Salon_Management_System.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +34,10 @@ public class UserController {
 
         return new CommonResponse(0, userDataDTO, "Login successful");
 
+    }
+    @PutMapping(value = "change-password",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        userService.changePassword(changePasswordDTO);
+        return new CommonResponse(0, changePasswordDTO, "Password changed successfully");
     }
 }
