@@ -1,10 +1,12 @@
 package com.example.Salon_Management_System.entity;
 
+import com.example.Salon_Management_System.enumiration.StaffAvailability;
 import com.example.Salon_Management_System.enumiration.UserStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Staff {
     private Long staffId;
@@ -19,6 +21,20 @@ public class Staff {
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private StaffAvailability availability;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany (mappedBy = "staff",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<StaffWorkingHour> workingHours = new ArrayList<>();
+
+    @OneToMany(mappedBy = "staff",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<StaffLeave> leaves = new ArrayList<>();
+
 
 
 }
