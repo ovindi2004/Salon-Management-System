@@ -1,5 +1,6 @@
 package com.example.Salon_Management_System.entity;
 
+import com.example.Salon_Management_System.enumiration.LeaveStatus;
 import com.example.Salon_Management_System.enumiration.LeaveType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
