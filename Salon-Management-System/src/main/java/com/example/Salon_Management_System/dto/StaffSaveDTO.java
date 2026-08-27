@@ -1,10 +1,15 @@
 package com.example.Salon_Management_System.dto;
 
 import com.example.Salon_Management_System.enumiration.UserStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class StaffSaveDTO {
     private String staffName;
     private String staffEmail;
