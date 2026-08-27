@@ -3,12 +3,20 @@ package com.example.Salon_Management_System.entity;
 import com.example.Salon_Management_System.enumiration.StaffAvailability;
 import com.example.Salon_Management_System.enumiration.UserStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class Staff {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long staffId;
     private String staffName;
     private String staffEmail;
