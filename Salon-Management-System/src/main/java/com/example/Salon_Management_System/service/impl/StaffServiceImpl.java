@@ -218,3 +218,25 @@ public List<StaffWorkingHourDTO>getWorkingHours(Long staffId){
             .map(this::convertToDTO)
             .collect(Collectors.toList());
 }
+
+@Override
+public void updateWorkingHours(Long staffId, List<StaffWorkingHourDTO> dtoList) {
+    Staff staff = findStaff(staffId);
+    List<StaffWorkingHour>existingWorkingHours = workingHourRepository.findByStaffStaffId(staffId);
+
+    workingHourRepository.deleteAll(existingWorkingHours);
+
+    if(dtoList == null){
+        return;
+    }
+    for (StaffWorkingHourDTO staffWorkingHourDTO : dtoList) {
+        StaffWorkingHour staffWorkingHour = new StaffWorkingHour();
+
+        staffWorkingHour.setDay(staffWorkingHourDTO.getDay());
+        staffWorkingHour.setStartTime(staffWorkingHourDTO.getStartTime());
+        staffWorkingHour.setEndTime(staffWorkingHourDTO.getEndTime());
+        staffWorkingHour.setStaff(staff);
+
+        workingHourRepository.save(staffWorkingHour);
+    }
+}
