@@ -142,5 +142,45 @@ public class StaffServiceImpl implements StaffService {
                 .map(this::convertTODTO)
                 .collect(Collectors.toList());
     }
+    @Override
+    public StaffDTO updateStaff(Long id ,StaffDTO dto){
+        Staff staff = findStaff(id);
+
+        staff.setStaffName(dto.getStaffName());
+        staff.setStaffEmail(dto.getStaffEmail());
+        staff.setStaffPhone(dto.getStaffPhone());
+        staff.setDateOfBirth(dto.getDateOfBirth());
+        staff.setGender(dto.getGender());
+        staff.setAddress(dto.getAddress());
+
+        staff.setPosition(dto.getPosition());
+        staff.setHireDate(dto.getHireDate());
+        staff.setSalary(dto.getSalary());
+
+        if (dto.getStatus() != null) {
+            staff.setStatus(dto.getStatus());
+        }
+
+        User user = staff.getUser();
+
+        if (dto.getUsername() != null &&
+                !dto.getUsername().isBlank()) {
+
+            user.setUserName(dto.getUsername());
+        }
+
+        user.setUserEmail(dto.getStaffEmail());
+
+        if (dto.getPassword() != null &&
+                !dto.getPassword().isBlank()) {
+
+            user.setUserPassword(
+                    passwordEncoder.encode(dto.getPassword())
+            );
+        }
+
+    }
+    Staff updatedStaff =staffRepository.save(staff);
+    return convertToDTO(updatedStaff);
 
 }
