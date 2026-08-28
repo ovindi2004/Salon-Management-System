@@ -239,4 +239,43 @@ public void updateWorkingHours(Long staffId, List<StaffWorkingHourDTO> dtoList) 
 
         workingHourRepository.save(staffWorkingHour);
     }
+
+
 }
+
+@Override
+public void updateLeave(Long staffId, List<StaffLeaveDTO> dto) {
+
+    Staff staff =findStaff(staffId);
+
+    if (dto.getStartDate()== null ||
+    dto.getEndDate() == null){
+
+        throw new RuntimeException("" +
+                "Levre Start")
+
+    }
+    if(dto.getEndDate().isBefore(dto.getStartDate())){
+        throw new RuntimeException("Leave End Date");
+    }
+     StaffLeave staffLeave = new StaffLeave();
+
+    staffLeave.setStartDate(dto.getStartDate());
+    staffLeave.setEndDate(dto.getEndDate());
+    staffLeave.setStaff(staff);
+
+
+    if (dto.getStatus() != null) {
+        leave.setStatus(dto.getStatus());
+    } else {
+        leave.setStatus(LeaveStatus.PENDING);
+    }
+
+    StaffLeave savedLeave =
+            leaveRepository.save(leave);
+
+    return convertLeaveToDTO(savedLeave);
+
+    staffLeaveRepository.save(staffLeave);
+}
+
