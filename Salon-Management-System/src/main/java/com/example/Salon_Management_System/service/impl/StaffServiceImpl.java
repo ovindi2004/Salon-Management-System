@@ -37,7 +37,6 @@ public class StaffServiceImpl implements StaffService {
     private final PasswordEncoder passwordEncoder;
 
 
-
     @Override
     public StaffDTO createStaff(StaffSaveDTO dto) {
 
@@ -119,14 +118,14 @@ public class StaffServiceImpl implements StaffService {
     @Override
     @Transactional(readOnly = true)
     public StaffDTO getStaffById(Long staffId) {
-        Staff staff =  findStaff(staffId);
+        Staff staff = findStaff(staffId);
         return convertToDTO(staff);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<StaffDTO>searchStaff(String keyword){
-        if(keyword == null || keyword.isBlank()){
+    public List<StaffDTO> searchStaff(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
             return getAllStaff();
         }
         String search = keyword.trim().toLowerCase();
@@ -134,16 +133,17 @@ public class StaffServiceImpl implements StaffService {
         return staffRepository.findAll()
                 .stream()
                 .filter(staff ->
-                        contains(staff.getStaffName(),search)
-                     || contains(staff.getStaffEmail(),search)
-                     ||contains(staff.getStaffPhone(),search)
-                     ||contains(staff.getPosition(),search)
+                        contains(staff.getStaffName(), search)
+                                || contains(staff.getStaffEmail(), search)
+                                || contains(staff.getStaffPhone(), search)
+                                || contains(staff.getPosition(), search)
                 )
                 .map(this::convertTODTO)
                 .collect(Collectors.toList());
     }
+
     @Override
-    public StaffDTO updateStaff(Long id ,StaffDTO dto){
+    public StaffDTO updateStaff(Long id, StaffDTO dto) {
         Staff staff = findStaff(id);
 
         staff.setStaffName(dto.getStaffName());
@@ -180,7 +180,15 @@ public class StaffServiceImpl implements StaffService {
         }
 
     }
-    Staff updatedStaff =staffRepository.save(staff);
-    return convertToDTO(updatedStaff);
+
+    Staff updatedStaff = staffRepository.save(staff);
+    return
+
+    convertToDTO(updatedStaff);
+}
+@Override
+public void deleteStaff(Long id){
+    Staff staff = findStaff(id);
+    staffRepository.delete(staff);
 
 }
