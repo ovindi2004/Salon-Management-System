@@ -192,3 +192,19 @@ public void deleteStaff(Long id){
     staffRepository.delete(staff);
 
 }
+@Override
+public void updateStatus(Long id) {
+
+    Staff staff = findStaff(id);
+
+    if (staff.getStatus() == StaffStatus.ACTIVE) {
+
+        staff.setStatus(StaffStatus.INACTIVE);
+
+    } else {
+
+        staff.setStatus(StaffStatus.ACTIVE);
+    }
+
+    staffRepository.save(staff);
+}
