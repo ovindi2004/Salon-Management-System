@@ -108,67 +108,12 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public StaffDTO getStaffById(Long id) {
-        return null;
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public List<StaffDTO> getAllStaff() {
-        return List.of();
+        return staffRepository.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
-
-    @Override
-    public List<StaffDTO> searchStaff(String keyword) {
-        return List.of();
-    }
-
-    @Override
-    public StaffDTO updateStaff(Long id, StaffSaveDTO dto) {
-        return null;
-    }
-
-    @Override
-    public void deleteStaff(Long id) {
-
-    }
-
-    @Override
-    public void updateStatus(Long id) {
-
-    }
-
-    @Override
-    public void updateWorkingHours(Long staffId, List<StaffWorkingHourDTO> dto) {
-
-    }
-
-    @Override
-    public List<StaffWorkingHourDTO> getWorkingHours(Long staffId) {
-        return List.of();
-    }
-
-    @Override
-    public StaffLeaveDTO addLeave(Long staffId, StaffLeaveDTO dto) {
-        return null;
-    }
-
-    @Override
-    public List<StaffLeaveDTO> getStaffLeaves(Long staffId) {
-        return List.of();
-    }
-
-    @Override
-    public void updateLeaveStatus(Long leaveId, String status) {
-
-    }
-
-    private StaffDTO convertToDTO(Staff savedStaff) {
-        return savedStaff;
-    }
-
-    private void createDefaultWorkingHours(Staff savedStaff) {
-
-    }
-
 
 }
