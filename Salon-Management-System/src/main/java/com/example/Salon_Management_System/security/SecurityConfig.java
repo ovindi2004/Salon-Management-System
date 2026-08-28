@@ -68,6 +68,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/customers/delete/*").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/customers/search").permitAll()
 
+                        //Staff
+                        .requestMatchers(HttpMethod.POST,"/api/v1/staff/save").permitAll()
 
                         // Other APIs require JWT
                         .anyRequest()

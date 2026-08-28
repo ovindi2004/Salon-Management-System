@@ -11,22 +11,17 @@ import java.time.LocalTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class StaffWorkingHour {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long workingHourId;
-
     private String day;
-
     private LocalTime startTime;
-
     private LocalTime endTime;
-
     private boolean dayOff;
 
     @ManyToOne
     @JoinColumn(name = "staff_id")
     private Staff staff;
-
 }

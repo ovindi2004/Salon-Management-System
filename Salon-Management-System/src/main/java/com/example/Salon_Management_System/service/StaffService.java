@@ -2,21 +2,43 @@ package com.example.Salon_Management_System.service;
 
 import com.example.Salon_Management_System.dto.StaffDTO;
 import com.example.Salon_Management_System.dto.StaffLeaveDTO;
+import com.example.Salon_Management_System.dto.StaffSaveDTO;
 import com.example.Salon_Management_System.dto.StaffWorkingHourDTO;
 
 import java.util.List;
 
 public interface StaffService {
-    StaffDTO createStaff(StaffDTO staffDTO);
-    StaffDTO getStaffById(Long staffId);
+
+    StaffDTO createStaff(StaffSaveDTO dto);
+
+    StaffDTO getStaffById(Long id);
+
     List<StaffDTO> getAllStaff();
-    List<StaffDTO>searchStaff(String keyword);
-    StaffDTO updateStaff(Long staffId, StaffDTO staffDTO);
-    void deleteStaff(Long staffId);
-    void updateStatus(Long staffId);
-    void updateWorkingHours(Long staffId, List<StaffWorkingHourDTO> dto);
+
+    List<StaffDTO> searchStaff(String keyword);
+
+    StaffDTO updateStaff(Long id, StaffSaveDTO dto);
+
+    void deleteStaff(Long id);
+
+    void updateStatus(Long id);
+
+    void updateWorkingHours(
+            Long staffId,
+            List<StaffWorkingHourDTO> dto
+    );
+
     List<StaffWorkingHourDTO> getWorkingHours(Long staffId);
-    StaffLeaveDTO addLeave(Long staffId, StaffLeaveDTO dto);
-    List<StaffLeaveDTO> getLeaves(Long staffId);
-    void updateLeave(Long leaveId, String status);
+
+    StaffLeaveDTO addLeave(
+            Long staffId,
+            StaffLeaveDTO dto
+    );
+
+    List<StaffLeaveDTO> getStaffLeaves(Long staffId);
+
+    void updateLeaveStatus(
+            Long leaveId,
+            String status
+    );
 }

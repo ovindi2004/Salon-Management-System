@@ -1,5 +1,6 @@
 package com.example.Salon_Management_System.dto;
 
+import com.example.Salon_Management_System.enumiration.StaffStatus;
 import com.example.Salon_Management_System.enumiration.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class StaffSaveDTO {
     private String position;
     private LocalDate hireDate;
     private Double salary;
-    private UserStatus status;
+    private StaffStatus status;
     private String username;
     private String password;
     private List<Long> serviceIds;

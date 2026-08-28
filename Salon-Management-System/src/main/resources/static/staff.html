@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Management · Pink Beauty Salon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root{
+            --rose-gold:#B76E79;
+            --soft-pink:#F8D7DA;
+            --champagne:#E8C07D;
+            --cream:#FFF9FB;
+            --dark:#2D2025;
+            --white:#FFFFFF;
+            --border:#F0DDE1;
+            --muted:#8A7A82;
+            --success:#2FAE6B;
+            --success-bg:#E6F6EE;
+            --warning:#E08A2B;
+            --warning-bg:#FDF1E0;
+            --purple:#7C5CB8;
+            --purple-bg:#EFE9F8;
+            --danger:#D9534F;
+            --danger-bg:#FBEAE9;
+            --shadow:0 4px 20px rgba(183,110,121,0.08);
+            --shadow-hover:0 10px 30px rgba(183,110,121,0.15);
+            --radius:16px;
+            --radius-sm:10px;
+            --sidebar-w:260px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            font-family:'Poppins',sans-serif;
+            background:var(--cream);
+            color:var(--dark);
+            font-size:14px;
+            line-height:1.5;
+            -webkit-font-smoothing:antialiased;
+        }
+        button{font-family:inherit;cursor:pointer;border:none;background:none}
+        input,select,textarea{font-family:inherit}
+        a{color:inherit;text-decoration:none}
+        ::-webkit-scrollbar{width:8px;height:8px}
+        ::-webkit-scrollbar-thumb{background:var(--soft-pink);border-radius:8px}
+        ::-webkit-scrollbar-track{background:transparent}
+
+        /* ===== Sidebar ===== */
+        .sidebar{
+            position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+            background:var(--white);
+            border-right:1px solid var(--border);
+            display:flex;flex-direction:column;
+            z-index:200;
+            transition:transform .3s ease;
+        }
+        .brand{
+            display:flex;align-items:center;gap:12px;
+            padding:22px 22px 18px;
+            border-bottom:1px solid var(--border);
+        }
+        .brand-icon{
+            width:42px;height:42px;border-radius:12px;
+            background:linear-gradient(135deg,var(--rose-gold),var(--champagne));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-size:18px;
+            box-shadow:0 4px 12px rgba(183,110,121,.3);
+        }
+        .brand-name{font-weight:700;font-size:15px;letter-spacing:.3px;line-height:1.2}
+        .brand-tag{font-size:10.5px;color:var(--muted);font-weight:400;letter-spacing:.4px}
+        .nav{flex:1;overflow-y:auto;padding:14px 12px}
+        .nav-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:10px 12px 6px;font-weight:600}
+        .nav-item{
+            display:flex;align-items:center;gap:12px;
+            padding:11px 14px;border-radius:10px;
+            color:#5A4A52;font-weight:500;font-size:13.5px;
+            cursor:pointer;transition:all .2s ease;margin-bottom:2px;
+            position:relative;
+        }
+        .nav-item i{width:18px;text-align:center;font-size:15px;color:var(--muted);transition:color .2s}
+        .nav-item:hover{background:var(--cream);color:var(--rose-gold)}
+        .nav-item:hover i{color:var(--rose-gold)}
+        .nav-item.active{
+            background:linear-gradient(135deg,rgba(183,110,121,.12),rgba(232,192,125,.12));
+            color:var(--rose-gold);font-weight:600;
+        }
+        .nav-item.active i{color:var(--rose-gold)}
+        .nav-item.active::before{
+            content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+            width:3px;height:60%;background:var(--rose-gold);border-radius:0 4px 4px 0;
+        }
+        .sidebar-footer{padding:14px 12px;border-top:1px solid var(--border)}
+        .profile-mini{
+            display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;
+            transition:background .2s;
+        }
+        .profile-mini:hover{background:var(--cream)}
+        .profile-mini .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--rose-gold),var(--champagne));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
+        .profile-mini .info{flex:1;min-width:0}
+        .profile-mini .name{font-size:13px;font-weight:600}
+        .profile-mini .role{font-size:11px;color:var(--muted)}
+        .logout-btn{
+            display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;
+            color:var(--danger);font-weight:500;font-size:13px;width:100%;transition:background .2s;
+        }
+        .logout-btn:hover{background:var(--danger-bg)}
+
+        /* ===== Main ===== */
+        .main{margin-left:var(--sidebar-w);min-height:100vh;display:flex;flex-direction:column}
+        .header{
+            background:var(--white);
+            border-bottom:1px solid var(--border);
+            padding:18px 28px;
+            display:flex;align-items:center;justify-content:space-between;
+            position:sticky;top:0;z-index:100;
+        }
+        .header-title h1{font-size:22px;font-weight:700;letter-spacing:-.2px}
+        .header-title p{font-size:12.5px;color:var(--muted);margin-top:2px}
+        .header-right{display:flex;align-items:center;gap:18px}
+        .icon-btn{
+            width:40px;height:40px;border-radius:10px;background:var(--cream);
+            display:flex;align-items:center;justify-content:center;color:#6A5A62;font-size:15px;
+            transition:all .2s;position:relative;
+        }
+        .icon-btn:hover{background:var(--soft-pink);color:var(--rose-gold)}
+        .icon-btn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;background:var(--rose-gold);border-radius:50%;border:2px solid #fff}
+        .admin-chip{display:flex;align-items:center;gap:10px}
+        .admin-chip .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--rose-gold),var(--champagne));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600}
+        .admin-chip .meta .name{font-size:13.5px;font-weight:600;line-height:1.2}
+        .admin-chip .meta .role{font-size:11px;color:var(--muted)}
+        .menu-toggle{display:none;font-size:20px;color:var(--rose-gold);background:none}
+
+        .content{padding:26px 28px;flex:1}
+
+        /* ===== Stats ===== */
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:22px}
+        .stat-card{
+            background:var(--white);border-radius:var(--radius);padding:20px;
+            box-shadow:var(--shadow);border:1px solid var(--border);
+            display:flex;align-items:center;gap:16px;
+            transition:transform .25s ease,box-shadow .25s ease;
+        }
+        .stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+        .stat-icon{
+            width:54px;height:54px;border-radius:14px;
+            display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+        }
+        .stat-icon.pink{background:var(--soft-pink);color:var(--rose-gold)}
+        .stat-icon.gold{background:rgba(232,192,125,.2);color:#B8902E}
+        .stat-icon.green{background:var(--success-bg);color:var(--success)}
+        .stat-icon.purple{background:var(--purple-bg);color:var(--purple)}
+        .stat-info .num{font-size:26px;font-weight:700;line-height:1}
+        .stat-info .label{font-size:12.5px;color:var(--muted);margin-top:4px;font-weight:500}
+        .stat-info .desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+        /* ===== Card ===== */
+        .card{
+            background:var(--white);border-radius:var(--radius);
+            box-shadow:var(--shadow);border:1px solid var(--border);
+            overflow:hidden;
+        }
+        .card-head{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:20px 24px;border-bottom:1px solid var(--border);
+        }
+        .card-head h2{font-size:17px;font-weight:700}
+        .card-head p{font-size:12.5px;color:var(--muted);margin-top:2px}
+        .btn{
+            display:inline-flex;align-items:center;gap:8px;
+            padding:11px 18px;border-radius:10px;font-weight:600;font-size:13px;
+            transition:all .2s ease;
+        }
+        .btn-primary{background:var(--rose-gold);color:#fff}
+        .btn-primary:hover{background:#A65D68;box-shadow:0 6px 16px rgba(183,110,121,.35)}
+        .btn-ghost{background:var(--cream);color:#6A5A62}
+        .btn-ghost:hover{background:var(--soft-pink);color:var(--rose-gold)}
+        .btn-outline{background:#fff;border:1px solid var(--border);color:#6A5A62}
+        .btn-outline:hover{border-color:var(--rose-gold);color:var(--rose-gold)}
+        .btn-danger{background:var(--danger);color:#fff}
+        .btn-danger:hover{background:#C0443F}
+        .btn-success{background:var(--success);color:#fff}
+        .btn-success:hover{background:#269157}
+
+        /* ===== Toolbar ===== */
+        .toolbar{
+            display:flex;gap:12px;padding:18px 24px;
+            border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center;
+        }
+        .search-wrap{position:relative;flex:1;min-width:220px}
+        .search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+        .search-wrap input{
+            width:100%;padding:11px 14px 11px 40px;border-radius:10px;
+            border:1px solid var(--border);background:var(--cream);font-size:13px;
+            transition:all .2s;
+        }
+        .search-wrap input:focus{outline:none;border-color:var(--rose-gold);background:#fff;box-shadow:0 0 0 3px rgba(183,110,121,.1)}
+        .select-wrap{position:relative}
+        .select-wrap select{
+            appearance:none;padding:11px 34px 11px 14px;border-radius:10px;
+            border:1px solid var(--border);background:var(--cream);font-size:13px;color:#5A4A52;
+            cursor:pointer;min-width:150px;transition:all .2s;
+        }
+        .select-wrap select:focus{outline:none;border-color:var(--rose-gold);background:#fff}
+        .select-wrap::after{content:"\f078";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none}
+
+        /* ===== Table ===== */
+        .table-wrap{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;min-width:980px}
+        thead th{
+            text-align:left;padding:14px 20px;font-size:11px;text-transform:uppercase;
+            letter-spacing:.6px;color:var(--muted);font-weight:600;
+            background:var(--cream);border-bottom:1px solid var(--border);white-space:nowrap;
+        }
+        tbody td{padding:14px 20px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+        tbody tr{transition:background .15s}
+        tbody tr:hover{background:var(--cream)}
+        tbody tr:last-child td{border-bottom:none}
+        .staff-cell{display:flex;align-items:center;gap:12px}
+        .avatar{
+            width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+            font-weight:600;font-size:13px;color:#fff;flex-shrink:0;
+        }
+        .staff-cell .meta .name{font-weight:600;font-size:13.5px}
+        .staff-cell .meta .sub{font-size:11.5px;color:var(--muted)}
+        .contact-cell .line{font-size:12.5px}
+        .contact-cell .line i{width:14px;color:var(--muted);font-size:11px}
+        .contact-cell .line:first-child{margin-bottom:3px}
+        .position-tag{
+            display:inline-block;padding:5px 11px;border-radius:8px;font-size:11.5px;font-weight:500;
+            background:rgba(232,192,125,.18);color:#9A7A2E;
+        }
+        .services-cell{display:flex;flex-wrap:wrap;gap:5px;max-width:180px}
+        .service-chip{font-size:11px;padding:3px 9px;border-radius:6px;background:var(--soft-pink);color:var(--rose-gold);font-weight:500}
+        .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;font-size:11.5px;font-weight:600}
+        .badge.avail-available{background:var(--success-bg);color:var(--success)}
+        .badge.avail-busy{background:var(--warning-bg);color:var(--warning)}
+        .badge.avail-leave{background:var(--purple-bg);color:var(--purple)}
+        .badge.dot::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+        .badge.status-active{background:var(--success-bg);color:var(--success)}
+        .badge.status-inactive{background:var(--danger-bg);color:var(--danger)}
+        .action-cell{position:relative}
+        .action-btn{
+            width:34px;height:34px;border-radius:8px;background:var(--cream);color:#6A5A62;
+            display:flex;align-items:center;justify-content:center;transition:all .2s;
+        }
+        .action-btn:hover{background:var(--soft-pink);color:var(--rose-gold)}
+        .dropdown{
+            position:absolute;right:0;top:42px;background:#fff;border:1px solid var(--border);
+            border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,.12);min-width:200px;
+            padding:6px;z-index:50;display:none;animation:pop .15s ease;
+        }
+        .dropdown.open{display:block}
+        @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+        .dropdown-item{
+            display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:8px;
+            font-size:12.5px;color:#5A4A52;text-align:left;transition:background .15s;
+        }
+        .dropdown-item i{width:16px;text-align:center;color:var(--muted);font-size:12px}
+        .dropdown-item:hover{background:var(--cream)}
+        .dropdown-item:hover i{color:var(--rose-gold)}
+        .dropdown-item.danger{color:var(--danger)}
+        .dropdown-item.danger i{color:var(--danger)}
+        .dropdown-divider{height:1px;background:var(--border);margin:4px 8px}
+
+        /* ===== Pagination ===== */
+        .pagination{
+            display:flex;align-items:center;justify-content:space-between;padding:16px 24px;
+            border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;
+        }
+        .pagination .info{font-size:12.5px;color:var(--muted)}
+        .page-btns{display:flex;gap:6px;align-items:center}
+        .page-btn{
+            min-width:34px;height:34px;padding:0 10px;border-radius:8px;
+            border:1px solid var(--border);background:#fff;color:#5A4A52;font-size:12.5px;font-weight:500;
+            transition:all .2s;
+        }
+        .page-btn:hover:not(:disabled){border-color:var(--rose-gold);color:var(--rose-gold)}
+        .page-btn.active{background:var(--rose-gold);color:#fff;border-color:var(--rose-gold)}
+        .page-btn:disabled{opacity:.45;cursor:not-allowed}
+
+        /* ===== Empty ===== */
+        .empty-state{padding:60px 20px;text-align:center}
+        .empty-state .icon-circle{
+            width:80px;height:80px;border-radius:50%;background:var(--soft-pink);
+            display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:30px;color:var(--rose-gold);
+        }
+        .empty-state h3{font-size:17px;font-weight:600;margin-bottom:6px}
+        .empty-state p{font-size:13px;color:var(--muted);margin-bottom:18px}
+
+        /* ===== Modal ===== */
+        .modal-overlay{
+            position:fixed;inset:0;background:rgba(45,32,37,.5);backdrop-filter:blur(4px);
+            display:none;align-items:flex-start;justify-content:center;z-index:1000;
+            padding:30px 16px;overflow-y:auto;
+        }
+        .modal-overlay.open{display:flex}
+        .modal{
+            background:#fff;border-radius:18px;width:100%;max-width:560px;
+            box-shadow:0 20px 60px rgba(0,0,0,.25);animation:slideUp .3s ease;margin:auto;
+        }
+        .modal.lg{max-width:760px}
+        @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .modal-head{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:20px 24px;border-bottom:1px solid var(--border);
+        }
+        .modal-head h3{font-size:17px;font-weight:700}
+        .modal-head p{font-size:12.5px;color:var(--muted);margin-top:2px}
+        .modal-close{
+            width:34px;height:34px;border-radius:8px;background:var(--cream);color:#6A5A62;
+            display:flex;align-items:center;justify-content:center;transition:all .2s;
+        }
+        .modal-close:hover{background:var(--danger-bg);color:var(--danger)}
+        .modal-body{padding:22px 24px;max-height:70vh;overflow-y:auto}
+        .modal-foot{
+            display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;
+            border-top:1px solid var(--border);background:var(--cream);
+        }
+
+        /* Form */
+        .form-section{margin-bottom:22px}
+        .form-section h4{
+            font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;
+            color:var(--rose-gold);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);
+        }
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .form-grid .full{grid-column:1/-1}
+        .field label{display:block;font-size:12px;font-weight:500;color:#5A4A52;margin-bottom:6px}
+        .field input,.field select,.field textarea{
+            width:100%;padding:10px 12px;border-radius:9px;border:1px solid var(--border);
+            background:var(--cream);font-size:13px;transition:all .2s;
+        }
+        .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--rose-gold);background:#fff;box-shadow:0 0 0 3px rgba(183,110,121,.1)}
+        .field textarea{resize:vertical;min-height:70px}
+
+        /* View details */
+        .detail-profile{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+        .detail-profile .avatar{width:64px;height:64px;font-size:22px}
+        .detail-profile .name{font-size:18px;font-weight:700}
+        .detail-profile .pos{font-size:13px;color:var(--muted)}
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+        .detail-item{background:var(--cream);padding:12px 14px;border-radius:10px}
+        .detail-item .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+        .detail-item .val{font-size:13.5px;font-weight:600;margin-top:3px}
+        .detail-subhead{font-size:12.5px;font-weight:600;color:var(--rose-gold);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 10px}
+        .service-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+        .service-tag{padding:6px 12px;border-radius:8px;background:var(--soft-pink);color:var(--rose-gold);font-size:12px;font-weight:500}
+        .schedule-list{display:flex;flex-direction:column;gap:8px}
+        .schedule-row{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:var(--cream);border-radius:9px;font-size:13px}
+        .schedule-row .day{font-weight:600}
+        .schedule-row .time{color:var(--muted)}
+        .schedule-row.off .time{color:var(--danger);font-weight:500}
+        .perf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+        .perf-card{background:var(--cream);padding:14px;border-radius:12px;text-align:center}
+        .perf-card .num{font-size:22px;font-weight:700;color:var(--rose-gold)}
+        .perf-card .lbl{font-size:11px;color:var(--muted);margin-top:3px}
+        .perf-card .rating{color:#E8C07D}
+
+        /* Assign services */
+        .checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .check-item{
+            display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--border);
+            border-radius:10px;cursor:pointer;transition:all .2s;
+        }
+        .check-item:hover{border-color:var(--rose-gold);background:var(--cream)}
+        .check-item input{accent-color:var(--rose-gold);width:16px;height:16px}
+        .check-item label{font-size:13px;cursor:pointer;flex:1}
+
+        /* Working hours editor */
+        .wh-row{display:grid;grid-template-columns:120px 1fr 1fr 90px;gap:10px;align-items:center;margin-bottom:10px}
+        .wh-row .day-lbl{font-weight:600;font-size:13px}
+        .wh-row input[type=time]{padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--cream);font-size:12.5px}
+        .wh-row input[type=time]:focus{outline:none;border-color:var(--rose-gold)}
+        .wh-row select{padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--cream);font-size:12.5px}
+        .wh-row.off input,.wh-row.off select{opacity:.4;pointer-events:none}
+
+        /* Leave */
+        .leave-list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+        .leave-card{border:1px solid var(--border);border-radius:12px;padding:14px}
+        .leave-card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+        .leave-card .type{font-weight:600;font-size:13px}
+        .leave-card .date{font-size:12px;color:var(--muted)}
+        .leave-card .reason{font-size:12.5px;color:#5A4A52;margin:6px 0 10px}
+        .leave-actions{display:flex;gap:8px}
+
+        /* Appointments table in modal */
+        .mini-table{width:100%;border-collapse:collapse}
+        .mini-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border)}
+        .mini-table td{padding:10px;font-size:12.5px;border-bottom:1px solid var(--border)}
+        .mini-table tr:last-child td{border-bottom:none}
+
+        /* Confirm modal */
+        .confirm-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px}
+        .confirm-icon.danger{background:var(--danger-bg);color:var(--danger)}
+        .confirm-icon.warn{background:var(--warning-bg);color:var(--warning)}
+        .confirm-body{text-align:center;padding:10px 0 6px}
+        .confirm-body h3{font-size:18px;font-weight:700;margin-bottom:8px}
+        .confirm-body p{font-size:13.5px;color:var(--muted);max-width:380px;margin:0 auto}
+
+        /* Toast */
+        .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:2000;display:flex;flex-direction:column;gap:10px}
+        .toast{
+            background:#fff;border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,.15);
+            padding:14px 18px;display:flex;align-items:center;gap:12px;min-width:280px;
+            border-left:4px solid var(--success);animation:toastIn .3s ease;
+        }
+        .toast.error{border-left-color:var(--danger)}
+        .toast.info{border-left-color:var(--rose-gold)}
+        .toast .ti{width:34px;height:34px;border-radius:50%;background:var(--success-bg);color:var(--success);display:flex;align-items:center;justify-content:center;font-size:14px}
+        .toast.error .ti{background:var(--danger-bg);color:var(--danger)}
+        .toast.info .ti{background:var(--soft-pink);color:var(--rose-gold)}
+        .toast .msg{font-size:13px;font-weight:500}
+        @keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
+
+        /* ===== Responsive ===== */
+        .overlay-bg{display:none;position:fixed;inset:0;background:rgba(45,32,37,.4);z-index:150}
+        .overlay-bg.show{display:block}
+        @media(max-width:1024px){
+            .stats-grid{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:768px){
+            :root{--sidebar-w:240px}
+            .sidebar{transform:translateX(-100%);box-shadow:0 0 40px rgba(0,0,0,.15)}
+            .sidebar.open{transform:translateX(0)}
+            .main{margin-left:0}
+            .menu-toggle{display:block}
+            .header{padding:14px 16px}
+            .content{padding:18px 16px}
+            .admin-chip .meta{display:none}
+            .form-grid{grid-template-columns:1fr}
+            .detail-grid{grid-template-columns:1fr}
+            .perf-grid{grid-template-columns:repeat(2,1fr)}
+            .checklist{grid-template-columns:1fr}
+            .wh-row{grid-template-columns:90px 1fr 1fr;gap:8px}
+            .wh-row .day-lbl{grid-column:1/-1}
+            .toolbar{flex-direction:column;align-items:stretch}
+            .select-wrap select{width:100%;min-width:0}
+            .card-head{flex-direction:column;align-items:flex-start;gap:12px}
+            .card-head .btn{width:100%;justify-content:center}
+        }
+        @media(max-width:480px){
+            .stats-grid{grid-template-columns:1fr}
+            .header-title h1{font-size:18px}
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-spa"></i></div>
+        <div>
+            <div class="brand-name">PINK BEAUTY</div>
+            <div class="brand-tag">Luxury Beauty Meets Smart Technology</div>
+        </div>
+    </div>
+    <nav class="nav">
+        <div class="nav-label">Main Menu</div>
+        <div class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></div>
+        <div class="nav-item"><i class="fa-solid fa-users"></i><span>User Management</span></div>
+        <div class="nav-item"><i class="fa-solid fa-user-group"></i><span>Customer Management</span></div>
+        <div class="nav-item active"><i class="fa-solid fa-user-tie"></i><span>Staff Management</span></div>
+        <div class="nav-item"><i class="fa-solid fa-calendar-check"></i><span>Appointment Management</span></div>
+        <div class="nav-item"><i class="fa-solid fa-scissors"></i><span>Service Management</span></div>
+        <div class="nav-item"><i class="fa-solid fa-credit-card"></i><span>Payment Management</span></div>
+        <div class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></div>
+        <div class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="profile-mini">
+            <div class="avatar">A</div>
+            <div class="info">
+                <div class="name">Admin</div>
+                <div class="role">Administrator</div>
+            </div>
+        </div>
+        <button class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+</aside>
+<div class="overlay-bg" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- Main -->
+<div class="main">
+    <header class="header">
+        <div style="display:flex;align-items:center;gap:14px">
+            <button class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div class="header-title">
+                <h1>Staff Management</h1>
+                <p>Manage your salon staff, schedules and availability</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" title="Notifications"><i class="fa-regular fa-bell"></i><span class="dot"></span></button>
+            <div class="admin-chip">
+                <div class="avatar">A</div>
+                <div class="meta">
+                    <div class="name">Admin</div>
+                    <div class="role">Administrator</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <!-- Stats -->
+        <section class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon pink"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info"><div class="num" id="statTotal">0</div><div class="label">Total Staff</div><div class="desc">+3 this month</div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fa-solid fa-user-check"></i></div>
+                <div class="stat-info"><div class="num" id="statActive">0</div><div class="label">Active Staff</div><div class="desc" id="statActiveDesc">83% of total staff</div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon gold"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="stat-info"><div class="num" id="statAvail">0</div><div class="label">Available Today</div><div class="desc">Ready for appointments</div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fa-solid fa-calendar-xmark"></i></div>
+                <div class="stat-info"><div class="num" id="statLeave">0</div><div class="label">On Leave</div><div class="desc">Currently unavailable</div></div>
+            </div>
+        </section>
+
+        <!-- Staff card -->
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <h2>Staff Members</h2>
+                    <p>Manage your salon team</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddStaff()"><i class="fa-solid fa-plus"></i> Add Staff</button>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="search-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search staff by name, email or phone..." oninput="applyFilters()" />
+                </div>
+                <div class="select-wrap">
+                    <select id="filterPosition" onchange="applyFilters()">
+                        <option value="">All Positions</option>
+                        <option>Hair Stylist</option>
+                        <option>Senior Hair Stylist</option>
+                        <option>Nail Technician</option>
+                        <option>Makeup Artist</option>
+                        <option>Receptionist</option>
+                        <option>Therapist</option>
+                    </select>
+                </div>
+                <div class="select-wrap">
+                    <select id="filterStatus" onchange="applyFilters()">
+                        <option value="">All Status</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
+                <div class="select-wrap">
+                    <select id="filterAvail" onchange="applyFilters()">
+                        <option value="">All Availability</option>
+                        <option>Available</option>
+                        <option>Busy</option>
+                        <option>On Leave</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline" onclick="clearFilters()"><i class="fa-solid fa-rotate-left"></i> Clear Filters</button>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Staff</th><th>Contact</th><th>Position</th><th>Services</th>
+                        <th>Working Hours</th><th>Availability</th><th>Status</th><th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="staffBody"></tbody>
+                </table>
+            </div>
+
+            <div id="emptyState" class="empty-state" style="display:none">
+                <div class="icon-circle"><i class="fa-solid fa-users"></i></div>
+                <h3>No staff members found</h3>
+                <p>Try changing your search or filter criteria.</p>
+                <button class="btn btn-primary" onclick="clearFilters()"><i class="fa-solid fa-rotate-left"></i> Clear Filters</button>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <div class="info" id="pageInfo">Showing 0–0 of 0 staff</div>
+                <div class="page-btns" id="pageBtns"></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal root -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()"></div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+    /* ============================================================
+       PINK BEAUTY SALON — Staff Management
+       Frontend-only mock data. Structured so a Spring Boot REST API
+       can later replace the mock arrays and CRUD functions.
+       ============================================================ */
+
+    const API_BASE = "/api/staff"; // reserved for future Spring Boot backend
+
+    // Avatar color palette (soft pink/gold tones)
+    const AVATAR_COLORS = [
+        "linear-gradient(135deg,#B76E79,#E8C07D)",
+        "linear-gradient(135deg,#E8C07D,#F8D7DA)",
+        "linear-gradient(135deg,#D98A95,#E8C07D)",
+        "linear-gradient(135deg,#C98A93,#F0C9CF)",
+        "linear-gradient(135deg,#B8902E,#F8D7DA)",
+        "linear-gradient(135deg,#A65D68,#E8C07D)"
+    ];
+
+    const ALL_SERVICES = [
+        "Hair Cut","Hair Coloring","Hair Styling","Manicure","Pedicure",
+        "Nail Art","Bridal Makeup","Party Makeup","Facial","Waxing"
+    ];
+
+    const DEFAULT_SCHEDULE = [
+        {day:"Monday",start:"09:00",end:"17:00",off:false},
+        {day:"Tuesday",start:"09:00",end:"17:00",off:false},
+        {day:"Wednesday",start:"09:00",end:"17:00",off:false},
+        {day:"Thursday",start:"09:00",end:"17:00",off:false},
+        {day:"Friday",start:"09:00",end:"17:00",off:false},
+        {day:"Saturday",start:"10:00",end:"16:00",off:false},
+        {day:"Sunday",start:"09:00",end:"17:00",off:true}
+    ];
+
+    let staffData = [
+        {id:"PBS-001",name:"Sophia Williams",email:"sophia@pinkbeautysalon.com",phone:"0771234567",position:"Senior Hair Stylist",services:["Hair Cut","Hair Coloring"],hours:"09:00 AM - 05:00 PM",availability:"Available",status:"Active",hireDate:"2022-03-15",salary:"$3,200",username:"sophia.w",gender:"Female",dob:"1995-04-12",address:"12 Rose Ave, Colombo",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:128,completed:112,cancelled:8,rating:4.8}},
+        {id:"PBS-002",name:"Emma Johnson",email:"emma@pinkbeautysalon.com",phone:"0772345678",position:"Nail Technician",services:["Manicure","Pedicure","Nail Art"],hours:"10:00 AM - 06:00 PM",availability:"Busy",status:"Active",hireDate:"2021-07-20",salary:"$2,800",username:"emma.j",gender:"Female",dob:"1996-09-23",address:"45 Lily St, Kandy",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:96,completed:88,cancelled:4,rating:4.6}},
+        {id:"PBS-003",name:"Olivia Brown",email:"olivia@pinkbeautysalon.com",phone:"0773456789",position:"Makeup Artist",services:["Bridal Makeup","Party Makeup"],hours:"09:00 AM - 04:00 PM",availability:"On Leave",status:"Active",hireDate:"2023-01-10",salary:"$3,000",username:"olivia.b",gender:"Female",dob:"1998-02-05",address:"78 Jasmine Rd, Galle",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:74,completed:68,cancelled:3,rating:4.9}},
+        {id:"PBS-004",name:"Mia Wilson",email:"mia@pinkbeautysalon.com",phone:"0774567890",position:"Hair Stylist",services:["Hair Cut","Hair Styling"],hours:"08:00 AM - 04:00 PM",availability:"Available",status:"Active",hireDate:"2022-11-01",salary:"$2,500",username:"mia.w",gender:"Female",dob:"1997-06-18",address:"23 Orchid Ln, Negombo",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:110,completed:101,cancelled:5,rating:4.7}},
+        {id:"PBS-005",name:"Ava Taylor",email:"ava@pinkbeautysalon.com",phone:"0775678901",position:"Therapist",services:["Facial","Waxing"],hours:"10:00 AM - 06:00 PM",availability:"Available",status:"Active",hireDate:"2023-05-14",salary:"$2,700",username:"ava.t",gender:"Female",dob:"1994-11-30",address:"56 Lotus Cres, Jaffna",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:84,completed:78,cancelled:2,rating:4.5}},
+        {id:"PBS-006",name:"Isabella Davis",email:"isabella@pinkbeautysalon.com",phone:"0776789012",position:"Hair Stylist",services:["Hair Styling","Hair Coloring"],hours:"09:00 AM - 05:00 PM",availability:"Busy",status:"Inactive",hireDate:"2021-09-05",salary:"$2,400",username:"isabella.d",gender:"Female",dob:"1999-03-22",address:"89 Daisy Blvd, Matara",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:62,completed:55,cancelled:4,rating:4.3}}
+    ];
+
+    function cloneSchedule(){return DEFAULT_SCHEDULE.map(d=>({...d}))}
+    function sampleAppts(){
+        return [
+            {customer:"Sarah Perera",service:"Hair Cut",date:"Aug 20, 2026",time:"10:00 AM",status:"Completed"},
+            {customer:"Nethmi Silva",service:"Hair Coloring",date:"Aug 20, 2026",time:"01:00 PM",status:"Confirmed"},
+            {customer:"Dilani Fernando",service:"Hair Styling",date:"Aug 21, 2026",time:"11:30 AM",status:"Pending"}
+        ];
+    }
+    function sampleLeaves(){
+        return [
+            {type:"Annual Leave",start:"2026-08-22",end:"2026-08-24",reason:"Family vacation",status:"Pending"}
+        ];
+    }
+
+    // State
+    let filtered = [...staffData];
+    let currentPage = 1;
+    const perPage = 5;
+    let editingId = null;
+    let activeDropdownId = null;
+
+    /* ---------- Helpers ---------- */
+    function initials(name){return name.split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase()}
+    function avatarColor(id){let h=0;for(const c of id)h+=c.charCodeAt(0);return AVATAR_COLORS[h%AVATAR_COLORS.length]}
+    function fmtTime(t){ // "09:00" -> "09:00 AM"
+        let [h,m]=t.split(":");h=+h;const ap=h>=12?"PM":"AM";h=h%12||12;return `${String(h).padStart(2,"0")}:${m} ${ap}`}
+    function fmtRange(s){return s.off?"Day Off":`${fmtTime(s.start)} - ${fmtTime(s.end)}`}
+
+    /* ---------- Render: Stats ---------- */
+    function renderStats(){
+        document.getElementById("statTotal").textContent = staffData.length;
+        const active = staffData.filter(s=>s.status==="Active").length;
+        document.getElementById("statActive").textContent = active;
+        const pct = staffData.length?Math.round(active/staffData.length*100):0;
+        document.getElementById("statActiveDesc").textContent = `${pct}% of total staff`;
+        document.getElementById("statAvail").textContent = staffData.filter(s=>s.availability==="Available").length;
+        document.getElementById("statLeave").textContent = staffData.filter(s=>s.availability==="On Leave").length;
+    }
+
+    /* ---------- Render: Table ---------- */
+    function renderTable(){
+        const body = document.getElementById("staffBody");
+        const empty = document.getElementById("emptyState");
+        const start = (currentPage-1)*perPage;
+        const pageItems = filtered.slice(start,start+perPage);
+
+        if(filtered.length===0){
+            body.innerHTML="";
+            empty.style.display="block";
+            document.getElementById("pagination").style.display="none";
+            return;
+        }
+        empty.style.display="none";
+        document.getElementById("pagination").style.display="flex";
+
+        body.innerHTML = pageItems.map(s=>`
+    <tr>
+      <td>
+        <div class="staff-cell">
+          <div class="avatar" style="background:${avatarColor(s.id)}">${initials(s.name)}</div>
+          <div class="meta"><div class="name">${s.name}</div><div class="sub">${s.id}</div></div>
+        </div>
+      </td>
+      <td class="contact-cell">
+        <div class="line"><i class="fa-regular fa-envelope"></i> ${s.email}</div>
+        <div class="line"><i class="fa-solid fa-phone"></i> ${s.phone}</div>
+      </td>
+      <td><span class="position-tag">${s.position}</span></td>
+      <td><div class="services-cell">${s.services.map(sv=>`<span class="service-chip">${sv}</span>`).join("")}</div></td>
+      <td style="white-space:nowrap">${s.hours}</td>
+      <td><span class="badge dot avail-${availKey(s.availability)}">${s.availability}</span></td>
+      <td><span class="badge status-${s.status.toLowerCase()}">${s.status}</span></td>
+      <td class="action-cell">
+        <button class="action-btn" onclick="toggleDropdown('${s.id}',event)"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+        <div class="dropdown" id="dd-${s.id}">
+          ${dropdownItems(s)}
+        </div>
+      </td>
+    </tr>`).join("");
+
+        renderPagination();
+    }
+
+    function availKey(a){return a==="Available"?"available":a==="Busy"?"busy":"leave"}
+
+    function dropdownItems(s){
+        const toggleLabel = s.status==="Active"?"Deactivate":"Activate";
+        const toggleIcon = s.status==="Active"?"fa-toggle-off":"fa-toggle-on";
+        return `
+    <button class="dropdown-item" onclick="viewDetails('${s.id}')"><i class="fa-regular fa-eye"></i> View Details</button>
+    <button class="dropdown-item" onclick="openEditStaff('${s.id}')"><i class="fa-solid fa-pen"></i> Edit Staff</button>
+    <button class="dropdown-item" onclick="openAssignServices('${s.id}')"><i class="fa-solid fa-list-check"></i> Assign Services</button>
+    <button class="dropdown-item" onclick="openWorkingHours('${s.id}')"><i class="fa-regular fa-clock"></i> Working Hours</button>
+    <button class="dropdown-item" onclick="openAppointments('${s.id}')"><i class="fa-solid fa-calendar-day"></i> View Appointments</button>
+    <button class="dropdown-item" onclick="openManageLeave('${s.id}')"><i class="fa-solid fa-umbrella-beach"></i> Manage Leave</button>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item" onclick="confirmToggleStatus('${s.id}')"><i class="fa-solid ${toggleIcon}"></i> ${toggleLabel}</button>
+    <button class="dropdown-item danger" onclick="confirmDelete('${s.id}')"><i class="fa-solid fa-trash"></i> Delete</button>`;
+    }
+
+    function toggleDropdown(id,e){
+        if(e) e.stopPropagation();
+        const dd = document.getElementById("dd-"+id);
+        const isOpen = dd.classList.contains("open");
+        closeAllDropdowns();
+        if(!isOpen){dd.classList.add("open");activeDropdownId=id}
+    }
+    function closeAllDropdowns(){
+        document.querySelectorAll(".dropdown.open").forEach(d=>d.classList.remove("open"));
+        activeDropdownId=null;
+    }
+    document.addEventListener("click",()=>closeAllDropdowns());
+
+    /* ---------- Pagination ---------- */
+    function renderPagination(){
+        const pages = Math.ceil(filtered.length/perPage)||1;
+        const start = (currentPage-1)*perPage+1;
+        const end = Math.min(currentPage*perPage,filtered.length);
+        document.getElementById("pageInfo").textContent = `Showing ${start}–${end} of ${filtered.length} staff`;
+        let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?"disabled":""}><i class="fa-solid fa-chevron-left"></i></button>`;
+        for(let i=1;i<=pages;i++) html += `<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
+        html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?"disabled":""}><i class="fa-solid fa-chevron-right"></i></button>`;
+        document.getElementById("pageBtns").innerHTML = html;
+    }
+    function goPage(p){const pages=Math.ceil(filtered.length/perPage)||1;if(p<1||p>pages)return;currentPage=p;renderTable()}
+
+    /* ---------- Search & Filters ---------- */
+    function applyFilters(){
+        const q = document.getElementById("searchInput").value.toLowerCase().trim();
+        const pos = document.getElementById("filterPosition").value;
+        const st = document.getElementById("filterStatus").value;
+        const av = document.getElementById("filterAvail").value;
+        filtered = staffData.filter(s=>{
+            const matchQ = !q || s.name.toLowerCase().includes(q)||s.email.toLowerCase().includes(q)||s.phone.includes(q)||s.position.toLowerCase().includes(q);
+            return matchQ && (!pos||s.position===pos) && (!st||s.status===st) && (!av||s.availability===av);
+        });
+        currentPage = 1;
+        renderTable();
+    }
+    function clearFilters(){
+        document.getElementById("searchInput").value="";
+        document.getElementById("filterPosition").value="";
+        document.getElementById("filterStatus").value="";
+        document.getElementById("filterAvail").value="";
+        applyFilters();
+    }
+
+    /* ---------- Modal core ---------- */
+    function openModal(html,cls=""){
+        const ov = document.getElementById("modalOverlay");
+        ov.innerHTML = `<div class="modal ${cls}">${html}</div>`;
+        ov.classList.add("open");
+        document.body.style.overflow="hidden";
+    }
+    function closeModal(){
+        const ov = document.getElementById("modalOverlay");
+        ov.classList.remove("open");
+        ov.innerHTML="";
+        document.body.style.overflow="";
+    }
+
+    /* ---------- Toast ---------- */
+    function toast(msg,type="success"){
+        const wrap = document.getElementById("toastWrap");
+        const el = document.createElement("div");
+        el.className=`toast ${type}`;
+        const icon = type==="error"?"fa-circle-xmark":type==="info"?"fa-circle-info":"fa-circle-check";
+        el.innerHTML = `<div class="ti"><i class="fa-solid ${icon}"></i></div><div class="msg">${msg}</div>`;
+        wrap.appendChild(el);
+        setTimeout(()=>{el.style.animation="toastOut .3s ease forwards";setTimeout(()=>el.remove(),300)},2800);
+    }
+
+    /* ---------- View Details ---------- */
+    function viewDetails(id){
+        const s = staffData.find(x=>x.id===id);if(!s)return;
+        closeAllDropdowns();
+        const html = `
+    <div class="modal-head"><div><h3>Staff Details</h3><p>Complete profile information</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <div class="detail-profile">
+        <div class="avatar" style="background:${avatarColor(s.id)};width:64px;height:64px;font-size:22px">${initials(s.name)}</div>
+        <div><div class="name">${s.name}</div><div class="pos">${s.position} · ${s.id}</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="lbl">Email</div><div class="val">${s.email}</div></div>
+        <div class="detail-item"><div class="lbl">Phone</div><div class="val">${s.phone}</div></div>
+        <div class="detail-item"><div class="lbl">Status</div><div class="val"><span class="badge status-${s.status.toLowerCase()}">${s.status}</span></div></div>
+        <div class="detail-item"><div class="lbl">Availability</div><div class="val"><span class="badge dot avail-${availKey(s.availability)}">${s.availability}</span></div></div>
+      </div>
+      <div class="detail-subhead">Employment Details</div>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="lbl">Staff ID</div><div class="val">${s.id}</div></div>
+        <div class="detail-item"><div class="lbl">Hire Date</div><div class="val">${s.hireDate}</div></div>
+        <div class="detail-item"><div class="lbl">Position</div><div class="val">${s.position}</div></div>
+        <div class="detail-item"><div class="lbl">Salary</div><div class="val">${s.salary}</div></div>
+      </div>
+      <div class="detail-subhead">Assigned Services</div>
+      <div class="service-tags">${s.services.map(sv=>`<span class="service-tag">${sv}</span>`).join("")}</div>
+      <div class="detail-subhead">Working Schedule</div>
+      <div class="schedule-list">
+        ${s.schedule.map(d=>`<div class="schedule-row ${d.off?"off":""}"><span class="day">${d.day}</span><span class="time">${fmtRange(d)}</span></div>`).join("")}
+      </div>
+      <div class="detail-subhead">Performance</div>
+      <div class="perf-grid">
+        <div class="perf-card"><div class="num">${s.perf.total}</div><div class="lbl">Total Appointments</div></div>
+        <div class="perf-card"><div class="num">${s.perf.completed}</div><div class="lbl">Completed</div></div>
+        <div class="perf-card"><div class="num">${s.perf.cancelled}</div><div class="lbl">Cancelled</div></div>
+        <div class="perf-card"><div class="num rating">${s.perf.rating} <i class="fa-solid fa-star"></i></div><div class="lbl">Rating</div></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
+        openModal(html,"lg");
+    }
+
+    /* ---------- Add / Edit Staff ---------- */
+    function staffFormFields(s={}){
+        return `
+    <div class="form-section">
+      <h4>Personal Information</h4>
+      <div class="form-grid">
+        <div class="field full"><label>Full Name</label><input id="f_name" value="${s.name||""}" placeholder="e.g. Sophia Williams"></div>
+        <div class="field"><label>Email</label><input id="f_email" type="email" value="${s.email||""}" placeholder="name@pinkbeautysalon.com"></div>
+        <div class="field"><label>Phone Number</label><input id="f_phone" value="${s.phone||""}" placeholder="0771234567"></div>
+        <div class="field"><label>Date of Birth</label><input id="f_dob" type="date" value="${s.dob||""}"></div>
+        <div class="field"><label>Gender</label>
+          <select id="f_gender"><option value="Female" ${s.gender==="Female"?"selected":""}>Female</option><option value="Male" ${s.gender==="Male"?"selected":""}>Male</option><option value="Other" ${s.gender==="Other"?"selected":""}>Other</option></select>
+        </div>
+        <div class="field full"><label>Address</label><input id="f_address" value="${s.address||""}" placeholder="Street, City"></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <h4>Employment Information</h4>
+      <div class="form-grid">
+        <div class="field"><label>Position</label>
+          <select id="f_position">
+            ${["Hair Stylist","Senior Hair Stylist","Nail Technician","Makeup Artist","Receptionist","Therapist"].map(p=>`<option ${s.position===p?"selected":""}>${p}</option>`).join("")}
+          </select>
+        </div>
+        <div class="field"><label>Hire Date</label><input id="f_hire" type="date" value="${s.hireDate||""}"></div>
+        <div class="field"><label>Salary</label><input id="f_salary" value="${s.salary||""}" placeholder="$2,500"></div>
+        <div class="field"><label>Status</label><select id="f_status"><option ${s.status!=="Inactive"?"selected":""}>Active</option><option ${s.status==="Inactive"?"selected":""}>Inactive</option></select></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <h4>Account Information</h4>
+      <div class="form-grid">
+        <div class="field"><label>Username</label><input id="f_username" value="${s.username||""}" placeholder="sophia.w"></div>
+        <div class="field"><label>Password</label><input id="f_password" type="password" placeholder="••••••••"></div>
+        <div class="field full"><label>Confirm Password</label><input id="f_cpassword" type="password" placeholder="••••••••"></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <h4>Professional Information</h4>
+      <div class="form-grid">
+        <div class="field full"><label>Services (comma separated)</label><input id="f_services" value="${(s.services||[]).join(", ")}" placeholder="Hair Cut, Hair Coloring"></div>
+        <div class="field"><label>Working Days</label><input id="f_days" value="Mon - Sat" placeholder="Mon - Sat"></div>
+        <div class="field"><label>Start Time</label><input id="f_start" type="time" value="09:00"></div>
+        <div class="field"><label>End Time</label><input id="f_end" type="time" value="17:00"></div>
+      </div>
+    </div>`;
+    }
+
+    function openAddStaff(){
+        closeAllDropdowns();
+        const html = `
+    <div class="modal-head"><div><h3>Add New Staff</h3><p>Create a new staff profile</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">${staffFormFields()}</div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addStaff()"><i class="fa-solid fa-check"></i> Create Staff</button></div>`;
+        openModal(html,"lg");
+    }
+
+    function openEditStaff(id){
+        closeAllDropdowns();
+        editingId = id;
+        const s = staffData.find(x=>x.id===id);
+        const html = `
+    <div class="modal-head"><div><h3>Edit Staff</h3><p>Update staff information</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">${staffFormFields(s)}</div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="updateStaff()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>`;
+        openModal(html,"lg");
+    }
+
+    function readForm(){
+        const name = val("f_name"), email = val("f_email"), phone = val("f_phone");
+        if(!name||!email||!phone){toast("Name, email and phone are required","error");return null}
+        const start = val("f_start"), end = val("f_end");
+        return {
+            name, email, phone,
+            dob:val("f_dob"), gender:val("f_gender"), address:val("f_address"),
+            position:val("f_position"), hireDate:val("f_hire"), salary:val("f_salary")||"$2,500",
+            status:val("f_status"), username:val("f_username"),
+            services:val("f_services").split(",").map(x=>x.trim()).filter(Boolean),
+            hours:`${fmtTime(start)} - ${fmtTime(end)}`
+        };
+    }
+    function val(id){const el=document.getElementById(id);return el?el.value.trim():""}
+
+    function addStaff(){
+        const data = readForm();if(!data)return;
+        const newId = "PBS-"+String(staffData.length+1).padStart(3,"0");
+        const staff = {
+            id:newId, ...data, availability:"Available",
+            schedule:cloneSchedule(), appointments:sampleAppts(), leaves:sampleLeaves(),
+            perf:{total:0,completed:0,cancelled:0,rating:5.0}
+        };
+        staffData.push(staff);
+        applyFilters();renderStats();
+        closeModal();
+        toast("Staff created successfully");
+    }
+
+    function updateStaff(){
+        const data = readForm();if(!data)return;
+        const idx = staffData.findIndex(s=>s.id===editingId);if(idx<0)return;
+        staffData[idx] = {...staffData[idx], ...data};
+        applyFilters();renderStats();
+        closeModal();
+        toast("Staff updated successfully");
+    }
+
+    /* ---------- Assign Services ---------- */
+    function openAssignServices(id){
+        closeAllDropdowns();
+        editingId = id;
+        const s = staffData.find(x=>x.id===id);
+        const html = `
+    <div class="modal-head"><div><h3>Assign Services</h3><p>Select services for ${s.name}</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <div class="checklist">
+        ${ALL_SERVICES.map(sv=>`<div class="check-item"><input type="checkbox" id="svc_${sv.replace(/\s/g,"")}" ${s.services.includes(sv)?"checked":""}><label for="svc_${sv.replace(/\s/g,"")}">${sv}</label></div>`).join("")}
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="assignServices()"><i class="fa-solid fa-check"></i> Save Changes</button></div>`;
+        openModal(html);
+    }
+    function assignServices(){
+        const sel = ALL_SERVICES.filter(sv=>document.getElementById("svc_"+sv.replace(/\s/g,"")).checked);
+        const s = staffData.find(x=>x.id===editingId);if(!s)return;
+        s.services = sel;
+        applyFilters();
+        closeModal();
+        toast("Services assigned successfully");
+    }
+
+    /* ---------- Working Hours ---------- */
+    function openWorkingHours(id){
+        closeAllDropdowns();
+        editingId = id;
+        const s = staffData.find(x=>x.id===id);
+        const html = `
+    <div class="modal-head"><div><h3>Working Hours</h3><p>Weekly schedule for ${s.name}</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">
+      ${s.schedule.map((d,i)=>`
+        <div class="wh-row ${d.off?"off":""}" id="wh_${i}">
+          <div class="day-lbl">${d.day}</div>
+          <input type="time" value="${d.start}">
+          <input type="time" value="${d.end}">
+          <select onchange="toggleOff(${i},this.value)"><option value="work" ${d.off?"":"selected"}>Working</option><option value="off" ${d.off?"selected":""}>Day Off</option></select>
+        </div>`).join("")}
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="updateWorkingHours()"><i class="fa-solid fa-floppy-disk"></i> Save Schedule</button></div>`;
+        openModal(html,"lg");
+    }
+    function toggleOff(i,v){
+        const row = document.getElementById("wh_"+i);
+        if(v==="off")row.classList.add("off");else row.classList.remove("off");
+    }
+    function updateWorkingHours(){
+        const s = staffData.find(x=>x.id===editingId);if(!s)return;
+        s.schedule.forEach((d,i)=>{
+            const row = document.getElementById("wh_"+i);
+            const inputs = row.querySelectorAll("input[type=time]");
+            const sel = row.querySelector("select").value;
+            d.off = sel==="off";
+            d.start = inputs[0].value;
+            d.end = inputs[1].value;
+        });
+        // update display hours string
+        const wd = s.schedule.filter(d=>!d.off);
+        if(wd.length){s.hours = `${fmtTime(wd[0].start)} - ${fmtTime(wd[0].end)}`}
+        applyFilters();
+        closeModal();
+        toast("Working hours updated successfully");
+    }
+
+    /* ---------- Appointments ---------- */
+    function openAppointments(id){
+        closeAllDropdowns();
+        const s = staffData.find(x=>x.id===id);
+        const html = `
+    <div class="modal-head"><div><h3>Appointments</h3><p>${s.name}'s scheduled appointments</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <table class="mini-table">
+        <thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+        <tbody>${s.appointments.map(a=>`<tr><td>${a.customer}</td><td>${a.service}</td><td>${a.date}</td><td>${a.time}</td><td><span class="badge status-${a.status==="Completed"?"active":"inactive"}" style="${a.status==="Pending"?"background:var(--warning-bg);color:var(--warning)":a.status==="Confirmed"?"background:var(--success-bg);color:var(--success)":""}">${a.status}</span></td></tr>`).join("")}</tbody>
+      </table>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
+        openModal(html,"lg");
+    }
+    function loadAppointments(id){return (staffData.find(s=>s.id===id)||{appointments:[]}).appointments}
+
+    /* ---------- Manage Leave ---------- */
+    function openManageLeave(id){
+        closeAllDropdowns();
+        editingId = id;
+        const s = staffData.find(x=>x.id===id);
+        const html = `
+    <div class="modal-head"><div><h3>Manage Leave</h3><p>Leave requests for ${s.name}</p></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <div class="form-section">
+        <h4>New Leave Request</h4>
+        <div class="form-grid">
+          <div class="field"><label>Leave Type</label>
+            <select id="lv_type"><option>Annual Leave</option><option>Sick Leave</option><option>Maternity Leave</option><option>Unpaid Leave</option></select>
+          </div>
+          <div class="field"><label>Start Date</label><input id="lv_start" type="date"></div>
+          <div class="field"><label>End Date</label><input id="lv_end" type="date"></div>
+          <div class="field full"><label>Reason</label><textarea id="lv_reason" placeholder="Reason for leave"></textarea></div>
+        </div>
+        <button class="btn btn-outline" onclick="addLeave()" style="margin-top:10px"><i class="fa-solid fa-plus"></i> Add Request</button>
+      </div>
+      <div class="detail-subhead" style="margin-top:6px">Current Leave Requests</div>
+      <div class="leave-list" id="leaveList">${renderLeaves(s)}</div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
+        openModal(html,"lg");
+    }
+    function renderLeaves(s){
+        if(!s.leaves.length)return"<p style='color:var(--muted);font-size:13px'>No leave requests.</p>";
+        return s.leaves.map((l,i)=>`
+    <div class="leave-card">
+      <div class="top"><span class="type">${l.type}</span>
+        <span class="badge ${l.status==="Approved"?"status-active":l.status==="Rejected"?"status-inactive":""}" style="${l.status==="Pending"?"background:var(--warning-bg);color:var(--warning)":""}">${l.status}</span></div>
+      <div class="date">${l.start} → ${l.end}</div>
+      <div class="reason">${l.reason}</div>
+      ${l.status==="Pending"?`<div class="leave-actions"><button class="btn btn-success" onclick="manageLeave(${i},'Approved')"><i class="fa-solid fa-check"></i> Approve</button><button class="btn btn-danger" onclick="manageLeave(${i},'Rejected')"><i class="fa-solid fa-xmark"></i> Reject</button></div>`:""}
+    </div>`).join("");
+    }
+    function addLeave(){
+        const s = staffData.find(x=>x.id===editingId);if(!s)return;
+        const type=val("lv_type"),start=val("lv_start"),end=val("lv_end"),reason=val("lv_reason");
+        if(!start||!end){toast("Please select dates","error");return}
+        s.leaves.push({type,start,end,reason,status:"Pending"});
+        document.getElementById("leaveList").innerHTML = renderLeaves(s);
+        toast("Leave request added","info");
+    }
+    function manageLeave(i,decision){
+        const s = staffData.find(x=>x.id===editingId);if(!s)return;
+        s.leaves[i].status = decision;
+        document.getElementById("leaveList").innerHTML = renderLeaves(s);
+        toast(`Leave ${decision.toLowerCase()}`,"info");
+    }
+
+    /* ---------- Toggle status ---------- */
+    function confirmToggleStatus(id){
+        closeAllDropdowns();
+        const s = staffData.find(x=>x.id===id);
+        const isActivate = s.status==="Inactive";
+        const html = `
+    <div class="modal-body">
+      <div class="confirm-body">
+        <div class="confirm-icon ${isActivate?"warn":"danger"}"><i class="fa-solid ${isActivate?"fa-toggle-on":"fa-toggle-off"}"></i></div>
+        <h3>${isActivate?"Activate Staff?":"Deactivate Staff?"}</h3>
+        <p>${isActivate?"Are you sure you want to activate this staff account?":"Are you sure you want to deactivate this staff account?"}</p>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn ${isActivate?"btn-success":"btn-danger"}" onclick="updateStaffStatus('${id}')">${isActivate?"Activate":"Deactivate"}</button></div>`;
+        openModal(html);
+    }
+    function updateStaffStatus(id){
+        const s = staffData.find(x=>x.id===id);
+        s.status = s.status==="Active"?"Inactive":"Active";
+        applyFilters();renderStats();
+        closeModal();
+        toast(s.status==="Active"?"Staff activated successfully":"Staff account deactivated");
+    }
+
+    /* ---------- Delete ---------- */
+    function confirmDelete(id){
+        closeAllDropdowns();
+        const html = `
+    <div class="modal-body">
+      <div class="confirm-body">
+        <div class="confirm-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <h3>Delete Staff?</h3>
+        <p>This action cannot be undone. Are you sure you want to delete this staff member?</p>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="deleteStaff('${id}')"><i class="fa-solid fa-trash"></i> Delete Staff</button></div>`;
+        openModal(html);
+    }
+    function deleteStaff(id){
+        staffData = staffData.filter(s=>s.id!==id);
+        applyFilters();renderStats();
+        closeModal();
+        toast("Staff deleted successfully");
+    }
+
+    /* ---------- Sidebar (mobile) ---------- */
+    function toggleSidebar(){
+        document.getElementById("sidebar").classList.toggle("open");
+        document.getElementById("overlay").classList.toggle("show");
+    }
+
+    /* ---------- Boot ---------- */
+    function loadStaff(){applyFilters();renderStats()}
+    loadStaff();
+</script>
+</body>
+</html>
