@@ -208,3 +208,13 @@ public void updateStatus(Long id) {
 
     staffRepository.save(staff);
 }
+}
+@Override
+@Transactional(readOnly = true)
+public List<StaffWorkingHourDTO>getWorkingHours(Long staffId){
+    Staff staff = findStaff(staffId);
+    return staff.getStaffWorkingHours()
+            .stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+}
