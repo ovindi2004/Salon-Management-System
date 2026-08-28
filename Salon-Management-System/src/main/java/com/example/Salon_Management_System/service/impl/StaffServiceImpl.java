@@ -123,4 +123,24 @@ public class StaffServiceImpl implements StaffService {
         return convertToDTO(staff);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<StaffDTO>searchStaff(String keyword){
+        if(keyword == null || keyword.isBlank()){
+            return getAllStaff();
+        }
+        String search = keyword.trim().toLowerCase();
+
+        return staffRepository.findAll()
+                .stream()
+                .filter(staff ->
+                        contains(staff.getStaffName(),search)
+                     || contains(staff.getStaffEmail(),search)
+                     ||contains(staff.getStaffPhone(),search)
+                     ||contains(staff.getPosition(),search)
+                )
+                .map(this::convertTODTO)
+                .collect(Collectors.toList());
+    }
+
 }
