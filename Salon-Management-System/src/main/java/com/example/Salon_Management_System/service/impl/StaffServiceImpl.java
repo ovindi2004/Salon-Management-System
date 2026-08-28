@@ -116,4 +116,11 @@ public class StaffServiceImpl implements StaffService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public StaffDTO getStaffById(Long staffId) {
+        Staff staff =  findStaff(staffId);
+        return convertToDTO(staff);
+    }
+
 }
