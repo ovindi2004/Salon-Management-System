@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -251,6 +252,43 @@ public class ServiceServiceImpl implements ServiceService {
         }catch (Exception e){
             log.error("Failed to assign staff to service by ID: {}", serviceId, e);
             throw new RuntimeException("Failed to assign staff to service");
+        }
+    }
+
+    private SalonService findService(Long serviceId) {
+        log.info("Finding service by ID: {}", serviceId);
+        try {
+            return serviceRepository.findById(serviceId)
+                    .orElseThrow(() -> new RuntimeException("Service not found with ID: " + serviceId));
+
+        }catch (Exception e){
+            log.error("Failed to find service by ID: {}", serviceId, e);
+            throw new RuntimeException("Failed to find service");
+        }
+    }
+    private  ServiceDTO convertToDTO(SalonService service){
+        log.info("Converting service to DTO: {}", service);
+        try{
+            List<Long> staffIds = new ArrayList<>();            if(service.getStaff() == null){
+                staffIds = service.getStaff()
+                        .stream()
+                        .map(Staff::getStaffId)
+                        .collect(Collectors.toList());
+            }
+
+            return new ServiceDTO(
+                    service.getServiceId(),
+                    service.getServiceName(),
+                    service.getCategory(),
+                    service.getDescription(),
+                    service.getPrice(),
+                    service.getDuration(),
+                    service.getStatus(),
+                    staffIds
+            );)
+        }catch (Exception e){
+            log.error("Failed to convert service to DTO: {}", service, e);
+            throw new RuntimeException("Failed to convert service to DTO");
         }
     }
 
