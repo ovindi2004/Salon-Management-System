@@ -33,7 +33,5 @@ public class Customer {
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Appointment> appointments = new HashSet<>();
 
 }

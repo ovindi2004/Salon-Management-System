@@ -71,6 +71,51 @@ public class SecurityConfig {
                         //Staff
                         .requestMatchers(HttpMethod.POST,"/api/v1/staff/save").permitAll()
 
+                        // =========================
+                        // SERVICE APIs
+                        // =========================
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/services/save"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/services/all"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/services/*"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/services/search"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/v1/services/update"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/v1/services/delete/*"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.PATCH,
+                                "/api/v1/services/status/*"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/v1/services/assign-staff/*"
+                        ).permitAll()
+
+
                         // Other APIs require JWT
                         .anyRequest()
                         .authenticated()
