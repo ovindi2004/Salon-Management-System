@@ -176,6 +176,17 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public void deleteService(Long serviceId) {
+        log.info("Deleting service by ID: {}", serviceId);
+        try{
+            SalonService service = findService(serviceId);
+            service.getStaff().clear();
+            serviceRepository.save(service);
+            serviceRepository.delete(service);
+
+        }catch (Exception e){
+            log.error("Failed to delete service by ID: {}", serviceId, e);
+            throw new RuntimeException("Failed to delete service");
+        }
 
     }
 
