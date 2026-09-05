@@ -199,8 +199,7 @@ public class ServiceServiceImpl implements ServiceService {
             if(name == null || name.trim().isEmpty()){
                 return getAllServices();
             }
-            return serviceRepository.findByServiceNameContaining(name.trim())
-                    .stream()
+            return serviceRepository.findByServiceNameContainingIgnoreCase(name.trim())                    .stream()
                     .map(this::convertToDTO)
                     .toList();
 
@@ -285,7 +284,7 @@ public class ServiceServiceImpl implements ServiceService {
                     service.getDuration(),
                     service.getStatus(),
                     staffIds
-            );)
+            );
         }catch (Exception e){
             log.error("Failed to convert service to DTO: {}", service, e);
             throw new RuntimeException("Failed to convert service to DTO");
