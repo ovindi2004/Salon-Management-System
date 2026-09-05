@@ -213,20 +213,46 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public void updateStatus(Long serviceId) {
         log.info("Updating service by ID: {}", serviceId);
-        try{
+        try {
             SalonService service = findService(serviceId);
 
-            if("Active".equalsIgnoreCase(service.getStatus())){
+            if ("Active".equalsIgnoreCase(service.getStatus())) {
                 service.setStatus("Inactive");
-            }else{
+            } else {
                 service.setStatus("Active");
-        }
+            }
             serviceRepository.save(service);
 
+        } catch (Exception e) {
+            log.error("Failed to update service by ID: {}", serviceId, e);
+            throw new RuntimeException("Failed to update service");
+        }
     }
 
     @Override
     public void assignStaff(Long serviceId, List<Long> staffIds) {
+        log.info("Assigning staff to service by ID: {}", serviceId);
+        try {
 
+            SalonService service = findService(serviceId);
+            List<Staff> staffList = new ArrayList<>();
+            if (staffIds != null &&
+                    !staffIds.isEmpty()) {
+                for (Long staffId : staffIds) {
+                    Staff staff = staffRepository.findById(staffId)
+                            .orElseThrow(() -> new RuntimeException("Staff not found with ID: " + staffId));
+                    staffList.add(staff);
+                }
+
+            }
+            service.setStaff(staffList);
+            serviceRepository.save(service);
+
+        }catch (Exception e){
+            log.error("Failed to assign staff to service by ID: {}", serviceId, e);
+            throw new RuntimeException("Failed to assign staff to service");
+        }
     }
+
+
 }
