@@ -76,17 +76,101 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ServiceDTO> getAllServices() {
-        return List.of();
+        log.info("Fetching all services");
+        try {
+            return serviceRepository.findAll().stream().map(this::convertToDTO).toList();
+
+        }catch (Exception e){
+            log.error("Failed to fetch all services", e);
+            throw new RuntimeException("Failed to fetch all services");
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ServiceDTO getServiceById(Long serviceId) {
-        return null;
+        log.info("Fetching service by ID: {}", serviceId);
+        try {
+            SalonService service = findService(serviceId);
+            return convertToDTO(service);
+        }catch (Exception e){
+            log.error("Failed to fetch service by ID: {}", serviceId, e);
+            throw new RuntimeException("Failed to fetch service by ID");
+        }
     }
 
     @Override
     public void updateService(ServiceDTO serviceDTO) {
+        log.info("Updating service: {}", serviceDTO);
+        try{
+            if (serviceDTO.getServiceId() == null) {
+                throw new RuntimeException("Service ID is required");
+            }
+            SalonService service = findService(serviceDTO.getServiceId());
+
+            if (serviceDTO.getServiceName() == null ||
+                    serviceDTO.getServiceName().trim().isEmpty()) {
+
+                throw new RuntimeException("Service name is required");
+            }
+            if (serviceDTO.getCategory() == null ||
+                    serviceDTO.getCategory().trim().isEmpty()) {
+
+                throw new RuntimeException("Service category is required");
+            }
+
+            if (serviceDTO.getPrice() == null ||
+                    serviceDTO.getPrice().doubleValue() <= 0) {
+
+                throw new RuntimeException("Service price must be greater than 0");
+            }
+
+            if (serviceDTO.getDuration() == null ||
+                    serviceDTO.getDuration() <= 0) {
+
+                throw new RuntimeException("Service duration must be greater than 0");
+            }
+
+            if (!service.getServiceName()
+                    .equalsIgnoreCase(serviceDTO.getServiceName().trim())) {
+
+                if (serviceRepository.existsByServiceNameIgnoreCase(
+                        serviceDTO.getServiceName().trim())) {
+
+                    throw new RuntimeException("Service name already exists");
+                }
+            }
+            service.setServiceName(serviceDTO.getServiceName().trim());
+            service.setCategory(serviceDTO.getCategory().trim());
+            service.setDescription(serviceDTO.getDescription());
+            service.setPrice(serviceDTO.getPrice());
+            service.setDuration(serviceDTO.getDuration());
+
+            if (serviceDTO.getStatus() != null &&
+                    !serviceDTO.getStatus().trim().isEmpty()) {
+
+                service.setStatus(serviceDTO.getStatus());
+                if (serviceDTO.getStaffIds() != null) {
+                    List<Staff> staffList = new ArrayList<>();
+                    for (Long staffId : serviceDTO.getStaffIds()) {
+                        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new RuntimeException("Staff not found with ID: " + staffId));
+                        staffList.add(staff);
+                    }
+                    service.setStaff(staffList);
+                }
+                serviceRepository.save(service);
+            }
+
+
+
+
+
+        }catch (Exception e){
+            log.error("Failed to update service: {}", serviceDTO, e);
+            throw new RuntimeException("Failed to update service");
+        }
 
     }
 
