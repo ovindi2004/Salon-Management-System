@@ -17,5 +17,5 @@ public class ServiceDTO {
     private BigDecimal price;
     private Integer duration;
     private String status;
-    private List<Long> staffIds;.
+    private List<Long> staffIds;
 }

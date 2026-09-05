@@ -35,7 +35,7 @@ public class SalonService {
             joinColumns = @JoinColumn(name = "service_id"),
             inverseJoinColumns = @JoinColumn(name = "staff_id")
     )
-    private List<Staff> staff = new ArrayList<>();.
+    private List<Staff> staff = new ArrayList<>();
 
 
 }
