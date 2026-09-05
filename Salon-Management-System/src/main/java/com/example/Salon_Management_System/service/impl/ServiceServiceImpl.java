@@ -191,8 +191,23 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ServiceDTO> searchServices(String name) {
-        return List.of();
+        log.info("Searching service by name: {}", name);
+        try{
+            if(name == null || name.trim().isEmpty()){
+                return getAllServices();
+            }
+            return serviceRepository.findByServiceNameContaining(name.trim())
+                    .stream()
+                    .map(this::convertToDTO)
+                    .toList();
+
+        }catch (Exception e){
+            log.error("Failed to search service by name: {}", name, e);
+            throw new RuntimeException("Failed to search service");
+        }
+
     }
 
     @Override
