@@ -212,6 +212,16 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public void updateStatus(Long serviceId) {
+        log.info("Updating service by ID: {}", serviceId);
+        try{
+            SalonService service = findService(serviceId);
+
+            if("Active".equalsIgnoreCase(service.getStatus())){
+                service.setStatus("Inactive");
+            }else{
+                service.setStatus("Active");
+        }
+            serviceRepository.save(service);
 
     }
 
