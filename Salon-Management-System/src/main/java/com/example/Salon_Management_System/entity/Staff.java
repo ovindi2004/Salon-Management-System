@@ -56,6 +56,7 @@ public class Staff {
     )
     private List<StaffLeave> leaves = new ArrayList<>();
 
-    
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Appointment> appointments = new ArrayList<>();
 
 }

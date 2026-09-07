@@ -68,53 +68,35 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/customers/delete/*").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/customers/search").permitAll()
 
-                        //Staff
-                        .requestMatchers(HttpMethod.POST,"/api/v1/staff/save").permitAll()
 
-                        // =========================
+                        // STAFF APIs
+                        .requestMatchers(HttpMethod.GET, "/api/v1/staff/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/staff/search").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/staff/*").permitAll()
+
+                        .requestMatchers("/api/v1/staff/**").authenticated()
+
                         // SERVICE APIs
-                        // =========================
 
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/v1/services/save"
-                        ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/services/save").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/services/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/services/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/services/search").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/services/update").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/services/delete/*").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/services/status/*").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/services/assign-staff/*").permitAll()
 
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/v1/services/all"
-                        ).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/v1/services/*"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/v1/services/search"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                HttpMethod.PUT,
-                                "/api/v1/services/update"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                HttpMethod.DELETE,
-                                "/api/v1/services/delete/*"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                HttpMethod.PATCH,
-                                "/api/v1/services/status/*"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                HttpMethod.PUT,
-                                "/api/v1/services/assign-staff/*"
-                        ).permitAll()
-
+                        // Appointment
+                        .requestMatchers(HttpMethod.POST, "/api/v1/appointment/save").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/appointment/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/appointment/date/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/appointment/*").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/appointment/update/*").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/appointment/delete/*").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/appointment/status/*").permitAll()
 
                         // Other APIs require JWT
                         .anyRequest()
