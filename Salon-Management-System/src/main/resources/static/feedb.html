@@ -1,0 +1,2562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback & Ratings | PINK BEAUTY SALON</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>/* ===== Design Tokens ===== */
+    :root {
+        --rose-gold: #B76E79;
+        --soft-pink: #F8D7DA;
+        --champagne: #E8C07D;
+        --dark-rose: #8F4F5A;
+        --bg: #FFF9FB;
+        --white: #FFFFFF;
+        --text: #2F2528;
+        --muted: #8A777C;
+        --success: #4CAF50;
+        --warning: #F2A93B;
+        --danger: #D9534F;
+
+        --sidebar-w: 270px;
+        --radius-sm: 10px;
+        --radius: 16px;
+        --radius-lg: 22px;
+        --shadow-sm: 0 2px 10px rgba(143, 79, 90, 0.06);
+        --shadow: 0 8px 30px rgba(143, 79, 90, 0.10);
+        --shadow-lg: 0 20px 60px rgba(143, 79, 90, 0.18);
+        --gradient-rose: linear-gradient(135deg, #B76E79 0%, #8F4F5A 100%);
+        --gradient-gold: linear-gradient(135deg, #E8C07D 0%, #B76E79 100%);
+        --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        --font-display: 'Playfair Display', serif;
+        --font-body: 'Poppins', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.5;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; color: var(--text); }
+
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input, select { font-family: inherit; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+        position: fixed;
+        top: 0; left: 0;
+        width: var(--sidebar-w);
+        height: 100vh;
+        background: var(--white);
+        border-right: 1px solid rgba(183, 110, 121, 0.12);
+        display: flex;
+        flex-direction: column;
+        z-index: 100;
+        transition: transform var(--transition);
+    }
+
+    .sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 24px 22px 20px;
+        border-bottom: 1px solid rgba(183, 110, 121, 0.10);
+    }
+
+    .brand-logo {
+        width: 46px; height: 46px;
+        border-radius: 14px;
+        background: var(--gradient-rose);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 20px;
+        box-shadow: 0 6px 16px rgba(183, 110, 121, 0.35);
+    }
+
+    .brand-text h1 {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--dark-rose);
+        line-height: 1.1;
+    }
+
+    .brand-text span {
+        font-size: 10.5px;
+        color: var(--muted);
+        letter-spacing: 0.3px;
+    }
+
+    .sidebar-nav {
+        flex: 1;
+        padding: 16px 14px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 12px 14px;
+        border-radius: var(--radius-sm);
+        color: var(--muted);
+        font-size: 13.5px;
+        font-weight: 500;
+        transition: all var(--transition);
+        position: relative;
+    }
+
+    .nav-item i { width: 20px; text-align: center; font-size: 15px; }
+
+    .nav-item:hover {
+        background: rgba(248, 215, 218, 0.5);
+        color: var(--dark-rose);
+    }
+
+    .nav-item.active {
+        background: var(--gradient-rose);
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(183, 110, 121, 0.32);
+    }
+
+    .nav-item.active i { color: #fff; }
+
+    .sidebar-footer {
+        padding: 16px 18px 20px;
+        border-top: 1px solid rgba(183, 110, 121, 0.10);
+    }
+
+    .admin-profile {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        background: var(--bg);
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+    }
+
+    .admin-avatar, .header-avatar {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        background: var(--gradient-gold);
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 600; font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    .admin-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+    .admin-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .admin-role { font-size: 11px; color: var(--muted); }
+
+    .logout-btn {
+        width: 32px; height: 32px;
+        border-radius: 8px;
+        color: var(--muted);
+        display: flex; align-items: center; justify-content: center;
+        transition: all var(--transition);
+    }
+    .logout-btn:hover { background: rgba(217, 83, 79, 0.12); color: var(--danger); }
+
+    .sidebar-overlay {
+        position: fixed; inset: 0;
+        background: rgba(47, 37, 40, 0.45);
+        backdrop-filter: blur(2px);
+        z-index: 99;
+        opacity: 0; visibility: hidden;
+        transition: all var(--transition);
+    }
+    .sidebar-overlay.show { opacity: 1; visibility: visible; }
+
+    /* ===== Main Wrapper ===== */
+    .main-wrapper {
+        margin-left: var(--sidebar-w);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        transition: margin var(--transition);
+    }
+
+    /* ===== Top Header ===== */
+    .top-header {
+        position: sticky; top: 0;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(183, 110, 121, 0.10);
+        padding: 14px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        z-index: 50;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 16px; }
+
+    .hamburger {
+        display: none;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        background: var(--white);
+        border: 1px solid rgba(183, 110, 121, 0.15);
+        color: var(--dark-rose);
+        font-size: 17px;
+        align-items: center; justify-content: center;
+        transition: all var(--transition);
+    }
+    .hamburger:hover { background: var(--soft-pink); }
+
+    .header-title h2 { font-size: 18px; color: var(--dark-rose); }
+    .header-title span { font-size: 12px; color: var(--muted); }
+
+    .header-right { display: flex; align-items: center; gap: 18px; }
+
+    .header-icon-btn {
+        position: relative;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--dark-rose);
+        font-size: 16px;
+        display: flex; align-items: center; justify-content: center;
+        transition: all var(--transition);
+    }
+    .header-icon-btn:hover { background: var(--soft-pink); transform: translateY(-1px); }
+
+    .notif-badge {
+        position: absolute;
+        top: -4px; right: -4px;
+        background: var(--danger);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 600;
+        min-width: 18px; height: 18px;
+        border-radius: 9px;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 4px;
+        border: 2px solid var(--white);
+    }
+
+    .header-admin {
+        display: flex; align-items: center; gap: 10px;
+        padding: 6px 10px 6px 6px;
+        border-radius: 12px;
+        background: var(--bg);
+        transition: all var(--transition);
+        cursor: pointer;
+    }
+    .header-admin:hover { background: var(--soft-pink); }
+    .header-admin-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .header-admin-name { font-size: 13px; font-weight: 600; }
+    .header-admin-role { font-size: 11px; color: var(--muted); }
+    .header-chevron { font-size: 11px; color: var(--muted); }
+
+    /* ===== Main Content ===== */
+    .main-content {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* ===== Page Header ===== */
+    .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .page-header-text h1 {
+        font-size: 26px;
+        color: var(--dark-rose);
+        margin-bottom: 4px;
+    }
+    .page-header-text p { color: var(--muted); font-size: 13.5px; }
+
+    .page-header-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ===== Buttons ===== */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 18px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-weight: 500;
+        transition: all var(--transition);
+        white-space: nowrap;
+    }
+    .btn i { font-size: 13px; }
+
+    .btn-primary {
+        background: var(--gradient-rose);
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(183, 110, 121, 0.30);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(183, 110, 121, 0.42); }
+
+    .btn-outline {
+        background: var(--white);
+        color: var(--dark-rose);
+        border: 1px solid rgba(183, 110, 121, 0.25);
+    }
+    .btn-outline:hover { background: var(--soft-pink); border-color: var(--rose-gold); }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #D9534F, #b03a36);
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(217, 83, 79, 0.30);
+    }
+    .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(217, 83, 79, 0.42); }
+
+    /* ===== Cards ===== */
+    .card {
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(183, 110, 121, 0.08);
+        overflow: hidden;
+        transition: box-shadow var(--transition);
+    }
+    .card:hover { box-shadow: var(--shadow); }
+
+    .card-header {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid rgba(183, 110, 121, 0.08);
+    }
+    .card-header h2 { font-size: 17px; color: var(--dark-rose); }
+    .card-subtitle { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+    /* ===== Stats Grid ===== */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .stat-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 22px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(183, 110, 121, 0.08);
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        transition: all var(--transition);
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+    .stat-icon {
+        width: 52px; height: 52px;
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px; color: #fff;
+        flex-shrink: 0;
+    }
+    .stat-icon-rose { background: var(--gradient-rose); }
+    .stat-icon-gold { background: var(--gradient-gold); }
+    .stat-icon-success { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+    .stat-icon-warning { background: linear-gradient(135deg, #F2A93B, #E8C07D); }
+
+    .stat-body { display: flex; flex-direction: column; gap: 3px; }
+    .stat-label { font-size: 12.5px; color: var(--muted); font-weight: 500; }
+    .stat-value { font-size: 24px; font-weight: 700; color: var(--text); font-family: var(--font-display); line-height: 1.2; }
+    .stat-meta { font-size: 11.5px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+    .stat-meta-up { color: var(--success); }
+    .stat-stars { color: var(--champagne); font-size: 15px; letter-spacing: 2px; }
+
+    /* ===== Rating Overview ===== */
+    .rating-overview-body {
+        padding: 24px;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 32px;
+        align-items: center;
+    }
+
+    .rating-overview-left { text-align: center; padding: 16px 0; }
+    .big-rating { font-size: 56px; font-weight: 700; font-family: var(--font-display); color: var(--dark-rose); line-height: 1; }
+    .big-stars { color: var(--champagne); font-size: 24px; letter-spacing: 4px; margin: 8px 0 6px; }
+    .big-rating-meta { font-size: 13px; color: var(--muted); }
+
+    .rating-overview-right { display: flex; flex-direction: column; gap: 14px; }
+
+    .dist-row { display: flex; align-items: center; gap: 12px; }
+    .dist-label {
+        display: flex; align-items: center; gap: 5px;
+        min-width: 72px;
+        font-size: 13px; font-weight: 500; color: var(--text);
+    }
+    .dist-label i { color: var(--champagne); font-size: 12px; }
+
+    .dist-bar {
+        flex: 1;
+        height: 10px;
+        background: var(--bg);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .dist-bar-fill {
+        height: 100%;
+        border-radius: 6px;
+        background: var(--gradient-rose);
+        width: 0;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dist-bar-fill.fill-gold { background: var(--gradient-gold); }
+    .dist-bar-fill.fill-warn { background: linear-gradient(135deg, #F2A93B, #E8C07D); }
+    .dist-bar-fill.fill-danger { background: linear-gradient(135deg, #D9534F, #8F4F5A); }
+
+    .dist-meta { min-width: 92px; text-align: right; font-size: 12.5px; color: var(--muted); }
+    .dist-meta strong { color: var(--text); font-weight: 600; }
+
+    /* ===== Rating Trends ===== */
+    .chart-wrap { padding: 20px 24px 8px; height: 300px; position: relative; }
+
+    .trends-footer {
+        display: flex;
+        gap: 16px;
+        padding: 16px 24px 22px;
+        border-top: 1px solid rgba(183, 110, 121, 0.08);
+        flex-wrap: wrap;
+    }
+    .trends-stat { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 120px; }
+    .trends-stat-label { font-size: 12px; color: var(--muted); }
+    .trends-stat-value { font-size: 20px; font-weight: 700; font-family: var(--font-display); color: var(--text); }
+    .trends-up { color: var(--success); }
+
+    /* ===== Service Performance ===== */
+    .service-list { padding: 8px 24px 22px; display: flex; flex-direction: column; gap: 18px; }
+
+    .service-item { display: flex; flex-direction: column; gap: 8px; }
+    .service-item-head { display: flex; align-items: center; justify-content: space-between; }
+    .service-item-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .service-item-stars { color: var(--champagne); font-size: 13px; letter-spacing: 1px; }
+    .service-item-meta { display: flex; align-items: center; gap: 10px; }
+    .service-item-rating { font-size: 14px; font-weight: 700; color: var(--dark-rose); font-family: var(--font-display); }
+    .service-item-count { font-size: 12px; color: var(--muted); }
+
+    .service-bar { height: 10px; background: var(--bg); border-radius: 6px; overflow: hidden; }
+    .service-bar-fill {
+        height: 100%;
+        border-radius: 6px;
+        background: var(--gradient-gold);
+        width: 0;
+        transition: width 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== Filters ===== */
+    .filters-body {
+        padding: 20px 24px 24px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+        gap: 16px;
+        align-items: end;
+    }
+
+    .filter-group { display: flex; flex-direction: column; gap: 7px; }
+    .filter-group label { font-size: 12px; font-weight: 500; color: var(--muted); }
+
+    .search-wrap { position: relative; }
+    .search-wrap i {
+        position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+        color: var(--muted); font-size: 13px;
+    }
+    .search-wrap input {
+        width: 100%;
+        padding: 11px 14px 11px 38px;
+        border: 1px solid rgba(183, 110, 121, 0.18);
+        border-radius: var(--radius-sm);
+        background: var(--bg);
+        font-size: 13px;
+        color: var(--text);
+        transition: all var(--transition);
+    }
+    .search-wrap input:focus { outline: none; border-color: var(--rose-gold); background: var(--white); box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.10); }
+
+    .filter-group select {
+        padding: 11px 14px;
+        border: 1px solid rgba(183, 110, 121, 0.18);
+        border-radius: var(--radius-sm);
+        background: var(--bg);
+        font-size: 13px;
+        color: var(--text);
+        cursor: pointer;
+        transition: all var(--transition);
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238A777C'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        padding-right: 34px;
+    }
+    .filter-group select:focus { outline: none; border-color: var(--rose-gold); box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.10); }
+
+    .filter-actions { display: flex; align-items: end; }
+
+    /* ===== Feedback Table ===== */
+    .result-count { font-size: 12.5px; color: var(--muted); background: var(--bg); padding: 5px 12px; border-radius: 20px; }
+
+    .table-wrap { overflow-x: auto; padding: 0 4px; }
+
+    .feedback-table { width: 100%; border-collapse: collapse; min-width: 880px; }
+
+    .feedback-table thead th {
+        text-align: left;
+        padding: 14px 18px;
+        font-size: 11.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--muted);
+        border-bottom: 1px solid rgba(183, 110, 121, 0.12);
+        background: var(--bg);
+    }
+
+    .feedback-table tbody td {
+        padding: 16px 18px;
+        font-size: 13px;
+        color: var(--text);
+        border-bottom: 1px solid rgba(183, 110, 121, 0.07);
+        vertical-align: middle;
+    }
+
+    .feedback-table tbody tr { transition: background var(--transition); }
+    .feedback-table tbody tr:hover { background: rgba(248, 215, 218, 0.28); }
+
+    .customer-cell { display: flex; align-items: center; gap: 11px; }
+    .customer-cell .avatar {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        background: var(--gradient-gold);
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 600; font-size: 13px;
+        flex-shrink: 0;
+    }
+    .customer-cell .cust-info { display: flex; flex-direction: column; line-height: 1.3; }
+    .customer-cell .cust-name { font-weight: 600; color: var(--text); }
+    .customer-cell .cust-email { font-size: 11.5px; color: var(--muted); }
+
+    .service-badge {
+        display: inline-block;
+        padding: 4px 11px;
+        border-radius: 20px;
+        background: var(--soft-pink);
+        color: var(--dark-rose);
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .rating-stars { color: var(--champagne); font-size: 13px; letter-spacing: 1.5px; white-space: nowrap; }
+    .rating-stars .empty { color: rgba(232, 192, 125, 0.28); }
+
+    .feedback-text {
+        max-width: 260px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--muted);
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 11px;
+        border-radius: 20px;
+        font-size: 11.5px;
+        font-weight: 600;
+    }
+    .status-reviewed { background: rgba(76, 175, 80, 0.14); color: var(--success); }
+    .status-pending { background: rgba(242, 169, 59, 0.16); color: var(--warning); }
+    .status-badge i { font-size: 9px; }
+
+    .action-btns { display: flex; gap: 8px; }
+    .action-btn {
+        width: 34px; height: 34px;
+        border-radius: 9px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px;
+        transition: all var(--transition);
+    }
+    .action-view { background: rgba(183, 110, 121, 0.12); color: var(--rose-gold); }
+    .action-view:hover { background: var(--rose-gold); color: #fff; }
+    .action-delete { background: rgba(217, 83, 79, 0.12); color: var(--danger); }
+    .action-delete:hover { background: var(--danger); color: #fff; }
+
+    .empty-row { text-align: center; padding: 48px 18px; color: var(--muted); }
+    .empty-row i { font-size: 32px; color: rgba(183, 110, 121, 0.35); margin-bottom: 10px; display: block; }
+
+    /* ===== Pagination ===== */
+    .pagination {
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(183, 110, 121, 0.08);
+    }
+
+    .page-info { font-size: 13px; color: var(--muted); }
+    .page-info strong { color: var(--text); }
+
+    .page-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .page-btn {
+        min-width: 38px; height: 38px;
+        padding: 0 12px;
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 500;
+        display: flex; align-items: center; justify-content: center;
+        transition: all var(--transition);
+        border: 1px solid transparent;
+    }
+    .page-btn:hover:not(:disabled):not(.active) { background: var(--soft-pink); color: var(--dark-rose); }
+    .page-btn.active { background: var(--gradient-rose); color: #fff; box-shadow: 0 4px 12px rgba(183, 110, 121, 0.30); }
+    .page-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ===== Modals ===== */
+    .modal-overlay {
+        position: fixed; inset: 0;
+        background: rgba(47, 37, 40, 0.55);
+        backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        padding: 20px;
+        z-index: 200;
+        opacity: 0; visibility: hidden;
+        transition: all var(--transition);
+    }
+    .modal-overlay.show { opacity: 1; visibility: visible; }
+
+    .modal {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(24px) scale(0.97);
+        transition: transform var(--transition);
+    }
+    .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+    .modal-sm { max-width: 440px; }
+
+    .modal-header {
+        padding: 22px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(183, 110, 121, 0.10);
+    }
+    .modal-header h3 { font-size: 18px; color: var(--dark-rose); }
+    .modal-close {
+        width: 34px; height: 34px;
+        border-radius: 9px;
+        color: var(--muted);
+        font-size: 16px;
+        display: flex; align-items: center; justify-content: center;
+        transition: all var(--transition);
+    }
+    .modal-close:hover { background: var(--soft-pink); color: var(--dark-rose); }
+
+    .modal-body { padding: 24px 26px; }
+    .modal-footer {
+        padding: 18px 26px 24px;
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(183, 110, 121, 0.08);
+    }
+
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; }
+    .detail-item { display: flex; flex-direction: column; gap: 4px; }
+    .detail-item.full { grid-column: 1 / -1; }
+    .detail-label { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); font-weight: 500; }
+    .detail-value { font-size: 14px; color: var(--text); font-weight: 500; }
+    .detail-value.stars { color: var(--champagne); font-size: 18px; letter-spacing: 3px; }
+
+    .detail-comment {
+        background: var(--bg);
+        border-left: 3px solid var(--rose-gold);
+        padding: 14px 16px;
+        border-radius: 0 10px 10px 0;
+        font-size: 13.5px;
+        color: var(--text);
+        font-style: italic;
+        line-height: 1.6;
+    }
+
+    .detail-status-row { display: flex; align-items: center; gap: 8px; }
+
+    .delete-icon {
+        width: 64px; height: 64px;
+        margin: 0 auto 16px;
+        border-radius: 50%;
+        background: rgba(217, 83, 79, 0.12);
+        color: var(--danger);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 26px;
+    }
+    .modal-body p { text-align: center; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* ===== Toasts ===== */
+    .toast-container {
+        position: fixed;
+        top: 24px; right: 24px;
+        z-index: 300;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+    }
+
+    .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--white);
+        padding: 14px 18px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        border-left: 4px solid var(--success);
+        min-width: 280px;
+        max-width: 380px;
+        transform: translateX(120%);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: auto;
+    }
+    .toast.show { transform: translateX(0); opacity: 1; }
+    .toast.hide { transform: translateX(120%); opacity: 0; }
+
+    .toast-icon {
+        width: 34px; height: 34px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 15px; color: #fff;
+        flex-shrink: 0;
+    }
+    .toast-success { border-left-color: var(--success); }
+    .toast-success .toast-icon { background: var(--success); }
+    .toast-info { border-left-color: var(--rose-gold); }
+    .toast-info .toast-icon { background: var(--rose-gold); }
+    .toast-danger { border-left-color: var(--danger); }
+    .toast-danger .toast-icon { background: var(--danger); }
+
+    .toast-body { display: flex; flex-direction: column; gap: 1px; }
+    .toast-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .toast-msg { font-size: 12px; color: var(--muted); }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1100px) {
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .rating-overview-body { grid-template-columns: 220px 1fr; gap: 24px; }
+        .filters-body { grid-template-columns: 1fr 1fr 1fr; }
+        .filter-search { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 900px) {
+        .sidebar { transform: translateX(-100%); }
+        .sidebar.show { transform: translateX(0); }
+        .main-wrapper { margin-left: 0; }
+        .hamburger { display: flex; }
+        .header-admin-text { display: none; }
+        .header-chevron { display: none; }
+    }
+
+    @media (max-width: 768px) {
+        .main-content { padding: 18px; gap: 18px; }
+        .page-header-text h1 { font-size: 22px; }
+        .stats-grid { grid-template-columns: 1fr; }
+        .rating-overview-body { grid-template-columns: 1fr; gap: 20px; }
+        .rating-overview-left { padding: 0; }
+        .big-rating { font-size: 46px; }
+        .filters-body { grid-template-columns: 1fr; }
+        .filter-actions { justify-content: flex-start; }
+        .detail-grid { grid-template-columns: 1fr; }
+        .trends-footer { gap: 12px; }
+        .trends-stat { min-width: 100px; }
+        .header-title { display: none; }
+        .page-header-actions { width: 100%; }
+        .page-header-actions .btn { flex: 1; justify-content: center; }
+        .modal-footer { flex-direction: column-reverse; }
+        .modal-footer .btn { width: 100%; justify-content: center; }
+        .toast-container { left: 16px; right: 16px; top: 16px; }
+        .toast { min-width: 0; max-width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+        .top-header { padding: 12px 16px; }
+        .main-content { padding: 14px; }
+        .card-header { padding: 16px 18px; }
+        .stat-card { padding: 18px; }
+        .pagination { flex-direction: column; align-items: stretch; }
+        .page-btns { justify-content: center; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-logo">
+            <i class="fa-solid fa-spa"></i>
+        </div>
+        <div class="brand-text">
+            <h1>PINK BEAUTY</h1>
+            <span>Luxury Beauty Meets Smart Technology</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-users"></i><span>User Management</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-user-tag"></i><span>Customer Management</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-user-nurse"></i><span>Staff Management</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-calendar-check"></i><span>Appointment Management</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-credit-card"></i><span>Payment Management</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-scissors"></i><span>Service Management</span></a>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-comments"></i><span>Feedback &amp; Ratings</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports &amp; Analytics</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="admin-profile">
+            <div class="admin-avatar">AD</div>
+            <div class="admin-info">
+                <span class="admin-name">Admin Dashboard</span>
+                <span class="admin-role">Administrator</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn" title="Logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </div>
+</aside>
+
+<!-- Mobile overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="main-wrapper">
+
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="header-left">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-title">
+                <h2>Feedback &amp; Ratings</h2>
+                <span>Admin Panel</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="header-icon-btn" id="notificationBtn" aria-label="Notifications">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </button>
+            <div class="header-admin">
+                <div class="header-avatar">AD</div>
+                <div class="header-admin-text">
+                    <span class="header-admin-name">Admin Dashboard</span>
+                    <span class="header-admin-role">Administrator</span>
+                </div>
+                <i class="fa-solid fa-chevron-down header-chevron"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header-text">
+                <h1>Feedback &amp; Ratings</h1>
+                <p>Monitor customer experiences, ratings and valuable feedback</p>
+            </div>
+            <div class="page-header-actions">
+                <button class="btn btn-outline" id="exportBtn">
+                    <i class="fa-solid fa-file-export"></i>
+                    <span>Export Feedback</span>
+                </button>
+                <button class="btn btn-primary" id="refreshBtn">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-rose"><i class="fa-solid fa-comments"></i></div>
+                <div class="stat-body">
+                    <span class="stat-label">Total Feedback</span>
+                    <span class="stat-value" id="statTotal">248</span>
+                    <span class="stat-meta stat-meta-up"><i class="fa-solid fa-arrow-trend-up"></i> +12.5% this month</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-gold"><i class="fa-solid fa-star"></i></div>
+                <div class="stat-body">
+                    <span class="stat-label">Average Rating</span>
+                    <span class="stat-value" id="statAvg">4.7 / 5.0</span>
+                    <span class="stat-stars" id="statAvgStars">★★★★★</span>
+                    <span class="stat-meta">Excellent customer satisfaction</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-success"><i class="fa-solid fa-thumbs-up"></i></div>
+                <div class="stat-body">
+                    <span class="stat-label">Positive Feedback</span>
+                    <span class="stat-value" id="statPositive">91%</span>
+                    <span class="stat-meta"><span id="statPositiveCount">226</span> positive reviews</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-warning"><i class="fa-solid fa-clock"></i></div>
+                <div class="stat-body">
+                    <span class="stat-label">Pending Review</span>
+                    <span class="stat-value" id="statPending">12</span>
+                    <span class="stat-meta">Needs admin attention</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rating Overview -->
+        <section class="rating-overview card">
+            <div class="card-header">
+                <h2>Customer Rating Overview</h2>
+            </div>
+            <div class="rating-overview-body">
+                <div class="rating-overview-left">
+                    <div class="big-rating" id="bigRating">4.7</div>
+                    <div class="big-stars" id="bigStars">★★★★★</div>
+                    <div class="big-rating-meta">Based on <span id="bigRatingCount">248</span> customer reviews</div>
+                </div>
+                <div class="rating-overview-right" id="ratingDistribution"></div>
+            </div>
+        </section>
+
+        <!-- Rating Trends -->
+        <section class="rating-trends card">
+            <div class="card-header">
+                <div>
+                    <h2>Rating Trends</h2>
+                    <p class="card-subtitle">Customer satisfaction over the last 6 months</p>
+                </div>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="trendsChart"></canvas>
+            </div>
+            <div class="trends-footer">
+                <div class="trends-stat">
+                    <span class="trends-stat-label">Average Rating</span>
+                    <span class="trends-stat-value" id="trendAvg">4.7</span>
+                </div>
+                <div class="trends-stat">
+                    <span class="trends-stat-label">Total Reviews</span>
+                    <span class="trends-stat-value" id="trendTotal">248</span>
+                </div>
+                <div class="trends-stat">
+                    <span class="trends-stat-label">Trend</span>
+                    <span class="trends-stat-value trends-up" id="trendPct">+8.4%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Performance -->
+        <section class="service-performance card">
+            <div class="card-header">
+                <h2>Service Performance</h2>
+            </div>
+            <div class="service-list" id="serviceList"></div>
+        </section>
+
+        <!-- Search & Filters -->
+        <section class="filters card">
+            <div class="card-header">
+                <h2>Search &amp; Filters</h2>
+            </div>
+            <div class="filters-body">
+                <div class="filter-group filter-search">
+                    <label for="searchInput">Search</label>
+                    <div class="search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Search customer or feedback..." />
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label for="ratingFilter">Rating</label>
+                    <select id="ratingFilter">
+                        <option value="">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="serviceFilter">Service</label>
+                    <select id="serviceFilter">
+                        <option value="">All Services</option>
+                        <option value="Hair Styling">Hair Styling</option>
+                        <option value="Facial">Facial</option>
+                        <option value="Manicure">Manicure</option>
+                        <option value="Pedicure">Pedicure</option>
+                        <option value="Hair Coloring">Hair Coloring</option>
+                        <option value="Bridal Package">Bridal Package</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="statusFilter">Status</label>
+                    <select id="statusFilter">
+                        <option value="">All</option>
+                        <option value="Reviewed">Reviewed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFilter">Date</label>
+                    <select id="dateFilter">
+                        <option value="">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="custom">Custom Date</option>
+                    </select>
+                </div>
+                <div class="filter-group filter-actions">
+                    <button class="btn btn-outline" id="resetFiltersBtn">
+                        <i class="fa-solid fa-rotate-left"></i><span>Reset Filters</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Table -->
+        <section class="feedback-section card">
+            <div class="card-header">
+                <h2>Customer Feedback</h2>
+                <span class="result-count" id="resultCount">248 records</span>
+            </div>
+            <div class="table-wrap">
+                <table class="feedback-table">
+                    <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Rating</th>
+                        <th>Feedback</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="feedbackTableBody"></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination"></div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Feedback Details Modal -->
+<div class="modal-overlay" id="feedbackModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Customer Feedback Details</h3>
+            <button class="modal-close" id="feedbackModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" id="feedbackModalBody"></div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="markReviewedBtn"><i class="fa-solid fa-check-circle"></i><span>Mark as Reviewed</span></button>
+            <button class="btn btn-outline" id="feedbackModalCloseBtn">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <h3>Delete Feedback?</h3>
+            <button class="modal-close" id="deleteModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="delete-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <p>Are you sure you want to permanently delete this feedback? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" id="deleteCancelBtn">Cancel</button>
+            <button class="btn btn-danger" id="deleteConfirmBtn"><i class="fa-solid fa-trash"></i><span>Delete Feedback</span></button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script >/* ============================================================
+   PINK BEAUTY SALON
+   FEEDBACK & RATINGS - ADMIN
+   Backend:
+   /api/v1/feedback
+   ============================================================ */
+
+const API = {
+    feedback: "http://localhost:8080/api/v1/feedback"
+};
+
+let feedbackData = [];
+let filteredData = [];
+let currentPage = 1;
+const pageSize = 8;
+
+let selectedFeedbackId = null;
+let deleteFeedbackId = null;
+let trendsChart = null;
+
+
+// ============================================================
+// AUTH
+// ============================================================
+
+function getToken() {
+    return localStorage.getItem("token");
+}
+
+async function apiFetch(url, options = {}) {
+
+    const token = getToken();
+
+    const headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        ...(options.headers || {})
+    };
+
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, {
+        ...options,
+        headers
+    });
+
+    if (response.status === 401 || response.status === 403) {
+        showToast(
+            "Authentication Error",
+            "Please login again.",
+            "danger"
+        );
+
+        return null;
+    }
+
+    if (!response.ok) {
+
+        let message = `HTTP ${response.status}`;
+
+        try {
+            const error = await response.json();
+            message = error.message || message;
+        } catch (_) {}
+
+        throw new Error(message);
+    }
+
+    if (response.status === 204) {
+        return null;
+    }
+
+    return response.json();
+}
+
+
+// ============================================================
+// INITIAL LOAD
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    setupEvents();
+
+    await loadFeedback();
+    await loadStatistics();
+    await loadRatingDistribution();
+    await loadServicePerformance();
+});
+
+
+// ============================================================
+// LOAD FEEDBACK
+// ============================================================
+
+async function loadFeedback() {
+
+    try {
+
+        const data = await apiFetch(API.feedback);
+
+        if (!data) return;
+
+        feedbackData = Array.isArray(data) ? data : [];
+
+        applyFilters();
+
+    } catch (error) {
+
+        console.error("Feedback loading error:", error);
+
+        showToast(
+            "Error",
+            "Unable to load feedback.",
+            "danger"
+        );
+    }
+}
+
+
+// ============================================================
+// STATISTICS
+// ============================================================
+
+async function loadStatistics() {
+
+    try {
+
+        const stats =
+            await apiFetch(
+                `${API.feedback}/statistics`
+            );
+
+        if (!stats) return;
+
+        document.getElementById("statTotal").textContent =
+            stats.totalFeedback ?? 0;
+
+        document.getElementById("statAvg").textContent =
+            `${Number(stats.averageRating || 0).toFixed(1)} / 5.0`;
+
+        document.getElementById("statPositive").textContent =
+            `${stats.positiveFeedback ?? 0}%`;
+
+        document.getElementById("statPositiveCount").textContent =
+            stats.positiveCount ?? 0;
+
+        document.getElementById("statPending").textContent =
+            stats.pendingReview ?? 0;
+
+        document.getElementById("bigRating").textContent =
+            Number(stats.averageRating || 0).toFixed(1);
+
+        document.getElementById("bigRatingCount").textContent =
+            stats.totalFeedback ?? 0;
+
+        document.getElementById("trendAvg").textContent =
+            Number(stats.averageRating || 0).toFixed(1);
+
+        document.getElementById("trendTotal").textContent =
+            stats.totalFeedback ?? 0;
+
+        document.getElementById("statAvgStars").textContent =
+            createStars(Number(stats.averageRating || 0), false);
+
+        document.getElementById("bigStars").textContent =
+            createStars(Number(stats.averageRating || 0), false);
+
+    } catch (error) {
+
+        console.error("Statistics error:", error);
+    }
+}
+
+
+// ============================================================
+// RATING DISTRIBUTION
+// ============================================================
+
+async function loadRatingDistribution() {
+
+    try {
+
+        const distribution =
+            await apiFetch(
+                `${API.feedback}/rating-distribution`
+            );
+
+        if (!distribution) return;
+
+        const total =
+            Object.values(distribution)
+                .reduce(
+                    (sum, value) =>
+                        sum + Number(value),
+                    0
+                );
+
+        const container =
+            document.getElementById(
+                "ratingDistribution"
+            );
+
+        container.innerHTML = "";
+
+        [5, 4, 3, 2, 1].forEach(rating => {
+
+            const count =
+                Number(distribution[rating] || 0);
+
+            const percentage =
+                total === 0
+                    ? 0
+                    : (count / total) * 100;
+
+            const row =
+                document.createElement("div");
+
+            row.className = "dist-row";
+
+            row.innerHTML = `
+                <div class="dist-label">
+                    ${rating}
+                    <i class="fa-solid fa-star"></i>
+                </div>
+
+                <div class="dist-bar">
+                    <div
+                        class="dist-bar-fill"
+                        style="width:${percentage}%">
+                    </div>
+                </div>
+
+                <div class="dist-meta">
+                    <strong>${count}</strong>
+                    (${percentage.toFixed(0)}%)
+                </div>
+            `;
+
+            container.appendChild(row);
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Rating distribution error:",
+            error
+        );
+    }
+}
+
+
+// ============================================================
+// SERVICE PERFORMANCE
+// ============================================================
+
+async function loadServicePerformance() {
+
+    try {
+
+        const data =
+            await apiFetch(
+                `${API.feedback}/service-performance`
+            );
+
+        if (!data) return;
+
+        const container =
+            document.getElementById(
+                "serviceList"
+            );
+
+        container.innerHTML = "";
+
+        if (!data.length) {
+
+            container.innerHTML = `
+                <div class="empty-row">
+                    <i class="fa-solid fa-scissors"></i>
+                    No service feedback available
+                </div>
+            `;
+
+            return;
+        }
+
+        data.forEach(item => {
+
+            const rating =
+                Number(item.averageRating || 0);
+
+            const width =
+                Math.min(
+                    (rating / 5) * 100,
+                    100
+                );
+
+            const div =
+                document.createElement("div");
+
+            div.className = "service-item";
+
+            div.innerHTML = `
+                <div class="service-item-head">
+
+                    <span class="service-item-name">
+                        ${escapeHtml(
+                item.serviceName ||
+                "Unknown Service"
+            )}
+                    </span>
+
+                    <div class="service-item-meta">
+
+                        <span class="service-item-rating">
+                            ${rating.toFixed(1)}
+                        </span>
+
+                        <span class="service-item-stars">
+                            ${createStars(rating, false)}
+                        </span>
+
+                        <span class="service-item-count">
+                            ${item.reviewCount || 0} reviews
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="service-bar">
+                    <div
+                        class="service-bar-fill"
+                        style="width:${width}%">
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(div);
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Service performance error:",
+            error
+        );
+    }
+}
+
+
+// ============================================================
+// TABLE
+// ============================================================
+
+function renderTable() {
+
+    const tbody =
+        document.getElementById(
+            "feedbackTableBody"
+        );
+
+    tbody.innerHTML = "";
+
+    const start =
+        (currentPage - 1) * pageSize;
+
+    const end =
+        start + pageSize;
+
+    const pageData =
+        filteredData.slice(start, end);
+
+    if (!pageData.length) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty-row">
+                    <i class="fa-solid fa-comments"></i>
+                    No feedback found
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    pageData.forEach(feedback => {
+
+        const tr =
+            document.createElement("tr");
+
+        const customerName =
+            feedback.customerName ||
+            "Unknown Customer";
+
+        const initials =
+            getInitials(customerName);
+
+        tr.innerHTML = `
+            <td>
+                <div class="customer-cell">
+
+                    <div class="avatar">
+                        ${escapeHtml(initials)}
+                    </div>
+
+                    <div class="cust-info">
+
+                        <span class="cust-name">
+                            ${escapeHtml(
+            customerName
+        )}
+                        </span>
+
+                        <span class="cust-email">
+                            ${escapeHtml(
+            feedback.customerEmail ||
+            "-"
+        )}
+                        </span>
+
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <span class="service-badge">
+                    ${escapeHtml(
+            feedback.serviceName ||
+            "Unknown"
+        )}
+                </span>
+            </td>
+
+            <td>
+                <span class="rating-stars">
+                    ${createStars(
+            feedback.rating || 0,
+            true
+        )}
+                </span>
+            </td>
+
+            <td>
+                <div class="feedback-text"
+                     title="${escapeHtml(
+            feedback.comment || ""
+        )}">
+                    ${escapeHtml(
+            feedback.comment || "-"
+        )}
+                </div>
+            </td>
+
+            <td>
+                ${formatDate(
+            feedback.feedbackDate
+        )}
+            </td>
+
+            <td>
+                ${getStatusBadge(
+            feedback.status
+        )}
+            </td>
+
+            <td>
+                <div class="action-btns">
+
+                    <button
+                        class="action-btn action-view"
+                        onclick="viewFeedback(${feedback.feedbackId})"
+                        title="View">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                    <button
+                        class="action-btn action-delete"
+                        onclick="openDeleteModal(${feedback.feedbackId})"
+                        title="Delete">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                </div>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    renderPagination();
+}
+
+
+// ============================================================
+// FILTERS
+// ============================================================
+
+function applyFilters() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+            .trim()
+            .toLowerCase();
+
+    const rating =
+        document.getElementById(
+            "ratingFilter"
+        ).value;
+
+    const service =
+        document.getElementById(
+            "serviceFilter"
+        ).value;
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+    filteredData =
+        feedbackData.filter(feedback => {
+
+            const matchesSearch =
+                !search ||
+                (feedback.customerName || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                (feedback.customerEmail || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                (feedback.comment || "")
+                    .toLowerCase()
+                    .includes(search);
+
+            const matchesRating =
+                !rating ||
+                String(feedback.rating) === rating;
+
+            const matchesService =
+                !service ||
+                feedback.serviceName === service;
+
+            const matchesStatus =
+                !status ||
+                feedback.status === status.toUpperCase();
+
+            return (
+                matchesSearch &&
+                matchesRating &&
+                matchesService &&
+                matchesStatus
+            );
+        });
+
+    currentPage = 1;
+
+    document.getElementById(
+        "resultCount"
+    ).textContent =
+        `${filteredData.length} records`;
+
+    renderTable();
+}
+
+
+// ============================================================
+// PAGINATION
+// ============================================================
+
+function renderPagination() {
+
+    const container =
+        document.getElementById(
+            "pagination"
+        );
+
+    container.innerHTML = "";
+
+    const totalPages =
+        Math.ceil(
+            filteredData.length / pageSize
+        );
+
+    if (totalPages <= 1) return;
+
+    const info =
+        document.createElement("div");
+
+    info.className = "page-info";
+
+    const start =
+        (currentPage - 1) * pageSize + 1;
+
+    const end =
+        Math.min(
+            currentPage * pageSize,
+            filteredData.length
+        );
+
+    info.innerHTML =
+        `Showing <strong>${start}</strong> -
+         <strong>${end}</strong> of
+         <strong>${filteredData.length}</strong>`;
+
+    const buttons =
+        document.createElement("div");
+
+    buttons.className = "page-btns";
+
+    const previous =
+        createPageButton(
+            "‹",
+            currentPage === 1,
+            () => {
+                currentPage--;
+                renderTable();
+            }
+        );
+
+    buttons.appendChild(previous);
+
+    for (let i = 1; i <= totalPages; i++) {
+
+        if (
+            totalPages > 7 &&
+            i > 3 &&
+            i < totalPages - 2 &&
+            Math.abs(i - currentPage) > 1
+        ) {
+            continue;
+        }
+
+        const button =
+            createPageButton(
+                i,
+                false,
+                () => {
+                    currentPage = i;
+                    renderTable();
+                }
+            );
+
+        if (i === currentPage) {
+            button.classList.add("active");
+        }
+
+        buttons.appendChild(button);
+    }
+
+    const next =
+        createPageButton(
+            "›",
+            currentPage === totalPages,
+            () => {
+                currentPage++;
+                renderTable();
+            }
+        );
+
+    buttons.appendChild(next);
+
+    container.appendChild(info);
+    container.appendChild(buttons);
+}
+
+function createPageButton(
+    text,
+    disabled,
+    action
+) {
+
+    const button =
+        document.createElement("button");
+
+    button.className = "page-btn";
+
+    button.textContent = text;
+
+    button.disabled = disabled;
+
+    button.addEventListener(
+        "click",
+        action
+    );
+
+    return button;
+}
+
+
+// ============================================================
+// VIEW FEEDBACK
+// ============================================================
+
+function viewFeedback(id) {
+
+    const feedback =
+        feedbackData.find(
+            item =>
+                Number(item.feedbackId) ===
+                Number(id)
+        );
+
+    if (!feedback) return;
+
+    selectedFeedbackId = id;
+
+    document.getElementById(
+        "feedbackModalBody"
+    ).innerHTML = `
+
+        <div class="detail-grid">
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Customer
+                </span>
+                <span class="detail-value">
+                    ${escapeHtml(
+        feedback.customerName || "-"
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Email
+                </span>
+                <span class="detail-value">
+                    ${escapeHtml(
+        feedback.customerEmail || "-"
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Service
+                </span>
+                <span class="detail-value">
+                    ${escapeHtml(
+        feedback.serviceName || "-"
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Staff
+                </span>
+                <span class="detail-value">
+                    ${escapeHtml(
+        feedback.staffName || "-"
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Appointment ID
+                </span>
+                <span class="detail-value">
+                    #${feedback.appointmentId || "-"}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Date
+                </span>
+                <span class="detail-value">
+                    ${formatDate(
+        feedback.feedbackDate
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Rating
+                </span>
+                <span class="detail-value stars">
+                    ${createStars(
+        feedback.rating || 0,
+        false
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">
+                    Status
+                </span>
+                <span class="detail-value">
+                    ${getStatusBadge(
+        feedback.status
+    )}
+                </span>
+            </div>
+
+            <div class="detail-item full">
+
+                <span class="detail-label">
+                    Customer Feedback
+                </span>
+
+                <div class="detail-comment">
+                    “${escapeHtml(
+        feedback.comment || "-"
+    )}”
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    const markBtn =
+        document.getElementById(
+            "markReviewedBtn"
+        );
+
+    if (
+        feedback.status === "REVIEWED"
+    ) {
+        markBtn.style.display = "none";
+    } else {
+        markBtn.style.display = "inline-flex";
+    }
+
+    openModal("feedbackModal");
+}
+
+
+// ============================================================
+// MARK REVIEWED
+// ============================================================
+
+async function markAsReviewed() {
+
+    if (!selectedFeedbackId) return;
+
+    try {
+
+        await apiFetch(
+            `${API.feedback}/${selectedFeedbackId}/reviewed`,
+            {
+                method: "PATCH"
+            }
+        );
+
+        closeModal("feedbackModal");
+
+        showToast(
+            "Success",
+            "Feedback marked as reviewed.",
+            "success"
+        );
+
+        await loadFeedback();
+        await loadStatistics();
+
+    } catch (error) {
+
+        showToast(
+            "Error",
+            error.message,
+            "danger"
+        );
+    }
+}
+
+
+// ============================================================
+// DELETE
+// ============================================================
+
+function openDeleteModal(id) {
+
+    deleteFeedbackId = id;
+
+    openModal("deleteModal");
+}
+
+async function deleteFeedback() {
+
+    if (!deleteFeedbackId) return;
+
+    try {
+
+        await apiFetch(
+            `${API.feedback}/${deleteFeedbackId}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        closeModal("deleteModal");
+
+        showToast(
+            "Deleted",
+            "Feedback deleted successfully.",
+            "success"
+        );
+
+        deleteFeedbackId = null;
+
+        await loadFeedback();
+        await loadStatistics();
+        await loadRatingDistribution();
+        await loadServicePerformance();
+
+    } catch (error) {
+
+        showToast(
+            "Error",
+            error.message,
+            "danger"
+        );
+    }
+}
+
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+
+function exportFeedback() {
+
+    if (!filteredData.length) {
+
+        showToast(
+            "No Data",
+            "There is no feedback to export.",
+            "info"
+        );
+
+        return;
+    }
+
+    const headers = [
+        "Feedback ID",
+        "Customer",
+        "Email",
+        "Service",
+        "Staff",
+        "Rating",
+        "Comment",
+        "Date",
+        "Status"
+    ];
+
+    const rows =
+        filteredData.map(f => [
+
+            f.feedbackId,
+            f.customerName || "",
+            f.customerEmail || "",
+            f.serviceName || "",
+            f.staffName || "",
+            f.rating || "",
+            f.comment || "",
+            f.feedbackDate || "",
+            f.status || ""
+        ]);
+
+    const csv = [
+        headers,
+        ...rows
+    ]
+        .map(row =>
+            row.map(value =>
+                `"${String(value)
+                    .replace(/"/g, '""')}"`
+            ).join(",")
+        )
+        .join("\n");
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        `pink-beauty-feedback-${new Date()
+            .toISOString()
+            .slice(0, 10)}.csv`;
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    showToast(
+        "Exported",
+        "Feedback exported successfully.",
+        "success"
+    );
+}
+
+
+// ============================================================
+// EVENTS
+// ============================================================
+
+function setupEvents() {
+
+    document.getElementById(
+        "searchInput"
+    ).addEventListener(
+        "input",
+        applyFilters
+    );
+
+    document.getElementById(
+        "ratingFilter"
+    ).addEventListener(
+        "change",
+        applyFilters
+    );
+
+    document.getElementById(
+        "serviceFilter"
+    ).addEventListener(
+        "change",
+        applyFilters
+    );
+
+    document.getElementById(
+        "statusFilter"
+    ).addEventListener(
+        "change",
+        applyFilters
+    );
+
+    document.getElementById(
+        "dateFilter"
+    ).addEventListener(
+        "change",
+        applyFilters
+    );
+
+    document.getElementById(
+        "resetFiltersBtn"
+    ).addEventListener(
+        "click",
+        resetFilters
+    );
+
+    document.getElementById(
+        "refreshBtn"
+    ).addEventListener(
+        "click",
+        async () => {
+
+            await loadFeedback();
+            await loadStatistics();
+            await loadRatingDistribution();
+            await loadServicePerformance();
+
+            showToast(
+                "Refreshed",
+                "Feedback data updated.",
+                "success"
+            );
+        }
+    );
+
+    document.getElementById(
+        "exportBtn"
+    ).addEventListener(
+        "click",
+        exportFeedback
+    );
+
+    document.getElementById(
+        "markReviewedBtn"
+    ).addEventListener(
+        "click",
+        markAsReviewed
+    );
+
+    document.getElementById(
+        "deleteConfirmBtn"
+    ).addEventListener(
+        "click",
+        deleteFeedback
+    );
+
+    document.getElementById(
+        "feedbackModalClose"
+    ).addEventListener(
+        "click",
+        () => closeModal("feedbackModal")
+    );
+
+    document.getElementById(
+        "feedbackModalCloseBtn"
+    ).addEventListener(
+        "click",
+        () => closeModal("feedbackModal")
+    );
+
+    document.getElementById(
+        "deleteModalClose"
+    ).addEventListener(
+        "click",
+        () => closeModal("deleteModal")
+    );
+
+    document.getElementById(
+        "deleteCancelBtn"
+    ).addEventListener(
+        "click",
+        () => closeModal("deleteModal")
+    );
+
+    document.getElementById(
+        "hamburgerBtn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            document
+                .getElementById("sidebar")
+                .classList.add("show");
+
+            document
+                .getElementById("sidebarOverlay")
+                .classList.add("show");
+        }
+    );
+
+    document.getElementById(
+        "sidebarOverlay"
+    ).addEventListener(
+        "click",
+        closeSidebar
+    );
+
+    document.getElementById(
+        "logoutBtn"
+    ).addEventListener(
+        "click",
+        logout
+    );
+}
+
+
+// ============================================================
+// RESET FILTERS
+// ============================================================
+
+function resetFilters() {
+
+    document.getElementById(
+        "searchInput"
+    ).value = "";
+
+    document.getElementById(
+        "ratingFilter"
+    ).value = "";
+
+    document.getElementById(
+        "serviceFilter"
+    ).value = "";
+
+    document.getElementById(
+        "statusFilter"
+    ).value = "";
+
+    document.getElementById(
+        "dateFilter"
+    ).value = "";
+
+    applyFilters();
+}
+
+
+// ============================================================
+// MODALS
+// ============================================================
+
+function openModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.add("show");
+}
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+}
+
+
+// ============================================================
+// TOAST
+// ============================================================
+
+function showToast(
+    title,
+    message,
+    type = "success"
+) {
+
+    const container =
+        document.getElementById(
+            "toastContainer"
+        );
+
+    const toast =
+        document.createElement("div");
+
+    toast.className =
+        `toast toast-${type}`;
+
+    let icon =
+        type === "success"
+            ? "fa-check"
+            : type === "danger"
+                ? "fa-xmark"
+                : "fa-info";
+
+    toast.innerHTML = `
+        <div class="toast-icon">
+            <i class="fa-solid ${icon}"></i>
+        </div>
+
+        <div class="toast-body">
+            <span class="toast-title">
+                ${escapeHtml(title)}
+            </span>
+
+            <span class="toast-msg">
+                ${escapeHtml(message)}
+            </span>
+        </div>
+    `;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.add("show");
+    });
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+        toast.classList.add("hide");
+
+        setTimeout(
+            () => toast.remove(),
+            400
+        );
+
+    }, 3500);
+}
+
+
+// ============================================================
+// HELPERS
+// ============================================================
+
+function createStars(
+    rating,
+    allowEmpty = true
+) {
+
+    const rounded =
+        Math.round(Number(rating) || 0);
+
+    let result = "";
+
+    for (let i = 1; i <= 5; i++) {
+
+        if (i <= rounded) {
+            result += "★";
+        } else {
+            result += allowEmpty
+                ? `<span class="empty">★</span>`
+                : "☆";
+        }
+    }
+
+    return result;
+}
+
+
+function getStatusBadge(status) {
+
+    const reviewed =
+        status === "REVIEWED";
+
+    return `
+        <span class="status-badge ${
+        reviewed
+            ? "status-reviewed"
+            : "status-pending"
+    }">
+
+            <i class="fa-solid ${
+        reviewed
+            ? "fa-check"
+            : "fa-clock"
+    }"></i>
+
+            ${reviewed
+        ? "Reviewed"
+        : "Pending"}
+
+        </span>
+    `;
+}
+
+
+function formatDate(date) {
+
+    if (!date) return "-";
+
+    const d = new Date(date);
+
+    if (isNaN(d.getTime())) {
+        return date;
+    }
+
+    return d.toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
+
+function getInitials(name) {
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word =>
+            word.charAt(0)
+        )
+        .join("")
+        .toUpperCase();
+}
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+
+function closeSidebar() {
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("show");
+
+    document
+        .getElementById("sidebarOverlay")
+        .classList.remove("show");
+}
+
+
+// ============================================================
+// LOGOUT
+// ============================================================
+
+function logout() {
+
+    localStorage.removeItem("token");
+
+    window.location.href =
+        "login.html";
+}
+
+
+// ============================================================
+// ESCAPE KEY
+// ============================================================
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "Escape") {
+
+            closeModal("feedbackModal");
+            closeModal("deleteModal");
+
+            closeSidebar();
+        }
+    }
+);</script>
+</body>
+</html>

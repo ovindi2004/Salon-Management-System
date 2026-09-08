@@ -176,15 +176,24 @@ public class AppointmentServiceImpl implements AppointmentService {
                     .orElseThrow(() -> new EntityNotFoundException("Staff not found with id: " + dto.getStaffId()));
 
             Appointment appointment = new Appointment();
+
             appointment.setCustomer(customer);
             appointment.setService(service);
             appointment.setStaff(staff);
             appointment.setAppointmentDate(dto.getAppointmentDate());
             appointment.setStartTime(dto.getStartTime());
             appointment.setDuration(dto.getDuration());
-            if (dto.getStatus() != null) appointment.setStatus(dto.getStatus());
-            if (dto.getPaymentStatus() != null) appointment.setPaymentStatus(dto.getPaymentStatus());
+
+            if (dto.getStatus() != null) {
+                appointment.setStatus(dto.getStatus());
+            }
+
+            if (dto.getPaymentStatus() != null) {
+                appointment.setPaymentStatus(dto.getPaymentStatus());
+            }
+
             appointment.setNotes(dto.getNotes());
+
             return appointment;
         }catch (Exception e) {
             log.error("Error converting appointment dto to entity: " + e.getMessage());

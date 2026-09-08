@@ -1,0 +1,3638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payments | Pink Beauty Salon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root{
+            --rose-gold:#B76E79;
+            --rose-gold-dark:#9a5963;
+            --soft-pink:#F8D7DA;
+            --champagne:#E8C07D;
+            --champagne-dark:#d4a85f;
+            --cream:#FFF9FB;
+            --dark:#2B2024;
+            --muted:#8C7A80;
+            --white:#FFFFFF;
+            --line:rgba(183,110,121,0.12);
+            --line-strong:rgba(183,110,121,0.22);
+            --shadow-sm:0 1px 3px rgba(43,32,36,0.06),0 1px 2px rgba(43,32,36,0.04);
+            --shadow-md:0 4px 16px rgba(43,32,36,0.08),0 2px 6px rgba(43,32,36,0.04);
+            --shadow-lg:0 18px 50px rgba(43,32,36,0.14),0 6px 18px rgba(43,32,36,0.06);
+            --shadow-rose:0 10px 30px rgba(183,110,121,0.18);
+            --radius-sm:10px;
+            --radius:16px;
+            --radius-lg:22px;
+            --grad-rose:linear-gradient(135deg,#B76E79 0%,#9a5963 100%);
+            --grad-champagne:linear-gradient(135deg,#E8C07D 0%,#d4a85f 100%);
+            --grad-soft:linear-gradient(135deg,#FFF9FB 0%,#FDF0F2 100%);
+            --paid:#2E7D5B;
+            --paid-bg:#E6F4EE;
+            --pending:#B57A00;
+            --pending-bg:#FBF1DC;
+            --refunded:#B23A48;
+            --refunded-bg:#FBEAEC;
+            --failed:#6B2B2B;
+            --failed-bg:#F2DEDD;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html,body{height:100%;}
+        body{
+            font-family:'Inter',system-ui,sans-serif;
+            background:var(--cream);
+            color:var(--dark);
+            font-size:14px;
+            line-height:1.5;
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+        .serif{font-family:'Cormorant Garamond',serif;}
+        .mono{font-family:'JetBrains Mono',monospace;}
+        button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+        input,select,textarea{font-family:inherit;font-size:inherit;color:inherit;}
+        a{color:inherit;text-decoration:none;}
+        ::-webkit-scrollbar{width:10px;height:10px;}
+        ::-webkit-scrollbar-track{background:transparent;}
+        ::-webkit-scrollbar-thumb{background:rgba(183,110,121,0.25);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+        ::-webkit-scrollbar-thumb:hover{background:rgba(183,110,121,0.4);background-clip:padding-box;}
+
+        /* Layout */
+        .app{display:flex;min-height:100vh;}
+        .sidebar{
+            width:260px;flex-shrink:0;
+            background:var(--white);
+            border-right:1px solid var(--line);
+            display:flex;flex-direction:column;
+            position:fixed;top:0;left:0;bottom:0;z-index:50;
+            transition:transform .35s cubic-bezier(.4,0,.2,1);
+        }
+        .main{flex:1;margin-left:260px;display:flex;flex-direction:column;min-width:0;}
+
+        /* Sidebar */
+        .brand{padding:26px 24px 22px;border-bottom:1px solid var(--line);}
+        .brand-mark{display:flex;align-items:center;gap:12px;}
+        .brand-logo{
+            width:44px;height:44px;border-radius:14px;
+            background:var(--grad-rose);
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-size:20px;
+            box-shadow:var(--shadow-rose);
+        }
+        .brand-name{line-height:1.1;}
+        .brand-name .top{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:19px;letter-spacing:.5px;color:var(--dark);}
+        .brand-name .top span{color:var(--rose-gold);}
+        .brand-name .sub{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+
+        .nav{flex:1;padding:18px 14px;overflow-y:auto;}
+        .nav-label{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);padding:0 12px;margin:18px 0 8px;font-weight:600;}
+        .nav-item{
+            display:flex;align-items:center;gap:13px;
+            padding:11px 14px;border-radius:12px;
+            color:var(--dark);font-weight:500;font-size:13.5px;
+            margin-bottom:3px;width:100%;text-align:left;
+            transition:all .2s ease;position:relative;
+        }
+        .nav-item i{width:20px;text-align:center;font-size:15px;color:var(--muted);transition:color .2s;}
+        .nav-item:hover{background:rgba(183,110,121,0.07);}
+        .nav-item:hover i{color:var(--rose-gold);}
+        .nav-item.active{background:var(--grad-rose);color:#fff;box-shadow:var(--shadow-rose);}
+        .nav-item.active i{color:#fff;}
+        .nav-item.active::before{content:"";position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:4px;height:22px;background:var(--rose-gold);border-radius:0 4px 4px 0;}
+
+        .side-foot{padding:16px 14px;border-top:1px solid var(--line);}
+        .side-profile{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--grad-soft);}
+        .side-avatar{width:40px;height:40px;border-radius:50%;background:var(--grad-champagne);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;flex-shrink:0;}
+        .side-profile .info{flex:1;min-width:0;}
+        .side-profile .name{font-weight:600;font-size:13px;}
+        .side-profile .role{font-size:11px;color:var(--muted);}
+        .logout-btn{display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:12px;color:var(--muted);font-size:13px;font-weight:500;width:100%;margin-top:8px;transition:all .2s;}
+        .logout-btn:hover{background:rgba(178,58,72,0.08);color:var(--refunded);}
+        .logout-btn i{font-size:14px;}
+
+        /* Header */
+        .header{
+            background:rgba(255,255,255,0.85);
+            backdrop-filter:blur(14px);
+            -webkit-backdrop-filter:blur(14px);
+            border-bottom:1px solid var(--line);
+            padding:20px 32px;
+            display:flex;align-items:center;justify-content:space-between;
+            gap:20px;position:sticky;top:0;z-index:30;
+        }
+        .h-left .title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;letter-spacing:.3px;line-height:1.1;}
+        .h-left .subtitle{font-size:13px;color:var(--muted);margin-top:4px;}
+        .h-right{display:flex;align-items:center;gap:14px;}
+        .icon-btn{
+            width:42px;height:42px;border-radius:13px;
+            background:var(--white);border:1px solid var(--line);
+            display:flex;align-items:center;justify-content:center;
+            color:var(--dark);font-size:15px;position:relative;
+            transition:all .25s ease;
+        }
+        .icon-btn:hover{background:var(--grad-soft);border-color:var(--line-strong);color:var(--rose-gold);transform:translateY(-2px);}
+        .icon-btn .dot{position:absolute;top:9px;right:10px;width:7px;height:7px;border-radius:50%;background:var(--rose-gold);border:1.5px solid var(--white);}
+        .h-avatar{display:flex;align-items:center;gap:10px;padding-left:6px;}
+        .h-avatar .av{width:42px;height:42px;border-radius:50%;background:var(--grad-rose);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;box-shadow:var(--shadow-rose);}
+        .h-avatar .meta .nm{font-weight:600;font-size:13px;line-height:1.2;}
+        .h-avatar .meta .dt{font-size:11px;color:var(--muted);margin-top:2px;}
+        .hamburger{display:none;width:42px;height:42px;border-radius:13px;background:var(--white);border:1px solid var(--line);align-items:center;justify-content:center;font-size:18px;color:var(--dark);}
+
+        /* Content */
+        .content{padding:28px 32px 60px;flex:1;}
+        .section{margin-bottom:28px;}
+
+        /* Summary cards */
+        .cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+        .sum-card{
+            background:var(--white);border:1px solid var(--line);
+            border-radius:var(--radius-lg);padding:22px;
+            position:relative;overflow:hidden;
+            transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s;
+            box-shadow:var(--shadow-sm);
+        }
+        .sum-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);}
+        .sum-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad-rose);opacity:.9;}
+        .sum-card.gold::before{background:var(--grad-champagne);}
+        .sum-card.pink::before{background:linear-gradient(135deg,#F8D7DA,#B76E79);}
+        .sum-card.dark::before{background:linear-gradient(135deg,#8C7A80,#2B2024);}
+        .sc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;}
+        .sc-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+        .sc-icon.rose{background:rgba(183,110,121,0.12);color:var(--rose-gold);}
+        .sc-icon.gold{background:rgba(232,192,125,0.16);color:var(--champagne-dark);}
+        .sc-icon.pink{background:rgba(248,215,218,0.5);color:var(--rose-gold);}
+        .sc-icon.dark{background:rgba(140,122,128,0.16);color:var(--dark);}
+        .sc-label{font-size:12.5px;color:var(--muted);font-weight:500;letter-spacing:.3px;}
+        .sc-value{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;letter-spacing:.2px;margin-top:2px;line-height:1.1;}
+        .sc-ind{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:11.5px;font-weight:500;}
+        .sc-ind.up{color:var(--paid);}
+        .sc-ind.down{color:var(--refunded);}
+        .sc-ind i{font-size:10px;}
+
+        /* Chart card */
+        .chart-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm);}
+        .chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px;}
+        .chart-head .t{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;}
+        .chart-head .s{font-size:12.5px;color:var(--muted);margin-top:3px;}
+        .period-tabs{display:flex;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:4px;gap:2px;}
+        .period-tabs button{padding:8px 16px;border-radius:9px;font-size:12.5px;font-weight:500;color:var(--muted);transition:all .25s;}
+        .period-tabs button.active{background:var(--white);color:var(--rose-gold);box-shadow:var(--shadow-sm);font-weight:600;}
+        .chart-wrap{position:relative;height:300px;}
+
+        /* Insights */
+        .insights-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+        .ins-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:16px;transition:all .3s;box-shadow:var(--shadow-sm);}
+        .ins-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+        .ins-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+        .ins-icon.a{background:rgba(183,110,121,0.12);color:var(--rose-gold);}
+        .ins-icon.b{background:rgba(232,192,125,0.16);color:var(--champagne-dark);}
+        .ins-icon.c{background:rgba(46,125,91,0.12);color:var(--paid);}
+        .ins-icon.d{background:rgba(178,58,72,0.12);color:var(--refunded);}
+        .ins-card .lbl{font-size:11.5px;color:var(--muted);font-weight:500;}
+        .ins-card .val{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;margin-top:2px;line-height:1.1;}
+        .ins-card .sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+        /* Action bar */
+        .action-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+        .search-box{position:relative;flex:1;max-width:420px;min-width:240px;}
+        .search-box i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;}
+        .search-box input{width:100%;padding:12px 16px 12px 44px;border:1px solid var(--line);border-radius:13px;background:var(--white);transition:all .25s;outline:none;}
+        .search-box input:focus{border-color:var(--rose-gold);box-shadow:0 0 0 4px rgba(183,110,121,0.1);}
+        .btn-primary{display:inline-flex;align-items:center;gap:9px;padding:12px 20px;border-radius:13px;background:var(--grad-rose);color:#fff;font-weight:600;font-size:13.5px;box-shadow:var(--shadow-rose);transition:all .25s;}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(183,110,121,0.28);}
+        .btn-primary:active{transform:translateY(0);}
+        .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:13px;background:var(--white);border:1px solid var(--line);color:var(--dark);font-weight:500;font-size:13px;transition:all .25s;}
+        .btn-ghost:hover{border-color:var(--line-strong);background:var(--grad-soft);}
+
+        /* Filters */
+        .filters-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+        .filters-grid{display:grid;grid-template-columns:repeat(5,1fr) auto;gap:14px;align-items:end;}
+        .field{display:flex;flex-direction:column;gap:6px;}
+        .field label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;padding-left:2px;}
+        .field input,.field select{padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--cream);outline:none;transition:all .25s;width:100%;}
+        .field input:focus,.field select:focus{border-color:var(--rose-gold);background:var(--white);box-shadow:0 0 0 4px rgba(183,110,121,0.08);}
+        .field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C7A80' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:38px;}
+        .reset-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:11px;background:transparent;border:1px solid var(--line-strong);color:var(--muted);font-weight:500;font-size:13px;transition:all .25s;white-space:nowrap;}
+        .reset-btn:hover{color:var(--rose-gold);border-color:var(--rose-gold);background:rgba(183,110,121,0.05);}
+
+        /* Table */
+        .table-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;}
+        .table-scroll{overflow-x:auto;}
+        table{width:100%;border-collapse:collapse;min-width:980px;}
+        thead th{
+            text-align:left;padding:15px 18px;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+            background:var(--cream);border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;
+        }
+        tbody td{padding:16px 18px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle;}
+        tbody tr{transition:background .2s;}
+        tbody tr:hover{background:var(--grad-soft);}
+        .pay-id{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--rose-gold);font-weight:500;}
+        .cust-cell{display:flex;align-items:center;gap:11px;}
+        .cust-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px;flex-shrink:0;}
+        .cust-cell .nm{font-weight:600;font-size:13px;}
+        .cust-cell .ph{font-size:11px;color:var(--muted);}
+        .amount{font-weight:700;font-size:14px;color:var(--dark);}
+        .method-cell{display:flex;align-items:center;gap:9px;}
+        .method-ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);color:var(--rose-gold);}
+        .method-cell .mt{font-size:12.5px;font-weight:500;}
+        .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:600;letter-spacing:.3px;}
+        .badge::before{content:"";width:6px;height:6px;border-radius:50%;}
+        .badge.paid{background:var(--paid-bg);color:var(--paid);}
+        .badge.paid::before{background:var(--paid);}
+        .badge.pending{background:var(--pending-bg);color:var(--pending);}
+        .badge.pending::before{background:var(--pending);}
+        .badge.refunded{background:var(--refunded-bg);color:var(--refunded);}
+        .badge.refunded::before{background:var(--refunded);}
+        .badge.failed{background:var(--failed-bg);color:var(--failed);}
+        .badge.failed::before{background:var(--failed);}
+        .actions-cell{display:flex;align-items:center;gap:6px;}
+        .act-btn{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;border:1px solid transparent;transition:all .2s;color:var(--muted);background:var(--cream);}
+        .act-btn:hover{transform:translateY(-2px);}
+        .act-btn.view:hover{color:var(--rose-gold);border-color:var(--line-strong);}
+        .act-btn.edit:hover{color:#3a7bd5;border-color:#3a7bd5;}
+        .act-btn.refund:hover{color:var(--pending);border-color:var(--pending);}
+        .act-btn.del:hover{color:var(--refunded);border-color:var(--refunded);}
+
+        /* Skeleton */
+        .skel-row td{padding:18px;}
+        .skel{height:16px;border-radius:6px;background:linear-gradient(90deg,rgba(183,110,121,0.06) 25%,rgba(183,110,121,0.14) 37%,rgba(183,110,121,0.06) 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;}
+        @keyframes shimmer{0%{background-position:100% 0;}100%{background-position:-100% 0;}}
+
+        /* Empty state */
+        .empty{padding:70px 20px;text-align:center;}
+        .empty-ic{width:90px;height:90px;border-radius:50%;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:36px;color:var(--rose-gold);}
+        .empty h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:8px;}
+        .empty p{color:var(--muted);font-size:13.5px;margin-bottom:22px;}
+
+        /* Pagination */
+        .pagination{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-top:1px solid var(--line);flex-wrap:wrap;gap:14px;}
+        .page-info{font-size:12.5px;color:var(--muted);}
+        .page-info b{color:var(--dark);}
+        .page-btns{display:flex;align-items:center;gap:6px;}
+        .pg-btn{min-width:38px;height:38px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--white);color:var(--dark);font-size:13px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;}
+        .pg-btn:hover:not(:disabled){border-color:var(--rose-gold);color:var(--rose-gold);}
+        .pg-btn.active{background:var(--grad-rose);color:#fff;border-color:transparent;box-shadow:var(--shadow-rose);}
+        .pg-btn:disabled{opacity:.45;cursor:not-allowed;}
+
+        /* Modal */
+        .modal-overlay{position:fixed;inset:0;background:rgba(43,32,36,0.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .25s;}
+        .modal-overlay.show{display:flex;opacity:1;}
+        .modal{
+            background:var(--white);border-radius:var(--radius-lg);
+            width:100%;max-width:560px;max-height:92vh;overflow-y:auto;
+            box-shadow:var(--shadow-lg);
+            transform:scale(.94) translateY(10px);opacity:0;transition:all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .modal-overlay.show .modal{transform:scale(1) translateY(0);opacity:1;}
+        .modal.lg{max-width:680px;}
+        .modal-head{padding:24px 28px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;position:sticky;top:0;background:var(--white);z-index:2;border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
+        .modal-head .t{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;line-height:1.1;}
+        .modal-head .s{font-size:12.5px;color:var(--muted);margin-top:4px;}
+        .modal-close{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;transition:all .2s;flex-shrink:0;}
+        .modal-close:hover{background:var(--cream);color:var(--dark);}
+        .modal-body{padding:24px 28px;}
+        .modal-foot{padding:18px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:12px;position:sticky;bottom:0;background:var(--white);border-radius:0 0 var(--radius-lg) var(--radius-lg);}
+
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+        .form-grid .full{grid-column:1/-1;}
+        .fg label{display:block;font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-bottom:7px;padding-left:2px;}
+        .fg label .req{color:var(--rose-gold);}
+        .fg input,.fg select,.fg textarea{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--cream);outline:none;transition:all .25s;}
+        .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--rose-gold);background:var(--white);box-shadow:0 0 0 4px rgba(183,110,121,0.08);}
+        .fg textarea{resize:vertical;min-height:74px;}
+        .fg select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C7A80' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:38px;}
+        .fg .hint{font-size:11px;color:var(--muted);margin-top:5px;padding-left:2px;}
+        .fg input[readonly],.fg input[disabled]{background:#f3eef0;color:var(--muted);cursor:not-allowed;}
+        .input-prefix{position:relative;}
+        .input-prefix span{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);font-weight:600;pointer-events:none;}
+        .input-prefix input{padding-left:42px;}
+
+        /* Appointment info box */
+        .apt-info{background:var(--grad-soft);border:1px solid var(--line-strong);border-radius:14px;padding:16px;margin-bottom:18px;display:none;}
+        .apt-info.show{display:block;animation:fadeSlide .3s ease;}
+        @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+        .apt-info .ai-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--rose-gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+        .apt-info .ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;}
+        .apt-info .ai-item{display:flex;flex-direction:column;gap:2px;}
+        .apt-info .ai-item .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;}
+        .apt-info .ai-item .v{font-size:13px;font-weight:600;}
+
+        /* View modal detail */
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;}
+        .detail-item{display:flex;flex-direction:column;gap:4px;padding:12px 0;border-bottom:1px dashed var(--line);}
+        .detail-item .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;}
+        .detail-item .v{font-size:14px;font-weight:600;}
+        .detail-item .v.mono{font-family:'JetBrains Mono',monospace;font-weight:500;}
+        .detail-item.full{grid-column:1/-1;}
+        .detail-banner{background:var(--grad-soft);border-radius:14px;padding:18px 20px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+        .detail-banner .left .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+        .detail-banner .left .v{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;margin-top:2px;}
+        .detail-banner .right{text-align:right;}
+        .detail-banner .right .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+
+        /* Receipt */
+        .receipt{background:var(--white);border:1px solid var(--line-strong);border-radius:16px;padding:0;overflow:hidden;}
+        .receipt-top{background:var(--grad-rose);color:#fff;padding:28px 28px 24px;text-align:center;}
+        .receipt-top .logo{width:54px;height:54px;border-radius:16px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;border:1px solid rgba(255,255,255,0.25);}
+        .receipt-top .brand{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;letter-spacing:1px;}
+        .receipt-top .tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-top:4px;}
+        .receipt-title{background:var(--cream);text-align:center;padding:12px;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--rose-gold);border-bottom:1px solid var(--line);}
+        .receipt-body{padding:24px 28px;}
+        .receipt-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;}
+        .receipt-row .k{color:var(--muted);}
+        .receipt-row .v{font-weight:600;text-align:right;}
+        .receipt-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0 6px;margin-top:8px;border-top:2px solid var(--rose-gold);}
+        .receipt-total .k{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;}
+        .receipt-total .v{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--rose-gold);}
+        .receipt-foot{text-align:center;padding:18px 28px 26px;font-size:12px;color:var(--muted);font-style:italic;}
+        .receipt-status{text-align:center;margin:14px 0 4px;}
+        .receipt-status .badge{font-size:13px;padding:7px 18px;}
+
+        /* Toast */
+        .toast{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px;}
+        .toast-item{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--rose-gold);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;font-size:13px;font-weight:500;min-width:260px;animation:toastIn .3s ease;}
+        .toast-item.success{border-left-color:var(--paid);}
+        .toast-item.error{border-left-color:var(--refunded);}
+        .toast-item i{font-size:18px;}
+        .toast-item.success i{color:var(--paid);}
+        .toast-item.error i{color:var(--refunded);}
+        @keyframes toastIn{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+
+        /* Overlay for mobile sidebar */
+        .scrim{position:fixed;inset:0;background:rgba(43,32,36,0.4);backdrop-filter:blur(3px);z-index:45;display:none;}
+
+        /* Responsive */
+        @media(max-width:1100px){
+            .cards-grid{grid-template-columns:repeat(2,1fr);}
+            .insights-grid{grid-template-columns:repeat(2,1fr);}
+            .filters-grid{grid-template-columns:repeat(3,1fr);}
+        }
+        @media(max-width:900px){
+            .sidebar{transform:translateX(-100%);box-shadow:var(--shadow-lg);}
+            .sidebar.open{transform:translateX(0);}
+            .main{margin-left:0;}
+            .hamburger{display:flex;}
+            .h-avatar .meta{display:none;}
+        }
+        @media(max-width:680px){
+            .content{padding:20px 16px 50px;}
+            .header{padding:16px;}
+            .cards-grid{grid-template-columns:1fr;}
+            .insights-grid{grid-template-columns:1fr 1fr;}
+            .filters-grid{grid-template-columns:1fr 1fr;}
+            .form-grid{grid-template-columns:1fr;}
+            .detail-grid{grid-template-columns:1fr;}
+            .h-right{gap:8px;}
+            .icon-btn{width:40px;height:40px;}
+            .action-bar{flex-direction:column;align-items:stretch;}
+            .search-box{max-width:none;}
+            .apt-info .ai-grid{grid-template-columns:1fr;}
+            .chart-head{flex-direction:column;align-items:stretch;}
+            .period-tabs{align-self:flex-start;}
+        }
+        @media print{
+            body *{visibility:hidden;}
+            #printArea, #printArea *{visibility:visible;}
+            #printArea{position:absolute;left:0;top:0;width:100%;}
+            .modal-overlay{position:static;background:none;padding:0;}
+            .modal{box-shadow:none;max-height:none;transform:none;}
+        }
+        #printArea{display:none;}
+        #printArea.show{display:block;}
+    </style>
+</head>
+<body>
+<div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-mark">
+                <div class="brand-logo"><i class="fa-solid fa-spa"></i></div>
+                <div class="brand-name">
+                    <div class="top">PINK <span>BEAUTY</span></div>
+                    <div class="sub">Salon</div>
+                </div>
+            </div>
+        </div>
+        <nav class="nav" aria-label="Main navigation">
+            <div class="nav-label">Menu</div>
+            <button class="nav-item" data-page="Dashboard"><i class="fa-solid fa-table-columns"></i>Dashboard</button>
+            <button class="nav-item" data-page="Appointments"><i class="fa-regular fa-calendar-check"></i>Appointments</button>
+            <button class="nav-item" data-page="Customers"><i class="fa-solid fa-user-group"></i>Customers</button>
+            <button class="nav-item" data-page="Staff"><i class="fa-solid fa-scissors"></i>Staff</button>
+            <button class="nav-item" data-page="Services"><i class="fa-solid fa-hand-sparkles"></i>Services</button>
+            <button class="nav-item active" data-page="Payments"><i class="fa-solid fa-credit-card"></i>Payments</button>
+            <button class="nav-item" data-page="Reports"><i class="fa-solid fa-chart-line"></i>Reports</button>
+            <button class="nav-item" data-page="Users"><i class="fa-solid fa-users"></i>Users</button>
+            <button class="nav-item" data-page="Settings"><i class="fa-solid fa-gear"></i>Settings</button>
+        </nav>
+        <div class="side-foot">
+            <div class="side-profile">
+                <div class="side-avatar">AD</div>
+                <div class="info">
+                    <div class="name">Admin</div>
+                    <div class="role">Administrator</div>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+        </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <!-- Main -->
+    <div class="main">
+        <header class="header">
+            <button class="hamburger" id="hamburger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="h-left">
+                <h1 class="title">Payments</h1>
+                <p class="subtitle">Track payments, transactions and salon revenue.</p>
+            </div>
+            <div class="h-right">
+                <button class="icon-btn" aria-label="Notifications"><i class="fa-regular fa-bell"></i><span class="dot"></span></button>
+                <button class="icon-btn" aria-label="Calendar"><i class="fa-regular fa-calendar"></i></button>
+                <div class="h-avatar">
+                    <div class="av">AD</div>
+                    <div class="meta">
+                        <div class="nm">Admin</div>
+                        <div class="dt" id="todayDate"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            <!-- Summary cards -->
+            <section class="section">
+                <div class="cards-grid">
+                    <div class="sum-card">
+                        <div class="sc-top">
+                            <div>
+                                <div class="sc-label">Today's Revenue</div>
+                                <div class="sc-value" id="todayRevenue">LKR 0</div>
+                            </div>
+                            <div class="sc-icon rose"><i class="fa-solid fa-sack-dollar"></i></div>
+                        </div>
+                        <div class="sc-ind up" id="todayInd"><i class="fa-solid fa-arrow-up"></i> <span>+12.5% from yesterday</span></div>
+                    </div>
+                    <div class="sum-card gold">
+                        <div class="sc-top">
+                            <div>
+                                <div class="sc-label">Total Revenue</div>
+                                <div class="sc-value" id="totalRevenue">LKR 0</div>
+                            </div>
+                            <div class="sc-icon gold"><i class="fa-solid fa-coins"></i></div>
+                        </div>
+                        <div class="sc-ind up"><i class="fa-solid fa-arrow-up"></i> <span id="totalPaidCount">0 paid payments</span></div>
+                    </div>
+                    <div class="sum-card pink">
+                        <div class="sc-top">
+                            <div>
+                                <div class="sc-label">Pending Payments</div>
+                                <div class="sc-value" id="pendingRevenue">LKR 0</div>
+                            </div>
+                            <div class="sc-icon pink"><i class="fa-solid fa-clock"></i></div>
+                        </div>
+                        <div class="sc-ind" style="color:var(--pending)"><i class="fa-solid fa-circle"></i> <span id="pendingCount">0 pending</span></div>
+                    </div>
+                    <div class="sum-card dark">
+                        <div class="sc-top">
+                            <div>
+                                <div class="sc-label">Refunded</div>
+                                <div class="sc-value" id="refundedRevenue">LKR 0</div>
+                            </div>
+                            <div class="sc-icon dark"><i class="fa-solid fa-rotate-left"></i></div>
+                        </div>
+                        <div class="sc-ind down"><i class="fa-solid fa-arrow-down"></i> <span id="refundedCount">0 refunds</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart -->
+            <section class="section">
+                <div class="chart-card">
+                    <div class="chart-head">
+                        <div>
+                            <div class="t">Revenue Overview</div>
+                            <div class="s">Payment performance over the selected period.</div>
+                        </div>
+                        <div class="period-tabs" id="periodTabs">
+                            <button data-period="7" class="active">7 Days</button>
+                            <button data-period="30">30 Days</button>
+                            <button data-period="90">90 Days</button>
+                            <button data-period="365">This Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+                </div>
+            </section>
+
+            <!-- Insights -->
+            <section class="section">
+                <div class="insights-grid">
+                    <div class="ins-card">
+                        <div class="ins-icon a"><i class="fa-solid fa-credit-card"></i></div>
+                        <div>
+                            <div class="lbl">Most Popular Method</div>
+                            <div class="val" id="popMethod">—</div>
+                            <div class="sub" id="popMethodPct">—</div>
+                        </div>
+                    </div>
+                    <div class="ins-card">
+                        <div class="ins-icon b"><i class="fa-solid fa-calendar-day"></i></div>
+                        <div>
+                            <div class="lbl">Highest Revenue Day</div>
+                            <div class="val" id="topDay">—</div>
+                            <div class="sub" id="topDayAmt">—</div>
+                        </div>
+                    </div>
+                    <div class="ins-card">
+                        <div class="ins-icon c"><i class="fa-solid fa-receipt"></i></div>
+                        <div>
+                            <div class="lbl">Average Transaction</div>
+                            <div class="val" id="avgTxn">—</div>
+                            <div class="sub">across all payments</div>
+                        </div>
+                    </div>
+                    <div class="ins-card">
+                        <div class="ins-icon d"><i class="fa-solid fa-percent"></i></div>
+                        <div>
+                            <div class="lbl">Refund Rate</div>
+                            <div class="val" id="refundRate">—</div>
+                            <div class="sub" id="refundRateSub">of all payments</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action bar -->
+            <section class="section">
+                <div class="action-bar">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Search customer, payment ID or appointment..." aria-label="Search payments" />
+                    </div>
+                    <button class="btn-primary" id="recordBtn"><i class="fa-solid fa-plus"></i> Record Payment</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-card">
+                    <div class="filters-grid">
+                        <div class="field">
+                            <label for="fSearch">Search</label>
+                            <input type="text" id="fSearch" placeholder="Search..." />
+                        </div>
+                        <div class="field">
+                            <label for="fFrom">Date From</label>
+                            <input type="date" id="fFrom" />
+                        </div>
+                        <div class="field">
+                            <label for="fTo">Date To</label>
+                            <input type="date" id="fTo" />
+                        </div>
+                        <div class="field">
+                            <label for="fStatus">Payment Status</label>
+                            <select id="fStatus">
+                                <option value="">All Status</option>
+                                <option value="PAID">Paid</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="REFUNDED">Refunded</option>
+                                <option value="FAILED">Failed</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="fMethod">Payment Method</label>
+                            <select id="fMethod">
+                                <option value="">All Methods</option>
+                                <option value="CASH">Cash</option>
+                                <option value="CARD">Card</option>
+                                <option value="ONLINE">Online</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <button class="reset-btn" id="resetFilters"><i class="fa-solid fa-rotate"></i> Reset Filters</button>
+                    </div>
+                    <div class="filters-grid" style="margin-top:14px;grid-template-columns:1fr auto;">
+                        <div class="field">
+                            <label for="fService">Service</label>
+                            <select id="fService"><option value="">All Services</option></select>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-card">
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Payment ID</th>
+                                <th>Customer</th>
+                                <th>Appointment</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<!-- Record / Edit Modal -->
+<div class="modal-overlay" id="recordModalOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal-head">
+            <div>
+                <div class="t" id="modalTitle">Record Payment</div>
+                <div class="s" id="modalSub">Add a new payment transaction.</div>
+            </div>
+            <button class="modal-close" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="apt-info" id="aptInfo">
+                <div class="ai-title"><i class="fa-solid fa-circle-info"></i> Appointment Details</div>
+                <div class="ai-grid">
+                    <div class="ai-item"><span class="k">Customer</span><span class="v" id="aiCustomer">—</span></div>
+                    <div class="ai-item"><span class="k">Phone</span><span class="v" id="aiPhone">—</span></div>
+                    <div class="ai-item"><span class="k">Service</span><span class="v" id="aiService">—</span></div>
+                    <div class="ai-item"><span class="k">Staff</span><span class="v" id="aiStaff">—</span></div>
+                    <div class="ai-item"><span class="k">Appointment Date</span><span class="v" id="aiDate">—</span></div>
+                    <div class="ai-item"><span class="k">Appointment Time</span><span class="v" id="aiTime">—</span></div>
+                    <div class="ai-item"><span class="k">Service Price</span><span class="v" id="aiPrice">—</span></div>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="fg full">
+                    <label for="mAppointment">Appointment <span class="req">*</span></label>
+                    <select id="mAppointment"><option value="">Select appointment</option></select>
+                </div>
+                <div class="fg">
+                    <label for="mCustomer">Customer</label>
+                    <input type="text" id="mCustomer" readonly placeholder="Auto-filled after appointment selection" />
+                </div>
+                <div class="fg">
+                    <label for="mService">Service</label>
+                    <input type="text" id="mService" readonly placeholder="Auto-filled" />
+                </div>
+                <div class="fg">
+                    <label for="mAmount">Amount <span class="req">*</span></label>
+                    <div class="input-prefix"><span>LKR</span><input type="number" id="mAmount" min="0" step="0.01" placeholder="0.00" /></div>
+                </div>
+                <div class="fg">
+                    <label for="mMethod">Payment Method <span class="req">*</span></label>
+                    <select id="mMethod">
+                        <option value="">Select method</option>
+                        <option value="CASH">Cash</option>
+                        <option value="CARD">Card</option>
+                        <option value="ONLINE">Online</option>
+                        <option value="BANK_TRANSFER">Bank Transfer</option>
+                    </select>
+                </div>
+                <div class="fg">
+                    <label for="mStatus">Payment Status <span class="req">*</span></label>
+                    <select id="mStatus">
+                        <option value="">Select status</option>
+                        <option value="PAID">Paid</option>
+                        <option value="PENDING">Pending</option>
+                    </select>
+                </div>
+                <div class="fg">
+                    <label for="mDate">Payment Date <span class="req">*</span></label>
+                    <input type="date" id="mDate" />
+                </div>
+                <div class="fg full">
+                    <label for="mRef">Transaction Reference</label>
+                    <input type="text" id="mRef" placeholder="Optional" />
+                </div>
+                <div class="fg full">
+                    <label for="mNotes">Notes</label>
+                    <textarea id="mNotes" placeholder="Additional notes..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn-ghost" data-close>Cancel</button>
+            <button class="btn-primary" id="savePaymentBtn">Record Payment</button>
+        </div>
+    </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal-overlay" id="viewModalOverlay">
+    <div class="modal lg" role="dialog" aria-modal="true">
+        <div class="modal-head">
+            <div>
+                <div class="t">Payment Details</div>
+                <div class="s">Full transaction information.</div>
+            </div>
+            <button class="modal-close" data-close-view aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" id="viewBody"></div>
+        <div class="modal-foot">
+            <button class="btn-ghost" id="printReceiptBtn"><i class="fa-solid fa-print"></i> Print Receipt</button>
+            <button class="btn-primary" id="downloadReceiptBtn"><i class="fa-solid fa-download"></i> Download Receipt</button>
+        </div>
+    </div>
+</div>
+
+<!-- Receipt print area -->
+<div id="printArea"></div>
+
+<!-- Toast container -->
+<div class="toast" id="toastContainer"></div>
+
+<script>
+    /* ============================================================
+       PINK BEAUTY SALON
+       PAYMENT MANAGEMENT
+       Backend:
+       /api/v1/payments
+       /api/v1/appointment
+       ============================================================ */
+
+    const API = {
+        payments: "http://localhost:8080/api/v1/payments",
+        appointments: "http://localhost:8080/api/v1/appointment"
+    };
+
+    let payments = [];
+    let appointments = [];
+
+    let currentPage = 1;
+    const pageSize = 8;
+
+    let editingPaymentId = null;
+    let selectedPayment = null;
+    let revenueChart = null;
+
+
+    /* ============================================================
+       AUTH
+       ============================================================ */
+
+    function getToken() {
+        return (
+            localStorage.getItem("token") ||
+            localStorage.getItem("jwtToken") ||
+            localStorage.getItem("accessToken") ||
+            sessionStorage.getItem("token") ||
+            ""
+        );
+    }
+
+
+    /* ============================================================
+       API FETCH
+       ============================================================ */
+
+    async function apiFetch(url, options = {}) {
+
+        const token = getToken();
+
+        const headers = {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+        };
+
+        if (token) {
+            headers["Authorization"] =
+                token.startsWith("Bearer ")
+                    ? token
+                    : `Bearer ${token}`;
+        }
+
+        const response = await fetch(url, {
+            ...options,
+            headers
+        });
+
+        const text = await response.text();
+
+        let data = null;
+
+        try {
+            data = text ? JSON.parse(text) : null;
+        } catch {
+            data = text;
+        }
+
+        if (!response.ok) {
+
+            let message =
+                data?.message ||
+                data?.error ||
+                text ||
+                `HTTP ${response.status}`;
+
+            throw new Error(message);
+        }
+
+        return data;
+    }
+
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+
+    function money(value) {
+
+        const amount = Number(value || 0);
+
+        return "LKR " + amount.toLocaleString("en-LK", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+
+    function formatDate(date) {
+
+        if (!date) return "—";
+
+        const d = new Date(date + "T00:00:00");
+
+        return d.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+
+    function formatDateShort(date) {
+
+        if (!date) return "—";
+
+        const d = new Date(date + "T00:00:00");
+
+        return d.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short"
+        });
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    function initials(name) {
+
+        if (!name) return "??";
+
+        return name
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map(x => x.charAt(0))
+            .join("")
+            .toUpperCase();
+    }
+
+
+    function avatarGradient(index) {
+
+        const gradients = [
+            "linear-gradient(135deg,#B76E79,#9a5963)",
+            "linear-gradient(135deg,#E8C07D,#d4a85f)",
+            "linear-gradient(135deg,#d8899a,#b76e79)",
+            "linear-gradient(135deg,#9c7b84,#6e5960)",
+            "linear-gradient(135deg,#e7aeb7,#b76e79)"
+        ];
+
+        return gradients[index % gradients.length];
+    }
+
+
+    function methodLabel(method) {
+
+        const map = {
+            CASH: "Cash",
+            CARD: "Card",
+            ONLINE: "Online",
+            BANK_TRANSFER: "Bank Transfer"
+        };
+
+        return map[method] || method || "—";
+    }
+
+
+    function methodIcon(method) {
+
+        const map = {
+            CASH: "fa-money-bill-wave",
+            CARD: "fa-credit-card",
+            ONLINE: "fa-globe",
+            BANK_TRANSFER: "fa-building-columns"
+        };
+
+        return map[method] || "fa-credit-card";
+    }
+
+
+    function statusLabel(status) {
+
+        const map = {
+            PAID: "Paid",
+            PENDING: "Pending",
+            REFUNDED: "Refunded",
+            FAILED: "Failed"
+        };
+
+        return map[status] || status || "—";
+    }
+
+
+    function statusClass(status) {
+
+        return String(status || "")
+            .toLowerCase();
+    }
+
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+
+    function showToast(message, type = "success") {
+
+        const container =
+            document.getElementById("toastContainer");
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            `toast-item ${type}`;
+
+        item.innerHTML = `
+        <i class="fa-solid ${
+            type === "success"
+                ? "fa-circle-check"
+                : "fa-circle-exclamation"
+        }"></i>
+        <span>${escapeHtml(message)}</span>
+    `;
+
+        container.appendChild(item);
+
+        setTimeout(() => {
+            item.style.opacity = "0";
+            item.style.transform = "translateX(30px)";
+
+            setTimeout(() => item.remove(), 300);
+        }, 3000);
+    }
+
+
+    /* ============================================================
+       LOAD PAYMENTS
+       ============================================================ */
+
+    async function loadPayments() {
+
+        renderLoading();
+
+        try {
+
+            const data =
+                await apiFetch(`${API.payments}/all`);
+
+            payments = Array.isArray(data)
+                ? data
+                : [];
+
+            currentPage = 1;
+
+            populateServiceFilter();
+            updateDashboard();
+            applyFilters();
+
+        } catch (error) {
+
+            console.error("Payment loading error:", error);
+
+            renderEmpty(
+                "Unable to load payments",
+                error.message
+            );
+
+            showToast(
+                "Failed to load payments",
+                "error"
+            );
+        }
+    }
+
+
+    /* ============================================================
+       LOAD APPOINTMENTS
+       ============================================================ */
+
+
+
+    async function loadAppointments() {
+        try {
+            const response = await apiFetch(`${API.appointments}/all`);
+
+            console.log("Appointment API response:", response);
+
+            if (response && Array.isArray(response.body)) {
+                appointments = response.body;
+            } else if (Array.isArray(response)) {
+                // fallback if backend returns direct array
+                appointments = response;
+            } else {
+                appointments = [];
+            }
+
+            console.log("Loaded appointments:", appointments);
+
+            populateAppointmentSelect();
+
+        } catch (error) {
+            console.error("Appointment loading error:", error);
+
+            appointments = [];
+            populateAppointmentSelect();
+
+            showToast("Failed to load appointments", "error");
+        }
+    }
+
+
+
+
+    /* ============================================================
+       APPOINTMENT SELECT
+       ============================================================ */
+
+    function populateAppointmentSelect() {
+
+        const select = document.getElementById("mAppointment");
+
+        if (!select) {
+            console.error("mAppointment select not found");
+            return;
+        }
+
+        select.innerHTML = `
+        <option value="">Select appointment</option>
+    `;
+
+        // Only appointments which don't already have a payment
+        const availableAppointments = appointments.filter(appointment => {
+
+            return !payments.some(payment =>
+                Number(payment.appointmentId) === Number(appointment.appointmentId)
+            );
+
+        });
+
+        console.log("Available appointments:", availableAppointments);
+
+        availableAppointments.forEach(appointment => {
+
+            const option = document.createElement("option");
+
+            option.value = appointment.appointmentId;
+
+            option.textContent =
+                `APT-${String(appointment.appointmentId).padStart(4, "0")} • ` +
+                `${appointment.customerName || "Customer"} • ` +
+                `${appointment.serviceName || "Service"} • ` +
+                `${formatDate(appointment.appointmentDate)}`;
+
+            select.appendChild(option);
+        });
+
+        if (availableAppointments.length === 0) {
+            const option = document.createElement("option");
+
+            option.value = "";
+            option.textContent = "No unpaid appointments available";
+
+            select.appendChild(option);
+        }
+    }
+
+
+    /* ============================================================
+       APPOINTMENT CHANGE
+       ============================================================ */
+
+    document
+        .getElementById("mAppointment")
+        .addEventListener("change", function () {
+
+            const id = Number(this.value);
+
+            const appointment =
+                appointments.find(
+                    a => Number(a.appointmentId) === id
+                );
+
+            if (!appointment) {
+
+                clearAppointmentInfo();
+
+                return;
+            }
+
+            fillAppointmentInfo(appointment);
+        });
+
+
+    function fillAppointmentInfo(a) {
+
+        document.getElementById("mCustomer").value =
+            a.customerName || "";
+
+        document.getElementById("mService").value =
+            a.serviceName || "";
+
+        document.getElementById("mAmount").value =
+            a.servicePrice || "";
+
+        document.getElementById("aiCustomer").textContent =
+            a.customerName || "—";
+
+        document.getElementById("aiPhone").textContent =
+            a.customerPhone || "—";
+
+        document.getElementById("aiService").textContent =
+            a.serviceName || "—";
+
+        document.getElementById("aiStaff").textContent =
+            a.staffName || "—";
+
+        document.getElementById("aiDate").textContent =
+            formatDate(a.appointmentDate);
+
+        document.getElementById("aiTime").textContent =
+            a.startTime || "—";
+
+        document.getElementById("aiPrice").textContent =
+            money(a.servicePrice);
+
+        document.getElementById("aptInfo")
+            .classList.add("show");
+    }
+
+
+    function clearAppointmentInfo() {
+
+        document.getElementById("mCustomer").value = "";
+        document.getElementById("mService").value = "";
+
+        document.getElementById("aiCustomer").textContent = "—";
+        document.getElementById("aiPhone").textContent = "—";
+        document.getElementById("aiService").textContent = "—";
+        document.getElementById("aiStaff").textContent = "—";
+        document.getElementById("aiDate").textContent = "—";
+        document.getElementById("aiTime").textContent = "—";
+        document.getElementById("aiPrice").textContent = "—";
+
+        document.getElementById("aptInfo")
+            .classList.remove("show");
+    }
+
+
+    /* ============================================================
+       DASHBOARD
+       ============================================================ */
+
+    function updateDashboard() {
+
+        const today =
+            new Date().toISOString().split("T")[0];
+
+        const paid =
+            payments.filter(
+                p => p.paymentStatus === "PAID"
+            );
+
+        const pending =
+            payments.filter(
+                p => p.paymentStatus === "PENDING"
+            );
+
+        const refunded =
+            payments.filter(
+                p => p.paymentStatus === "REFUNDED"
+            );
+
+        const todayPaid =
+            paid.filter(
+                p => p.paymentDate === today
+            );
+
+        const todayRevenue =
+            todayPaid.reduce(
+                (sum, p) =>
+                    sum + Number(p.amount || 0),
+                0
+            );
+
+        const totalRevenue =
+            paid.reduce(
+                (sum, p) =>
+                    sum + Number(p.amount || 0),
+                0
+            );
+
+        const pendingRevenue =
+            pending.reduce(
+                (sum, p) =>
+                    sum + Number(p.amount || 0),
+                0
+            );
+
+        const refundedRevenue =
+            refunded.reduce(
+                (sum, p) =>
+                    sum + Number(p.amount || 0),
+                0
+            );
+
+        document.getElementById("todayRevenue")
+            .textContent = money(todayRevenue);
+
+        document.getElementById("totalRevenue")
+            .textContent = money(totalRevenue);
+
+        document.getElementById("pendingRevenue")
+            .textContent = money(pendingRevenue);
+
+        document.getElementById("refundedRevenue")
+            .textContent = money(refundedRevenue);
+
+        document.getElementById("totalPaidCount")
+            .textContent =
+            `${paid.length} paid payments`;
+
+        document.getElementById("pendingCount")
+            .textContent =
+            `${pending.length} pending`;
+
+        document.getElementById("refundedCount")
+            .textContent =
+            `${refunded.length} refunds`;
+
+        updateInsights();
+
+        updateChart(7);
+    }
+
+
+    /* ============================================================
+       INSIGHTS
+       ============================================================ */
+
+    function updateInsights() {
+
+        if (!payments.length) {
+
+            document.getElementById("popMethod")
+                .textContent = "—";
+
+            document.getElementById("popMethodPct")
+                .textContent = "—";
+
+            document.getElementById("topDay")
+                .textContent = "—";
+
+            document.getElementById("topDayAmt")
+                .textContent = "—";
+
+            document.getElementById("avgTxn")
+                .textContent = "—";
+
+            document.getElementById("refundRate")
+                .textContent = "—";
+
+            return;
+        }
+
+
+        /* Most popular payment method */
+
+        const methodCounts = {};
+
+        payments.forEach(p => {
+
+            const method =
+                p.paymentMethod || "UNKNOWN";
+
+            methodCounts[method] =
+                (methodCounts[method] || 0) + 1;
+        });
+
+        const topMethod =
+            Object.entries(methodCounts)
+                .sort((a, b) => b[1] - a[1])[0];
+
+        if (topMethod) {
+
+            const percentage =
+                (topMethod[1] / payments.length) * 100;
+
+            document.getElementById("popMethod")
+                .textContent =
+                methodLabel(topMethod[0]);
+
+            document.getElementById("popMethodPct")
+                .textContent =
+                `${percentage.toFixed(1)}% of transactions`;
+        }
+
+
+        /* Highest revenue day */
+
+        const dailyRevenue = {};
+
+        payments
+            .filter(p => p.paymentStatus === "PAID")
+            .forEach(p => {
+
+                const date = p.paymentDate;
+
+                dailyRevenue[date] =
+                    (dailyRevenue[date] || 0) +
+                    Number(p.amount || 0);
+            });
+
+        const topDay =
+            Object.entries(dailyRevenue)
+                .sort((a, b) => b[1] - a[1])[0];
+
+        if (topDay) {
+
+            document.getElementById("topDay")
+                .textContent =
+                formatDate(topDay[0]);
+
+            document.getElementById("topDayAmt")
+                .textContent =
+                money(topDay[1]);
+        }
+
+
+        /* Average transaction */
+
+        const paid =
+            payments.filter(
+                p => p.paymentStatus === "PAID"
+            );
+
+        const total =
+            paid.reduce(
+                (sum, p) =>
+                    sum + Number(p.amount || 0),
+                0
+            );
+
+        document.getElementById("avgTxn")
+            .textContent =
+            paid.length
+                ? money(total / paid.length)
+                : "LKR 0";
+
+
+        /* Refund rate */
+
+        const refunds =
+            payments.filter(
+                p => p.paymentStatus === "REFUNDED"
+            ).length;
+
+        const refundRate =
+            (refunds / payments.length) * 100;
+
+        document.getElementById("refundRate")
+            .textContent =
+            `${refundRate.toFixed(1)}%`;
+
+        document.getElementById("refundRateSub")
+            .textContent =
+            `${refunds} refunded payment(s)`;
+    }
+
+
+    /* ============================================================
+       CHART
+       ============================================================ */
+
+    function updateChart(days) {
+
+        const canvas =
+            document.getElementById("revenueChart");
+
+        if (!canvas) return;
+
+        const today =
+            new Date();
+
+        const dates = [];
+        const values = [];
+
+        for (let i = days - 1; i >= 0; i--) {
+
+            const d = new Date(today);
+
+            d.setDate(
+                today.getDate() - i
+            );
+
+            const date =
+                d.toISOString().split("T")[0];
+
+            dates.push(date);
+
+            const total =
+                payments
+                    .filter(p =>
+                        p.paymentStatus === "PAID" &&
+                        p.paymentDate === date
+                    )
+                    .reduce(
+                        (sum, p) =>
+                            sum + Number(p.amount || 0),
+                        0
+                    );
+
+            values.push(total);
+        }
+
+        if (revenueChart) {
+            revenueChart.destroy();
+        }
+
+        revenueChart =
+            new Chart(canvas, {
+
+                type: "line",
+
+                data: {
+                    labels: dates.map(formatDateShort),
+
+                    datasets: [{
+                        label: "Revenue",
+                        data: values,
+                        borderColor: "#B76E79",
+                        backgroundColor: "rgba(183,110,121,0.12)",
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 6
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    interaction: {
+                        intersect: false,
+                        mode: "index"
+                    },
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        },
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: function(context) {
+
+                                    return "Revenue: " +
+                                        money(context.raw);
+                                }
+                            }
+                        }
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                callback: function(value) {
+                                    return "LKR " +
+                                        Number(value)
+                                            .toLocaleString();
+                                }
+                            },
+
+                            grid: {
+                                color:
+                                    "rgba(183,110,121,0.08)"
+                            }
+                        },
+
+                        x: {
+
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+    }
+
+
+    /* ============================================================
+       PERIOD BUTTONS
+       ============================================================ */
+
+    document
+        .querySelectorAll("#periodTabs button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                document
+                    .querySelectorAll(
+                        "#periodTabs button"
+                    )
+                    .forEach(b =>
+                        b.classList.remove("active")
+                    );
+
+                button.classList.add("active");
+
+                updateChart(
+                    Number(button.dataset.period)
+                );
+            });
+        });
+
+
+    /* ============================================================
+       FILTER SERVICE
+       ============================================================ */
+
+    function populateServiceFilter() {
+
+        const select =
+            document.getElementById("fService");
+
+        const services =
+            [...new Map(
+                payments
+                    .filter(p => p.serviceId)
+                    .map(p => [
+                        p.serviceId,
+                        p.serviceName
+                    ])
+            ).entries()];
+
+        select.innerHTML =
+            `<option value="">All Services</option>`;
+
+        services.forEach(
+            ([id, name]) => {
+
+                const option =
+                    document.createElement("option");
+
+                option.value = id;
+
+                option.textContent =
+                    name || `Service ${id}`;
+
+                select.appendChild(option);
+            }
+        );
+    }
+
+
+    /* ============================================================
+       FILTERING
+       ============================================================ */
+
+    function getFilteredPayments() {
+
+        const search =
+            document.getElementById("fSearch")
+                .value
+                .trim()
+                .toLowerCase();
+
+        const dateFrom =
+            document.getElementById("fFrom").value;
+
+        const dateTo =
+            document.getElementById("fTo").value;
+
+        const status =
+            document.getElementById("fStatus").value;
+
+        const method =
+            document.getElementById("fMethod").value;
+
+        const service =
+            document.getElementById("fService").value;
+
+        const globalSearch =
+            document.getElementById("searchInput")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        return payments.filter(p => {
+
+            const searchable = [
+                p.paymentId,
+                p.appointmentId,
+                p.customerName,
+                p.customerPhone,
+                p.serviceName,
+                p.staffName,
+                p.transactionReference
+            ]
+                .join(" ")
+                .toLowerCase();
+
+            if (
+                search &&
+                !searchable.includes(search)
+            ) {
+                return false;
+            }
+
+            if (
+                globalSearch &&
+                !searchable.includes(globalSearch)
+            ) {
+                return false;
+            }
+
+            if (
+                dateFrom &&
+                p.paymentDate < dateFrom
+            ) {
+                return false;
+            }
+
+            if (
+                dateTo &&
+                p.paymentDate > dateTo
+            ) {
+                return false;
+            }
+
+            if (
+                status &&
+                p.paymentStatus !== status
+            ) {
+                return false;
+            }
+
+            if (
+                method &&
+                p.paymentMethod !== method
+            ) {
+                return false;
+            }
+
+            if (
+                service &&
+                String(p.serviceId) !== service
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+
+    function applyFilters() {
+
+        currentPage = 1;
+
+        const filtered =
+            getFilteredPayments();
+
+        renderTable(filtered);
+    }
+
+
+    /* ============================================================
+       TABLE
+       ============================================================ */
+
+    function renderTable(data) {
+
+        const tbody =
+            document.getElementById("tableBody");
+
+        if (!data.length) {
+
+            renderEmpty(
+                "No payments found",
+                "Try changing your search or filters."
+            );
+
+            document.getElementById("pagination")
+                .innerHTML = "";
+
+            return;
+        }
+
+        const totalPages =
+            Math.ceil(data.length / pageSize);
+
+        if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
+
+        const start =
+            (currentPage - 1) * pageSize;
+
+        const pageData =
+            data.slice(
+                start,
+                start + pageSize
+            );
+
+        tbody.innerHTML =
+            pageData.map(
+                (p, index) => {
+
+                    const globalIndex =
+                        start + index;
+
+                    return `
+                <tr>
+
+                    <td>
+                        <span class="pay-id">
+                            PAY-${String(
+                        p.paymentId
+                    ).padStart(5, "0")}
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="cust-cell">
+
+                            <div
+                                class="cust-av"
+                                style="background:${avatarGradient(
+                        globalIndex
+                    )}"
+                            >
+                                ${escapeHtml(
+                        initials(
+                            p.customerName
+                        )
+                    )}
+                            </div>
+
+                            <div>
+                                <div class="nm">
+                                    ${escapeHtml(
+                        p.customerName ||
+                        "Unknown Customer"
+                    )}
+                                </div>
+
+                                <div class="ph">
+                                    ${escapeHtml(
+                        p.customerPhone ||
+                        "—"
+                    )}
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="mono">
+                            APT-${String(
+                        p.appointmentId
+                    ).padStart(4, "0")}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                        p.serviceName || "—"
+                    )}
+                    </td>
+
+                    <td>
+                        ${formatDate(
+                        p.paymentDate
+                    )}
+                    </td>
+
+                    <td>
+                        <span class="amount">
+                            ${money(p.amount)}
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="method-cell">
+
+                            <div class="method-ic">
+                                <i class="fa-solid ${
+                        methodIcon(
+                            p.paymentMethod
+                        )
+                    }"></i>
+                            </div>
+
+                            <span class="mt">
+                                ${escapeHtml(
+                        methodLabel(
+                            p.paymentMethod
+                        )
+                    )}
+                            </span>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="badge ${
+                        statusClass(
+                            p.paymentStatus
+                        )
+                    }">
+                            ${escapeHtml(
+                        statusLabel(
+                            p.paymentStatus
+                        )
+                    )}
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="actions-cell">
+
+                            <button
+                                class="act-btn view"
+                                title="View"
+                                onclick="viewPayment(${p.paymentId})"
+                            >
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+
+                            ${
+                        p.paymentStatus !==
+                        "REFUNDED"
+                            ? `
+                                    <button
+                                        class="act-btn edit"
+                                        title="Edit"
+                                        onclick="editPayment(${p.paymentId})"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    `
+                            : ""
+                    }
+
+                            ${
+                        p.paymentStatus === "PAID"
+                            ? `
+                                    <button
+                                        class="act-btn refund"
+                                        title="Refund"
+                                        onclick="refundPayment(${p.paymentId})"
+                                    >
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                    `
+                            : ""
+                    }
+
+                            <button
+                                class="act-btn del"
+                                title="Delete"
+                                onclick="deletePayment(${p.paymentId})"
+                            >
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+
+                        </div>
+                    </td>
+
+                </tr>
+                `;
+                }
+            )
+                .join("");
+
+        renderPagination(
+            data.length,
+            totalPages
+        );
+    }
+
+
+    /* ============================================================
+       PAGINATION
+       ============================================================ */
+
+    function renderPagination(
+        total,
+        totalPages
+    ) {
+
+        const pagination =
+            document.getElementById("pagination");
+
+        const start =
+            total === 0
+                ? 0
+                : (currentPage - 1) *
+                pageSize + 1;
+
+        const end =
+            Math.min(
+                currentPage * pageSize,
+                total
+            );
+
+        let html = `
+        <div class="page-info">
+            Showing <b>${start}</b>–<b>${end}</b>
+            of <b>${total}</b> payments
+        </div>
+
+        <div class="page-btns">
+
+            <button
+                class="pg-btn"
+                ${currentPage === 1 ? "disabled" : ""}
+                onclick="changePage(${currentPage - 1})"
+            >
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+    `;
+
+        for (
+            let i = 1;
+            i <= totalPages;
+            i++
+        ) {
+
+            html += `
+            <button
+                class="pg-btn ${
+                i === currentPage
+                    ? "active"
+                    : ""
+            }"
+                onclick="changePage(${i})"
+            >
+                ${i}
+            </button>
+        `;
+        }
+
+        html += `
+            <button
+                class="pg-btn"
+                ${
+            currentPage === totalPages
+                ? "disabled"
+                : ""
+        }
+                onclick="changePage(${currentPage + 1})"
+            >
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+        </div>
+    `;
+
+        pagination.innerHTML = html;
+    }
+
+
+    function changePage(page) {
+
+        const filtered =
+            getFilteredPayments();
+
+        const totalPages =
+            Math.ceil(
+                filtered.length / pageSize
+            );
+
+        if (
+            page < 1 ||
+            page > totalPages
+        ) {
+            return;
+        }
+
+        currentPage = page;
+
+        renderTable(filtered);
+    }
+
+
+    /* ============================================================
+       EMPTY / LOADING
+       ============================================================ */
+
+    function renderLoading() {
+
+        const tbody =
+            document.getElementById("tableBody");
+
+        tbody.innerHTML = Array(5)
+            .fill(0)
+            .map(() => `
+            <tr class="skel-row">
+
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+                <td><div class="skel"></div></td>
+
+            </tr>
+        `)
+            .join("");
+    }
+
+
+    function renderEmpty(
+        title,
+        message
+    ) {
+
+        document.getElementById("tableBody")
+            .innerHTML = `
+            <tr>
+                <td colspan="9">
+
+                    <div class="empty">
+
+                        <div class="empty-ic">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+
+                        <h3>
+                            ${escapeHtml(title)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(message)}
+                        </p>
+
+                    </div>
+
+                </td>
+            </tr>
+        `;
+    }
+
+
+    /* ============================================================
+       RECORD PAYMENT MODAL
+       ============================================================ */
+
+    document
+        .getElementById("recordBtn")
+        .addEventListener("click", openRecordModal);
+
+
+    function openRecordModal() {
+
+        editingPaymentId = null;
+
+        document.getElementById("modalTitle")
+            .textContent = "Record Payment";
+
+        document.getElementById("modalSub")
+            .textContent =
+            "Add a new payment transaction.";
+
+        document.getElementById("savePaymentBtn")
+            .textContent = "Record Payment";
+
+        resetPaymentForm();
+
+        populateAppointmentSelect();
+
+        document.getElementById("recordModalOverlay")
+            .classList.add("show");
+    }
+
+
+    function resetPaymentForm() {
+
+        document.getElementById("mAppointment").value = "";
+
+        document.getElementById("mAmount").value = "";
+
+        document.getElementById("mMethod").value = "";
+
+        document.getElementById("mStatus").value = "PAID";
+
+        document.getElementById("mDate").value =
+            new Date().toISOString().split("T")[0];
+
+        document.getElementById("mRef").value = "";
+
+        document.getElementById("mNotes").value = "";
+
+        clearAppointmentInfo();
+    }
+
+
+    /* ============================================================
+       SAVE PAYMENT
+       ============================================================ */
+
+    document
+        .getElementById("savePaymentBtn")
+        .addEventListener(
+            "click",
+            savePayment
+        );
+
+
+    async function savePayment() {
+
+        const appointmentId =
+            document.getElementById(
+                "mAppointment"
+            ).value;
+
+        const amount =
+            document.getElementById(
+                "mAmount"
+            ).value;
+
+        const method =
+            document.getElementById(
+                "mMethod"
+            ).value;
+
+        const status =
+            document.getElementById(
+                "mStatus"
+            ).value;
+
+        const date =
+            document.getElementById(
+                "mDate"
+            ).value;
+
+        const reference =
+            document.getElementById(
+                "mRef"
+            ).value.trim();
+
+        const notes =
+            document.getElementById(
+                "mNotes"
+            ).value.trim();
+
+
+        if (!appointmentId) {
+
+            showToast(
+                "Please select an appointment",
+                "error"
+            );
+
+            return;
+        }
+
+        if (
+            !amount ||
+            Number(amount) < 0
+        ) {
+
+            showToast(
+                "Please enter a valid amount",
+                "error"
+            );
+
+            return;
+        }
+
+        if (!method) {
+
+            showToast(
+                "Please select payment method",
+                "error"
+            );
+
+            return;
+        }
+
+        if (!status) {
+
+            showToast(
+                "Please select payment status",
+                "error"
+            );
+
+            return;
+        }
+
+        if (!date) {
+
+            showToast(
+                "Please select payment date",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const payload = {
+
+            appointmentId:
+                Number(appointmentId),
+
+            amount:
+                Number(amount),
+
+            paymentMethod:
+            method,
+
+            paymentStatus:
+            status,
+
+            paymentDate:
+            date,
+
+            transactionReference:
+                reference || null,
+
+            notes:
+                notes || null
+        };
+
+
+        const button =
+            document.getElementById(
+                "savePaymentBtn"
+            );
+
+        button.disabled = true;
+
+        button.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Saving...
+    `;
+
+
+        try {
+
+            if (editingPaymentId) {
+
+                await apiFetch(
+                    `${API.payments}/update/${editingPaymentId}`,
+                    {
+                        method: "PUT",
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                showToast(
+                    "Payment updated successfully"
+                );
+
+            } else {
+
+                await apiFetch(
+                    `${API.payments}/save`,
+                    {
+                        method: "POST",
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                showToast(
+                    "Payment recorded successfully"
+                );
+            }
+
+            closeRecordModal();
+
+            await loadPayments();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                error.message ||
+                "Failed to save payment",
+                "error"
+            );
+
+        } finally {
+
+            button.disabled = false;
+
+            button.innerHTML =
+                editingPaymentId
+                    ? "Update Payment"
+                    : "Record Payment";
+        }
+    }
+
+
+    /* ============================================================
+       EDIT PAYMENT
+       ============================================================ */
+
+    function editPayment(id) {
+
+        const payment =
+            payments.find(
+                p => Number(p.paymentId) === Number(id)
+            );
+
+        if (!payment) return;
+
+        editingPaymentId = id;
+
+        document.getElementById("modalTitle")
+            .textContent = "Edit Payment";
+
+        document.getElementById("modalSub")
+            .textContent =
+            "Update payment transaction details.";
+
+        document.getElementById("savePaymentBtn")
+            .textContent = "Update Payment";
+
+        const appointment =
+            appointments.find(
+                a =>
+                    Number(a.appointmentId) ===
+                    Number(payment.appointmentId)
+            );
+
+        populateAppointmentSelect();
+
+        const appointmentSelect =
+            document.getElementById(
+                "mAppointment"
+            );
+
+        appointmentSelect.innerHTML = `
+        <option value="${payment.appointmentId}">
+            APT-${String(
+            payment.appointmentId
+        ).padStart(4, "0")} •
+            ${escapeHtml(
+            payment.customerName || "Customer"
+        )} •
+            ${escapeHtml(
+            payment.serviceName || "Service"
+        )}
+        </option>
+    `;
+
+        appointmentSelect.value =
+            payment.appointmentId;
+
+        if (appointment) {
+            fillAppointmentInfo(appointment);
+        }
+
+        document.getElementById("mAmount")
+            .value = payment.amount || "";
+
+        document.getElementById("mMethod")
+            .value =
+            payment.paymentMethod || "";
+
+        document.getElementById("mStatus")
+            .value =
+            payment.paymentStatus || "";
+
+        document.getElementById("mDate")
+            .value =
+            payment.paymentDate || "";
+
+        document.getElementById("mRef")
+            .value =
+            payment.transactionReference || "";
+
+        document.getElementById("mNotes")
+            .value =
+            payment.notes || "";
+
+        document.getElementById("recordModalOverlay")
+            .classList.add("show");
+    }
+
+
+    /* ============================================================
+       VIEW PAYMENT
+       ============================================================ */
+
+    async function viewPayment(id) {
+
+        try {
+
+            const payment =
+                await apiFetch(
+                    `${API.payments}/${id}`
+                );
+
+            selectedPayment = payment;
+
+            renderPaymentDetails(payment);
+
+            document.getElementById(
+                "viewModalOverlay"
+            ).classList.add("show");
+
+        } catch (error) {
+
+            showToast(
+                error.message ||
+                "Failed to load payment",
+                "error"
+            );
+        }
+    }
+
+
+    function renderPaymentDetails(p) {
+
+        const body =
+            document.getElementById("viewBody");
+
+        body.innerHTML = `
+
+        <div class="detail-banner">
+
+            <div class="left">
+
+                <div class="k">
+                    Payment ID
+                </div>
+
+                <div class="v mono">
+                    PAY-${String(
+            p.paymentId
+        ).padStart(5, "0")}
+                </div>
+
+            </div>
+
+            <div class="right">
+
+                <div class="k">
+                    Status
+                </div>
+
+                <div style="margin-top:6px">
+
+                    <span class="badge ${
+            statusClass(
+                p.paymentStatus
+            )
+        }">
+                        ${escapeHtml(
+            statusLabel(
+                p.paymentStatus
+            )
+        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-grid">
+
+            <div class="detail-item">
+                <span class="k">
+                    Customer
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            p.customerName || "—"
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Phone
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            p.customerPhone || "—"
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Appointment
+                </span>
+
+                <span class="v mono">
+                    APT-${String(
+            p.appointmentId
+        ).padStart(4, "0")}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Appointment Date
+                </span>
+
+                <span class="v">
+                    ${formatDate(
+            p.appointmentDate
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Appointment Time
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            p.appointmentTime || "—"
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Service
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            p.serviceName || "—"
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Staff
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            p.staffName || "—"
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Service Price
+                </span>
+
+                <span class="v">
+                    ${money(
+            p.servicePrice
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Payment Date
+                </span>
+
+                <span class="v">
+                    ${formatDate(
+            p.paymentDate
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item">
+                <span class="k">
+                    Payment Method
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            methodLabel(
+                p.paymentMethod
+            )
+        )}
+                </span>
+            </div>
+
+
+            <div class="detail-item full">
+
+                <span class="k">
+                    Transaction Reference
+                </span>
+
+                <span class="v mono">
+                    ${escapeHtml(
+            p.transactionReference ||
+            "—"
+        )}
+                </span>
+
+            </div>
+
+
+            <div class="detail-item full">
+
+                <span class="k">
+                    Notes
+                </span>
+
+                <span class="v">
+                    ${escapeHtml(
+            p.notes || "No notes"
+        )}
+                </span>
+
+            </div>
+
+        </div>
+
+        <div style="margin-top:24px">
+
+            <div class="receipt">
+
+                <div class="receipt-top">
+
+                    <div class="logo">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+
+                    <div class="brand">
+                        PINK BEAUTY SALON
+                    </div>
+
+                    <div class="tag">
+                        Luxury Beauty Meets Smart Technology
+                    </div>
+
+                </div>
+
+                <div class="receipt-title">
+                    Payment Receipt
+                </div>
+
+                <div class="receipt-body">
+
+                    <div class="receipt-row">
+                        <span class="k">
+                            Payment ID
+                        </span>
+                        <span class="v mono">
+                            PAY-${String(
+            p.paymentId
+        ).padStart(5, "0")}
+                        </span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="k">
+                            Customer
+                        </span>
+                        <span class="v">
+                            ${escapeHtml(
+            p.customerName || "—"
+        )}
+                        </span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="k">
+                            Service
+                        </span>
+                        <span class="v">
+                            ${escapeHtml(
+            p.serviceName || "—"
+        )}
+                        </span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="k">
+                            Payment Date
+                        </span>
+                        <span class="v">
+                            ${formatDate(
+            p.paymentDate
+        )}
+                        </span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="k">
+                            Method
+                        </span>
+                        <span class="v">
+                            ${escapeHtml(
+            methodLabel(
+                p.paymentMethod
+            )
+        )}
+                        </span>
+                    </div>
+
+                    <div class="receipt-total">
+                        <span class="k">
+                            Total Paid
+                        </span>
+
+                        <span class="v">
+                            ${money(p.amount)}
+                        </span>
+                    </div>
+
+                    <div class="receipt-status">
+
+                        <span class="badge ${
+            statusClass(
+                p.paymentStatus
+            )
+        }">
+                            ${escapeHtml(
+            statusLabel(
+                p.paymentStatus
+            )
+        )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="receipt-foot">
+                    Thank you for choosing
+                    Pink Beauty Salon.
+                </div>
+
+            </div>
+
+        </div>
+    `;
+    }
+
+
+    /* ============================================================
+       REFUND
+       ============================================================ */
+
+    async function refundPayment(id) {
+
+        const payment =
+            payments.find(
+                p =>
+                    Number(p.paymentId) ===
+                    Number(id)
+            );
+
+        if (!payment) return;
+
+
+        const result =
+            await Swal.fire({
+
+                title: "Refund Payment?",
+
+                html: `
+                <p style="margin-bottom:8px">
+                    Are you sure you want to refund
+                </p>
+
+                <strong>
+                    PAY-${String(
+                    id
+                ).padStart(5, "0")}
+                </strong>
+
+                <br>
+
+                <strong>
+                    ${money(payment.amount)}
+                </strong>
+            `,
+
+                icon: "warning",
+
+                showCancelButton: true,
+
+                confirmButtonText:
+                    "Yes, Refund",
+
+                cancelButtonText:
+                    "Cancel",
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+
+
+        if (!result.isConfirmed) return;
+
+
+        try {
+
+            await apiFetch(
+                `${API.payments}/refund/${id}`,
+                {
+                    method: "PATCH"
+                }
+            );
+
+            showToast(
+                "Payment refunded successfully"
+            );
+
+            await loadPayments();
+
+        } catch (error) {
+
+            showToast(
+                error.message ||
+                "Refund failed",
+                "error"
+            );
+        }
+    }
+
+
+    /* ============================================================
+       DELETE
+       ============================================================ */
+
+    async function deletePayment(id) {
+
+        const payment =
+            payments.find(
+                p =>
+                    Number(p.paymentId) ===
+                    Number(id)
+            );
+
+        if (!payment) return;
+
+
+        const result =
+            await Swal.fire({
+
+                title: "Delete Payment?",
+
+                text:
+                    "This action cannot be undone.",
+
+                icon: "warning",
+
+                showCancelButton: true,
+
+                confirmButtonText:
+                    "Delete",
+
+                cancelButtonText:
+                    "Cancel",
+
+                confirmButtonColor:
+                    "#B23A48"
+            });
+
+
+        if (!result.isConfirmed) return;
+
+
+        try {
+
+            await apiFetch(
+                `${API.payments}/delete/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            showToast(
+                "Payment deleted successfully"
+            );
+
+            await loadPayments();
+
+        } catch (error) {
+
+            showToast(
+                error.message ||
+                "Failed to delete payment",
+                "error"
+            );
+        }
+    }
+
+
+    /* ============================================================
+       RECEIPT PRINT
+       ============================================================ */
+
+    document
+        .getElementById("printReceiptBtn")
+        .addEventListener(
+            "click",
+            printReceipt
+        );
+
+
+    function printReceipt() {
+
+        if (!selectedPayment) return;
+
+        const p = selectedPayment;
+
+        const printArea =
+            document.getElementById("printArea");
+
+        printArea.innerHTML = `
+
+        <div style="
+            max-width:600px;
+            margin:0 auto;
+            font-family:Arial,sans-serif;
+            color:#2B2024;
+        ">
+
+            <div style="
+                text-align:center;
+                padding:30px;
+                background:#B76E79;
+                color:white;
+            ">
+
+                <div style="
+                    font-size:26px;
+                    font-weight:bold;
+                ">
+                    PINK BEAUTY SALON
+                </div>
+
+                <div style="
+                    margin-top:6px;
+                    font-size:12px;
+                    letter-spacing:2px;
+                ">
+                    LUXURY BEAUTY MEETS SMART TECHNOLOGY
+                </div>
+
+            </div>
+
+            <div style="
+                text-align:center;
+                padding:15px;
+                background:#FFF9FB;
+                color:#B76E79;
+                font-size:18px;
+                font-weight:bold;
+                letter-spacing:2px;
+            ">
+                PAYMENT RECEIPT
+            </div>
+
+            <div style="
+                padding:25px;
+            ">
+
+                <p>
+                    <strong>Payment ID:</strong>
+                    PAY-${String(
+            p.paymentId
+        ).padStart(5, "0")}
+                </p>
+
+                <p>
+                    <strong>Customer:</strong>
+                    ${escapeHtml(
+            p.customerName || "—"
+        )}
+                </p>
+
+                <p>
+                    <strong>Appointment:</strong>
+                    APT-${String(
+            p.appointmentId
+        ).padStart(4, "0")}
+                </p>
+
+                <p>
+                    <strong>Service:</strong>
+                    ${escapeHtml(
+            p.serviceName || "—"
+        )}
+                </p>
+
+                <p>
+                    <strong>Staff:</strong>
+                    ${escapeHtml(
+            p.staffName || "—"
+        )}
+                </p>
+
+                <p>
+                    <strong>Date:</strong>
+                    ${formatDate(
+            p.paymentDate
+        )}
+                </p>
+
+                <p>
+                    <strong>Payment Method:</strong>
+                    ${escapeHtml(
+            methodLabel(
+                p.paymentMethod
+            )
+        )}
+                </p>
+
+                <hr style="
+                    margin:20px 0;
+                    border:0;
+                    border-top:2px solid #B76E79;
+                ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:22px;
+                    font-weight:bold;
+                    color:#B76E79;
+                ">
+                    <span>Total</span>
+                    <span>${money(p.amount)}</span>
+                </div>
+
+                <p style="
+                    text-align:center;
+                    margin-top:25px;
+                ">
+                    Status:
+                    <strong>
+                        ${statusLabel(
+            p.paymentStatus
+        )}
+                    </strong>
+                </p>
+
+            </div>
+
+            <div style="
+                text-align:center;
+                padding:20px;
+                color:#8C7A80;
+                font-size:12px;
+            ">
+                Thank you for choosing
+                Pink Beauty Salon.
+            </div>
+
+        </div>
+    `;
+
+        printArea.classList.add("show");
+
+        window.print();
+
+        setTimeout(() => {
+            printArea.classList.remove("show");
+        }, 1000);
+    }
+
+
+    /* ============================================================
+       DOWNLOAD RECEIPT
+       ============================================================ */
+
+    document
+        .getElementById("downloadReceiptBtn")
+        .addEventListener(
+            "click",
+            downloadReceipt
+        );
+
+
+    function downloadReceipt() {
+
+        if (!selectedPayment) return;
+
+        const p = selectedPayment;
+
+        const receiptText = `
+PINK BEAUTY SALON
+Luxury Beauty Meets Smart Technology
+========================================
+
+PAYMENT RECEIPT
+
+Payment ID:
+PAY-${String(
+            p.paymentId
+        ).padStart(5, "0")}
+
+Customer:
+${p.customerName || "—"}
+
+Phone:
+${p.customerPhone || "—"}
+
+Appointment:
+APT-${String(
+            p.appointmentId
+        ).padStart(4, "0")}
+
+Service:
+${p.serviceName || "—"}
+
+Staff:
+${p.staffName || "—"}
+
+Appointment Date:
+${formatDate(p.appointmentDate)}
+
+Appointment Time:
+${p.appointmentTime || "—"}
+
+Payment Date:
+${formatDate(p.paymentDate)}
+
+Payment Method:
+${methodLabel(p.paymentMethod)}
+
+Payment Status:
+${statusLabel(p.paymentStatus)}
+
+Amount:
+${money(p.amount)}
+
+Transaction Reference:
+${p.transactionReference || "—"}
+
+Notes:
+${p.notes || "—"}
+
+========================================
+
+Thank you for choosing
+Pink Beauty Salon.
+    `;
+
+        const blob =
+            new Blob(
+                [receiptText],
+                {
+                    type: "text/plain"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const a =
+            document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+            `PAY-${String(
+                p.paymentId
+            ).padStart(5, "0")}-receipt.txt`;
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        a.remove();
+
+        URL.revokeObjectURL(url);
+
+        showToast(
+            "Receipt downloaded successfully"
+        );
+    }
+
+
+    /* ============================================================
+       CLOSE MODALS
+       ============================================================ */
+
+    function closeRecordModal() {
+
+        document
+            .getElementById(
+                "recordModalOverlay"
+            )
+            .classList.remove("show");
+    }
+
+
+    function closeViewModal() {
+
+        document
+            .getElementById(
+                "viewModalOverlay"
+            )
+            .classList.remove("show");
+    }
+
+
+    document
+        .querySelectorAll("[data-close]")
+        .forEach(btn => {
+
+            btn.addEventListener(
+                "click",
+                closeRecordModal
+            );
+        });
+
+
+    document
+        .querySelectorAll("[data-close-view]")
+        .forEach(btn => {
+
+            btn.addEventListener(
+                "click",
+                closeViewModal
+            );
+        });
+
+
+    document
+        .getElementById(
+            "recordModalOverlay"
+        )
+        .addEventListener(
+            "click",
+            function(e) {
+
+                if (e.target === this) {
+                    closeRecordModal();
+                }
+            }
+        );
+
+
+    document
+        .getElementById(
+            "viewModalOverlay"
+        )
+        .addEventListener(
+            "click",
+            function(e) {
+
+                if (e.target === this) {
+                    closeViewModal();
+                }
+            }
+        );
+
+
+    /* ============================================================
+       FILTER EVENTS
+       ============================================================ */
+
+    [
+        "fSearch",
+        "fFrom",
+        "fTo",
+        "fStatus",
+        "fMethod",
+        "fService"
+    ].forEach(id => {
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "input",
+                applyFilters
+            );
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "change",
+                applyFilters
+            );
+    });
+
+
+    document
+        .getElementById("searchInput")
+        .addEventListener(
+            "input",
+            applyFilters
+        );
+
+
+    /* ============================================================
+       RESET FILTERS
+       ============================================================ */
+
+    document
+        .getElementById("resetFilters")
+        .addEventListener(
+            "click",
+            () => {
+
+                document.getElementById(
+                    "searchInput"
+                ).value = "";
+
+                document.getElementById(
+                    "fSearch"
+                ).value = "";
+
+                document.getElementById(
+                    "fFrom"
+                ).value = "";
+
+                document.getElementById(
+                    "fTo"
+                ).value = "";
+
+                document.getElementById(
+                    "fStatus"
+                ).value = "";
+
+                document.getElementById(
+                    "fMethod"
+                ).value = "";
+
+                document.getElementById(
+                    "fService"
+                ).value = "";
+
+                applyFilters();
+            }
+        );
+
+
+    /* ============================================================
+       MOBILE SIDEBAR
+       ============================================================ */
+
+    document
+        .getElementById("hamburger")
+        .addEventListener(
+            "click",
+            () => {
+
+                document
+                    .getElementById("sidebar")
+                    .classList.add("open");
+
+                document
+                    .getElementById("scrim")
+                    .style.display = "block";
+            }
+        );
+
+
+    document
+        .getElementById("scrim")
+        .addEventListener(
+            "click",
+            closeSidebar
+        );
+
+
+    function closeSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList.remove("open");
+
+        document
+            .getElementById("scrim")
+            .style.display = "none";
+    }
+
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+
+            item.addEventListener(
+                "click",
+                function() {
+
+                    const page =
+                        this.dataset.page;
+
+                    if (
+                        page === "Payments"
+                    ) {
+                        closeSidebar();
+                        return;
+                    }
+
+                    /*
+                     * Change these paths according
+                     * to your actual HTML filenames.
+                     */
+
+                    const pages = {
+
+                        Dashboard:
+                            "dashboard.html",
+
+                        Appointments:
+                            "appointment.html",
+
+                        Customers:
+                            "customer.html",
+
+                        Staff:
+                            "staff.html",
+
+                        Services:
+                            "service.html",
+
+                        Reports:
+                            "report.html",
+
+                        Users:
+                            "user.html",
+
+                        Settings:
+                            "settings.html"
+                    };
+
+                    if (pages[page]) {
+                        window.location.href =
+                            pages[page];
+                    }
+                }
+            );
+        });
+
+
+    /* ============================================================
+       LOGOUT
+       ============================================================ */
+
+    document
+        .getElementById("logoutBtn")
+        .addEventListener(
+            "click",
+            async () => {
+
+                const result =
+                    await Swal.fire({
+
+                        title: "Logout?",
+
+                        text:
+                            "Are you sure you want to logout?",
+
+                        icon: "question",
+
+                        showCancelButton: true,
+
+                        confirmButtonText:
+                            "Logout",
+
+                        cancelButtonText:
+                            "Cancel",
+
+                        confirmButtonColor:
+                            "#B76E79"
+                    });
+
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                localStorage.removeItem("token");
+                localStorage.removeItem("jwtToken");
+                localStorage.removeItem("accessToken");
+
+                sessionStorage.removeItem("token");
+
+                window.location.href =
+                    "login.html";
+            }
+        );
+
+
+    /* ============================================================
+       DATE
+       ============================================================ */
+
+    document.getElementById(
+        "todayDate"
+    ).textContent =
+        new Date().toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+
+    /* ============================================================
+       INITIALIZE
+       ============================================================ */
+
+    async function initPaymentPage() {
+        try {
+            await Promise.all([
+                loadAppointments(),
+                loadPayments()
+            ]);
+
+            // Payments loaded after/before appointments
+            // so refresh appointment dropdown after both are ready
+            populateAppointmentSelect();
+
+        } catch (error) {
+            console.error("Payment page initialization error:", error);
+        }
+    }
+
+
+    initPaymentPage();
+
+</script>
+</body>
+</html>
