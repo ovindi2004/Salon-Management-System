@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings | PINK BEAUTY SALON</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>/* ============== PINK BEAUTY SALON — SETTINGS ============== */
+
+  :root {
+    --rose-gold: #B76E79;
+    --soft-pink: #F8D7DA;
+    --champagne: #E8C07D;
+    --dark-rose: #8F4F5A;
+    --bg: #FFF9FB;
+    --white: #FFFFFF;
+    --text: #2F2528;
+    --muted: #8A777C;
+    --success: #4CAF50;
+    --warning: #F2A93B;
+    --danger: #D9534F;
+    --accent: #B76E79;
+    --border: #F0E1E4;
+    --shadow-sm: 0 2px 8px rgba(183, 110, 121, 0.06);
+    --shadow-md: 0 8px 24px rgba(183, 110, 121, 0.10);
+    --shadow-lg: 0 16px 48px rgba(183, 110, 121, 0.14);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --sidebar-w: 260px;
+    --sidebar-collapsed-w: 84px;
+    --header-h: 72px;
+  }
+
+  /* Dark theme */
+  body.theme-dark {
+    --bg: #1F1819;
+    --white: #2A2123;
+    --text: #F5E9EB;
+    --muted: #B5A0A4;
+    --border: #3A2D30;
+    --soft-pink: #3A2A2D;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
+
+  /* ============== SIDEBAR ============== */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF9FB 100%);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    transition: width 0.3s ease, transform 0.3s ease;
+  }
+
+  body.theme-dark .sidebar {
+    background: linear-gradient(180deg, #2A2123 0%, #1F1819 100%);
+  }
+
+  .sidebar-brand {
+    padding: 24px 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand-mark {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    color: #fff;
+    display: grid; place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.3);
+  }
+
+  .brand-text h1 { font-size: 17px; color: var(--text); letter-spacing: 0.5px; }
+  .brand-text span { font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-item i { width: 20px; text-align: center; font-size: 16px; }
+
+  .nav-item:hover {
+    background: var(--soft-pink);
+    color: var(--rose-gold);
+  }
+
+  .nav-item.active {
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(183, 110, 121, 0.3);
+  }
+
+  .sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .admin-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 12px;
+    background: var(--bg);
+  }
+
+  .admin-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--champagne), var(--rose-gold));
+    color: #fff;
+    display: grid; place-items: center;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .admin-avatar.sm { width: 36px; height: 36px; font-size: 14px; }
+
+  .admin-meta { flex: 1; min-width: 0; }
+  .admin-meta strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); }
+  .admin-meta span { font-size: 11px; color: var(--muted); }
+
+  .logout-btn {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .logout-btn:hover { background: var(--danger); color: #fff; }
+
+  /* Compact sidebar */
+  body.compact-sidebar .sidebar { width: var(--sidebar-collapsed-w); }
+  body.compact-sidebar .brand-text,
+  body.compact-sidebar .nav-item span,
+  body.compact-sidebar .admin-meta,
+  body.compact-sidebar .logout-btn i { display: none; }
+  body.compact-sidebar .nav-item { justify-content: center; padding: 14px; }
+  body.compact-sidebar .sidebar-brand { justify-content: center; }
+  body.compact-sidebar .admin-card { justify-content: center; }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .sidebar-overlay.show { display: block; opacity: 1; }
+
+  /* ============== MAIN WRAPPER ============== */
+  .main-wrapper {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+  }
+  body.compact-sidebar .main-wrapper { margin-left: var(--sidebar-collapsed-w); }
+
+  /* ============== TOP HEADER ============== */
+  .top-header {
+    position: sticky; top: 0;
+    height: var(--header-h);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    z-index: 100;
+  }
+  body.theme-dark .top-header { background: rgba(42, 33, 35, 0.85); }
+
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+
+  .hamburger {
+    display: none;
+    border: none; background: transparent;
+    font-size: 22px; color: var(--text);
+    cursor: pointer;
+  }
+
+  .page-title { font-size: 20px; color: var(--text); font-family: 'Poppins', sans-serif; font-weight: 600; }
+
+  .icon-btn {
+    position: relative;
+    border: none; background: transparent;
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .icon-btn:hover { background: var(--soft-pink); color: var(--rose-gold); }
+  .badge {
+    position: absolute; top: 6px; right: 8px;
+    background: var(--danger); color: #fff;
+    font-size: 10px; font-weight: 600;
+    min-width: 18px; height: 18px;
+    border-radius: 9px;
+    display: grid; place-items: center;
+    padding: 0 4px;
+  }
+
+  .header-admin {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px; border-radius: 12px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .header-admin:hover { background: var(--soft-pink); }
+  .header-admin .admin-meta strong { font-size: 13px; }
+  .header-admin .fa-chevron-down { font-size: 12px; color: var(--muted); }
+
+  /* ============== MAIN CONTENT ============== */
+  .main-content { padding: 32px 28px; }
+
+  .page-header { margin-bottom: 28px; }
+  .page-header h1 { font-size: 30px; color: var(--text); margin-bottom: 6px; }
+  .page-header p { color: var(--muted); font-size: 15px; }
+
+  /* ============== SETTINGS LAYOUT ============== */
+  .settings-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* Settings nav */
+  .settings-nav {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .settings-tab {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .settings-tab i { width: 18px; text-align: center; font-size: 15px; }
+  .settings-tab:hover { background: var(--soft-pink); color: var(--rose-gold); }
+  .settings-tab.active {
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.25);
+  }
+
+  /* Settings content */
+  .settings-content { min-height: 400px; }
+
+  .settings-section { display: none; animation: fadeIn 0.3s ease; }
+  .settings-section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  body.no-animations .settings-section,
+  body.no-animations * { animation: none !important; transition: none !important; }
+
+  .section-head { margin-bottom: 20px; }
+  .section-head h3 { font-size: 22px; color: var(--text); margin-bottom: 4px; }
+  .section-head p { color: var(--muted); font-size: 14px; }
+
+  /* ============== CARD ============== */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  .card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ============== FORM ============== */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field.full { grid-column: 1 / -1; }
+
+  .field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.12);
+    background: var(--white);
+  }
+
+  .field input[readonly] { background: var(--soft-pink); color: var(--muted); cursor: not-allowed; }
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .input-wrap { position: relative; }
+  .input-wrap input { padding-right: 44px; }
+  .toggle-eye {
+    position: absolute; right: 8px; top: 50%;
+    transform: translateY(-50%);
+    border: none; background: transparent;
+    color: var(--muted); cursor: pointer;
+    padding: 8px; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .toggle-eye:hover { color: var(--accent); background: var(--soft-pink); }
+
+  /* Radio + checkbox groups */
+  .radio-group { display: flex; gap: 16px; padding-top: 4px; }
+  .radio, .check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .radio input, .check input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+
+  .checkbox-group {
+    display: flex; flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 4px;
+  }
+
+  /* ============== FORM ACTIONS ============== */
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ============== BUTTONS ============== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(183, 110, 121, 0.25);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(183, 110, 121, 0.35); }
+  .btn-ghost {
+    background: var(--bg);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--soft-pink); border-color: var(--accent); }
+  .btn-danger {
+    background: linear-gradient(135deg, var(--danger), #B9413D);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(217, 83, 79, 0.25);
+  }
+  .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(217, 83, 79, 0.35); }
+
+  /* ============== SALON LOGO ============== */
+  .salon-card { padding-top: 28px; }
+  .logo-block {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .logo-preview {
+    width: 100px; height: 100px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--soft-pink), var(--champagne));
+    display: grid; place-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .logo-preview span {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--rose-gold);
+  }
+  .logo-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .logo-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* ============== ACCOUNT CARD ============== */
+  .account-card { text-align: center; }
+  .profile-avatar {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    color: #fff;
+    display: grid; place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 40px; font-weight: 700;
+    margin: 0 auto 28px;
+    box-shadow: 0 8px 24px rgba(183, 110, 121, 0.3);
+  }
+
+  /* ============== PASSWORD STRENGTH ============== */
+  .strength-block {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .strength-meter {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .strength-bar {
+    height: 100%;
+    width: 10%;
+    background: var(--danger);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  .strength-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .password-reqs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .req {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .req i { font-size: 8px; color: var(--muted); }
+  .req.valid { color: var(--success); }
+  .req.valid i { color: var(--success); }
+
+  /* ============== TOGGLE SWITCH ============== */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px; height: 26px;
+    flex-shrink: 0;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; inset: 0;
+    background: var(--border);
+    border-radius: 26px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .slider::before {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    left: 3px; top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .switch input:checked + .slider { background: var(--accent); }
+  .switch input:checked + .slider::before { transform: translateX(22px); }
+
+  /* ============== TOGGLE LIST ============== */
+  .toggle-list { display: flex; flex-direction: column; }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-row strong { font-size: 14px; font-weight: 600; color: var(--text); display: block; }
+  .toggle-row p { font-size: 13px; }
+
+  .muted { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+  /* ============== STATUS PILL ============== */
+  .status-pill {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .status-pill.enabled { background: rgba(76, 175, 80, 0.12); border-color: var(--success); color: var(--success); }
+
+  /* ============== APPEARANCE ============== */
+  .theme-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .theme-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 16px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .theme-card i { font-size: 24px; color: var(--accent); }
+  .theme-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .theme-card.active {
+    border-color: var(--accent);
+    background: var(--soft-pink);
+    box-shadow: 0 4px 14px rgba(183, 110, 121, 0.15);
+  }
+
+  .accent-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .accent-swatch {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .accent-swatch:hover { transform: scale(1.1); }
+  .accent-swatch.active {
+    border-color: var(--text);
+    box-shadow: 0 0 0 3px var(--white), 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* ============== SYSTEM INFO ============== */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .info-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-value { font-size: 15px; font-weight: 600; color: var(--text); }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    background: rgba(242, 169, 59, 0.15);
+    color: var(--warning);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* ============== ACTION CARDS ============== */
+  .action-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .action-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .action-card h4 { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; }
+  .action-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--soft-pink);
+    color: var(--rose-gold);
+    display: grid; place-items: center;
+    font-size: 18px;
+  }
+  .action-icon.danger { background: rgba(217, 83, 79, 0.12); color: var(--danger); }
+  .action-card .btn { margin-top: auto; width: 100%; justify-content: center; }
+
+  /* ============== MODAL ============== */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(47, 37, 40, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .modal-overlay.show { display: flex; opacity: 1; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: rgba(217, 83, 79, 0.12);
+    color: var(--danger);
+    display: grid; place-items: center;
+    font-size: 26px;
+  }
+  .modal h3 { font-size: 22px; color: var(--text); margin-bottom: 10px; }
+  .modal p { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .modal-actions .btn { flex: 1; justify-content: center; }
+
+  /* ============== TOAST ============== */
+  .toast-container {
+    position: fixed;
+    top: 24px; right: 24px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .toast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--success);
+    min-width: 280px;
+    max-width: 380px;
+    animation: toastIn 0.3s ease;
+  }
+  .toast.error { border-left-color: var(--danger); }
+  .toast.warning { border-left-color: var(--warning); }
+  .toast i { font-size: 18px; color: var(--success); }
+  .toast.error i { color: var(--danger); }
+  .toast.warning i { color: var(--warning); }
+  .toast span { font-size: 14px; font-weight: 500; color: var(--text); }
+  .toast.removing { animation: toastOut 0.3s ease forwards; }
+
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes toastOut {
+    to { opacity: 0; transform: translateX(100%); }
+  }
+
+  /* ============== RESPONSIVE ============== */
+  @media (max-width: 1100px) {
+    .settings-layout { grid-template-columns: 200px 1fr; }
+  }
+
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main-wrapper { margin-left: 0; }
+    .hamburger { display: block; }
+    .settings-layout { grid-template-columns: 1fr; }
+    .settings-nav {
+      position: relative;
+      top: 0;
+      flex-direction: row;
+      overflow-x: auto;
+      padding: 8px;
+      gap: 6px;
+      scrollbar-width: thin;
+    }
+    .settings-tab { flex-shrink: 0; }
+    .settings-tab span { display: none; }
+    .settings-tab { padding: 12px 14px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .theme-cards { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .main-content { padding: 20px 16px; }
+    .top-header { padding: 0 16px; }
+    .header-admin .admin-meta { display: none; }
+    .page-header h1 { font-size: 24px; }
+    .card { padding: 20px; }
+    .form-actions { flex-direction: column; }
+    .form-actions .btn { width: 100%; justify-content: center; }
+    .modal-actions { flex-direction: column; }
+    .toast-container { left: 16px; right: 16px; top: 16px; }
+    .toast { min-width: 0; max-width: none; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- ============== SIDEBAR ============== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-mark">P</div>
+    <div class="brand-text">
+      <h1>PINK BEAUTY</h1>
+      <span>Luxury Beauty Meets Smart Technology</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-users"></i><span>User Management</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i><span>Customer Management</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-user-tie"></i><span>Staff Management</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-calendar-check"></i><span>Appointment Management</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-credit-card"></i><span>Payment Management</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-spa"></i><span>Service Management</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-star"></i><span>Feedback &amp; Ratings</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports &amp; Analytics</span></a>
+    <a href="#" class="nav-item active"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-card">
+      <div class="admin-avatar">A</div>
+      <div class="admin-meta">
+        <strong>Admin Name</strong>
+        <span>Administrator</span>
+      </div>
+      <button class="logout-btn" id="logoutBtn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+</aside>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ============== MAIN WRAPPER ============== -->
+<div class="main-wrapper">
+
+  <!-- ============== TOP HEADER ============== -->
+  <header class="top-header">
+    <div class="header-left">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+      <h2 class="page-title">Settings</h2>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" title="Notifications">
+        <i class="fa-solid fa-bell"></i>
+        <span class="badge">3</span>
+      </button>
+      <div class="header-admin">
+        <div class="admin-avatar sm">A</div>
+        <div class="admin-meta">
+          <strong>Admin Name</strong>
+          <span>Administrator</span>
+        </div>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============== MAIN CONTENT ============== -->
+  <main class="main-content">
+
+    <section class="page-header">
+      <div>
+        <h1>Settings</h1>
+        <p>Manage your salon system preferences and account settings</p>
+      </div>
+    </section>
+
+    <section class="settings-layout">
+
+      <!-- ===== SETTINGS NAV ===== -->
+      <aside class="settings-nav" id="settingsNav">
+        <button class="settings-tab active" data-tab="general"><i class="fa-solid fa-sliders"></i><span>General</span></button>
+        <button class="settings-tab" data-tab="salon"><i class="fa-solid fa-store"></i><span>Salon Profile</span></button>
+        <button class="settings-tab" data-tab="account"><i class="fa-solid fa-user"></i><span>Account</span></button>
+        <button class="settings-tab" data-tab="security"><i class="fa-solid fa-shield-halved"></i><span>Security</span></button>
+        <button class="settings-tab" data-tab="notifications"><i class="fa-solid fa-bell"></i><span>Notifications</span></button>
+        <button class="settings-tab" data-tab="appearance"><i class="fa-solid fa-palette"></i><span>Appearance</span></button>
+        <button class="settings-tab" data-tab="appointments"><i class="fa-solid fa-calendar-check"></i><span>Appointments</span></button>
+        <button class="settings-tab" data-tab="payments"><i class="fa-solid fa-credit-card"></i><span>Payments</span></button>
+        <button class="settings-tab" data-tab="system"><i class="fa-solid fa-server"></i><span>System</span></button>
+      </aside>
+
+      <!-- ===== SETTINGS CONTENT ===== -->
+      <section class="settings-content">
+
+        <!-- ===== GENERAL ===== -->
+        <div class="settings-section active" id="general">
+          <div class="section-head">
+            <h3>General Settings</h3>
+            <p>Basic system configuration for your salon.</p>
+          </div>
+          <div class="card">
+            <div class="form-grid">
+              <div class="field">
+                <label>System Name</label>
+                <input type="text" id="systemName" value="PINK BEAUTY SALON" />
+              </div>
+              <div class="field">
+                <label>Tagline</label>
+                <input type="text" id="tagline" value="Luxury Beauty Meets Smart Technology" />
+              </div>
+              <div class="field">
+                <label>Default Language</label>
+                <select id="defaultLanguage">
+                  <option value="English">English</option>
+                  <option value="Sinhala">Sinhala</option>
+                  <option value="Tamil">Tamil</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Currency</label>
+                <select id="currency">
+                  <option value="LKR">LKR - Sri Lankan Rupee</option>
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Time Zone</label>
+                <input type="text" id="timeZone" value="Asia/Colombo" />
+              </div>
+              <div class="field">
+                <label>Date Format</label>
+                <select id="dateFormat">
+                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Time Format</label>
+                <div class="radio-group">
+                  <label class="radio"><input type="radio" name="timeFormat" value="12" checked /><span>12 Hour</span></label>
+                  <label class="radio"><input type="radio" name="timeFormat" value="24" /><span>24 Hour</span></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="saveGeneralSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+              <button class="btn btn-ghost" onclick="resetSection('general')"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SALON PROFILE ===== -->
+        <div class="settings-section" id="salon">
+          <div class="section-head">
+            <h3>Salon Information</h3>
+            <p>Public profile details for your salon.</p>
+          </div>
+          <div class="card salon-card">
+            <div class="logo-block">
+              <div class="logo-preview" id="logoPreview">
+                <span id="logoPlaceholder">P</span>
+                <img id="logoImage" src="" alt="Salon Logo" style="display:none;" />
+              </div>
+              <div class="logo-actions">
+                <input type="file" id="logoInput" accept="image/*" hidden />
+                <button class="btn btn-primary" onclick="uploadSalonLogo()"><i class="fa-solid fa-upload"></i> Upload Logo</button>
+                <button class="btn btn-ghost" onclick="removeSalonLogo()"><i class="fa-solid fa-trash"></i> Remove Logo</button>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Salon Name</label>
+                <input type="text" id="salonName" value="PINK BEAUTY SALON" />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" id="salonEmail" value="info@pinkbeautysalon.com" />
+              </div>
+              <div class="field">
+                <label>Phone</label>
+                <input type="text" id="salonPhone" value="+94 71 234 5678" />
+              </div>
+              <div class="field">
+                <label>Address</label>
+                <input type="text" id="salonAddress" value="Colombo, Sri Lanka" />
+              </div>
+              <div class="field">
+                <label>Website</label>
+                <input type="text" id="salonWebsite" value="www.pinkbeautysalon.com" />
+              </div>
+              <div class="field">
+                <label>Opening Time</label>
+                <input type="time" id="openingTime" value="09:00" />
+              </div>
+              <div class="field">
+                <label>Closing Time</label>
+                <input type="time" id="closingTime" value="18:00" />
+              </div>
+              <div class="field">
+                <label>Working Days</label>
+                <div class="checkbox-group">
+                  <label class="check"><input type="checkbox" class="working-day" value="Monday" checked /><span>Monday</span></label>
+                  <label class="check"><input type="checkbox" class="working-day" value="Tuesday" checked /><span>Tuesday</span></label>
+                  <label class="check"><input type="checkbox" class="working-day" value="Wednesday" checked /><span>Wednesday</span></label>
+                  <label class="check"><input type="checkbox" class="working-day" value="Thursday" checked /><span>Thursday</span></label>
+                  <label class="check"><input type="checkbox" class="working-day" value="Friday" checked /><span>Friday</span></label>
+                  <label class="check"><input type="checkbox" class="working-day" value="Saturday" checked /><span>Saturday</span></label>
+                  <label class="check"><input type="checkbox" class="working-day" value="Sunday" /><span>Sunday</span></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="saveSalonProfile()"><i class="fa-solid fa-floppy-disk"></i> Save Salon Profile</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== ACCOUNT ===== -->
+        <div class="settings-section" id="account">
+          <div class="section-head">
+            <h3>My Account</h3>
+            <p>Update your personal admin account details.</p>
+          </div>
+          <div class="card account-card">
+            <div class="profile-avatar">
+              <span id="profileAvatarText">A</span>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Full Name</label>
+                <input type="text" id="accountFullName" value="Admin Name" />
+              </div>
+              <div class="field">
+                <label>Username</label>
+                <input type="text" id="accountUsername" value="admin" />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" id="accountEmail" value="admin@pinkbeautysalon.com" />
+              </div>
+              <div class="field">
+                <label>Phone</label>
+                <input type="text" id="accountPhone" value="+94 71 234 5678" />
+              </div>
+              <div class="field">
+                <label>Role</label>
+                <input type="text" id="accountRole" value="Administrator" readonly />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="updateProfile()"><i class="fa-solid fa-floppy-disk"></i> Update Profile</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SECURITY ===== -->
+        <div class="settings-section" id="security">
+          <div class="section-head">
+            <h3>Security &amp; Password</h3>
+            <p>Protect your account with a strong password and 2FA.</p>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title">Change Password</h4>
+            <div class="form-grid">
+              <div class="field">
+                <label>Current Password</label>
+                <div class="input-wrap">
+                  <input type="password" id="currentPassword" placeholder="Enter current password" />
+                  <button class="toggle-eye" data-target="currentPassword"><i class="fa-solid fa-eye"></i></button>
+                </div>
+              </div>
+              <div class="field">
+                <label>New Password</label>
+                <div class="input-wrap">
+                  <input type="password" id="newPassword" placeholder="Enter new password" oninput="checkPasswordStrength();checkPasswordRequirements();" />
+                  <button class="toggle-eye" data-target="newPassword"><i class="fa-solid fa-eye"></i></button>
+                </div>
+              </div>
+              <div class="field">
+                <label>Confirm New Password</label>
+                <div class="input-wrap">
+                  <input type="password" id="confirmPassword" placeholder="Re-enter new password" oninput="checkPasswordMatch();" />
+                  <button class="toggle-eye" data-target="confirmPassword"><i class="fa-solid fa-eye"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="strength-block">
+              <div class="strength-meter">
+                <div class="strength-bar" id="strengthBar"></div>
+              </div>
+              <span class="strength-label" id="strengthLabel">Weak</span>
+            </div>
+
+            <div class="password-reqs" id="passwordReqs">
+              <div class="req" data-req="length"><i class="fa-solid fa-circle"></i> At least 8 characters</div>
+              <div class="req" data-req="upper"><i class="fa-solid fa-circle"></i> One uppercase letter</div>
+              <div class="req" data-req="lower"><i class="fa-solid fa-circle"></i> One lowercase letter</div>
+              <div class="req" data-req="number"><i class="fa-solid fa-circle"></i> One number</div>
+              <div class="req" data-req="special"><i class="fa-solid fa-circle"></i> One special character</div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="changePassword()"><i class="fa-solid fa-key"></i> Change Password</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="toggle-row">
+              <div>
+                <h4 class="card-title">Two-Factor Authentication</h4>
+                <p class="muted">Add an extra layer of security to your admin account.</p>
+                <span class="status-pill" id="twoFactorStatus">Currently Disabled</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="twoFactorToggle" onchange="toggle2FA(this)" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== NOTIFICATIONS ===== -->
+        <div class="settings-section" id="notifications">
+          <div class="section-head">
+            <h3>Notification Preferences</h3>
+            <p>Choose what you want to be notified about.</p>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title">Notification Types</h4>
+            <div class="toggle-list">
+              <div class="toggle-row">
+                <div>
+                  <strong>Appointment Notifications</strong>
+                  <p class="muted">Receive notifications for new appointments</p>
+                </div>
+                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="appointment" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>Appointment Cancellation</strong>
+                  <p class="muted">Receive notifications when appointments are cancelled</p>
+                </div>
+                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="cancellation" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>New Customer</strong>
+                  <p class="muted">Receive notifications when a new customer registers</p>
+                </div>
+                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="newCustomer" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>Payment Notifications</strong>
+                  <p class="muted">Receive notifications for successful payments</p>
+                </div>
+                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="payment" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>Feedback Notifications</strong>
+                  <p class="muted">Receive notifications when customers submit feedback</p>
+                </div>
+                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="feedback" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>Staff Notifications</strong>
+                  <p class="muted">Receive staff leave and availability notifications</p>
+                </div>
+                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="staff" /><span class="slider"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title">Notification Channels</h4>
+            <div class="toggle-list">
+              <div class="toggle-row">
+                <div><strong>Email Notifications</strong><p class="muted">Receive alerts via email</p></div>
+                <label class="switch"><input type="checkbox" class="channel-toggle" data-key="email" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div><strong>System Notifications</strong><p class="muted">In-app system alerts</p></div>
+                <label class="switch"><input type="checkbox" class="channel-toggle" data-key="system" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div><strong>SMS Notifications</strong><p class="muted">Receive alerts via SMS</p></div>
+                <label class="switch"><input type="checkbox" class="channel-toggle" data-key="sms" /><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="updateNotificationSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Notification Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== APPEARANCE ===== -->
+        <div class="settings-section" id="appearance">
+          <div class="section-head">
+            <h3>Appearance</h3>
+            <p>Customize how the dashboard looks for you.</p>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title">Theme</h4>
+            <div class="theme-cards">
+              <button class="theme-card active" data-theme="light"><i class="fa-solid fa-sun"></i><span>Light</span></button>
+              <button class="theme-card" data-theme="dark"><i class="fa-solid fa-moon"></i><span>Dark</span></button>
+              <button class="theme-card" data-theme="system"><i class="fa-solid fa-laptop"></i><span>System</span></button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title">Accent Color</h4>
+            <div class="accent-row">
+              <button class="accent-swatch active" data-color="#B76E79" style="background:#B76E79" title="Rose Gold"></button>
+              <button class="accent-swatch" data-color="#E8C07D" style="background:#E8C07D" title="Champagne Gold"></button>
+              <button class="accent-swatch" data-color="#F8D7DA" style="background:#F8D7DA" title="Soft Pink"></button>
+              <button class="accent-swatch" data-color="#8F4F5A" style="background:#8F4F5A" title="Dark Rose"></button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="toggle-row">
+              <div><strong>Compact Sidebar</strong><p class="muted">Collapse sidebar to save space</p></div>
+              <label class="switch"><input type="checkbox" id="compactSidebar" onchange="toggleCompactSidebar(this)" /><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><strong>Enable Animations</strong><p class="muted">Smooth transitions and effects</p></div>
+              <label class="switch"><input type="checkbox" id="enableAnimations" checked onchange="toggleAnimations(this)" /><span class="slider"></span></label>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="updateAppearanceSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Appearance</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== APPOINTMENTS ===== -->
+        <div class="settings-section" id="appointments">
+          <div class="section-head">
+            <h3>Appointment Configuration</h3>
+            <p>Configure how appointments are booked and managed.</p>
+          </div>
+          <div class="card">
+            <div class="form-grid">
+              <div class="field">
+                <label>Appointment Duration</label>
+                <select id="appointmentDuration">
+                  <option value="15">15 minutes</option>
+                  <option value="30" selected>30 minutes</option>
+                  <option value="45">45 minutes</option>
+                  <option value="60">60 minutes</option>
+                  <option value="90">90 minutes</option>
+                  <option value="120">120 minutes</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Booking Advance Period</label>
+                <select id="bookingAdvance">
+                  <option value="0">Same Day</option>
+                  <option value="1">1 Day</option>
+                  <option value="3">3 Days</option>
+                  <option value="7" selected>7 Days</option>
+                  <option value="14">14 Days</option>
+                  <option value="30">30 Days</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Maximum Daily Appointments</label>
+                <input type="number" id="maxDaily" value="50" min="1" />
+              </div>
+              <div class="field full">
+                <label>Cancellation Policy</label>
+                <textarea id="cancellationPolicy" rows="3">Appointments can be cancelled up to 24 hours before the scheduled time.</textarea>
+              </div>
+            </div>
+
+            <div class="toggle-list">
+              <div class="toggle-row">
+                <div><strong>Allow Same-Day Booking</strong><p class="muted">Let customers book on the same day</p></div>
+                <label class="switch"><input type="checkbox" id="sameDayBooking" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div><strong>Allow Online Booking</strong><p class="muted">Accept bookings from online portal</p></div>
+                <label class="switch"><input type="checkbox" id="onlineBooking" checked /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div><strong>Auto Confirm Appointments</strong><p class="muted">Skip manual confirmation step</p></div>
+                <label class="switch"><input type="checkbox" id="autoConfirm" /><span class="slider"></span></label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="saveAppointmentSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Appointment Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PAYMENTS ===== -->
+        <div class="settings-section" id="payments">
+          <div class="section-head">
+            <h3>Payment Configuration</h3>
+            <p>Configure accepted payment methods and tax settings.</p>
+          </div>
+          <div class="card">
+            <div class="field full">
+              <label>Accepted Payment Methods</label>
+              <div class="checkbox-group">
+                <label class="check"><input type="checkbox" class="payment-method" value="Cash" checked /><span>Cash</span></label>
+                <label class="check"><input type="checkbox" class="payment-method" value="Card" checked /><span>Credit / Debit Card</span></label>
+                <label class="check"><input type="checkbox" class="payment-method" value="Bank Transfer" /><span>Bank Transfer</span></label>
+                <label class="check"><input type="checkbox" class="payment-method" value="Online" /><span>Online Payment</span></label>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Default Payment Method</label>
+                <select id="defaultPaymentMethod">
+                  <option value="Cash" selected>Cash</option>
+                  <option value="Card">Credit / Debit Card</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Online">Online Payment</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Tax (%)</label>
+                <input type="number" id="taxRate" value="0" min="0" max="100" step="0.1" />
+              </div>
+              <div class="field">
+                <label>Currency</label>
+                <input type="text" id="paymentCurrency" value="LKR" readonly />
+              </div>
+            </div>
+            <div class="toggle-list">
+              <div class="toggle-row">
+                <div><strong>Enable Online Payments</strong><p class="muted">Allow online payment gateway</p></div>
+                <label class="switch"><input type="checkbox" id="onlinePayments" /><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <div><strong>Require Payment Confirmation</strong><p class="muted">Manually confirm each payment</p></div>
+                <label class="switch"><input type="checkbox" id="paymentConfirmation" checked /><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="savePaymentSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Payment Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SYSTEM ===== -->
+        <div class="settings-section" id="system">
+          <div class="section-head">
+            <h3>System Preferences</h3>
+            <p>System information and maintenance actions.</p>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title">System Information</h4>
+            <div class="info-grid">
+              <div class="info-item"><span class="info-label">Application</span><span class="info-value">PINK BEAUTY SALON</span></div>
+              <div class="info-item"><span class="info-label">Version</span><span class="info-value">1.0.0</span></div>
+              <div class="info-item"><span class="info-label">Environment</span><span class="info-value"><span class="tag">Development</span></span></div>
+              <div class="info-item"><span class="info-label">Backend</span><span class="info-value">Spring Boot</span></div>
+              <div class="info-item"><span class="info-label">Database</span><span class="info-value">MySQL</span></div>
+              <div class="info-item"><span class="info-label">API</span><span class="info-value">REST API</span></div>
+            </div>
+          </div>
+
+          <div class="action-cards">
+            <div class="card action-card">
+              <div class="action-icon"><i class="fa-solid fa-broom"></i></div>
+              <div>
+                <h4>Clear Cache</h4>
+                <p class="muted">Clear temporary system data.</p>
+              </div>
+              <button class="btn btn-ghost" onclick="clearCache()"><i class="fa-solid fa-broom"></i> Clear Cache</button>
+            </div>
+            <div class="card action-card">
+              <div class="action-icon"><i class="fa-solid fa-database"></i></div>
+              <div>
+                <h4>Backup Data</h4>
+                <p class="muted">Create a backup of salon data.</p>
+              </div>
+              <button class="btn btn-primary" onclick="createBackup()"><i class="fa-solid fa-download"></i> Create Backup</button>
+            </div>
+            <div class="card action-card">
+              <div class="action-icon"><i class="fa-solid fa-upload"></i></div>
+              <div>
+                <h4>Restore Data</h4>
+                <p class="muted">Restore previously backed up data.</p>
+              </div>
+              <button class="btn btn-ghost" onclick="restoreBackup()"><i class="fa-solid fa-rotate"></i> Restore Backup</button>
+            </div>
+            <div class="card action-card danger">
+              <div class="action-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div>
+                <h4>Reset Settings</h4>
+                <p class="muted">Restore all settings to default values.</p>
+              </div>
+              <button class="btn btn-danger" onclick="resetSettings()"><i class="fa-solid fa-rotate-left"></i> Reset Settings</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </section>
+  </main>
+</div>
+
+<!-- ============== CONFIRMATION MODAL ============== -->
+<div class="modal-overlay" id="confirmationModal">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <h3 id="modalTitle">Reset Settings?</h3>
+    <p id="modalMessage">Are you sure you want to restore all settings to their default values?</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="modalConfirmBtn">Reset Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============== TOAST ============== -->
+<div class="toast-container" id="toastContainer"></div>
+<script>
+  const API_URL = "/api/settings";
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    initializeSettingsTabs();
+    initializePasswordToggles();
+    initializeAppearance();
+    initializeNotifications();
+
+    loadSettings();
+  });
+
+  async function loadSettings() {
+
+    try {
+
+      const response = await fetch(API_URL);
+
+      if (!response.ok) {
+        throw new Error("Failed to load settings");
+      }
+
+      const data = await response.json();
+
+      populateSettings(data);
+
+    } catch (error) {
+
+      console.error(error);
+
+      showToast(
+              "Unable to load settings",
+              "error"
+      );
+    }
+  }
+
+  function populateSettings(data) {
+
+    // General
+    setValue("systemName", data.systemName);
+    setValue("tagline", data.tagline);
+    setValue("defaultLanguage", data.defaultLanguage);
+    setValue("currency", data.currency);
+    setValue("timeZone", data.timeZone);
+    setValue("dateFormat", data.dateFormat);
+
+    document
+            .querySelectorAll('input[name="timeFormat"]')
+            .forEach(input => {
+              input.checked = input.value === data.timeFormat;
+            });
+
+
+    // Salon
+    setValue("salonName", data.salonName);
+    setValue("salonEmail", data.salonEmail);
+    setValue("salonPhone", data.salonPhone);
+    setValue("salonAddress", data.salonAddress);
+    setValue("salonWebsite", data.salonWebsite);
+    setValue("openingTime", data.openingTime);
+    setValue("closingTime", data.closingTime);
+
+
+    // Appointment
+    setValue(
+            "appointmentDuration",
+            data.appointmentDuration
+    );
+
+    setValue(
+            "bookingAdvance",
+            data.bookingAdvance
+    );
+
+    setValue(
+            "maxDaily",
+            data.maxDailyAppointments
+    );
+
+    setValue(
+            "cancellationPolicy",
+            data.cancellationPolicy
+    );
+
+    setChecked(
+            "sameDayBooking",
+            data.sameDayBooking
+    );
+
+    setChecked(
+            "onlineBooking",
+            data.onlineBooking
+    );
+
+    setChecked(
+            "autoConfirm",
+            data.autoConfirm
+    );
+
+
+    // Payment
+    setValue(
+            "defaultPaymentMethod",
+            data.defaultPaymentMethod
+    );
+
+    setValue(
+            "taxRate",
+            data.taxRate
+    );
+
+    setValue(
+            "paymentCurrency",
+            data.currency
+    );
+
+    setChecked(
+            "onlinePayments",
+            data.onlinePayments
+    );
+
+    setChecked(
+            "paymentConfirmation",
+            data.paymentConfirmation
+    );
+
+
+    // Appearance
+    setChecked(
+            "compactSidebar",
+            data.compactSidebar
+    );
+
+    setChecked(
+            "enableAnimations",
+            data.enableAnimations
+    );
+
+    applyTheme(data.theme);
+    applyAccentColor(data.accentColor);
+
+
+    // Security
+    setChecked(
+            "twoFactorToggle",
+            data.twoFactorEnabled
+    );
+
+    update2FAStatus(data.twoFactorEnabled);
+
+
+    // Notifications
+    setCheckedByKey(
+            ".notif-toggle",
+            "appointment",
+            data.appointmentNotification
+    );
+
+    setCheckedByKey(
+            ".notif-toggle",
+            "cancellation",
+            data.cancellationNotification
+    );
+
+    setCheckedByKey(
+            ".notif-toggle",
+            "newCustomer",
+            data.newCustomerNotification
+    );
+
+    setCheckedByKey(
+            ".notif-toggle",
+            "payment",
+            data.paymentNotification
+    );
+
+    setCheckedByKey(
+            ".notif-toggle",
+            "feedback",
+            data.feedbackNotification
+    );
+
+    setCheckedByKey(
+            ".notif-toggle",
+            "staff",
+            data.staffNotification
+    );
+
+    setCheckedByKey(
+            ".channel-toggle",
+            "email",
+            data.emailNotification
+    );
+
+    setCheckedByKey(
+            ".channel-toggle",
+            "system",
+            data.systemNotification
+    );
+
+    setCheckedByKey(
+            ".channel-toggle",
+            "sms",
+            data.smsNotification
+    );
+  }
+
+  function setValue(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element && value !== null && value !== undefined) {
+      element.value = value;
+    }
+  }
+
+
+  function setChecked(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.checked = Boolean(value);
+    }
+  }
+
+
+  function setCheckedByKey(
+          selector,
+          key,
+          value
+  ) {
+
+    const element = document.querySelector(
+            `${selector}[data-key="${key}"]`
+    );
+
+    if (element) {
+      element.checked = Boolean(value);
+    }
+  }
+  async function saveGeneralSettings() {
+
+    await saveSettings("General settings saved successfully");
+  }
+
+  async function saveSalonProfile() {
+
+    await saveSettings("Salon profile saved successfully");
+  }
+  async function saveAppointmentSettings() {
+
+    await saveSettings(
+            "Appointment settings saved successfully"
+    );
+  }
+  async function savePaymentSettings() {
+
+    await saveSettings(
+            "Payment settings saved successfully"
+    );
+  }
+  async function updateAppearanceSettings() {
+
+    await saveSettings(
+            "Appearance settings saved successfully"
+    );
+  }
+  async function updateNotificationSettings() {
+
+    await saveSettings(
+            "Notification settings saved successfully"
+    );
+  }
+  async function saveSettings(successMessage) {
+
+    try {
+
+      const payload = collectSettings();
+
+      const response = await fetch(API_URL, {
+
+        method: "PUT",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save settings");
+      }
+
+      const data = await response.json();
+
+      populateSettings(data);
+
+      showToast(successMessage);
+
+    } catch (error) {
+
+      console.error(error);
+
+      showToast(
+              "Failed to save settings",
+              "error"
+      );
+    }
+  }
+  function collectSettings() {
+
+    const timeFormat =
+            document.querySelector(
+                    'input[name="timeFormat"]:checked'
+            )?.value || "12";
+
+
+    const workingDays =
+            Array.from(
+                    document.querySelectorAll(".working-day:checked")
+            )
+                    .map(input => input.value)
+                    .join(",");
+
+
+    const paymentMethods =
+            Array.from(
+                    document.querySelectorAll(".payment-method:checked")
+            )
+                    .map(input => input.value)
+                    .join(",");
+
+
+    return {
+
+      // General
+      systemName: getValue("systemName"),
+      tagline: getValue("tagline"),
+      defaultLanguage: getValue("defaultLanguage"),
+      currency: getValue("currency"),
+      timeZone: getValue("timeZone"),
+      dateFormat: getValue("dateFormat"),
+      timeFormat: timeFormat,
+
+
+      // Salon
+      salonName: getValue("salonName"),
+      salonEmail: getValue("salonEmail"),
+      salonPhone: getValue("salonPhone"),
+      salonAddress: getValue("salonAddress"),
+      salonWebsite: getValue("salonWebsite"),
+      openingTime: getValue("openingTime"),
+      closingTime: getValue("closingTime"),
+      workingDays: workingDays,
+
+
+      // Appointment
+      appointmentDuration:
+              Number(getValue("appointmentDuration")),
+
+      bookingAdvance:
+              Number(getValue("bookingAdvance")),
+
+      maxDailyAppointments:
+              Number(getValue("maxDaily")),
+
+      cancellationPolicy:
+              getValue("cancellationPolicy"),
+
+      sameDayBooking:
+              getChecked("sameDayBooking"),
+
+      onlineBooking:
+              getChecked("onlineBooking"),
+
+      autoConfirm:
+              getChecked("autoConfirm"),
+
+
+      // Payment
+      paymentMethods:
+      paymentMethods,
+
+      defaultPaymentMethod:
+              getValue("defaultPaymentMethod"),
+
+      taxRate:
+              Number(getValue("taxRate")),
+
+      onlinePayments:
+              getChecked("onlinePayments"),
+
+      paymentConfirmation:
+              getChecked("paymentConfirmation"),
+
+
+      // Appearance
+      theme:
+              getCurrentTheme(),
+
+      accentColor:
+              getComputedStyle(document.documentElement)
+                      .getPropertyValue("--accent")
+                      .trim(),
+
+      compactSidebar:
+              getChecked("compactSidebar"),
+
+      enableAnimations:
+              getChecked("enableAnimations"),
+
+
+      // Security
+      twoFactorEnabled:
+              getChecked("twoFactorToggle"),
+
+
+      // Notifications
+      appointmentNotification:
+              getNotifValue("appointment"),
+
+      cancellationNotification:
+              getNotifValue("cancellation"),
+
+      newCustomerNotification:
+              getNotifValue("newCustomer"),
+
+      paymentNotification:
+              getNotifValue("payment"),
+
+      feedbackNotification:
+              getNotifValue("feedback"),
+
+      staffNotification:
+              getNotifValue("staff"),
+
+      emailNotification:
+              getChannelValue("email"),
+
+      systemNotification:
+              getChannelValue("system"),
+
+      smsNotification:
+              getChannelValue("sms")
+    };
+    function getValue(id) {
+
+      const element = document.getElementById(id);
+
+      return element ? element.value : "";
+    }
+
+
+    function getChecked(id) {
+
+      const element = document.getElementById(id);
+
+      return element ? element.checked : false;
+    }
+
+
+    function getNotifValue(key) {
+
+      const element = document.querySelector(
+              `.notif-toggle[data-key="${key}"]`
+      );
+
+      return element ? element.checked : false;
+    }
+
+
+    function getChannelValue(key) {
+
+      const element = document.querySelector(
+              `.channel-toggle[data-key="${key}"]`
+      );
+
+      return element ? element.checked : false;
+    }
+    function initializeSettingsTabs() {
+
+      const tabs =
+              document.querySelectorAll(".settings-tab");
+
+      const sections =
+              document.querySelectorAll(".settings-section");
+
+
+      tabs.forEach(tab => {
+
+        tab.addEventListener("click", () => {
+
+          const target =
+                  tab.dataset.tab;
+
+
+          tabs.forEach(item =>
+                  item.classList.remove("active")
+          );
+
+          sections.forEach(section =>
+                  section.classList.remove("active")
+          );
+
+
+          tab.classList.add("active");
+
+
+          const section =
+                  document.getElementById(target);
+
+          if (section) {
+            section.classList.add("active");
+          }
+        });
+      });
+    }
+    function initializeAppearance() {
+
+      document
+              .querySelectorAll(".theme-card")
+              .forEach(card => {
+
+                card.addEventListener("click", () => {
+
+                  const theme =
+                          card.dataset.theme;
+
+                  applyTheme(theme);
+
+                  document
+                          .querySelectorAll(".theme-card")
+                          .forEach(c =>
+                                  c.classList.remove("active")
+                          );
+
+                  card.classList.add("active");
+                });
+              });
+
+
+      document
+              .querySelectorAll(".accent-swatch")
+              .forEach(swatch => {
+
+                swatch.addEventListener("click", () => {
+
+                  const color =
+                          swatch.dataset.color;
+
+                  applyAccentColor(color);
+
+                  document
+                          .querySelectorAll(".accent-swatch")
+                          .forEach(s =>
+                                  s.classList.remove("active")
+                          );
+
+                  swatch.classList.add("active");
+                });
+              });
+    }
+    function applyTheme(theme) {
+
+      document.body.classList.remove("theme-dark");
+
+      if (theme === "dark") {
+
+        document.body.classList.add("theme-dark");
+
+      } else if (theme === "system") {
+
+        if (
+                window.matchMedia(
+                        "(prefers-color-scheme: dark)"
+                ).matches
+        ) {
+          document.body.classList.add("theme-dark");
+        }
+      }
+
+      document
+              .querySelectorAll(".theme-card")
+              .forEach(card => {
+
+                card.classList.toggle(
+                        "active",
+                        card.dataset.theme === theme
+                );
+              });
+    }
+
+
+    function getCurrentTheme() {
+
+      const active =
+              document.querySelector(
+                      ".theme-card.active"
+              );
+
+      return active
+              ? active.dataset.theme
+              : "light";
+    }
+    function applyAccentColor(color) {
+
+      if (!color) {
+        return;
+      }
+
+      document.documentElement.style
+              .setProperty("--accent", color);
+
+      document.documentElement.style
+              .setProperty("--rose-gold", color);
+
+      document
+              .querySelectorAll(".accent-swatch")
+              .forEach(swatch => {
+
+                swatch.classList.toggle(
+                        "active",
+                        swatch.dataset.color.toLowerCase() ===
+                        color.toLowerCase()
+                );
+              });
+    }
+    function toggleCompactSidebar(element) {
+
+      document.body.classList.toggle(
+              "compact-sidebar",
+              element.checked
+      );
+    }
+
+    function toggleAnimations(element) {
+
+      document.body.classList.toggle(
+              "no-animations",
+              !element.checked
+      );
+    }
+    function initializePasswordToggles() {
+
+      document
+              .querySelectorAll(".toggle-eye")
+              .forEach(button => {
+
+                button.addEventListener("click", () => {
+
+                  const targetId =
+                          button.dataset.target;
+
+                  const input =
+                          document.getElementById(targetId);
+
+                  if (!input) {
+                    return;
+                  }
+
+                  if (input.type === "password") {
+
+                    input.type = "text";
+
+                    button.innerHTML =
+                            '<i class="fa-solid fa-eye-slash"></i>';
+
+                  } else {
+
+                    input.type = "password";
+
+                    button.innerHTML =
+                            '<i class="fa-solid fa-eye"></i>';
+                  }
+                });
+              });
+    }
+    function checkPasswordStrength() {
+
+      const password =
+              document.getElementById("newPassword").value;
+
+      let score = 0;
+
+      if (password.length >= 8) score++;
+
+      if (/[A-Z]/.test(password)) score++;
+
+      if (/[a-z]/.test(password)) score++;
+
+      if (/[0-9]/.test(password)) score++;
+
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+
+      const bar =
+              document.getElementById("strengthBar");
+
+      const label =
+              document.getElementById("strengthLabel");
+
+
+      const widths = [
+        "10%",
+        "25%",
+        "45%",
+        "70%",
+        "100%"
+      ];
+
+      const labels = [
+        "Weak",
+        "Weak",
+        "Fair",
+        "Good",
+        "Strong"
+      ];
+
+
+      bar.style.width =
+              widths[score];
+
+      label.textContent =
+              labels[score];
+    }
+    function checkPasswordRequirements() {
+
+      const password =
+              document.getElementById("newPassword").value;
+
+
+      updateRequirement(
+              "length",
+              password.length >= 8
+      );
+
+      updateRequirement(
+              "upper",
+              /[A-Z]/.test(password)
+      );
+
+      updateRequirement(
+              "lower",
+              /[a-z]/.test(password)
+      );
+
+      updateRequirement(
+              "number",
+              /[0-9]/.test(password)
+      );
+
+      updateRequirement(
+              "special",
+              /[^A-Za-z0-9]/.test(password)
+      );
+    }
+
+
+    function updateRequirement(
+            name,
+            valid
+    ) {
+
+      const req =
+              document.querySelector(
+                      `.req[data-req="${name}"]`
+              );
+
+      if (!req) {
+        return;
+      }
+
+      req.classList.toggle(
+              "valid",
+              valid
+      );
+
+      const icon =
+              req.querySelector("i");
+
+      if (icon) {
+
+        icon.className = valid
+                ? "fa-solid fa-circle-check"
+                : "fa-solid fa-circle";
+      }
+    }
+
+    function checkPasswordMatch() {
+
+      const password =
+              document.getElementById("newPassword").value;
+
+      const confirm =
+              document.getElementById("confirmPassword").value;
+
+      const input =
+              document.getElementById("confirmPassword");
+
+      if (!confirm) {
+        input.style.borderColor = "";
+        return;
+      }
+
+      if (password === confirm) {
+
+        input.style.borderColor =
+                "var(--success)";
+
+      } else {
+
+        input.style.borderColor =
+                "var(--danger)";
+      }
+    }
+    async function changePassword() {
+
+      const currentPassword =
+              getValue("currentPassword");
+
+      const newPassword =
+              getValue("newPassword");
+
+      const confirmPassword =
+              getValue("confirmPassword");
+
+
+      if (!currentPassword ||
+              !newPassword ||
+              !confirmPassword) {
+
+        showToast(
+                "Please fill all password fields",
+                "error"
+        );
+
+        return;
+      }
+
+
+      if (newPassword !== confirmPassword) {
+
+        showToast(
+                "Passwords do not match",
+                "error"
+        );
+
+        return;
+      }
+
+
+      try {
+
+        const response = await fetch(
+                "/api/auth/change-password",
+                {
+                  method: "PUT",
+
+                  headers: {
+                    "Content-Type":
+                            "application/json"
+                  },
+
+                  body: JSON.stringify({
+                    currentPassword,
+                    newPassword
+                  })
+                }
+        );
+
+
+        if (!response.ok) {
+          throw new Error();
+        }
+
+
+        showToast(
+                "Password changed successfully"
+        );
+
+
+        document.getElementById(
+                "currentPassword"
+        ).value = "";
+
+        document.getElementById(
+                "newPassword"
+        ).value = "";
+
+        document.getElementById(
+                "confirmPassword"
+        ).value = "";
+
+
+      } catch (error) {
+
+        showToast(
+                "Failed to change password",
+                "error"
+        );
+      }
+    }
+    async function toggle2FA(element) {
+
+      const enabled = element.checked;
+
+      try {
+
+        const response = await fetch(
+                `/api/settings/2fa?enabled=${enabled}`,
+                {
+                  method: "PUT"
+                }
+        );
+
+        if (!response.ok) {
+          throw new Error();
+        }
+
+        update2FAStatus(enabled);
+
+        showToast(
+                enabled
+                        ? "Two-factor authentication enabled"
+                        : "Two-factor authentication disabled"
+        );
+
+      } catch (error) {
+
+        element.checked = !enabled;
+
+        showToast(
+                "Unable to update 2FA",
+                "error"
+        );
+      }
+    }
+
+
+    function update2FAStatus(enabled) {
+
+      const status =
+              document.getElementById(
+                      "twoFactorStatus"
+              );
+
+      if (!status) {
+        return;
+      }
+
+      status.textContent =
+              enabled
+                      ? "Currently Enabled"
+                      : "Currently Disabled";
+
+      status.classList.toggle(
+              "enabled",
+              enabled
+      );
+    }
+    function initializeNotifications() {
+
+      document
+              .querySelectorAll(
+                      ".notif-toggle, .channel-toggle"
+              )
+              .forEach(toggle => {
+
+                toggle.addEventListener(
+                        "change",
+                        () => {
+
+                          console.log(
+                                  toggle.dataset.key,
+                                  toggle.checked
+                          );
+                        }
+                );
+              });
+    }
+  }
+  function resetSettings() {
+
+    openModal(
+            "Reset Settings?",
+            "Are you sure you want to restore all settings to their default values?",
+            async () => {
+
+              try {
+
+                const response =
+                        await fetch(
+                                `${API_URL}/reset`,
+                                {
+                                  method: "POST"
+                                }
+                        );
+
+                if (!response.ok) {
+                  throw new Error();
+                }
+
+                await loadSettings();
+
+                closeModal();
+
+                showToast(
+                        "Settings restored to default"
+                );
+
+              } catch (error) {
+
+                showToast(
+                        "Failed to reset settings",
+                        "error"
+                );
+              }
+            }
+    );
+  }
+  function openModal(
+          title,
+          message,
+          confirmAction
+  ) {
+
+    document.getElementById(
+            "modalTitle"
+    ).textContent = title;
+
+    document.getElementById(
+            "modalMessage"
+    ).textContent = message;
+
+
+    const confirmButton =
+            document.getElementById(
+                    "modalConfirmBtn"
+            );
+
+
+    confirmButton.onclick =
+            confirmAction;
+
+
+    document
+            .getElementById(
+                    "confirmationModal"
+            )
+            .classList.add("show");
+  }
+
+
+  function closeModal() {
+
+    document
+            .getElementById(
+                    "confirmationModal"
+            )
+            .classList.remove("show");
+  }
+  function clearCache() {
+
+    localStorage.clear();
+
+    sessionStorage.clear();
+
+    showToast(
+            "Cache cleared successfully"
+    );
+  }
+  async function createBackup() {
+
+    try {
+
+      const response =
+              await fetch(API_URL);
+
+      const data =
+              await response.json();
+
+
+      const blob =
+              new Blob(
+                      [JSON.stringify(data, null, 2)],
+                      {
+                        type: "application/json"
+                      }
+              );
+
+
+      const url =
+              URL.createObjectURL(blob);
+
+
+      const link =
+              document.createElement("a");
+
+      link.href = url;
+
+      link.download =
+              "pink-beauty-settings-backup.json";
+
+      link.click();
+
+
+      URL.revokeObjectURL(url);
+
+
+      showToast(
+              "Backup created successfully"
+      );
+
+    } catch (error) {
+
+      showToast(
+              "Backup failed",
+              "error"
+      );
+    }
+  }
+  function restoreBackup() {
+
+    const input =
+            document.createElement("input");
+
+    input.type = "file";
+
+    input.accept =
+            "application/json";
+
+
+    input.onchange = async () => {
+
+      const file =
+              input.files[0];
+
+      if (!file) {
+        return;
+      }
+
+
+      try {
+
+        const text =
+                await file.text();
+
+        const data =
+                JSON.parse(text);
+
+
+        const response =
+                await fetch(API_URL, {
+
+                  method: "PUT",
+
+                  headers: {
+                    "Content-Type":
+                            "application/json"
+                  },
+
+                  body:
+                          JSON.stringify(data)
+                });
+
+
+        if (!response.ok) {
+          throw new Error();
+        }
+
+
+        await loadSettings();
+
+
+        showToast(
+                "Backup restored successfully"
+        );
+
+      } catch (error) {
+
+        showToast(
+                "Invalid backup file",
+                "error"
+        );
+      }
+    };
+
+
+    input.click();
+  }
+  async function updateProfile() {
+
+    const profile = {
+
+      fullName:
+              getValue("accountFullName"),
+
+      username:
+              getValue("accountUsername"),
+
+      email:
+              getValue("accountEmail"),
+
+      phone:
+              getValue("accountPhone")
+    };
+
+
+    try {
+
+      const response =
+              await fetch(
+                      "/api/users/profile",
+                      {
+                        method: "PUT",
+
+                        headers: {
+                          "Content-Type":
+                                  "application/json"
+                        },
+
+                        body:
+                                JSON.stringify(profile)
+                      }
+              );
+
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+
+      showToast(
+              "Profile updated successfully"
+      );
+
+
+    } catch (error) {
+
+      showToast(
+              "Failed to update profile",
+              "error"
+      );
+    }
+  }
+  function getCurrentTheme() {
+
+    const active =
+            document.querySelector(
+                    ".theme-card.active"
+            );
+
+    return active
+            ? active.dataset.theme
+            : "light";
+  }
+
+</script>
+
+</body>
+</html>

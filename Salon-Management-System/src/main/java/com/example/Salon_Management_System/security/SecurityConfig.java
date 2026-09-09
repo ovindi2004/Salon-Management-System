@@ -110,6 +110,32 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/payments/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/payments/refund/*").permitAll()
 
+
+                        // Frontend static resources
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/static/**"
+                        ).permitAll()
+
+                        // Settings API
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/settings"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/settings"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                "/api/settings/**"
+                        ).permitAll()
+
                         //Feedback
                         .requestMatchers("/api/v1/feedback/**").permitAll()
 
