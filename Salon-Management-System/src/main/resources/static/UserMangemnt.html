@@ -2468,6 +2468,1825 @@
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
 
-<script ></script>
+<script >
+    const API_BASE = "http://localhost:8080/api/v1/admin-users";
+
+    let allUsers = [];
+    let filteredUsers = [];
+
+    let currentPage = 1;
+    const pageSize = 8;
+
+    let editingUserId = null;
+    let selectedUserId = null;
+    let selectedAction = null;
+
+
+    // ==========================================
+    // INITIAL LOAD
+    // ==========================================
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        loadUsers();
+
+        document
+            .getElementById("searchInput")
+            .addEventListener("input", applyFilters);
+
+        document
+            .getElementById("roleFilter")
+            .addEventListener("change", applyFilters);
+
+        document
+            .getElementById("statusFilter")
+            .addEventListener("change", applyFilters);
+
+        document
+            .getElementById("sortFilter")
+            .addEventListener("change", applyFilters);
+
+        setupMobileSidebar();
+    });
+
+
+    // ==========================================
+    // GET ALL USERS
+    // ==========================================
+
+    async function loadUsers() {
+
+        try {
+
+            showLoading();
+
+            const response = await fetch(`${API_BASE}/all`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to load users");
+            }
+
+            allUsers = await response.json();
+
+            filteredUsers = [...allUsers];
+
+            updateStatistics();
+
+            applyFilters();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                "Unable to load users",
+                "error"
+            );
+
+        }
+    }
+
+
+    // ==========================================
+    // CREATE USER
+    // ==========================================
+
+    async function saveUser() {
+
+        const fullName =
+            document.getElementById("fullName").value.trim();
+
+        const username =
+            document.getElementById("username").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const role =
+            document.getElementById("role").value;
+
+        const status =
+            document.getElementById("status").value;
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const address =
+            document.getElementById("address").value.trim();
+
+
+        if (!fullName) {
+            showToast("Full name is required", "error");
+            return;
+        }
+
+        if (!username) {
+            showToast("Username is required", "error");
+            return;
+        }
+
+        if (!email) {
+            showToast("Email is required", "error");
+            return;
+        }
+
+        if (!role) {
+            showToast("Please select a role", "error");
+            return;
+        }
+
+
+        if (role !== "STAFF" &&
+            role !== "RECEPTIONIST") {
+
+            showToast(
+                "Admin can create only Staff or Receptionist",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!editingUserId) {
+
+            if (!password) {
+                showToast("Password is required", "error");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast(
+                    "Passwords do not match",
+                    "error"
+                );
+                return;
+            }
+        }
+
+
+        const data = {
+
+            fullName: fullName,
+
+            username: username,
+
+            email: email,
+
+            password:
+                editingUserId
+                    ? null
+                    : password,
+
+            phone: phone,
+
+            address: address,
+
+            role: role,
+
+            status:
+                status === "Active"
+                    ? "ACTIVE"
+                    : "INACTIVE"
+        };
+
+
+        try {
+
+            setSaveButtonLoading(true);
+
+            let url;
+            let method;
+
+            if (editingUserId) {
+
+                url =
+                    `${API_BASE}/update/${editingUserId}`;
+
+                method = "PUT";
+
+            } else {
+
+                url =
+                    `${API_BASE}/save`;
+
+                method = "POST";
+            }
+
+
+            const response = await fetch(url, {
+
+                method: method,
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(data)
+            });
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Failed to save user"
+                );
+            }
+
+
+            if (!editingUserId &&
+                result.password) {
+
+                showToast(
+                    "User created successfully. Temporary password generated.",
+                    "success"
+                );
+
+            } else {
+
+                showToast(
+                    editingUserId
+                        ? "User updated successfully"
+                        : "User created successfully",
+                    "success"
+                );
+            }
+
+
+            closeUserModal();
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                error.message,
+                "error"
+            );
+
+        } finally {
+
+            setSaveButtonLoading(false);
+        }
+    }
+
+
+    // ==========================================
+    // EDIT USER
+    // ==========================================
+
+    async function editUser(id) {
+
+        try {
+
+            const response =
+                await fetch(`${API_BASE}/${id}`);
+
+            if (!response.ok) {
+                throw new Error("Unable to load user");
+            }
+
+            const user =
+                await response.json();
+
+            editingUserId = id;
+
+            document.getElementById("userModalTitle")
+                .textContent = "Edit User";
+
+            document.getElementById("fullName")
+                .value = user.fullName || "";
+
+            document.getElementById("username")
+                .value = user.username || "";
+
+            document.getElementById("email")
+                .value = user.email || "";
+
+            document.getElementById("phone")
+                .value = user.phone || "";
+
+            document.getElementById("address")
+                .value = user.address || "";
+
+            document.getElementById("role")
+                .value = user.role || "";
+
+            document.getElementById("status")
+                .value =
+                user.status === "ACTIVE"
+                    ? "Active"
+                    : "Inactive";
+
+            document.getElementById("password")
+                .value = "";
+
+            document.getElementById("confirmPassword")
+                .value = "";
+
+            document.getElementById("passwordFieldGroup")
+                .style.display = "none";
+
+            document.getElementById(
+                "confirmPasswordFieldGroup"
+            ).style.display = "none";
+
+            document.querySelector(
+                "#saveUserBtn .btn-text"
+            ).textContent = "Update User";
+
+            document
+                .getElementById("userModalOverlay")
+                .classList.add("active");
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+        }
+    }
+
+
+    // ==========================================
+    // CHANGE ROLE
+    // ==========================================
+
+    function openRoleModal(id) {
+
+        const user =
+            allUsers.find(
+                u => u.adminUserId === id
+            );
+
+        if (!user) return;
+
+        selectedUserId = id;
+
+        document.getElementById("roleModalUser")
+            .textContent = user.fullName;
+
+        document.getElementById("roleModalCurrent")
+            .innerHTML =
+            `<span class="role-badge ${user.role.toLowerCase()}">
+            ${user.role}
+        </span>`;
+
+        document.getElementById("newRole")
+            .value = "";
+
+        document
+            .getElementById("roleModalOverlay")
+            .classList.add("active");
+    }
+
+
+    async function changeRole() {
+
+        const role =
+            document.getElementById("newRole").value;
+
+        if (!role) {
+
+            showToast(
+                "Please select a new role",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (role === "OWNER" ||
+            role === "CUSTOMER") {
+
+            showToast(
+                "This role cannot be assigned here",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/${selectedUserId}/role?role=${role}`,
+                    {
+                        method: "PATCH"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                const error =
+                    await response.text();
+
+                throw new Error(error);
+            }
+
+
+            showToast(
+                "User role updated successfully",
+                "success"
+            );
+
+            closeRoleModal();
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+        }
+    }
+
+
+    // ==========================================
+    // STATUS
+    // ==========================================
+
+    function openStatusConfirmation(id) {
+
+        const user =
+            allUsers.find(
+                u => u.adminUserId === id
+            );
+
+        if (!user) return;
+
+        selectedUserId = id;
+
+        const newStatus =
+            user.status === "ACTIVE"
+                ? "INACTIVE"
+                : "ACTIVE";
+
+        selectedAction = newStatus;
+
+        const title =
+            newStatus === "ACTIVE"
+                ? "Activate User?"
+                : "Deactivate User?";
+
+        const message =
+            newStatus === "ACTIVE"
+                ? `Are you sure you want to activate ${user.fullName}?`
+                : `Are you sure you want to deactivate ${user.fullName}?`;
+
+        document.getElementById("confirmModalTitle")
+            .textContent = title;
+
+        document.getElementById("confirmModalMessage")
+            .textContent = message;
+
+        const button =
+            document.getElementById("confirmModalBtn");
+
+        button.className =
+            newStatus === "ACTIVE"
+                ? "btn-success"
+                : "btn-danger";
+
+        button.querySelector(".btn-text")
+            .textContent =
+            newStatus === "ACTIVE"
+                ? "Activate User"
+                : "Deactivate User";
+
+        document
+            .getElementById("confirmModalOverlay")
+            .classList.add("active");
+    }
+
+
+    async function confirmAction() {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/${selectedUserId}/status?status=${selectedAction}`,
+                    {
+                        method: "PATCH"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                const text =
+                    await response.text();
+
+                throw new Error(text);
+            }
+
+
+            showToast(
+                `User ${selectedAction.toLowerCase()} successfully`,
+                "success"
+            );
+
+            closeConfirmModal();
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+        }
+    }
+
+
+    // ==========================================
+    // DELETE
+    // ==========================================
+
+    function openDeleteModal(id) {
+
+        selectedUserId = id;
+
+        document
+            .getElementById("deleteModalOverlay")
+            .classList.add("active");
+    }
+
+
+    async function confirmDelete() {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/delete/${selectedUserId}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                const text =
+                    await response.text();
+
+                throw new Error(text);
+            }
+
+
+            showToast(
+                "User deleted successfully",
+                "success"
+            );
+
+            closeDeleteModal();
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+        }
+    }
+
+
+    // ==========================================
+    // RESET PASSWORD
+    // ==========================================
+
+    function openResetModal(id) {
+
+        selectedUserId = id;
+
+        document.getElementById("resetInitial")
+            .style.display = "block";
+
+        document.getElementById("resetSuccess")
+            .style.display = "none";
+
+        document
+            .getElementById("resetModalOverlay")
+            .classList.add("active");
+    }
+
+
+    async function resetPassword() {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/${selectedUserId}/reset-password`,
+                    {
+                        method: "POST"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                const text =
+                    await response.text();
+
+                throw new Error(text);
+            }
+
+
+            const result =
+                await response.json();
+
+
+            document.getElementById("tempUsername")
+                .textContent =
+                result.username;
+
+            document.getElementById("tempPassword")
+                .value =
+                result.password;
+
+
+            document.getElementById("resetInitial")
+                .style.display = "none";
+
+            document.getElementById("resetSuccess")
+                .style.display = "block";
+
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+        }
+    }
+
+
+    function copyTemporaryPassword() {
+
+        const password =
+            document.getElementById("tempPassword").value;
+
+        navigator.clipboard.writeText(password);
+
+        showToast(
+            "Temporary password copied",
+            "success"
+        );
+    }
+
+
+    // ==========================================
+    // FILTER
+    // ==========================================
+
+    function applyFilters() {
+
+        const search =
+            document.getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+        const role =
+            document.getElementById("roleFilter")
+                .value;
+
+        const status =
+            document.getElementById("statusFilter")
+                .value;
+
+        const sort =
+            document.getElementById("sortFilter")
+                .value;
+
+
+        filteredUsers =
+            allUsers.filter(user => {
+
+                const matchesSearch =
+                    !search ||
+                    user.fullName
+                        ?.toLowerCase()
+                        .includes(search) ||
+                    user.username
+                        ?.toLowerCase()
+                        .includes(search) ||
+                    user.email
+                        ?.toLowerCase()
+                        .includes(search);
+
+                const matchesRole =
+                    !role ||
+                    user.role === role;
+
+                const matchesStatus =
+                    !status ||
+                    (
+                        status === "Active"
+                            ? user.status === "ACTIVE"
+                            : user.status === "INACTIVE"
+                    );
+
+                return (
+                    matchesSearch &&
+                    matchesRole &&
+                    matchesStatus
+                );
+            });
+
+
+        if (sort === "az") {
+
+            filteredUsers.sort(
+                (a, b) =>
+                    a.fullName.localeCompare(b.fullName)
+            );
+
+        } else if (sort === "za") {
+
+            filteredUsers.sort(
+                (a, b) =>
+                    b.fullName.localeCompare(a.fullName)
+            );
+
+        } else if (sort === "newest") {
+
+            filteredUsers.sort(
+                (a, b) =>
+                    new Date(b.createdAt) -
+                    new Date(a.createdAt)
+            );
+
+        } else if (sort === "oldest") {
+
+            filteredUsers.sort(
+                (a, b) =>
+                    new Date(a.createdAt) -
+                    new Date(b.createdAt)
+            );
+        }
+
+
+        currentPage = 1;
+
+        renderUsers();
+    }
+
+
+    // ==========================================
+    // RENDER
+    // ==========================================
+
+    function renderUsers() {
+
+        const tableBody =
+            document.getElementById("tableBody");
+
+        const mobileCards =
+            document.getElementById("mobileCards");
+
+        tableBody.innerHTML = "";
+
+        mobileCards.innerHTML = "";
+
+
+        if (filteredUsers.length === 0) {
+
+            document.getElementById("tableContainer")
+                .style.display = "none";
+
+            document.getElementById("mobileCards")
+                .style.display = "none";
+
+            document.getElementById("emptyState")
+                .style.display = "block";
+
+            document.getElementById("pagination")
+                .style.display = "none";
+
+            return;
+        }
+
+
+        document.getElementById("emptyState")
+            .style.display = "none";
+
+        document.getElementById("tableContainer")
+            .style.display = "block";
+
+        document.getElementById("pagination")
+            .style.display = "flex";
+
+
+        const start =
+            (currentPage - 1) * pageSize;
+
+        const end =
+            start + pageSize;
+
+        const pageUsers =
+            filteredUsers.slice(start, end);
+
+
+        pageUsers.forEach(user => {
+
+            tableBody.innerHTML += createTableRow(user);
+
+            mobileCards.innerHTML += createMobileCard(user);
+        });
+
+
+        renderPagination();
+    }
+
+
+    function createTableRow(user) {
+
+        const initials =
+            getInitials(user.fullName);
+
+        const statusText =
+            user.status === "ACTIVE"
+                ? "Active"
+                : "Inactive";
+
+        const statusClass =
+            user.status === "ACTIVE"
+                ? "active"
+                : "inactive";
+
+        return `
+        <tr>
+
+            <td>
+                <div class="user-cell">
+
+                    <div class="table-avatar">
+                        ${initials}
+                    </div>
+
+                    <div class="user-cell-info">
+
+                        <span class="user-cell-name">
+                            ${escapeHtml(user.fullName)}
+                        </span>
+
+                        <span class="user-cell-id">
+                            #${user.adminUserId}
+                        </span>
+
+                    </div>
+
+                </div>
+            </td>
+
+            <td>
+                ${escapeHtml(user.username)}
+            </td>
+
+            <td>
+                ${escapeHtml(user.email)}
+            </td>
+
+            <td>
+                <span class="role-badge ${user.role.toLowerCase()}">
+                    ${user.role}
+                </span>
+            </td>
+
+            <td>
+                <span class="status-badge ${statusClass}">
+                    ${statusText}
+                </span>
+            </td>
+
+            <td>
+                ${formatDate(user.createdAt)}
+            </td>
+
+            <td class="actions-cell">
+
+                <button
+                    class="row-menu-btn"
+                    onclick="toggleRowMenu(${user.adminUserId})">
+
+                    <i class="fas fa-ellipsis-vertical"></i>
+
+                </button>
+
+                <div
+                    class="row-dropdown"
+                    id="menu-${user.adminUserId}">
+
+                    <button
+                        class="dropdown-item"
+                        onclick="viewProfile(${user.adminUserId})">
+
+                        <i class="fas fa-eye"></i>
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="dropdown-item"
+                        onclick="editUser(${user.adminUserId})">
+
+                        <i class="fas fa-pen"></i>
+                        Edit User
+
+                    </button>
+
+                    <button
+                        class="dropdown-item"
+                        onclick="openRoleModal(${user.adminUserId})">
+
+                        <i class="fas fa-user-shield"></i>
+                        Change Role
+
+                    </button>
+
+                    <button
+                        class="dropdown-item"
+                        onclick="openResetModal(${user.adminUserId})">
+
+                        <i class="fas fa-key"></i>
+                        Reset Password
+
+                    </button>
+
+                    <div class="dropdown-divider"></div>
+
+                    <button
+                        class="dropdown-item"
+                        onclick="openStatusConfirmation(${user.adminUserId})">
+
+                        <i class="fas fa-power-off"></i>
+
+                        ${user.status === "ACTIVE"
+            ? "Deactivate"
+            : "Activate"}
+
+                    </button>
+
+                    <button
+                        class="dropdown-item danger"
+                        onclick="openDeleteModal(${user.adminUserId})">
+
+                        <i class="fas fa-trash"></i>
+                        Delete User
+
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>
+    `;
+    }
+
+
+    // ==========================================
+    // MOBILE CARD
+    // ==========================================
+
+    function createMobileCard(user) {
+
+        return `
+        <div class="user-card">
+
+            <div class="user-card-top">
+
+                <div class="table-avatar">
+                    ${getInitials(user.fullName)}
+                </div>
+
+                <div class="user-card-info">
+
+                    <span class="user-card-name">
+                        ${escapeHtml(user.fullName)}
+                    </span>
+
+                    <span class="user-card-id">
+                        #${user.adminUserId}
+                    </span>
+
+                </div>
+
+                <span class="role-badge ${user.role.toLowerCase()}">
+                    ${user.role}
+                </span>
+
+            </div>
+
+            <div class="user-card-details">
+
+                <div class="user-card-row">
+                    <span class="user-card-label">
+                        Username
+                    </span>
+
+                    <span class="user-card-value">
+                        ${escapeHtml(user.username)}
+                    </span>
+                </div>
+
+                <div class="user-card-row">
+                    <span class="user-card-label">
+                        Email
+                    </span>
+
+                    <span class="user-card-value">
+                        ${escapeHtml(user.email)}
+                    </span>
+                </div>
+
+                <div class="user-card-row">
+                    <span class="user-card-label">
+                        Status
+                    </span>
+
+                    <span class="status-badge ${
+            user.status === "ACTIVE"
+                ? "active"
+                : "inactive"
+        }">
+
+                        ${
+            user.status === "ACTIVE"
+                ? "Active"
+                : "Inactive"
+        }
+
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="user-card-actions">
+
+                <button onclick="editUser(${user.adminUserId})">
+                    <i class="fas fa-pen"></i>
+                    Edit
+                </button>
+
+                <button onclick="openRoleModal(${user.adminUserId})">
+                    <i class="fas fa-user-shield"></i>
+                    Role
+                </button>
+
+                <button
+                    class="danger"
+                    onclick="openDeleteModal(${user.adminUserId})">
+
+                    <i class="fas fa-trash"></i>
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+    `;
+    }
+
+
+    // ==========================================
+    // STATISTICS
+    // ==========================================
+
+    function updateStatistics() {
+
+        const total =
+            allUsers.length;
+
+        const active =
+            allUsers.filter(
+                u => u.status === "ACTIVE"
+            ).length;
+
+        const inactive =
+            allUsers.filter(
+                u => u.status === "INACTIVE"
+            ).length;
+
+        const staff =
+            allUsers.filter(
+                u =>
+                    u.role === "STAFF" ||
+                    u.role === "RECEPTIONIST"
+            ).length;
+
+
+        document.getElementById("statTotal")
+            .textContent = total;
+
+        document.getElementById("statActive")
+            .textContent = active;
+
+        document.getElementById("statStaff")
+            .textContent = staff;
+
+        document.getElementById("statInactive")
+            .textContent = inactive;
+
+
+        const activeRate =
+            total === 0
+                ? 0
+                : Math.round(
+                    (active / total) * 100
+                );
+
+        const inactiveRate =
+            total === 0
+                ? 0
+                : Math.round(
+                    (inactive / total) * 100
+                );
+
+
+        document.getElementById(
+            "statActiveRate"
+        ).textContent = activeRate;
+
+        document.getElementById(
+            "statInactiveRate"
+        ).textContent = inactiveRate;
+    }
+
+
+    // ==========================================
+    // PROFILE
+    // ==========================================
+
+    function viewProfile(id) {
+
+        const user =
+            allUsers.find(
+                u => u.adminUserId === id
+            );
+
+        if (!user) return;
+
+        document.getElementById("profileAvatar")
+            .textContent =
+            getInitials(user.fullName);
+
+        document.getElementById("profileName")
+            .textContent =
+            user.fullName;
+
+        document.getElementById("profileEmail")
+            .textContent =
+            user.email;
+
+        document.getElementById("profileUsername")
+            .textContent =
+            `@${user.username}`;
+
+        document.getElementById("profileBadges")
+            .innerHTML = `
+
+        <span class="role-badge ${user.role.toLowerCase()}">
+            ${user.role}
+        </span>
+
+        <span class="status-badge ${
+            user.status === "ACTIVE"
+                ? "active"
+                : "inactive"
+        }">
+
+            ${
+            user.status === "ACTIVE"
+                ? "Active"
+                : "Inactive"
+        }
+
+        </span>
+    `;
+
+
+        document.getElementById("drawerBody")
+            .innerHTML = `
+
+        <div class="profile-section">
+
+            <div class="profile-section-title">
+                Personal Information
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Full Name
+                </span>
+
+                <span class="profile-info-value">
+                    ${escapeHtml(user.fullName)}
+                </span>
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Phone
+                </span>
+
+                <span class="profile-info-value">
+                    ${escapeHtml(user.phone || "-")}
+                </span>
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Address
+                </span>
+
+                <span class="profile-info-value">
+                    ${escapeHtml(user.address || "-")}
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="profile-section">
+
+            <div class="profile-section-title">
+                Account Information
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Username
+                </span>
+
+                <span class="profile-info-value">
+                    ${escapeHtml(user.username)}
+                </span>
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Email
+                </span>
+
+                <span class="profile-info-value">
+                    ${escapeHtml(user.email)}
+                </span>
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Role
+                </span>
+
+                <span class="profile-info-value">
+                    ${user.role}
+                </span>
+            </div>
+
+            <div class="profile-info-row">
+                <span class="profile-info-label">
+                    Created
+                </span>
+
+                <span class="profile-info-value">
+                    ${formatDate(user.createdAt)}
+                </span>
+            </div>
+
+        </div>
+    `;
+
+
+        document.getElementById("drawerEditBtn")
+            .onclick = () => {
+
+            closeProfileDrawer();
+
+            editUser(id);
+        };
+
+
+        document.getElementById("drawerOverlay")
+            .classList.add("active");
+    }
+
+
+    // ==========================================
+    // MODAL FUNCTIONS
+    // ==========================================
+
+    function openUserModal() {
+
+        editingUserId = null;
+
+        document.getElementById("userModalTitle")
+            .textContent = "Add New User";
+
+        document.getElementById("userForm")
+            .reset();
+
+        document.getElementById("passwordFieldGroup")
+            .style.display = "flex";
+
+        document.getElementById(
+            "confirmPasswordFieldGroup"
+        ).style.display = "flex";
+
+        document.querySelector(
+            "#saveUserBtn .btn-text"
+        ).textContent = "Create User";
+
+        document
+            .getElementById("userModalOverlay")
+            .classList.add("active");
+    }
+
+
+    function closeUserModal() {
+
+        document
+            .getElementById("userModalOverlay")
+            .classList.remove("active");
+    }
+
+
+    function closeRoleModal() {
+
+        document
+            .getElementById("roleModalOverlay")
+            .classList.remove("active");
+    }
+
+
+    function closeDeleteModal() {
+
+        document
+            .getElementById("deleteModalOverlay")
+            .classList.remove("active");
+    }
+
+
+    function closeConfirmModal() {
+
+        document
+            .getElementById("confirmModalOverlay")
+            .classList.remove("active");
+    }
+
+
+    function closeResetModal() {
+
+        document
+            .getElementById("resetModalOverlay")
+            .classList.remove("active");
+    }
+
+
+    function closeProfileDrawer() {
+
+        document
+            .getElementById("drawerOverlay")
+            .classList.remove("active");
+    }
+
+
+    // ==========================================
+    // ROW MENU
+    // ==========================================
+
+    function toggleRowMenu(id) {
+
+        document
+            .querySelectorAll(".row-dropdown")
+            .forEach(menu => {
+
+                if (menu.id !== `menu-${id}`) {
+                    menu.classList.remove("active");
+                }
+            });
+
+
+        const menu =
+            document.getElementById(`menu-${id}`);
+
+        menu.classList.toggle("active");
+    }
+
+
+    document.addEventListener("click", event => {
+
+        if (!event.target.closest(".actions-cell")) {
+
+            document
+                .querySelectorAll(".row-dropdown")
+                .forEach(menu =>
+                    menu.classList.remove("active")
+                );
+        }
+    });
+
+
+    // ==========================================
+    // PAGINATION
+    // ==========================================
+
+    function renderPagination() {
+
+        const totalPages =
+            Math.ceil(
+                filteredUsers.length / pageSize
+            );
+
+        const controls =
+            document.getElementById(
+                "paginationControls"
+            );
+
+        controls.innerHTML = "";
+
+
+        document.getElementById("paginationInfo")
+            .textContent =
+            `Showing ${
+                filteredUsers.length === 0
+                    ? 0
+                    : ((currentPage - 1) * pageSize) + 1
+            }–${
+                Math.min(
+                    currentPage * pageSize,
+                    filteredUsers.length
+                )
+            } of ${filteredUsers.length} users`;
+
+
+        const previous =
+            document.createElement("button");
+
+        previous.className = "page-btn";
+
+        previous.innerHTML =
+            `<i class="fas fa-chevron-left"></i>`;
+
+        previous.disabled =
+            currentPage === 1;
+
+        previous.onclick = () => {
+
+            currentPage--;
+
+            renderUsers();
+        };
+
+        controls.appendChild(previous);
+
+
+        for (let i = 1; i <= totalPages; i++) {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                `page-btn ${
+                    i === currentPage
+                        ? "active"
+                        : ""
+                }`;
+
+            button.textContent = i;
+
+            button.onclick = () => {
+
+                currentPage = i;
+
+                renderUsers();
+            };
+
+            controls.appendChild(button);
+        }
+
+
+        const next =
+            document.createElement("button");
+
+        next.className = "page-btn";
+
+        next.innerHTML =
+            `<i class="fas fa-chevron-right"></i>`;
+
+        next.disabled =
+            currentPage === totalPages;
+
+        next.onclick = () => {
+
+            currentPage++;
+
+            renderUsers();
+        };
+
+        controls.appendChild(next);
+    }
+
+
+    // ==========================================
+    // CSV EXPORT
+    // ==========================================
+
+    function exportCSV() {
+
+        if (filteredUsers.length === 0) {
+
+            showToast(
+                "No users to export",
+                "info"
+            );
+
+            return;
+        }
+
+
+        const headers = [
+            "ID",
+            "Full Name",
+            "Username",
+            "Email",
+            "Role",
+            "Status",
+            "Phone",
+            "Address",
+            "Created Date"
+        ];
+
+
+        const rows =
+            filteredUsers.map(user => [
+
+                user.adminUserId,
+
+                user.fullName,
+
+                user.username,
+
+                user.email,
+
+                user.role,
+
+                user.status,
+
+                user.phone || "",
+
+                user.address || "",
+
+                formatDate(user.createdAt)
+            ]);
+
+
+        let csv =
+            headers.join(",") + "\n";
+
+        rows.forEach(row => {
+
+            csv +=
+                row
+                    .map(value =>
+                        `"${String(value)
+                            .replace(/"/g, '""')}"`
+                    )
+                    .join(",") +
+                "\n";
+        });
+
+
+        const blob =
+            new Blob(
+                [csv],
+                { type: "text/csv;charset=utf-8;" }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            "admin-users.csv";
+
+        link.click();
+
+        URL.revokeObjectURL(url);
+    }
+
+
+    // ==========================================
+    // HELPERS
+    // ==========================================
+
+    function getInitials(name) {
+
+        if (!name) return "U";
+
+        return name
+            .split(" ")
+            .map(word => word.charAt(0))
+            .slice(0, 2)
+            .join("")
+            .toUpperCase();
+    }
+
+
+    function formatDate(date) {
+
+        if (!date) return "-";
+
+        return new Date(date)
+            .toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric"
+                }
+            );
+    }
+
+
+    function escapeHtml(value) {
+
+        if (!value) return "";
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    function showLoading() {
+
+        document.getElementById("tableBody")
+            .innerHTML = `
+            <tr>
+                <td colspan="7"
+                    style="text-align:center;padding:40px">
+
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading users...
+
+                </td>
+            </tr>
+        `;
+    }
+
+
+    function showToast(message, type = "info") {
+
+        const container =
+            document.getElementById(
+                "toastContainer"
+            );
+
+        const toast =
+            document.createElement("div");
+
+        toast.className =
+            `toast ${type}`;
+
+        const icon =
+            type === "success"
+                ? "fa-circle-check"
+                : type === "error"
+                    ? "fa-circle-xmark"
+                    : "fa-circle-info";
+
+        toast.innerHTML = `
+
+        <div class="toast-icon">
+            <i class="fas ${icon}"></i>
+        </div>
+
+        <div class="toast-message">
+            ${escapeHtml(message)}
+        </div>
+    `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add("show");
+        }, 10);
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+            setTimeout(() => {
+                toast.remove();
+            }, 400);
+
+        }, 3500);
+    }
+
+
+    function setSaveButtonLoading(loading) {
+
+        const button =
+            document.getElementById("saveUserBtn");
+
+        const text =
+            button.querySelector(".btn-text");
+
+        const spinner =
+            button.querySelector(".btn-spinner");
+
+
+        button.disabled = loading;
+
+        text.style.display =
+            loading ? "none" : "inline";
+
+        spinner.style.display =
+            loading ? "inline" : "none";
+    }
+
+
+    function setupMobileSidebar() {
+
+        const hamburger =
+            document.getElementById("hamburgerBtn");
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const backdrop =
+            document.getElementById(
+                "sidebarBackdrop"
+            );
+
+
+        hamburger.addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.toggle("active");
+
+                backdrop.classList.toggle("active");
+            }
+        );
+
+
+        backdrop.addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.remove("active");
+
+                backdrop.classList.remove("active");
+            }
+        );
+    }
+</script>
 </body>
 </html>

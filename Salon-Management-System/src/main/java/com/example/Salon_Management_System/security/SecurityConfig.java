@@ -98,8 +98,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/appointment/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/appointment/status/*").permitAll()
 
-
-                        // PAYMENT APIs
+                           //Payment
                         .requestMatchers(HttpMethod.POST, "/api/v1/payments/save").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/payments/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/payments/*").permitAll()
@@ -108,11 +107,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/payments/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/payments/refund/*").permitAll()
 
-                         //Feedback APIs
+                         //Feedback
                         .requestMatchers("/api/v1/feedback/**").permitAll()
-
-                        //report APIs
-                        .requestMatchers("/api/v1/report/**").permitAll()
 
                         // Other APIs require JWT
                         .anyRequest()

@@ -1,5 +1,6 @@
 package com.example.Salon_Management_System.entity;
 
+
 import com.example.Salon_Management_System.enumiration.FeedbackStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,10 @@ public class Feedback {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rating_id", nullable = false, unique = true)
+    private Rating rating;
 
     @Column(length = 500, nullable = false)
     private String comment;

@@ -1,6 +1,7 @@
 package com.example.Salon_Management_System.repository;
 
 import com.example.Salon_Management_System.entity.Feedback;
+
 import com.example.Salon_Management_System.enumiration.FeedbackStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

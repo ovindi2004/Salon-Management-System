@@ -111,8 +111,8 @@ public class UserServiceImpl implements UserService {
                     user.getUserGender(),
                     user.getStatus(),
                     user.getRole()
-            );
-        }catch (Exception e){
+                    );
+    }catch (Exception e){
             log.error("Failed to fetch user by userEmail: {}", userEmail, e);
             throw new RuntimeException("Failed to fetch user by userEmail");
         }

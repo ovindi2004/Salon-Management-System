@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -52,5 +51,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
         LIKE LOWER(CONCAT('%', :name, '%'))
         """)
     List<CustomerDTO> searchCustomers( @Param("name") String name);
-    List<Customer> findByLastVisitDateBetween(LocalDate fromDate, LocalDate toDate);
 }
