@@ -7,17 +7,7 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b96d63c-3fb9-4a1b-9a78-74d50568a5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/ReportController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/ReportDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/ReportRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/ReportService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/ReportServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" afterDir="false" />
-    </list>
+    <list default="true" id="9b96d63c-3fb9-4a1b-9a78-74d50568a5d9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -178,7 +168,7 @@
       <workItem from="1787117239635" duration="50158000" />
       <workItem from="1787629754538" duration="16603000" />
       <workItem from="1787849573631" duration="17623000" />
-      <workItem from="1788189717470" duration="104804000" />
+      <workItem from="1788189717470" duration="105109000" />
     </task>
     <servers />
   </component>
