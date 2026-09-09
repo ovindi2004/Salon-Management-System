@@ -8,30 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b96d63c-3fb9-4a1b-9a78-74d50568a5d9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Salon-Management-System.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/AdminUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AdminPasswordResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AdminUserRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AdminUserResponseDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AppointmentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AppointmentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/FeedbackDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/FeedbackDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/PaymentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/PaymentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/RatingDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Feedback.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Feedback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/AppointmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/AppointmentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/FeedbackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/FeedbackRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/AppointmentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/AppointmentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/FeedbackServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/FeedbackServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/PaymentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/UserMangemnt.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/UserMangemnt.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +103,7 @@
     "copilot.chat.legacySessionMetadata.migrated": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/dunij/Downloads/Salon-Management-System",
+    "last_opened_file_path": "C:/Users/dunij/Downloads/Salon-Management-System/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -141,16 +123,16 @@
       <recent name="com.example.Salon_Management_System.security" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dunij\Downloads\Salon-Management-System\Salon-Management-System\src\main\java\com\example\Salon_Management_System\dto" />
       <recent name="C:\Users\dunij\Downloads\Salon-Management-System" />
       <recent name="C:\Users\dunij\Downloads\Salon-Management-System\Salon-Management-System\src\main\java\com\example\Salon_Management_System" />
       <recent name="C:\Users\dunij\Downloads\Salon-Management-System\Salon-Management-System\src\main\java\com\example\Salon_Management_System\service\impl" />
       <recent name="C:\Users\dunij\Downloads\Salon-Management-System\Salon-Management-System\src\main\java\com\example\Salon_Management_System\service" />
-      <recent name="C:\Users\dunij\Downloads\Salon-Management-System\Salon-Management-System\src\main\java\com\example\Salon_Management_System\repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.Salon_Management_System.controller" />
       <recent name="com.example.Salon_Management_System.service.impl" />
       <recent name="com.example.Salon_Management_System.enumiration" />
-      <recent name="com.example.Salon_Management_System.controller" />
       <recent name="com.example.Salon_Management_System.dto" />
       <recent name="com.example.Salon_Management_System.security" />
     </key>
@@ -193,7 +175,7 @@
       <workItem from="1787117239635" duration="50158000" />
       <workItem from="1787629754538" duration="16603000" />
       <workItem from="1787849573631" duration="17623000" />
-      <workItem from="1788189717470" duration="97162000" />
+      <workItem from="1788189717470" duration="98011000" />
     </task>
     <servers />
   </component>

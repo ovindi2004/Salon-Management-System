@@ -60,6 +60,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/user/delete").permitAll()
 
                         .requestMatchers(HttpMethod.PUT, "/api/v1/user/change-password").authenticated()
+                        // Admin User Management APIs
+                        .requestMatchers("/api/v1/admin-users/**").permitAll()
+
                         // Customer
 
                         .requestMatchers(HttpMethod.POST,"/api/v1/customers/save").permitAll()
@@ -98,7 +101,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/appointment/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/appointment/status/*").permitAll()
 
-                           //Payment
+                        //Payment
                         .requestMatchers(HttpMethod.POST, "/api/v1/payments/save").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/payments/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/payments/*").permitAll()
@@ -107,7 +110,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/payments/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/payments/refund/*").permitAll()
 
-                         //Feedback
+                        //Feedback
                         .requestMatchers("/api/v1/feedback/**").permitAll()
 
                         // Other APIs require JWT
@@ -172,6 +175,7 @@ public class SecurityConfig {
                         "POST",
                         "PUT",
                         "DELETE",
+                        "PATCH",
                         "OPTIONS"
                 )
         );
