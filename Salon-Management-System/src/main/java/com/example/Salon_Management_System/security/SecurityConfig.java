@@ -113,6 +113,8 @@ public class SecurityConfig {
                         //Feedback
                         .requestMatchers("/api/v1/feedback/**").permitAll()
 
+                        .requestMatchers("/api/v1/reports/**").permitAll()
+
                         // Other APIs require JWT
                         .anyRequest()
                         .authenticated()

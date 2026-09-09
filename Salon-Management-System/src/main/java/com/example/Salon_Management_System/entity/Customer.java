@@ -31,6 +31,13 @@ public class Customer {
     private LocalDate lastVisitDate;
     private String customerStatus= "Active";
 
+    private LocalDate createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        if (createdAt == null) createdAt = LocalDate.now();
+    }
+
     @OneToOne
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;
