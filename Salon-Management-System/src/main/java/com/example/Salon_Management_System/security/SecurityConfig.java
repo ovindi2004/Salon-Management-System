@@ -100,16 +100,62 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/appointment/update/*").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/appointment/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/appointment/status/*").permitAll()
+                                .requestMatchers("/api/v1/appointment/**").permitAll()
 
                         //Payment
-                        .requestMatchers(HttpMethod.POST, "/api/v1/payments/save").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/payments/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/payments/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/payments/date-range").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/payments/update/*").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/payments/delete/*").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/api/v1/payments/refund/*").permitAll()
+                                // =========================
+// PAYMENT APIs
+// =========================
 
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/v1/payments/save"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/payments/all"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/payments/date-range"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/payments/invoice/*"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/payments/status"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/payments/method"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/payments/*"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.PUT,
+                                        "/api/v1/payments/update/*"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.DELETE,
+                                        "/api/v1/payments/delete/*"
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        HttpMethod.PATCH,
+                                        "/api/v1/payments/refund/*"
+                                ).permitAll()
 
                         // Frontend static resources
                         .requestMatchers(
@@ -140,6 +186,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/feedback/**").permitAll()
 
                         .requestMatchers("/api/v1/reports/**").permitAll()
+
+                        // PRODUCT APIs
+                        .requestMatchers("/api/v1/product/**").permitAll()
+                        //Invoice
+                        .requestMatchers("/api/v1/invoices/**").permitAll()
 
                         // Other APIs require JWT
                         .anyRequest()

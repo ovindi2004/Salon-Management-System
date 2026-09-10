@@ -13,7 +13,10 @@ public interface PaymentService {
 
     List<PaymentDTO> getAllPayments();
 
-    PaymentDTO updatePayment(Long id, PaymentDTO dto);
+    PaymentDTO updatePayment(
+            Long id,
+            PaymentDTO dto
+    );
 
     void deletePayment(Long id);
 
@@ -22,5 +25,17 @@ public interface PaymentService {
     List<PaymentDTO> getPaymentsByDateRange(
             LocalDate from,
             LocalDate to
+    );
+
+    List<PaymentDTO> getPaymentsByInvoice(
+            Long invoiceId
+    );
+
+    List<PaymentDTO> getPaymentsByStatus(
+            String status
+    );
+
+    List<PaymentDTO> getPaymentsByMethod(
+            String method
     );
 }

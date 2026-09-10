@@ -1,7 +1,5 @@
 package com.example.Salon_Management_System.entity;
 
-
-
 import com.example.Salon_Management_System.enumiration.PaymentMethod;
 import com.example.Salon_Management_System.enumiration.PaymentStatus;
 import jakarta.persistence.*;
@@ -23,12 +21,9 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
-    /*
-     * One appointment can have one payment record.
-     */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "appointment_id", nullable = false, unique = true)
-    private Appointment appointment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id", nullable = false)
+    private Invoice invoice;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;

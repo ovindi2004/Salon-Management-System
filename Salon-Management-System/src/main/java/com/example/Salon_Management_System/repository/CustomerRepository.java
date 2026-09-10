@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
@@ -51,4 +52,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
         LIKE LOWER(CONCAT('%', :name, '%'))
         """)
     List<CustomerDTO> searchCustomers( @Param("name") String name);
+    Optional<Customer> findById(Long customerId);
 }

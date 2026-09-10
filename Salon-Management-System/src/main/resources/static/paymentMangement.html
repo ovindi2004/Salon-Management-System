@@ -1,0 +1,6172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payments | Pink Beauty Salon</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+
+        /* =========================================================
+   YOUR ORIGINAL DESIGN
+   ========================================================= */
+
+        :root{
+            --rose-gold:#B76E79;
+            --rose-gold-dark:#9a5963;
+            --soft-pink:#F8D7DA;
+            --champagne:#E8C07D;
+            --champagne-dark:#d4a85f;
+            --cream:#FFF9FB;
+            --dark:#2B2024;
+            --muted:#8C7A80;
+            --white:#FFFFFF;
+            --line:rgba(183,110,121,0.12);
+            --line-strong:rgba(183,110,121,0.22);
+
+            --shadow-sm:
+                    0 1px 3px rgba(43,32,36,0.06),
+                    0 1px 2px rgba(43,32,36,0.04);
+
+            --shadow-md:
+                    0 4px 16px rgba(43,32,36,0.08),
+                    0 2px 6px rgba(43,32,36,0.04);
+
+            --shadow-lg:
+                    0 18px 50px rgba(43,32,36,0.14),
+                    0 6px 18px rgba(43,32,36,0.06);
+
+            --shadow-rose:
+                    0 10px 30px rgba(183,110,121,0.18);
+
+            --radius-sm:10px;
+            --radius:16px;
+            --radius-lg:22px;
+
+            --grad-rose:
+                    linear-gradient(135deg,#B76E79 0%,#9a5963 100%);
+
+            --grad-champagne:
+                    linear-gradient(135deg,#E8C07D 0%,#d4a85f 100%);
+
+            --grad-soft:
+                    linear-gradient(135deg,#FFF9FB 0%,#FDF0F2 100%);
+
+            --paid:#2E7D5B;
+            --paid-bg:#E6F4EE;
+
+            --pending:#B57A00;
+            --pending-bg:#FBF1DC;
+
+            --refunded:#B23A48;
+            --refunded-bg:#FBEAEC;
+
+            --failed:#6B2B2B;
+            --failed-bg:#F2DEDD;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        html,body{
+            height:100%;
+        }
+
+        body{
+            font-family:'Inter',system-ui,sans-serif;
+            background:var(--cream);
+            color:var(--dark);
+            font-size:14px;
+            line-height:1.5;
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+
+        .serif{
+            font-family:'Cormorant Garamond',serif;
+        }
+
+        .mono{
+            font-family:'JetBrains Mono',monospace;
+        }
+
+        button{
+            font-family:inherit;
+            cursor:pointer;
+            border:none;
+            background:none;
+            color:inherit;
+        }
+
+        input,select,textarea{
+            font-family:inherit;
+            font-size:inherit;
+            color:inherit;
+        }
+
+        a{
+            color:inherit;
+            text-decoration:none;
+        }
+
+        ::-webkit-scrollbar{
+            width:10px;
+            height:10px;
+        }
+
+        ::-webkit-scrollbar-track{
+            background:transparent;
+        }
+
+        ::-webkit-scrollbar-thumb{
+            background:rgba(183,110,121,0.25);
+            border-radius:10px;
+            border:2px solid transparent;
+            background-clip:padding-box;
+        }
+
+        /* Layout */
+
+        .app{
+            display:flex;
+            min-height:100vh;
+        }
+
+        .sidebar{
+            width:260px;
+            flex-shrink:0;
+            background:var(--white);
+            border-right:1px solid var(--line);
+            display:flex;
+            flex-direction:column;
+            position:fixed;
+            top:0;
+            left:0;
+            bottom:0;
+            z-index:50;
+            transition:transform .35s cubic-bezier(.4,0,.2,1);
+        }
+
+        .main{
+            flex:1;
+            margin-left:260px;
+            display:flex;
+            flex-direction:column;
+            min-width:0;
+        }
+
+        /* Sidebar */
+
+        .brand{
+            padding:26px 24px 22px;
+            border-bottom:1px solid var(--line);
+        }
+
+        .brand-mark{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .brand-logo{
+            width:44px;
+            height:44px;
+            border-radius:14px;
+            background:var(--grad-rose);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-size:20px;
+            box-shadow:var(--shadow-rose);
+        }
+
+        .brand-name{
+            line-height:1.1;
+        }
+
+        .brand-name .top{
+            font-family:'Cormorant Garamond',serif;
+            font-weight:700;
+            font-size:19px;
+            letter-spacing:.5px;
+        }
+
+        .brand-name .top span{
+            color:var(--rose-gold);
+        }
+
+        .brand-name .sub{
+            font-size:10.5px;
+            letter-spacing:2px;
+            text-transform:uppercase;
+            color:var(--muted);
+            margin-top:3px;
+        }
+
+        .nav{
+            flex:1;
+            padding:18px 14px;
+            overflow-y:auto;
+        }
+
+        .nav-label{
+            font-size:10px;
+            letter-spacing:1.6px;
+            text-transform:uppercase;
+            color:var(--muted);
+            padding:0 12px;
+            margin:18px 0 8px;
+            font-weight:600;
+        }
+
+        .nav-item{
+            display:flex;
+            align-items:center;
+            gap:13px;
+            padding:11px 14px;
+            border-radius:12px;
+            color:var(--dark);
+            font-weight:500;
+            font-size:13.5px;
+            margin-bottom:3px;
+            width:100%;
+            text-align:left;
+            transition:all .2s ease;
+            position:relative;
+        }
+
+        .nav-item i{
+            width:20px;
+            text-align:center;
+            font-size:15px;
+            color:var(--muted);
+        }
+
+        .nav-item:hover{
+            background:rgba(183,110,121,0.07);
+        }
+
+        .nav-item.active{
+            background:var(--grad-rose);
+            color:#fff;
+            box-shadow:var(--shadow-rose);
+        }
+
+        .nav-item.active i{
+            color:#fff;
+        }
+
+        .nav-item.active::before{
+            content:"";
+            position:absolute;
+            left:-14px;
+            top:50%;
+            transform:translateY(-50%);
+            width:4px;
+            height:22px;
+            background:var(--rose-gold);
+            border-radius:0 4px 4px 0;
+        }
+
+        .side-foot{
+            padding:16px 14px;
+            border-top:1px solid var(--line);
+        }
+
+        .side-profile{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:10px 12px;
+            border-radius:14px;
+            background:var(--grad-soft);
+        }
+
+        .side-avatar{
+            width:40px;
+            height:40px;
+            border-radius:50%;
+            background:var(--grad-champagne);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-weight:600;
+            font-size:14px;
+        }
+
+        .side-profile .info{
+            flex:1;
+        }
+
+        .side-profile .name{
+            font-weight:600;
+            font-size:13px;
+        }
+
+        .side-profile .role{
+            font-size:11px;
+            color:var(--muted);
+        }
+
+        .logout-btn{
+            display:flex;
+            align-items:center;
+            gap:9px;
+            padding:10px 14px;
+            border-radius:12px;
+            color:var(--muted);
+            font-size:13px;
+            font-weight:500;
+            width:100%;
+            margin-top:8px;
+        }
+
+        .logout-btn:hover{
+            background:rgba(178,58,72,0.08);
+            color:var(--refunded);
+        }
+
+        /* Header */
+
+        .header{
+            background:rgba(255,255,255,0.85);
+            backdrop-filter:blur(14px);
+            border-bottom:1px solid var(--line);
+            padding:20px 32px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:20px;
+            position:sticky;
+            top:0;
+            z-index:30;
+        }
+
+        .h-left .title{
+            font-family:'Cormorant Garamond',serif;
+            font-size:28px;
+            font-weight:700;
+        }
+
+        .h-left .subtitle{
+            font-size:13px;
+            color:var(--muted);
+            margin-top:4px;
+        }
+
+        .h-right{
+            display:flex;
+            align-items:center;
+            gap:14px;
+        }
+
+        .icon-btn{
+            width:42px;
+            height:42px;
+            border-radius:13px;
+            background:var(--white);
+            border:1px solid var(--line);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:var(--dark);
+            font-size:15px;
+            position:relative;
+        }
+
+        .icon-btn:hover{
+            color:var(--rose-gold);
+        }
+
+        .icon-btn .dot{
+            position:absolute;
+            top:9px;
+            right:10px;
+            width:7px;
+            height:7px;
+            border-radius:50%;
+            background:var(--rose-gold);
+            border:1.5px solid var(--white);
+        }
+
+        .h-avatar{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .h-avatar .av{
+            width:42px;
+            height:42px;
+            border-radius:50%;
+            background:var(--grad-rose);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-weight:600;
+            font-size:14px;
+        }
+
+        .h-avatar .meta .nm{
+            font-weight:600;
+            font-size:13px;
+        }
+
+        .h-avatar .meta .dt{
+            font-size:11px;
+            color:var(--muted);
+        }
+
+        .hamburger{
+            display:none;
+        }
+
+        /* Content */
+
+        .content{
+            padding:28px 32px 60px;
+            flex:1;
+        }
+
+        .section{
+            margin-bottom:28px;
+        }
+
+        /* Cards */
+
+        .cards-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:20px;
+        }
+
+        .sum-card{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:var(--radius-lg);
+            padding:22px;
+            position:relative;
+            overflow:hidden;
+            box-shadow:var(--shadow-sm);
+        }
+
+        .sum-card::before{
+            content:"";
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:3px;
+            background:var(--grad-rose);
+        }
+
+        .sum-card.gold::before{
+            background:var(--grad-champagne);
+        }
+
+        .sum-card.pink::before{
+            background:linear-gradient(135deg,#F8D7DA,#B76E79);
+        }
+
+        .sum-card.dark::before{
+            background:linear-gradient(135deg,#8C7A80,#2B2024);
+        }
+
+        .sc-top{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            margin-bottom:14px;
+        }
+
+        .sc-icon{
+            width:48px;
+            height:48px;
+            border-radius:14px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:20px;
+        }
+
+        .sc-icon.rose{
+            background:rgba(183,110,121,0.12);
+            color:var(--rose-gold);
+        }
+
+        .sc-icon.gold{
+            background:rgba(232,192,125,0.16);
+            color:var(--champagne-dark);
+        }
+
+        .sc-icon.pink{
+            background:rgba(248,215,218,0.5);
+            color:var(--rose-gold);
+        }
+
+        .sc-icon.dark{
+            background:rgba(140,122,128,0.16);
+            color:var(--dark);
+        }
+
+        .sc-label{
+            font-size:12.5px;
+            color:var(--muted);
+            font-weight:500;
+        }
+
+        .sc-value{
+            font-family:'Cormorant Garamond',serif;
+            font-size:30px;
+            font-weight:700;
+            margin-top:2px;
+        }
+
+        .sc-ind{
+            display:flex;
+            align-items:center;
+            gap:6px;
+            margin-top:10px;
+            font-size:11.5px;
+        }
+
+        .sc-ind.up{
+            color:var(--paid);
+        }
+
+        .sc-ind.down{
+            color:var(--refunded);
+        }
+
+        /* Chart */
+
+        .chart-card{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:var(--radius-lg);
+            padding:24px;
+            box-shadow:var(--shadow-sm);
+        }
+
+        .chart-head{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:16px;
+            flex-wrap:wrap;
+            margin-bottom:22px;
+        }
+
+        .chart-head .t{
+            font-family:'Cormorant Garamond',serif;
+            font-size:22px;
+            font-weight:700;
+        }
+
+        .chart-head .s{
+            font-size:12.5px;
+            color:var(--muted);
+        }
+
+        .period-tabs{
+            display:flex;
+            background:var(--cream);
+            border:1px solid var(--line);
+            border-radius:12px;
+            padding:4px;
+            gap:2px;
+        }
+
+        .period-tabs button{
+            padding:8px 16px;
+            border-radius:9px;
+            font-size:12.5px;
+            color:var(--muted);
+        }
+
+        .period-tabs button.active{
+            background:var(--white);
+            color:var(--rose-gold);
+            box-shadow:var(--shadow-sm);
+            font-weight:600;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+        }
+
+        #revenueChart {
+            display: block;
+            width: 100% !important;
+            height: 320px !important;
+        }
+
+        /* Insights */
+
+        .insights-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:20px;
+        }
+
+        .ins-card{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:var(--radius);
+            padding:18px 20px;
+            display:flex;
+            align-items:center;
+            gap:16px;
+            box-shadow:var(--shadow-sm);
+        }
+
+        .ins-icon{
+            width:46px;
+            height:46px;
+            border-radius:13px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            flex-shrink:0;
+        }
+
+        .ins-icon.a{
+            background:rgba(183,110,121,0.12);
+            color:var(--rose-gold);
+        }
+
+        .ins-icon.b{
+            background:rgba(232,192,125,0.16);
+            color:var(--champagne-dark);
+        }
+
+        .ins-icon.c{
+            background:rgba(46,125,91,0.12);
+            color:var(--paid);
+        }
+
+        .ins-icon.d{
+            background:rgba(178,58,72,0.12);
+            color:var(--refunded);
+        }
+
+        .ins-card .lbl{
+            font-size:11.5px;
+            color:var(--muted);
+        }
+
+        .ins-card .val{
+            font-family:'Cormorant Garamond',serif;
+            font-size:21px;
+            font-weight:700;
+        }
+
+        .ins-card .sub{
+            font-size:11px;
+            color:var(--muted);
+        }
+
+        /* Actions */
+
+        .action-bar{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            flex-wrap:wrap;
+            margin-bottom:18px;
+        }
+
+        .search-box{
+            position:relative;
+            flex:1;
+            max-width:420px;
+            min-width:240px;
+        }
+
+        .search-box i{
+            position:absolute;
+            left:16px;
+            top:50%;
+            transform:translateY(-50%);
+            color:var(--muted);
+        }
+
+        .search-box input{
+            width:100%;
+            padding:12px 16px 12px 44px;
+            border:1px solid var(--line);
+            border-radius:13px;
+            background:var(--white);
+            outline:none;
+        }
+
+        .btn-primary{
+            display:inline-flex;
+            align-items:center;
+            gap:9px;
+            padding:12px 20px;
+            border-radius:13px;
+            background:var(--grad-rose);
+            color:#fff;
+            font-weight:600;
+            font-size:13.5px;
+            box-shadow:var(--shadow-rose);
+        }
+
+        .btn-ghost{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:11px 18px;
+            border-radius:13px;
+            background:var(--white);
+            border:1px solid var(--line);
+            color:var(--dark);
+            font-weight:500;
+        }
+
+        /* Filters */
+
+        .filters-card{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:var(--radius);
+            padding:18px 20px;
+            box-shadow:var(--shadow-sm);
+            margin-bottom:20px;
+        }
+
+        .filters-grid{
+            display:grid;
+            grid-template-columns:repeat(5,1fr) auto;
+            gap:14px;
+            align-items:end;
+        }
+
+        .field{
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+
+        .field label{
+            font-size:11px;
+            font-weight:600;
+            color:var(--muted);
+            text-transform:uppercase;
+        }
+
+        .field input,
+        .field select{
+            padding:11px 14px;
+            border:1px solid var(--line);
+            border-radius:11px;
+            background:var(--cream);
+            outline:none;
+            width:100%;
+        }
+
+        .reset-btn{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:11px 18px;
+            border-radius:11px;
+            background:transparent;
+            border:1px solid var(--line-strong);
+            color:var(--muted);
+            font-weight:500;
+            white-space:nowrap;
+        }
+
+        /* Table */
+
+        .table-card{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:var(--radius-lg);
+            box-shadow:var(--shadow-sm);
+            overflow:hidden;
+        }
+
+        .table-scroll{
+            overflow-x:auto;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            min-width:980px;
+        }
+
+        thead th{
+            text-align:left;
+            padding:15px 18px;
+            font-size:10.5px;
+            font-weight:700;
+            letter-spacing:1px;
+            text-transform:uppercase;
+            color:var(--muted);
+            background:var(--cream);
+            border-bottom:1px solid var(--line);
+            white-space:nowrap;
+        }
+
+        tbody td{
+            padding:16px 18px;
+            border-bottom:1px solid var(--line);
+            font-size:13px;
+            vertical-align:middle;
+        }
+
+        tbody tr:hover{
+            background:var(--grad-soft);
+        }
+
+        .pay-id{
+            font-family:'JetBrains Mono',monospace;
+            font-size:12px;
+            color:var(--rose-gold);
+        }
+
+        .cust-cell{
+            display:flex;
+            align-items:center;
+            gap:11px;
+        }
+
+        .cust-av{
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-weight:600;
+            font-size:12px;
+            flex-shrink:0;
+            background:var(--grad-rose);
+        }
+
+        .cust-cell .nm{
+            font-weight:600;
+        }
+
+        .cust-cell .ph{
+            font-size:11px;
+            color:var(--muted);
+        }
+
+        .amount{
+            font-weight:700;
+        }
+
+        .method-cell{
+            display:flex;
+            align-items:center;
+            gap:9px;
+        }
+
+        .method-ic{
+            width:30px;
+            height:30px;
+            border-radius:9px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:var(--cream);
+            color:var(--rose-gold);
+        }
+
+        .badge{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:5px 12px;
+            border-radius:20px;
+            font-size:11.5px;
+            font-weight:600;
+        }
+
+        .badge::before{
+            content:"";
+            width:6px;
+            height:6px;
+            border-radius:50%;
+        }
+
+        .badge.paid{
+            background:var(--paid-bg);
+            color:var(--paid);
+        }
+
+        .badge.paid::before{
+            background:var(--paid);
+        }
+
+        .badge.pending{
+            background:var(--pending-bg);
+            color:var(--pending);
+        }
+
+        .badge.pending::before{
+            background:var(--pending);
+        }
+
+        .badge.refunded{
+            background:var(--refunded-bg);
+            color:var(--refunded);
+        }
+
+        .badge.refunded::before{
+            background:var(--refunded);
+        }
+
+        .actions-cell{
+            display:flex;
+            align-items:center;
+            gap:6px;
+        }
+
+        .act-btn{
+            width:32px;
+            height:32px;
+            border-radius:9px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:12px;
+            color:var(--muted);
+            background:var(--cream);
+        }
+
+        .act-btn.view:hover{
+            color:var(--rose-gold);
+        }
+
+        .act-btn.edit:hover{
+            color:#3a7bd5;
+        }
+
+        .act-btn.refund:hover{
+            color:var(--pending);
+        }
+
+        .act-btn.del:hover{
+            color:var(--refunded);
+        }
+
+        /* Pagination */
+
+        .pagination{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:18px 22px;
+            flex-wrap:wrap;
+            gap:14px;
+        }
+
+        .page-info{
+            font-size:12.5px;
+            color:var(--muted);
+        }
+
+        .page-btns{
+            display:flex;
+            align-items:center;
+            gap:6px;
+        }
+
+        .pg-btn{
+            min-width:38px;
+            height:38px;
+            padding:0 12px;
+            border-radius:10px;
+            border:1px solid var(--line);
+            background:var(--white);
+        }
+
+        .pg-btn.active{
+            background:var(--grad-rose);
+            color:#fff;
+        }
+
+        /* Modal */
+
+        .modal-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(43,32,36,0.45);
+            backdrop-filter:blur(6px);
+            z-index:100;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+        }
+
+        .modal-overlay.show{
+            display:flex;
+        }
+
+        .modal{
+            background:var(--white);
+            border-radius:var(--radius-lg);
+            width:100%;
+            max-width:560px;
+            max-height:92vh;
+            overflow-y:auto;
+            box-shadow:var(--shadow-lg);
+        }
+
+        .modal.lg{
+            max-width:680px;
+        }
+
+        .modal-head{
+            padding:24px 28px;
+            border-bottom:1px solid var(--line);
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:16px;
+        }
+
+        .modal-head .t{
+            font-family:'Cormorant Garamond',serif;
+            font-size:23px;
+            font-weight:700;
+        }
+
+        .modal-head .s{
+            font-size:12.5px;
+            color:var(--muted);
+        }
+
+        .modal-close{
+            width:36px;
+            height:36px;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:var(--muted);
+        }
+
+        .modal-body{
+            padding:24px 28px;
+        }
+
+        .modal-foot{
+            padding:18px 28px;
+            border-top:1px solid var(--line);
+            display:flex;
+            justify-content:flex-end;
+            gap:12px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px;
+        }
+
+        .form-grid .full{
+            grid-column:1/-1;
+        }
+
+        .fg label{
+            display:block;
+            font-size:11.5px;
+            font-weight:600;
+            color:var(--muted);
+            text-transform:uppercase;
+            margin-bottom:7px;
+        }
+
+        .fg input,
+        .fg select,
+        .fg textarea{
+            width:100%;
+            padding:11px 14px;
+            border:1px solid var(--line);
+            border-radius:11px;
+            background:var(--cream);
+            outline:none;
+        }
+
+        .fg textarea{
+            resize:vertical;
+            min-height:74px;
+        }
+
+        .fg input[readonly]{
+            background:#f3eef0;
+            color:var(--muted);
+            cursor:not-allowed;
+        }
+
+        .input-prefix{
+            position:relative;
+        }
+
+        .input-prefix span{
+            position:absolute;
+            left:14px;
+            top:50%;
+            transform:translateY(-50%);
+            font-size:12px;
+            color:var(--muted);
+            font-weight:600;
+        }
+
+        .input-prefix input{
+            padding-left:42px;
+        }
+
+        /* Appointment Info */
+
+        .apt-info{
+            background:var(--grad-soft);
+            border:1px solid var(--line-strong);
+            border-radius:14px;
+            padding:16px;
+            margin-bottom:18px;
+            display:none;
+        }
+
+        .apt-info.show{
+            display:block;
+        }
+
+        .apt-info .ai-title{
+            font-size:11px;
+            font-weight:700;
+            letter-spacing:1px;
+            text-transform:uppercase;
+            color:var(--rose-gold);
+            margin-bottom:12px;
+        }
+
+        .apt-info .ai-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px 18px;
+        }
+
+        .apt-info .ai-item{
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+        }
+
+        .apt-info .ai-item .k{
+            font-size:10.5px;
+            color:var(--muted);
+            text-transform:uppercase;
+        }
+
+        .apt-info .ai-item .v{
+            font-size:13px;
+            font-weight:600;
+        }
+
+        /* Detail */
+
+        .detail-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px 22px;
+        }
+
+        .detail-item{
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+            padding:12px 0;
+            border-bottom:1px dashed var(--line);
+        }
+
+        .detail-item .k{
+            font-size:10.5px;
+            color:var(--muted);
+            text-transform:uppercase;
+            letter-spacing:.6px;
+        }
+
+        .detail-item .v{
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .detail-item.full{
+            grid-column:1/-1;
+        }
+
+        /* Receipt */
+
+        .receipt{
+            background:var(--white);
+            border:1px solid var(--line-strong);
+            border-radius:16px;
+            overflow:hidden;
+        }
+
+        .receipt-top{
+            background:var(--grad-rose);
+            color:#fff;
+            padding:28px;
+            text-align:center;
+        }
+
+        .receipt-top .logo{
+            width:54px;
+            height:54px;
+            border-radius:16px;
+            background:rgba(255,255,255,0.18);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:24px;
+            margin:0 auto 14px;
+        }
+
+        .receipt-top .brand{
+            font-family:'Cormorant Garamond',serif;
+            font-size:24px;
+            font-weight:700;
+        }
+
+        .receipt-top .tag{
+            font-size:11px;
+            letter-spacing:2px;
+            text-transform:uppercase;
+        }
+
+        .receipt-title{
+            background:var(--cream);
+            text-align:center;
+            padding:12px;
+            font-family:'Cormorant Garamond',serif;
+            font-size:16px;
+            font-weight:700;
+            letter-spacing:3px;
+            text-transform:uppercase;
+            color:var(--rose-gold);
+        }
+
+        .receipt-body{
+            padding:24px 28px;
+        }
+
+        .receipt-row{
+            display:flex;
+            justify-content:space-between;
+            padding:10px 0;
+            border-bottom:1px dashed var(--line);
+            font-size:13px;
+        }
+
+        .receipt-row .k{
+            color:var(--muted);
+        }
+
+        .receipt-row .v{
+            font-weight:600;
+            text-align:right;
+        }
+
+        .receipt-total{
+            display:flex;
+            justify-content:space-between;
+            padding:16px 0 6px;
+            margin-top:8px;
+            border-top:2px solid var(--rose-gold);
+        }
+
+        .receipt-total .k{
+            font-family:'Cormorant Garamond',serif;
+            font-size:18px;
+            font-weight:700;
+        }
+
+        .receipt-total .v{
+            font-family:'Cormorant Garamond',serif;
+            font-size:26px;
+            font-weight:700;
+            color:var(--rose-gold);
+        }
+
+        .receipt-foot{
+            text-align:center;
+            padding:18px 28px 26px;
+            font-size:12px;
+            color:var(--muted);
+        }
+
+        /* Empty */
+
+        .empty{
+            padding:70px 20px;
+            text-align:center;
+        }
+
+        .empty-ic{
+            width:90px;
+            height:90px;
+            border-radius:50%;
+            background:var(--grad-soft);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin:0 auto 22px;
+            font-size:36px;
+            color:var(--rose-gold);
+        }
+
+        /* Mobile */
+
+        @media(max-width:1100px){
+
+            .cards-grid{
+                grid-template-columns:repeat(2,1fr);
+            }
+
+            .insights-grid{
+                grid-template-columns:repeat(2,1fr);
+            }
+
+            .filters-grid{
+                grid-template-columns:repeat(3,1fr);
+            }
+        }
+
+        @media(max-width:900px){
+
+            .sidebar{
+                transform:translateX(-100%);
+            }
+
+            .sidebar.open{
+                transform:translateX(0);
+            }
+
+            .main{
+                margin-left:0;
+            }
+
+            .hamburger{
+                display:flex;
+                width:42px;
+                height:42px;
+                border-radius:13px;
+                background:var(--white);
+                border:1px solid var(--line);
+                align-items:center;
+                justify-content:center;
+            }
+        }
+
+        @media(max-width:680px){
+
+            .content{
+                padding:20px 16px 50px;
+            }
+
+            .header{
+                padding:16px;
+            }
+
+            .cards-grid{
+                grid-template-columns:1fr;
+            }
+
+            .insights-grid{
+                grid-template-columns:1fr;
+            }
+
+            .filters-grid{
+                grid-template-columns:1fr;
+            }
+
+            .form-grid{
+                grid-template-columns:1fr;
+            }
+
+            .detail-grid{
+                grid-template-columns:1fr;
+            }
+
+            .apt-info .ai-grid{
+                grid-template-columns:1fr;
+            }
+
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">
+
+                <div class="brand-logo">
+                    <i class="fa-solid fa-spa"></i>
+                </div>
+
+                <div class="brand-name">
+
+                    <div class="top">
+                        PINK <span>BEAUTY</span>
+                    </div>
+
+                    <div class="sub">
+                        Salon
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <nav class="nav">
+
+            <div class="nav-label">
+                Menu
+            </div>
+
+            <button class="nav-item" data-page="Dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                Dashboard
+            </button>
+
+            <button class="nav-item" data-page="Appointments">
+                <i class="fa-regular fa-calendar-check"></i>
+                Appointments
+            </button>
+
+            <button class="nav-item" data-page="Customers">
+                <i class="fa-solid fa-user-group"></i>
+                Customers
+            </button>
+
+            <button class="nav-item" data-page="Staff">
+                <i class="fa-solid fa-scissors"></i>
+                Staff
+            </button>
+
+            <button class="nav-item" data-page="Services">
+                <i class="fa-solid fa-hand-sparkles"></i>
+                Services
+            </button>
+
+            <button class="nav-item active" data-page="Payments">
+                <i class="fa-solid fa-credit-card"></i>
+                Payments
+            </button>
+
+            <button class="nav-item" data-page="Reports">
+                <i class="fa-solid fa-chart-line"></i>
+                Reports
+            </button>
+
+            <button class="nav-item" data-page="Users">
+                <i class="fa-solid fa-users"></i>
+                Users
+            </button>
+
+            <button class="nav-item" data-page="Settings">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </button>
+
+        </nav>
+
+        <div class="side-foot">
+
+            <div class="side-profile">
+
+                <div class="side-avatar">
+                    AD
+                </div>
+
+                <div class="info">
+
+                    <div class="name">
+                        Admin
+                    </div>
+
+                    <div class="role">
+                        Administrator
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+     MAIN
+========================================================= -->
+
+    <div class="main">
+
+        <header class="header">
+
+            <button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="h-left">
+
+                <h1 class="title">
+                    Payments
+                </h1>
+
+                <p class="subtitle">
+                    Track payments, transactions and salon revenue.
+                </p>
+
+            </div>
+
+            <div class="h-right">
+
+                <button class="icon-btn">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="dot"></span>
+                </button>
+
+                <button class="icon-btn">
+                    <i class="fa-regular fa-calendar"></i>
+                </button>
+
+                <div class="h-avatar">
+
+                    <div class="av">
+                        AD
+                    </div>
+
+                    <div class="meta">
+
+                        <div class="nm">
+                            Admin
+                        </div>
+
+                        <div class="dt" id="todayDate">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <main class="content">
+
+            <!-- =========================================================
+     SUMMARY
+========================================================= -->
+
+            <section class="section">
+
+                <div class="cards-grid">
+
+                    <div class="sum-card">
+
+                        <div class="sc-top">
+
+                            <div>
+
+                                <div class="sc-label">
+                                    Today's Revenue
+                                </div>
+
+                                <div class="sc-value" id="todayRevenue">
+                                    LKR 0
+                                </div>
+
+                            </div>
+
+                            <div class="sc-icon rose">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sc-ind up">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            <span id="todayPaymentCount">
+            0 paid payments
+        </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="sum-card gold">
+
+                        <div class="sc-top">
+
+                            <div>
+
+                                <div class="sc-label">
+                                    Total Revenue
+                                </div>
+
+                                <div class="sc-value" id="totalRevenue">
+                                    LKR 0
+                                </div>
+
+                            </div>
+
+                            <div class="sc-icon gold">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sc-ind up">
+
+                            <i class="fa-solid fa-arrow-up"></i>
+
+                            <span id="totalPaidCount">
+            0 paid payments
+        </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sum-card pink">
+
+                        <div class="sc-top">
+
+                            <div>
+
+                                <div class="sc-label">
+                                    Pending Payments
+                                </div>
+
+                                <div class="sc-value" id="pendingRevenue">
+                                    LKR 0
+                                </div>
+
+                            </div>
+
+                            <div class="sc-icon pink">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sc-ind" style="color:var(--pending)">
+
+                            <i class="fa-solid fa-circle"></i>
+
+                            <span id="pendingCount">
+            0 pending
+        </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sum-card dark">
+
+                        <div class="sc-top">
+
+                            <div>
+
+                                <div class="sc-label">
+                                    Refunded
+                                </div>
+
+                                <div class="sc-value" id="refundedRevenue">
+                                    LKR 0
+                                </div>
+
+                            </div>
+
+                            <div class="sc-icon dark">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sc-ind down">
+
+                            <i class="fa-solid fa-arrow-down"></i>
+
+                            <span id="refundedCount">
+            0 refunds
+        </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================================================
+     CHART
+========================================================= -->
+
+            <section class="section">
+
+                <div class="chart-card">
+
+                    <div class="chart-head">
+
+                        <div>
+
+                            <div class="t">
+                                Revenue Overview
+                            </div>
+
+                            <div class="s">
+                                Payment performance over the selected period.
+                            </div>
+
+                        </div>
+
+
+                        <div class="period-tabs" id="periodTabs">
+
+                            <button class="active" data-period="7">
+                                7 Days
+                            </button>
+
+                            <button data-period="30">
+                                30 Days
+                            </button>
+
+                            <button data-period="90">
+                                90 Days
+                            </button>
+
+                            <button data-period="365">
+                                This Year
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+
+            </section>
+
+
+            <!-- =========================================================
+     INSIGHTS
+========================================================= -->
+
+            <section class="section">
+
+                <div class="insights-grid">
+
+                    <div class="ins-card">
+
+                        <div class="ins-icon a">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="lbl">
+                                Most Popular Method
+                            </div>
+
+                            <div class="val" id="popMethod">
+                                —
+                            </div>
+
+                            <div class="sub" id="popMethodPct">
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ins-card">
+
+                        <div class="ins-icon b">
+                            <i class="fa-solid fa-calendar-day"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="lbl">
+                                Highest Revenue Day
+                            </div>
+
+                            <div class="val" id="topDay">
+                                —
+                            </div>
+
+                            <div class="sub" id="topDayAmt">
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ins-card">
+
+                        <div class="ins-icon c">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="lbl">
+                                Average Transaction
+                            </div>
+
+                            <div class="val" id="avgTxn">
+                                —
+                            </div>
+
+                            <div class="sub">
+                                across all payments
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ins-card">
+
+                        <div class="ins-icon d">
+                            <i class="fa-solid fa-percent"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="lbl">
+                                Refund Rate
+                            </div>
+
+                            <div class="val" id="refundRate">
+                                —
+                            </div>
+
+                            <div class="sub" id="refundRateSub">
+                                of all payments
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================================================
+     PAYMENTS TABLE
+========================================================= -->
+
+            <section class="section">
+
+                <div class="action-bar">
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search customer, payment ID or appointment..."
+                        />
+
+                    </div>
+
+                    <button class="btn-primary" id="recordBtn">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Record Payment
+
+                    </button>
+
+                </div>
+
+
+                <!-- FILTER -->
+
+                <div class="filters-card">
+
+                    <div class="filters-grid">
+
+                        <div class="field">
+
+                            <label>
+                                Search
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="fSearch"
+                                    placeholder="Search..."
+                            />
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Date From
+                            </label>
+
+                            <input
+                                    type="date"
+                                    id="fFrom"
+                            />
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Date To
+                            </label>
+
+                            <input
+                                    type="date"
+                                    id="fTo"
+                            />
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Payment Status
+                            </label>
+
+                            <select id="fStatus">
+
+                                <option value="">
+                                    All Status
+                                </option>
+
+                                <option value="PAID">
+                                    Paid
+                                </option>
+
+                                <option value="PENDING">
+                                    Pending
+                                </option>
+
+                                <option value="REFUNDED">
+                                    Refunded
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Payment Method
+                            </label>
+
+                            <select id="fMethod">
+
+                                <option value="">
+                                    All Methods
+                                </option>
+
+                                <option value="CASH">
+                                    Cash
+                                </option>
+
+                                <option value="CARD">
+                                    Card
+                                </option>
+
+                                <option value="ONLINE">
+                                    Online
+                                </option>
+
+                                <option value="BANK_TRANSFER">
+                                    Bank Transfer
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <button class="reset-btn" id="resetFilters">
+
+                            <i class="fa-solid fa-rotate"></i>
+
+                            Reset Filters
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="filters-grid"
+                         style="margin-top:14px;grid-template-columns:1fr auto;">
+
+                        <div class="field">
+
+                            <label>
+                                Service
+                            </label>
+
+                            <select id="fService">
+
+                                <option value="">
+                                    All Services
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-card">
+
+                    <div class="table-scroll">
+
+                        <table>
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    Payment ID
+                                </th>
+
+                                <th>
+                                    Customer
+                                </th>
+
+                                <th>
+                                    Appointment
+                                </th>
+
+                                <th>
+                                    Service
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Amount
+                                </th>
+
+                                <th>
+                                    Method
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody id="tableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="pagination" id="pagination"></div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     RECORD PAYMENT MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="recordModalOverlay">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <div>
+
+                <div class="t" id="modalTitle">
+                    Record Payment
+                </div>
+
+                <div class="s" id="modalSub">
+                    Add a new payment transaction.
+                </div>
+
+            </div>
+
+            <button class="modal-close" data-close>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <!-- Appointment Info -->
+
+            <div class="apt-info" id="aptInfo">
+
+                <div class="ai-title">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    Appointment Details
+
+                </div>
+
+
+                <div class="ai-grid">
+
+                    <div class="ai-item">
+
+<span class="k">
+    Customer
+</span>
+
+                        <span class="v" id="aiCustomer">
+    —
+</span>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+<span class="k">
+    Phone
+</span>
+
+                        <span class="v" id="aiPhone">
+    —
+</span>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+<span class="k">
+    Service
+</span>
+
+                        <span class="v" id="aiService">
+    —
+</span>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+<span class="k">
+    Staff
+</span>
+
+                        <span class="v" id="aiStaff">
+    —
+</span>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+<span class="k">
+    Appointment Date
+</span>
+
+                        <span class="v" id="aiDate">
+    —
+</span>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+<span class="k">
+    Appointment Time
+</span>
+
+                        <span class="v" id="aiTime">
+    —
+</span>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+<span class="k">
+    Service Price
+</span>
+
+                        <span class="v" id="aiPrice">
+    —
+</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <!-- Appointment -->
+
+                <div class="fg full">
+
+                    <label>
+                        Appointment <span style="color:var(--rose-gold)">*</span>
+                    </label>
+
+                    <select id="mAppointment">
+
+                        <option value="">
+                            Select appointment
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Customer -->
+
+                <div class="fg">
+
+                    <label>
+                        Customer
+                    </label>
+
+                    <input
+                            type="text"
+                            id="mCustomer"
+                            readonly
+                            placeholder="Auto-filled"
+                    />
+
+                </div>
+
+
+                <!-- Service -->
+
+                <div class="fg">
+
+                    <label>
+                        Service
+                    </label>
+
+                    <input
+                            type="text"
+                            id="mService"
+                            readonly
+                            placeholder="Auto-filled"
+                    />
+
+                </div>
+
+
+                <!-- Amount -->
+
+                <div class="fg">
+
+                    <label>
+                        Amount <span style="color:var(--rose-gold)">*</span>
+                    </label>
+
+                    <div class="input-prefix">
+
+<span>
+    LKR
+</span>
+
+                        <input
+                                type="number"
+                                id="mAmount"
+                                min="0"
+                                step="0.01"
+                                placeholder="0.00"
+                        />
+
+                    </div>
+
+                </div>
+
+
+                <!-- Method -->
+
+                <div class="fg">
+
+                    <label>
+                        Payment Method <span style="color:var(--rose-gold)">*</span>
+                    </label>
+
+                    <select id="mMethod">
+
+                        <option value="">
+                            Select method
+                        </option>
+
+                        <option value="CASH">
+                            Cash
+                        </option>
+
+                        <option value="CARD">
+                            Card
+                        </option>
+
+                        <option value="ONLINE">
+                            Online
+                        </option>
+
+                        <option value="BANK_TRANSFER">
+                            Bank Transfer
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="fg">
+
+                    <label>
+                        Payment Status
+                    </label>
+
+                    <select id="mStatus">
+
+                        <option value="PAID">
+                            Paid
+                        </option>
+
+                        <option value="PENDING">
+                            Pending
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Date -->
+
+                <div class="fg">
+
+                    <label>
+                        Payment Date
+                    </label>
+
+                    <input
+                            type="date"
+                            id="mDate"
+                    />
+
+                </div>
+
+
+                <!-- Reference -->
+
+                <div class="fg full">
+
+                    <label>
+                        Transaction Reference
+                    </label>
+
+                    <input
+                            type="text"
+                            id="mRef"
+                            placeholder="Optional"
+                    />
+
+                </div>
+
+
+                <!-- Notes -->
+
+                <div class="fg full">
+
+                    <label>
+                        Notes
+                    </label>
+
+                    <textarea
+                            id="mNotes"
+                            placeholder="Additional notes..."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-foot">
+
+            <button class="btn-ghost" data-close>
+                Cancel
+            </button>
+
+            <button class="btn-primary" id="savePaymentBtn">
+                Record Payment
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     VIEW MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="viewModalOverlay">
+
+    <div class="modal lg">
+
+        <div class="modal-head">
+
+            <div>
+
+                <div class="t">
+                    Payment Details
+                </div>
+
+                <div class="s">
+                    Full transaction information.
+                </div>
+
+            </div>
+
+            <button class="modal-close" data-close-view>
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body" id="viewBody">
+        </div>
+
+
+        <div class="modal-foot">
+
+            <button class="btn-ghost" id="printReceiptBtn">
+
+                <i class="fa-solid fa-print"></i>
+
+                Print Receipt
+
+            </button>
+
+            <button class="btn-primary" id="downloadReceiptBtn">
+
+                <i class="fa-solid fa-download"></i>
+
+                Download Receipt
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* =========================================================
+       API CONFIG
+    ========================================================= */
+
+    const API_BASE = "http://localhost:8080/api/v1";
+
+    const API = {
+        payments: `${API_BASE}/payments`,
+        appointments: `${API_BASE}/appointment`,
+        invoices: `${API_BASE}/invoices`
+    };
+
+
+    /* =========================================================
+       GLOBAL DATA
+    ========================================================= */
+
+    let payments = [];
+    let appointments = [];
+    let invoices = [];
+
+    let currentPayment = null;
+    let editingPaymentId = null;
+    let revenueChart = null;
+
+    let currentPage = 1;
+    const pageSize = 10;
+
+
+    /* =========================================================
+       DOM HELPER
+    ========================================================= */
+
+    const $ = id => document.getElementById(id);
+
+
+    /* =========================================================
+       RESPONSE UNWRAPPER
+    ========================================================= */
+
+    function unwrap(response) {
+
+        if (response && response.body !== undefined) {
+            return response.body;
+        }
+
+        return response;
+    }
+
+
+    /* =========================================================
+       API FETCH HELPER
+    ========================================================= */
+
+    async function apiFetch(url, options = {}) {
+
+        const headers = {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+        };
+
+        const response = await fetch(url, {
+            ...options,
+            headers
+        });
+
+        let data = null;
+
+        try {
+            data = await response.json();
+        } catch (error) {
+            data = null;
+        }
+
+        if (!response.ok) {
+
+            let message =
+                data?.message ||
+                data?.error ||
+                data?.body?.message ||
+                `Request failed (${response.status})`;
+
+            throw new Error(message);
+        }
+
+        return data;
+    }
+
+
+    /* =========================================================
+       FORMATTERS
+    ========================================================= */
+
+    function money(value) {
+
+        const amount = Number(value || 0);
+
+        return "LKR " + amount.toLocaleString("en-LK", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+
+    function shortMoney(value) {
+
+        const amount = Number(value || 0);
+
+        if (amount >= 1000000) {
+            return "LKR " + (amount / 1000000).toFixed(1) + "M";
+        }
+
+        if (amount >= 1000) {
+            return "LKR " + (amount / 1000).toFixed(1) + "K";
+        }
+
+        return money(amount);
+    }
+
+
+    function formatDate(date) {
+
+        if (!date) return "—";
+
+        const d = new Date(date + "T00:00:00");
+
+        if (isNaN(d.getTime())) {
+            return date;
+        }
+
+        return d.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+
+    function formatTime(time) {
+
+        if (!time) return "—";
+
+        return String(time).substring(0, 5);
+    }
+
+
+    function initials(name) {
+
+        if (!name) return "?";
+
+        return name
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(x => x[0])
+            .join("")
+            .toUpperCase();
+    }
+
+
+    function methodLabel(method) {
+
+        const map = {
+            CASH: "Cash",
+            CARD: "Card",
+            ONLINE: "Online",
+            BANK_TRANSFER: "Bank Transfer"
+        };
+
+        return map[method] || method || "—";
+    }
+
+
+    function methodIcon(method) {
+
+        const map = {
+            CASH: "fa-money-bill-wave",
+            CARD: "fa-credit-card",
+            ONLINE: "fa-globe",
+            BANK_TRANSFER: "fa-building-columns"
+        };
+
+        return map[method] || "fa-credit-card";
+    }
+
+
+    function statusLabel(status) {
+
+        const map = {
+            PAID: "Paid",
+            PENDING: "Pending",
+            REFUNDED: "Refunded"
+        };
+
+        return map[status] || status || "Pending";
+    }
+
+
+    /* =========================================================
+       DATE
+    ========================================================= */
+
+    function setToday() {
+
+        const now = new Date();
+
+        if ($("todayDate")) {
+
+            $("todayDate").textContent =
+                now.toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                });
+        }
+
+        if ($("mDate")) {
+
+            $("mDate").value =
+                now.toISOString().split("T")[0];
+        }
+    }
+
+
+    /* =========================================================
+       LOAD PAYMENTS
+    ========================================================= */
+
+    async function loadPayments() {
+
+        try {
+
+            const response =
+                await apiFetch(`${API.payments}/all`);
+
+            const body = unwrap(response);
+
+            payments =
+                Array.isArray(body)
+                    ? body
+                    : [];
+
+            currentPage = 1;
+
+            renderPayments();
+
+            calculateStats();
+
+            renderChart(
+                getActiveChartPeriod()
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Payment loading error:",
+                error
+            );
+
+            $("tableBody").innerHTML = `
+
+                <tr>
+
+                    <td colspan="9">
+
+                        <div class="empty">
+
+                            <div class="empty-ic">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+
+                            <h3>
+                                Unable to Load Payments
+                            </h3>
+
+                            <p>
+                                ${escapeHtml(error.message)}
+                            </p>
+
+                            <button
+                                class="btn-primary"
+                                onclick="loadPayments()">
+
+                                <i class="fa-solid fa-rotate"></i>
+
+                                Retry
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+        }
+    }
+
+
+    /* =========================================================
+       LOAD APPOINTMENTS
+    ========================================================= */
+
+    async function loadAppointments() {
+
+        try {
+
+            const response =
+                await apiFetch(
+                    `${API.appointments}/all`
+                );
+
+            const body = unwrap(response);
+
+            appointments =
+                Array.isArray(body)
+                    ? body
+                    : [];
+
+            populateAppointments();
+
+        } catch (error) {
+
+            console.error(
+                "Appointment loading error:",
+                error
+            );
+
+            showToast(
+                "Unable to load appointments",
+                "error"
+            );
+        }
+    }
+
+
+    /* =========================================================
+       LOAD INVOICES
+    ========================================================= */
+
+    async function loadInvoices() {
+
+        try {
+
+            const response =
+                await apiFetch(
+                    `${API.invoices}/all`
+                );
+
+            const body = unwrap(response);
+
+            invoices =
+                Array.isArray(body)
+                    ? body
+                    : [];
+
+        } catch (error) {
+
+            console.error(
+                "Invoice loading error:",
+                error
+            );
+
+            showToast(
+                "Unable to load invoices",
+                "error"
+            );
+        }
+    }
+
+
+    /* =========================================================
+       APPOINTMENT DROPDOWN
+    ========================================================= */
+
+    function populateAppointments() {
+
+        const select =
+            $("mAppointment");
+
+        if (!select) return;
+
+        select.innerHTML =
+            `<option value="">Select appointment</option>`;
+
+        appointments.forEach(appointment => {
+
+            const invoice =
+                getInvoiceForAppointment(
+                    appointment.appointmentId
+                );
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                appointment.appointmentId;
+
+            option.textContent =
+                `#${appointment.appointmentId} — ` +
+                `${appointment.customerName || "Customer"} — ` +
+                `${appointment.serviceName || "Service"} — ` +
+                `${formatDate(appointment.appointmentDate)} ` +
+                `${formatTime(appointment.startTime)}`;
+
+            option.dataset.invoiceId =
+                invoice?.invoiceId || "";
+
+            select.appendChild(option);
+        });
+    }
+
+
+    /* =========================================================
+       FIND INVOICE BY APPOINTMENT
+    ========================================================= */
+
+    function getInvoiceForAppointment(appointmentId) {
+
+        return invoices.find(
+            invoice =>
+                Number(invoice.appointmentId) ===
+                Number(appointmentId)
+        );
+    }
+
+
+    /* =========================================================
+       APPOINTMENT SELECT CHANGE
+    ========================================================= */
+
+    if ($("mAppointment")) {
+
+        $("mAppointment").addEventListener(
+            "change",
+            function () {
+
+                const appointmentId =
+                    Number(this.value);
+
+                if (!appointmentId) {
+
+                    clearAppointmentInfo();
+
+                    return;
+                }
+
+                const appointment =
+                    appointments.find(
+                        a =>
+                            Number(a.appointmentId) ===
+                            appointmentId
+                    );
+
+                if (!appointment) return;
+
+                const invoice =
+                    getInvoiceForAppointment(
+                        appointmentId
+                    );
+
+                $("aptInfo").classList.add("show");
+
+                $("aiCustomer").textContent =
+                    appointment.customerName || "—";
+
+                $("aiPhone").textContent =
+                    appointment.customerPhone || "—";
+
+                $("aiService").textContent =
+                    appointment.serviceName || "—";
+
+                $("aiStaff").textContent =
+                    appointment.staffName || "—";
+
+                $("aiDate").textContent =
+                    formatDate(
+                        appointment.appointmentDate
+                    );
+
+                $("aiTime").textContent =
+                    formatTime(
+                        appointment.startTime
+                    );
+
+                const price =
+                    invoice?.totalAmount ??
+                    appointment.servicePrice ??
+                    0;
+
+                $("aiPrice").textContent =
+                    money(price);
+
+                $("mCustomer").value =
+                    appointment.customerName || "";
+
+                $("mService").value =
+                    appointment.serviceName || "";
+
+                /*
+                 * Payment belongs to Invoice.
+                 * Amount is based on invoice balance.
+                 */
+
+                if (invoice) {
+
+                    const balance =
+                        Number(
+                            invoice.balanceDue || 0
+                        );
+
+                    $("mAmount").value =
+                        balance > 0
+                            ? balance.toFixed(2)
+                            : "";
+
+                } else {
+
+                    $("mAmount").value = "";
+                }
+            }
+        );
+    }
+
+
+    /* =========================================================
+       CLEAR APPOINTMENT INFO
+    ========================================================= */
+
+    function clearAppointmentInfo() {
+
+        if ($("aptInfo")) {
+            $("aptInfo").classList.remove("show");
+        }
+
+        if ($("mCustomer")) {
+            $("mCustomer").value = "";
+        }
+
+        if ($("mService")) {
+            $("mService").value = "";
+        }
+
+        if ($("mAmount")) {
+            $("mAmount").value = "";
+        }
+    }
+
+
+    /* =========================================================
+       CREATE PAYMENT
+    ========================================================= */
+
+    async function createPayment() {
+
+        const appointmentId =
+            Number($("mAppointment").value);
+
+        const amount =
+            Number($("mAmount").value);
+
+        const method =
+            $("mMethod").value;
+
+        const status =
+            $("mStatus").value || "PAID";
+
+        const date =
+            $("mDate").value;
+
+        if (!appointmentId) {
+
+            throw new Error(
+                "Please select an appointment"
+            );
+        }
+
+        if (!amount || amount <= 0) {
+
+            throw new Error(
+                "Payment amount must be greater than 0"
+            );
+        }
+
+        if (!method) {
+
+            throw new Error(
+                "Please select payment method"
+            );
+        }
+
+        if (!date) {
+
+            throw new Error(
+                "Please select payment date"
+            );
+        }
+
+        const invoice =
+            getInvoiceForAppointment(
+                appointmentId
+            );
+
+        if (!invoice) {
+
+            throw new Error(
+                "No invoice found for this appointment"
+            );
+        }
+
+        const balance =
+            Number(invoice.balanceDue || 0);
+
+        if (balance <= 0) {
+
+            throw new Error(
+                "This invoice is already fully paid"
+            );
+        }
+
+        if (amount > balance) {
+
+            throw new Error(
+                `Payment cannot exceed invoice balance of ${money(balance)}`
+            );
+        }
+
+        /*
+         * IMPORTANT:
+         *
+         * Payment entity has ONLY invoice relationship.
+         *
+         * appointmentId is NOT sent.
+         */
+
+        const payload = {
+
+            invoiceId:
+            invoice.invoiceId,
+
+            amount:
+                amount.toFixed(2),
+
+            paymentMethod:
+            method,
+
+            paymentStatus:
+            status,
+
+            paymentDate:
+            date,
+
+            transactionReference:
+                $("mRef").value.trim() || null,
+
+            notes:
+                $("mNotes").value.trim() || null
+        };
+
+        return apiFetch(
+            `${API.payments}/save`,
+            {
+                method: "POST",
+                body: JSON.stringify(payload)
+            }
+        );
+    }
+
+
+    /* =========================================================
+       UPDATE PAYMENT
+    ========================================================= */
+
+    async function updatePayment() {
+
+        const amount =
+            Number($("mAmount").value);
+
+        const method =
+            $("mMethod").value;
+
+        const status =
+            $("mStatus").value;
+
+        const date =
+            $("mDate").value;
+
+        if (!amount || amount <= 0) {
+
+            throw new Error(
+                "Payment amount must be greater than 0"
+            );
+        }
+
+        if (!method) {
+
+            throw new Error(
+                "Please select payment method"
+            );
+        }
+
+        if (!date) {
+
+            throw new Error(
+                "Please select payment date"
+            );
+        }
+
+        if (!editingPaymentId) {
+
+            throw new Error(
+                "Payment ID is missing"
+            );
+        }
+
+        const payload = {
+
+            amount:
+                amount.toFixed(2),
+
+            paymentMethod:
+            method,
+
+            paymentStatus:
+            status,
+
+            paymentDate:
+            date,
+
+            transactionReference:
+                $("mRef").value.trim() || null,
+
+            notes:
+                $("mNotes").value.trim() || null
+        };
+
+        return apiFetch(
+            `${API.payments}/update/${editingPaymentId}`,
+            {
+                method: "PUT",
+                body: JSON.stringify(payload)
+            }
+        );
+    }
+
+
+    /* =========================================================
+       SAVE PAYMENT BUTTON
+    ========================================================= */
+
+    if ($("savePaymentBtn")) {
+
+        $("savePaymentBtn").addEventListener(
+            "click",
+            async function () {
+
+                const button = this;
+
+                const isEditing =
+                    !!editingPaymentId;
+
+                try {
+
+                    button.disabled = true;
+
+                    button.innerHTML =
+                        `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+
+                    if (isEditing) {
+
+                        await updatePayment();
+
+                    } else {
+
+                        await createPayment();
+                    }
+
+                    closeRecordModal();
+
+                    await loadInvoices();
+
+                    await loadAppointments();
+
+                    await loadPayments();
+
+                    Swal.fire({
+
+                        icon: "success",
+
+                        title:
+                            isEditing
+                                ? "Payment Updated"
+                                : "Payment Recorded",
+
+                        text:
+                            isEditing
+                                ? "Payment updated successfully."
+                                : "Payment recorded successfully.",
+
+                        confirmButtonColor:
+                            "#B76E79"
+                    });
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    Swal.fire({
+
+                        icon: "error",
+
+                        title: "Payment Error",
+
+                        text:
+                        error.message,
+
+                        confirmButtonColor:
+                            "#B76E79"
+                    });
+
+                } finally {
+
+                    button.disabled = false;
+
+                    button.innerHTML =
+                        isEditing
+                            ? "Update Payment"
+                            : "Record Payment";
+                }
+            }
+        );
+    }
+
+
+    /* =========================================================
+       RENDER PAYMENTS
+    ========================================================= */
+
+    function renderPayments() {
+
+        const filtered =
+            getFilteredPayments();
+
+        const start =
+            (currentPage - 1) * pageSize;
+
+        const end =
+            start + pageSize;
+
+        const pageItems =
+            filtered.slice(start, end);
+
+        const tbody =
+            $("tableBody");
+
+        if (!tbody) return;
+
+        if (pageItems.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="9">
+
+                        <div class="empty">
+
+                            <div class="empty-ic">
+                                <i class="fa-solid fa-receipt"></i>
+                            </div>
+
+                            <h3>
+                                No Payments Found
+                            </h3>
+
+                            <p>
+                                No payment transactions match your filters.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            renderPagination(filtered.length);
+
+            return;
+        }
+
+        tbody.innerHTML =
+            pageItems
+                .map(paymentRow)
+                .join("");
+
+        renderPagination(filtered.length);
+    }
+
+
+    /* =========================================================
+       PAYMENT ROW
+    ========================================================= */
+
+    function paymentRow(payment) {
+
+        const customer =
+            payment.customerName ||
+            "Unknown Customer";
+
+        const status =
+            payment.paymentStatus ||
+            "PENDING";
+
+        return `
+
+            <tr>
+
+                <td>
+
+                    <span class="pay-id">
+                        #PAY-${payment.paymentId}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="cust-cell">
+
+                        <div class="cust-av">
+                            ${initials(customer)}
+                        </div>
+
+                        <div>
+
+                            <div class="nm">
+                                ${escapeHtml(customer)}
+                            </div>
+
+                            <div class="ph">
+                                ${escapeHtml(
+            payment.customerPhone || ""
+        )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div>
+                        #${payment.appointmentId || "—"}
+                    </div>
+
+                    <div
+                        style="
+                            font-size:11px;
+                            color:var(--muted)
+                        ">
+
+                        ${formatTime(
+            payment.appointmentTime
+        )}
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHtml(
+            payment.serviceName || "—"
+        )}
+
+                </td>
+
+
+                <td>
+
+                    ${formatDate(
+            payment.paymentDate
+        )}
+
+                </td>
+
+
+                <td>
+
+                    <span class="amount">
+                        ${money(payment.amount)}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="method-cell">
+
+                        <div class="method-ic">
+
+                            <i
+                                class="fa-solid
+                                ${methodIcon(
+            payment.paymentMethod
+        )}">
+                            </i>
+
+                        </div>
+
+                        <span>
+                            ${methodLabel(
+            payment.paymentMethod
+        )}
+                        </span>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="badge
+                        ${status.toLowerCase()}">
+
+                        ${statusLabel(status)}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="actions-cell">
+
+
+                        <button
+                            class="act-btn view"
+                            title="View"
+                            onclick="
+                                viewPayment(
+                                    ${payment.paymentId}
+                                )
+                            ">
+
+                            <i
+                                class="fa-regular fa-eye">
+                            </i>
+
+                        </button>
+
+
+                        <button
+                            class="act-btn edit"
+                            title="Edit"
+                            onclick="
+                                editPayment(
+                                    ${payment.paymentId}
+                                )
+                            ">
+
+                            <i
+                                class="fa-solid fa-pen">
+                            </i>
+
+                        </button>
+
+
+                        ${
+            status === "PAID"
+                ?
+
+                `<button
+                                    class="act-btn refund"
+                                    title="Refund"
+                                    onclick="
+                                        refundPayment(
+                                            ${payment.paymentId}
+                                        )
+                                    ">
+
+                                    <i
+                                        class="fa-solid fa-rotate-left">
+                                    </i>
+
+                                </button>`
+
+                : ""
+        }
+
+
+                        <button
+                            class="act-btn del"
+                            title="Delete"
+                            onclick="
+                                deletePayment(
+                                    ${payment.paymentId}
+                                )
+                            ">
+
+                            <i
+                                class="fa-solid fa-trash">
+                            </i>
+
+                        </button>
+
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+    }
+
+
+    /* =========================================================
+       FILTER
+    ========================================================= */
+
+    function getFilteredPayments() {
+
+        const search =
+            (
+                ($("searchInput")?.value || "") +
+                " " +
+                ($("fSearch")?.value || "")
+            )
+                .trim()
+                .toLowerCase();
+
+        const from =
+            $("fFrom")?.value || "";
+
+        const to =
+            $("fTo")?.value || "";
+
+        const status =
+            $("fStatus")?.value || "";
+
+        const method =
+            $("fMethod")?.value || "";
+
+        const service =
+            $("fService")?.value || "";
+
+        return payments.filter(payment => {
+
+            const searchable = [
+
+                payment.paymentId,
+                payment.invoiceId,
+                payment.invoiceNumber,
+                payment.appointmentId,
+                payment.customerName,
+                payment.customerPhone,
+                payment.serviceName,
+                payment.staffName,
+                payment.transactionReference
+
+            ]
+                .join(" ")
+                .toLowerCase();
+
+            if (
+                search &&
+                !searchable.includes(search)
+            ) {
+                return false;
+            }
+
+            if (
+                from &&
+                payment.paymentDate < from
+            ) {
+                return false;
+            }
+
+            if (
+                to &&
+                payment.paymentDate > to
+            ) {
+                return false;
+            }
+
+            if (
+                status &&
+                payment.paymentStatus !== status
+            ) {
+                return false;
+            }
+
+            if (
+                method &&
+                payment.paymentMethod !== method
+            ) {
+                return false;
+            }
+
+            if (
+                service &&
+                String(payment.serviceId) !== service
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+
+    /* =========================================================
+       FILTER EVENTS
+    ========================================================= */
+
+    [
+        "searchInput",
+        "fSearch",
+        "fFrom",
+        "fTo",
+        "fStatus",
+        "fMethod",
+        "fService"
+    ].forEach(id => {
+
+        const element = $(id);
+
+        if (!element) return;
+
+        element.addEventListener(
+            "input",
+            () => {
+
+                currentPage = 1;
+
+                renderPayments();
+            }
+        );
+    });
+
+
+    /* =========================================================
+       RESET FILTERS
+    ========================================================= */
+
+    if ($("resetFilters")) {
+
+        $("resetFilters").addEventListener(
+            "click",
+            function () {
+
+                $("searchInput").value = "";
+                $("fSearch").value = "";
+                $("fFrom").value = "";
+                $("fTo").value = "";
+                $("fStatus").value = "";
+                $("fMethod").value = "";
+                $("fService").value = "";
+
+                currentPage = 1;
+
+                renderPayments();
+            }
+        );
+    }
+
+
+    /* =========================================================
+       SERVICE FILTER
+    ========================================================= */
+
+    function populateServiceFilter() {
+
+        const select =
+            $("fService");
+
+        if (!select) return;
+
+        const services =
+            new Map();
+
+        payments.forEach(payment => {
+
+            if (payment.serviceId) {
+
+                services.set(
+                    payment.serviceId,
+                    payment.serviceName || "Service"
+                );
+            }
+        });
+
+        select.innerHTML =
+            `<option value="">All Services</option>`;
+
+        services.forEach(
+            (name, id) => {
+
+                select.innerHTML += `
+
+                    <option value="${id}">
+                        ${escapeHtml(name)}
+                    </option>
+
+                `;
+            }
+        );
+    }
+
+
+    /* =========================================================
+       PAGINATION
+    ========================================================= */
+
+    function renderPagination(total) {
+
+        const pagination =
+            $("pagination");
+
+        if (!pagination) return;
+
+        const pages =
+            Math.ceil(total / pageSize);
+
+        if (pages <= 1) {
+
+            pagination.innerHTML = "";
+
+            return;
+        }
+
+        let html = `
+
+            <div class="page-info">
+
+                Showing
+
+                <b>
+                    ${Math.min(
+            (currentPage - 1) * pageSize + 1,
+            total
+        )}
+                </b>
+
+                -
+
+                <b>
+                    ${Math.min(
+            currentPage * pageSize,
+            total
+        )}
+                </b>
+
+                of
+
+                <b>${total}</b>
+
+            </div>
+
+
+            <div class="page-btns">
+
+        `;
+
+        for (
+            let i = 1;
+            i <= pages;
+            i++
+        ) {
+
+            html += `
+
+                <button
+                    class="
+                        pg-btn
+                        ${i === currentPage
+                ? "active"
+                : ""}
+                    "
+                    onclick="goPage(${i})">
+
+                    ${i}
+
+                </button>
+
+            `;
+        }
+
+        html += `</div>`;
+
+        pagination.innerHTML = html;
+    }
+
+
+    function goPage(page) {
+
+        currentPage = page;
+
+        renderPayments();
+    }
+
+
+    /* =========================================================
+       STATS
+    ========================================================= */
+
+    function calculateStats() {
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+        const paid =
+            payments.filter(
+                p =>
+                    p.paymentStatus === "PAID"
+            );
+
+        const pending =
+            payments.filter(
+                p =>
+                    p.paymentStatus === "PENDING"
+            );
+
+        const refunded =
+            payments.filter(
+                p =>
+                    p.paymentStatus === "REFUNDED"
+            );
+
+        const todayPaid =
+            paid.filter(
+                p =>
+                    p.paymentDate === today
+            );
+
+        const todayRevenue =
+            todayPaid.reduce(
+                (sum, p) =>
+                    sum + Number(
+                        p.amount || 0
+                    ),
+                0
+            );
+
+        const totalRevenue =
+            paid.reduce(
+                (sum, p) =>
+                    sum + Number(
+                        p.amount || 0
+                    ),
+                0
+            );
+
+        const pendingRevenue =
+            pending.reduce(
+                (sum, p) =>
+                    sum + Number(
+                        p.amount || 0
+                    ),
+                0
+            );
+
+        const refundedRevenue =
+            refunded.reduce(
+                (sum, p) =>
+                    sum + Number(
+                        p.amount || 0
+                    ),
+                0
+            );
+
+        if ($("todayRevenue")) {
+
+            $("todayRevenue").textContent =
+                shortMoney(todayRevenue);
+        }
+
+        if ($("todayPaymentCount")) {
+
+            $("todayPaymentCount").textContent =
+                `${todayPaid.length} paid payments`;
+        }
+
+        if ($("totalRevenue")) {
+
+            $("totalRevenue").textContent =
+                shortMoney(totalRevenue);
+        }
+
+        if ($("totalPaidCount")) {
+
+            $("totalPaidCount").textContent =
+                `${paid.length} paid payments`;
+        }
+
+        if ($("pendingRevenue")) {
+
+            $("pendingRevenue").textContent =
+                shortMoney(pendingRevenue);
+        }
+
+        if ($("pendingCount")) {
+
+            $("pendingCount").textContent =
+                `${pending.length} pending`;
+        }
+
+        if ($("refundedRevenue")) {
+
+            $("refundedRevenue").textContent =
+                shortMoney(refundedRevenue);
+        }
+
+        if ($("refundedCount")) {
+
+            $("refundedCount").textContent =
+                `${refunded.length} refunds`;
+        }
+
+        calculateInsights(
+            paid,
+            refunded
+        );
+
+        populateServiceFilter();
+    }
+
+
+    /* =========================================================
+       INSIGHTS
+    ========================================================= */
+
+    function calculateInsights(
+        paid,
+        refunded
+    ) {
+
+        /*
+         * Most Popular Payment Method
+         */
+
+        const methodTotals = {};
+
+        paid.forEach(payment => {
+
+            const method =
+                payment.paymentMethod ||
+                "UNKNOWN";
+
+            methodTotals[method] =
+                (methodTotals[method] || 0) + 1;
+        });
+
+        const methods =
+            Object.entries(methodTotals)
+                .sort(
+                    (a, b) =>
+                        b[1] - a[1]
+                );
+
+        if (methods.length) {
+
+            const [
+                method,
+                count
+            ] = methods[0];
+
+            const percentage =
+                paid.length
+                    ? (
+                        (count / paid.length) *
+                        100
+                    ).toFixed(1)
+                    : 0;
+
+            if ($("popMethod")) {
+
+                $("popMethod").textContent =
+                    methodLabel(method);
+            }
+
+            if ($("popMethodPct")) {
+
+                $("popMethodPct").textContent =
+                    `${percentage}% of paid transactions`;
+            }
+
+        } else {
+
+            if ($("popMethod")) {
+                $("popMethod").textContent = "—";
+            }
+
+            if ($("popMethodPct")) {
+                $("popMethodPct").textContent =
+                    "No paid transactions";
+            }
+        }
+
+
+        /*
+         * Average Transaction
+         */
+
+        const total =
+            paid.reduce(
+                (sum, p) =>
+                    sum + Number(
+                        p.amount || 0
+                    ),
+                0
+            );
+
+        const average =
+            paid.length
+                ? total / paid.length
+                : 0;
+
+        if ($("avgTxn")) {
+
+            $("avgTxn").textContent =
+                shortMoney(average);
+        }
+
+
+        /*
+         * Highest Revenue Day
+         */
+
+        const dayTotals = {};
+
+        paid.forEach(payment => {
+
+            const day =
+                payment.paymentDate;
+
+            if (!day) return;
+
+            dayTotals[day] =
+                (dayTotals[day] || 0) +
+                Number(payment.amount || 0);
+        });
+
+        const days =
+            Object.entries(dayTotals)
+                .sort(
+                    (a, b) =>
+                        b[1] - a[1]
+                );
+
+        if (days.length) {
+
+            if ($("topDay")) {
+
+                $("topDay").textContent =
+                    formatDate(days[0][0]);
+            }
+
+            if ($("topDayAmt")) {
+
+                $("topDayAmt").textContent =
+                    money(days[0][1]);
+            }
+
+        } else {
+
+            if ($("topDay")) {
+                $("topDay").textContent = "—";
+            }
+
+            if ($("topDayAmt")) {
+                $("topDayAmt").textContent = "LKR 0.00";
+            }
+        }
+
+
+        /*
+         * Refund Rate
+         */
+
+        const rate =
+            payments.length
+                ? (
+                    (refunded.length /
+                        payments.length) *
+                    100
+                ).toFixed(1)
+                : 0;
+
+        if ($("refundRate")) {
+
+            $("refundRate").textContent =
+                `${rate}%`;
+        }
+    }
+
+
+    /* =========================================================
+       ACTIVE CHART PERIOD
+    ========================================================= */
+
+    function getActiveChartPeriod() {
+
+        const active =
+            document.querySelector(
+                "#periodTabs button.active"
+            );
+
+        if (!active) {
+            return 7;
+        }
+
+        return Number(
+            active.dataset.period || 7
+        );
+    }
+
+
+    /* =========================================================
+       CHART
+    ========================================================= */
+
+    /* =========================================================
+    CHART
+ ========================================================= */
+
+    function renderChart(days = 7) {
+
+        console.log("Rendering revenue chart...");
+        console.log("Chart.js:", typeof Chart);
+        console.log("Payments:", payments);
+
+        /* ---------------------------------------------------------
+           CHECK CHART.JS
+        --------------------------------------------------------- */
+
+        if (typeof Chart === "undefined") {
+
+            console.error(
+                "Chart.js is not loaded."
+            );
+
+            return;
+        }
+
+
+        /* ---------------------------------------------------------
+           FIND CANVAS
+        --------------------------------------------------------- */
+
+        const canvas =
+            document.getElementById("revenueChart");
+
+        if (!canvas) {
+
+            console.error(
+                "Canvas #revenueChart was not found."
+            );
+
+            return;
+        }
+
+
+        /* ---------------------------------------------------------
+           DESTROY OLD CHART
+        --------------------------------------------------------- */
+
+        if (revenueChart) {
+
+            revenueChart.destroy();
+
+            revenueChart = null;
+        }
+
+
+        /* ---------------------------------------------------------
+           TODAY
+           IMPORTANT:
+           Do NOT use toISOString() for local date.
+        --------------------------------------------------------- */
+
+        const today =
+            new Date();
+
+        today.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        /* ---------------------------------------------------------
+           GET DATE STRING WITHOUT UTC CONVERSION
+        --------------------------------------------------------- */
+
+        function localDateString(date) {
+
+            const year =
+                date.getFullYear();
+
+            const month =
+                String(
+                    date.getMonth() + 1
+                ).padStart(2, "0");
+
+            const day =
+                String(
+                    date.getDate()
+                ).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        /* ---------------------------------------------------------
+           START DATE
+        --------------------------------------------------------- */
+
+        let startDate =
+            new Date(today);
+
+
+        if (days === 365) {
+
+            startDate =
+                new Date(
+                    today.getFullYear(),
+                    0,
+                    1
+                );
+
+        } else {
+
+            startDate.setDate(
+                today.getDate() -
+                (days - 1)
+            );
+        }
+
+
+        /* ---------------------------------------------------------
+           BUILD LABELS + VALUES
+        --------------------------------------------------------- */
+
+        const labels = [];
+        const values = [];
+
+
+        for (
+            let d = new Date(startDate);
+
+            d <= today;
+
+            d.setDate(
+                d.getDate() + 1
+            )
+        ) {
+
+            const date =
+                localDateString(d);
+
+
+            labels.push(
+
+                d.toLocaleDateString(
+                    "en-GB",
+                    {
+                        day: "2-digit",
+                        month: "short"
+                    }
+                )
+
+            );
+
+
+            const amount =
+                payments
+                    .filter(payment => {
+
+                        return (
+                            payment.paymentDate === date &&
+                            payment.paymentStatus === "PAID"
+                        );
+
+                    })
+                    .reduce(
+                        (sum, payment) => {
+
+                            return (
+                                sum +
+                                Number(
+                                    payment.amount || 0
+                                )
+                            );
+
+                        },
+                        0
+                    );
+
+
+            values.push(amount);
+        }
+
+
+        /* ---------------------------------------------------------
+           DEBUG
+        --------------------------------------------------------- */
+
+        console.log("Chart labels:", labels);
+        console.log("Chart values:", values);
+
+
+        /* ---------------------------------------------------------
+           GET CONTEXT
+        --------------------------------------------------------- */
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        /* ---------------------------------------------------------
+           CREATE CHART
+        --------------------------------------------------------- */
+
+        revenueChart =
+            new Chart(
+                ctx,
+                {
+
+                    type: "line",
+
+
+                    data: {
+
+                        labels: labels,
+
+                        datasets: [
+
+                            {
+
+                                label:
+                                    "Revenue",
+
+                                data:
+                                values,
+
+                                borderColor:
+                                    "#B76E79",
+
+                                backgroundColor:
+                                    "rgba(183, 110, 121, 0.10)",
+
+                                borderWidth:
+                                    2,
+
+                                fill:
+                                    true,
+
+                                tension:
+                                    0.4,
+
+                                pointRadius:
+                                    3,
+
+                                pointHoverRadius:
+                                    6
+
+                            }
+
+                        ]
+
+                    },
+
+
+                    options: {
+
+                        responsive:
+                            true,
+
+                        maintainAspectRatio:
+                            false,
+
+
+                        interaction: {
+
+                            intersect:
+                                false,
+
+                            mode:
+                                "index"
+
+                        },
+
+
+                        plugins: {
+
+                            legend: {
+
+                                display:
+                                    false
+
+                            },
+
+
+                            tooltip: {
+
+                                callbacks: {
+
+                                    label:
+                                        function(context) {
+
+                                            return (
+                                                " Revenue: " +
+                                                money(
+                                                    context.raw
+                                                )
+                                            );
+
+                                        }
+
+                                }
+
+                            }
+
+                        },
+
+
+                        scales: {
+
+                            x: {
+
+                                grid: {
+
+                                    display:
+                                        false
+
+                                }
+
+                            },
+
+
+                            y: {
+
+                                beginAtZero:
+                                    true,
+
+                                grid: {
+
+                                    color:
+                                        "rgba(0,0,0,0.06)"
+
+                                },
+
+                                ticks: {
+
+                                    callback:
+                                        function(value) {
+
+                                            return (
+                                                "LKR " +
+                                                Number(
+                                                    value
+                                                ).toLocaleString(
+                                                    "en-LK"
+                                                )
+                                            );
+
+                                        }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+        console.log(
+            "Revenue chart created successfully."
+        );
+    }
+    /* =========================================================
+       PERIOD BUTTONS
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            "#periodTabs button"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            "#periodTabs button"
+                        )
+                        .forEach(btn =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                        );
+
+                    this.classList.add("active");
+
+                    renderChart(
+                        Number(
+                            this.dataset.period
+                        )
+                    );
+                }
+            );
+        });
+
+
+    /* =========================================================
+       RECORD BUTTON
+    ========================================================= */
+
+    if ($("recordBtn")) {
+
+        $("recordBtn").addEventListener(
+            "click",
+            openCreateModal
+        );
+    }
+
+
+    /* =========================================================
+       OPEN CREATE MODAL
+    ========================================================= */
+
+    function openCreateModal() {
+
+        editingPaymentId = null;
+
+        $("modalTitle").textContent =
+            "Record Payment";
+
+        $("modalSub").textContent =
+            "Add a new payment transaction.";
+
+        $("savePaymentBtn").textContent =
+            "Record Payment";
+
+        $("mAppointment").value = "";
+
+        $("mCustomer").value = "";
+
+        $("mService").value = "";
+
+        $("mAmount").value = "";
+
+        $("mMethod").value = "";
+
+        $("mStatus").value = "PAID";
+
+        $("mRef").value = "";
+
+        $("mNotes").value = "";
+
+        setToday();
+
+        clearAppointmentInfo();
+
+        $("recordModalOverlay")
+            .classList.add("show");
+    }
+
+
+    /* =========================================================
+       CLOSE RECORD MODAL
+    ========================================================= */
+
+    function closeRecordModal() {
+
+        $("recordModalOverlay")
+            .classList.remove("show");
+    }
+
+
+    document
+        .querySelectorAll(
+            "[data-close]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                closeRecordModal
+            );
+        });
+
+
+    /* =========================================================
+       EDIT PAYMENT
+    ========================================================= */
+
+    async function editPayment(id) {
+
+        const payment =
+            payments.find(
+                p =>
+                    Number(
+                        p.paymentId
+                    ) === Number(id)
+            );
+
+        if (!payment) {
+
+            showToast(
+                "Payment not found",
+                "error"
+            );
+
+            return;
+        }
+
+        editingPaymentId =
+            payment.paymentId;
+
+        $("modalTitle").textContent =
+            "Edit Payment";
+
+        $("modalSub").textContent =
+            "Update payment transaction details.";
+
+        $("savePaymentBtn").textContent =
+            "Update Payment";
+
+        /*
+         * Payment remains linked to
+         * existing invoice.
+         */
+
+        $("mAppointment").value =
+            payment.appointmentId || "";
+
+        $("mCustomer").value =
+            payment.customerName || "";
+
+        $("mService").value =
+            payment.serviceName || "";
+
+        $("mAmount").value =
+            Number(
+                payment.amount || 0
+            ).toFixed(2);
+
+        $("mMethod").value =
+            payment.paymentMethod || "";
+
+        $("mStatus").value =
+            payment.paymentStatus ||
+            "PENDING";
+
+        $("mDate").value =
+            payment.paymentDate || "";
+
+        $("mRef").value =
+            payment.transactionReference ||
+            "";
+
+        $("mNotes").value =
+            payment.notes || "";
+
+        const appointment =
+            appointments.find(
+                a =>
+                    Number(
+                        a.appointmentId
+                    ) ===
+                    Number(
+                        payment.appointmentId
+                    )
+            );
+
+        if (appointment) {
+
+            $("aptInfo")
+                .classList.add("show");
+
+            $("aiCustomer").textContent =
+                appointment.customerName ||
+                "—";
+
+            $("aiPhone").textContent =
+                appointment.customerPhone ||
+                payment.customerPhone ||
+                "—";
+
+            $("aiService").textContent =
+                appointment.serviceName ||
+                payment.serviceName ||
+                "—";
+
+            $("aiStaff").textContent =
+                appointment.staffName ||
+                payment.staffName ||
+                "—";
+
+            $("aiDate").textContent =
+                formatDate(
+                    appointment.appointmentDate
+                );
+
+            $("aiTime").textContent =
+                formatTime(
+                    appointment.startTime
+                );
+
+            $("aiPrice").textContent =
+                money(
+                    payment.servicePrice ||
+                    payment.amount
+                );
+        }
+
+        $("recordModalOverlay")
+            .classList.add("show");
+    }
+
+
+    /* =========================================================
+       VIEW PAYMENT
+    ========================================================= */
+
+    async function viewPayment(id) {
+
+        try {
+
+            let payment =
+                payments.find(
+                    p =>
+                        Number(
+                            p.paymentId
+                        ) === Number(id)
+                );
+
+            try {
+
+                const response =
+                    await apiFetch(
+                        `${API.payments}/${id}`
+                    );
+
+                payment =
+                    unwrap(response) ||
+                    payment;
+
+            } catch (error) {
+
+                console.warn(
+                    "Using cached payment",
+                    error
+                );
+            }
+
+            if (!payment) {
+
+                throw new Error(
+                    "Payment not found"
+                );
+            }
+
+            currentPayment =
+                payment;
+
+            $("viewBody").innerHTML = `
+
+                <div class="receipt">
+
+                    <div class="receipt-top">
+
+                        <div class="logo">
+
+                            <i
+                                class="fa-solid fa-spa">
+                            </i>
+
+                        </div>
+
+                        <div class="brand">
+                            PINK BEAUTY SALON
+                        </div>
+
+                        <div class="tag">
+                            Luxury Beauty Meets Smart Technology
+                        </div>
+
+                    </div>
+
+
+                    <div class="receipt-title">
+                        Payment Receipt
+                    </div>
+
+
+                    <div class="receipt-body">
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Payment ID
+                            </span>
+
+                            <span class="v mono">
+                                #PAY-${payment.paymentId}
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Invoice
+                            </span>
+
+                            <span class="v">
+
+                                ${escapeHtml(
+                payment.invoiceNumber ||
+                "#" +
+                (
+                    payment.invoiceId ||
+                    "—"
+                )
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Customer
+                            </span>
+
+                            <span class="v">
+
+                                ${escapeHtml(
+                payment.customerName ||
+                "—"
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Customer Phone
+                            </span>
+
+                            <span class="v">
+
+                                ${escapeHtml(
+                payment.customerPhone ||
+                "—"
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Appointment
+                            </span>
+
+                            <span class="v">
+                                #${payment.appointmentId || "—"}
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Service
+                            </span>
+
+                            <span class="v">
+
+                                ${escapeHtml(
+                payment.serviceName ||
+                "—"
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Staff
+                            </span>
+
+                            <span class="v">
+
+                                ${escapeHtml(
+                payment.staffName ||
+                "—"
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Appointment Date
+                            </span>
+
+                            <span class="v">
+
+                                ${formatDate(
+                payment.appointmentDate
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Payment Date
+                            </span>
+
+                            <span class="v">
+
+                                ${formatDate(
+                payment.paymentDate
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Payment Method
+                            </span>
+
+                            <span class="v">
+
+                                ${methodLabel(
+                payment.paymentMethod
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-row">
+
+                            <span class="k">
+                                Transaction Reference
+                            </span>
+
+                            <span class="v">
+
+                                ${escapeHtml(
+                payment.transactionReference ||
+                "—"
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-status">
+
+                            <span
+                                class="
+                                    badge
+                                    ${
+                (
+                    payment.paymentStatus ||
+                    "PENDING"
+                ).toLowerCase()
+            }
+                                ">
+
+                                ${statusLabel(
+                payment.paymentStatus
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="receipt-total">
+
+                            <span class="k">
+                                Total Paid
+                            </span>
+
+                            <span class="v">
+
+                                ${money(
+                payment.amount
+            )}
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="receipt-foot">
+
+                        Thank you for choosing Pink Beauty Salon.
+
+                        <br>
+
+                        We appreciate your visit.
+
+                    </div>
+
+                </div>
+
+            `;
+
+            $("viewModalOverlay")
+                .classList.add("show");
+
+        } catch (error) {
+
+            Swal.fire({
+
+                icon: "error",
+
+                title:
+                    "Unable to View Payment",
+
+                text:
+                error.message,
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+        }
+    }
+
+
+    /* =========================================================
+       CLOSE VIEW MODAL
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            "[data-close-view]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    $("viewModalOverlay")
+                        .classList.remove("show");
+                }
+            );
+        });
+
+
+    /* =========================================================
+       REFUND PAYMENT
+    ========================================================= */
+
+    async function refundPayment(id) {
+
+        const payment =
+            payments.find(
+                p =>
+                    Number(
+                        p.paymentId
+                    ) === Number(id)
+            );
+
+        if (!payment) return;
+
+        if (
+            payment.paymentStatus !==
+            "PAID"
+        ) {
+
+            Swal.fire({
+
+                icon: "warning",
+
+                title:
+                    "Cannot Refund",
+
+                text:
+                    "Only paid payments can be refunded.",
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+
+            return;
+        }
+
+        const result =
+            await Swal.fire({
+
+                icon: "warning",
+
+                title:
+                    "Refund Payment?",
+
+                html:
+                    `Refund <b>${money(
+                        payment.amount
+                    )}</b>
+                    for <b>${escapeHtml(
+                        payment.customerName ||
+                        "customer"
+                    )}</b>?`,
+
+                showCancelButton: true,
+
+                confirmButtonText:
+                    "Yes, Refund",
+
+                cancelButtonText:
+                    "Cancel",
+
+                confirmButtonColor:
+                    "#B23A48"
+            });
+
+        if (!result.isConfirmed) {
+            return;
+        }
+
+        try {
+
+            /*
+             * SecurityConfig:
+             * PATCH /api/v1/payments/refund/{id}
+             */
+
+            await apiFetch(
+                `${API.payments}/refund/${id}`,
+                {
+                    method: "PATCH"
+                }
+            );
+
+            await loadInvoices();
+
+            await loadPayments();
+
+            Swal.fire({
+
+                icon: "success",
+
+                title:
+                    "Payment Refunded",
+
+                text:
+                    "Payment has been refunded successfully.",
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            Swal.fire({
+
+                icon: "error",
+
+                title:
+                    "Refund Failed",
+
+                text:
+                error.message,
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+        }
+    }
+
+
+    /* =========================================================
+       DELETE PAYMENT
+    ========================================================= */
+
+    async function deletePayment(id) {
+
+        const result =
+            await Swal.fire({
+
+                icon: "warning",
+
+                title:
+                    "Delete Payment?",
+
+                text:
+                    "This payment transaction will be permanently deleted.",
+
+                showCancelButton: true,
+
+                confirmButtonText:
+                    "Yes, Delete",
+
+                cancelButtonText:
+                    "Cancel",
+
+                confirmButtonColor:
+                    "#B23A48"
+            });
+
+        if (!result.isConfirmed) {
+            return;
+        }
+
+        try {
+
+            await apiFetch(
+                `${API.payments}/delete/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            await loadInvoices();
+
+            await loadPayments();
+
+            Swal.fire({
+
+                icon: "success",
+
+                title:
+                    "Deleted",
+
+                text:
+                    "Payment deleted successfully.",
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            Swal.fire({
+
+                icon: "error",
+
+                title:
+                    "Delete Failed",
+
+                text:
+                error.message,
+
+                confirmButtonColor:
+                    "#B76E79"
+            });
+        }
+    }
+
+
+    /* =========================================================
+       PRINT RECEIPT
+    ========================================================= */
+
+    if ($("printReceiptBtn")) {
+
+        $("printReceiptBtn")
+            .addEventListener(
+                "click",
+                function () {
+
+                    if (!currentPayment) {
+                        return;
+                    }
+
+                    const receipt =
+                        $("viewBody")
+                            .querySelector(
+                                ".receipt"
+                            );
+
+                    if (!receipt) {
+                        return;
+                    }
+
+                    const printWindow =
+                        window.open(
+                            "",
+                            "_blank",
+                            "width=800,height=900"
+                        );
+
+                    if (!printWindow) {
+
+                        showToast(
+                            "Please allow popups to print the receipt.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    printWindow.document.write(`
+
+                        <!DOCTYPE html>
+
+                        <html>
+
+                        <head>
+
+                            <title>
+                                Pink Beauty Salon Receipt
+                            </title>
+
+                            <style>
+
+                                body {
+
+                                    font-family:
+                                        Arial,
+                                        sans-serif;
+
+                                    background:
+                                        #fff;
+
+                                    padding:
+                                        30px;
+
+                                    color:
+                                        #2B2024;
+                                }
+
+                                .receipt {
+
+                                    max-width:
+                                        600px;
+
+                                    margin:
+                                        auto;
+
+                                    border:
+                                        1px solid #ddd;
+                                }
+
+                                .receipt-top {
+
+                                    background:
+                                        #B76E79;
+
+                                    color:
+                                        white;
+
+                                    padding:
+                                        30px;
+
+                                    text-align:
+                                        center;
+                                }
+
+                                .brand {
+
+                                    font-size:
+                                        25px;
+
+                                    font-weight:
+                                        bold;
+                                }
+
+                                .tag {
+
+                                    font-size:
+                                        11px;
+
+                                    letter-spacing:
+                                        2px;
+
+                                    margin-top:
+                                        5px;
+                                }
+
+                                .receipt-title {
+
+                                    text-align:
+                                        center;
+
+                                    padding:
+                                        14px;
+
+                                    font-weight:
+                                        bold;
+
+                                    letter-spacing:
+                                        3px;
+
+                                    background:
+                                        #FFF9FB;
+
+                                    color:
+                                        #B76E79;
+                                }
+
+                                .receipt-body {
+
+                                    padding:
+                                        25px;
+                                }
+
+                                .receipt-row {
+
+                                    display:
+                                        flex;
+
+                                    justify-content:
+                                        space-between;
+
+                                    padding:
+                                        12px 0;
+
+                                    border-bottom:
+                                        1px dashed #ddd;
+                                }
+
+                                .k {
+
+                                    color:
+                                        #8C7A80;
+                                }
+
+                                .v {
+
+                                    font-weight:
+                                        bold;
+                                }
+
+                                .receipt-total {
+
+                                    display:
+                                        flex;
+
+                                    justify-content:
+                                        space-between;
+
+                                    padding-top:
+                                        20px;
+
+                                    margin-top:
+                                        10px;
+
+                                    border-top:
+                                        2px solid #B76E79;
+
+                                    font-size:
+                                        20px;
+                                }
+
+                                .receipt-foot {
+
+                                    text-align:
+                                        center;
+
+                                    padding:
+                                        20px;
+
+                                    color:
+                                        #8C7A80;
+                                }
+
+                                .badge {
+
+                                    display:
+                                        inline-block;
+
+                                    padding:
+                                        7px 15px;
+
+                                    border-radius:
+                                        20px;
+
+                                    background:
+                                        #E6F4EE;
+
+                                    color:
+                                        #2E7D5B;
+
+                                    font-weight:
+                                        bold;
+                                }
+
+                            </style>
+
+                        </head>
+
+                        <body>
+
+                            ${receipt.outerHTML}
+
+                            <script>
+
+                                window.onload =
+                                    function () {
+
+                                        window.print();
+
+                                    };
+
+                            <\/script>
+
+                        </body>
+
+                        </html>
+
+                    `);
+
+                    printWindow.document.close();
+                }
+            );
+    }
+
+
+    /* =========================================================
+       DOWNLOAD RECEIPT
+    ========================================================= */
+
+    if ($("downloadReceiptBtn")) {
+
+        $("downloadReceiptBtn")
+            .addEventListener(
+                "click",
+                function () {
+
+                    if (!currentPayment) {
+                        return;
+                    }
+
+                    const payment =
+                        currentPayment;
+
+                    const text = `
+
+PINK BEAUTY SALON
+Luxury Beauty Meets Smart Technology
+
+PAYMENT RECEIPT
+----------------------------
+
+Payment ID:
+PAY-${payment.paymentId}
+
+Invoice:
+${payment.invoiceNumber ||
+                    payment.invoiceId ||
+                    "—"}
+
+Customer:
+${payment.customerName || "—"}
+
+Phone:
+${payment.customerPhone || "—"}
+
+Appointment:
+${payment.appointmentId || "—"}
+
+Service:
+${payment.serviceName || "—"}
+
+Staff:
+${payment.staffName || "—"}
+
+Appointment Date:
+${formatDate(
+                        payment.appointmentDate
+                    )}
+
+Payment Date:
+${formatDate(
+                        payment.paymentDate
+                    )}
+
+Payment Method:
+${methodLabel(
+                        payment.paymentMethod
+                    )}
+
+Transaction Reference:
+${payment.transactionReference || "—"}
+
+Status:
+${statusLabel(
+                        payment.paymentStatus
+                    )}
+
+TOTAL PAID:
+${money(payment.amount)}
+
+----------------------------
+
+Thank you for choosing
+Pink Beauty Salon.
+
+`;
+
+                    const blob =
+                        new Blob(
+                            [text],
+                            {
+                                type:
+                                    "text/plain"
+                            }
+                        );
+
+                    const url =
+                        URL.createObjectURL(
+                            blob
+                        );
+
+                    const a =
+                        document.createElement(
+                            "a"
+                        );
+
+                    a.href = url;
+
+                    a.download =
+                        `Payment-Receipt-${payment.paymentId}.txt`;
+
+                    document.body.appendChild(a);
+
+                    a.click();
+
+                    a.remove();
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+                }
+            );
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    function showToast(
+        message,
+        type = "success"
+    ) {
+
+        if (
+            typeof Swal ===
+            "undefined"
+        ) {
+
+            console.log(message);
+
+            return;
+        }
+
+        Swal.fire({
+
+            toast: true,
+
+            position:
+                "top-end",
+
+            icon:
+            type,
+
+            title:
+            message,
+
+            showConfirmButton:
+                false,
+
+            timer:
+                2500,
+
+            timerProgressBar:
+                true
+        });
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+        }
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            ".nav-item"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const page =
+                        this.dataset.page;
+
+                    if (
+                        page ===
+                        "Payments"
+                    ) {
+                        return;
+                    }
+
+                    const pages = {
+
+                        Dashboard:
+                            "dashboard.html",
+
+                        Appointments:
+                            "appointmentManagement.html",
+
+                        Customers:
+                            "customerManagement.html",
+
+                        Staff:
+                            "staffManagement.html",
+
+                        Services:
+                            "serviceManagement.html",
+
+                        Reports:
+                            "reports.html",
+
+                        Users:
+                            "userManagement.html",
+
+                        Settings:
+                            "settings.html"
+                    };
+
+                    if (
+                        pages[page]
+                    ) {
+
+                        window.location.href =
+                            pages[page];
+                    }
+                }
+            );
+        });
+
+
+    /* =========================================================
+       MOBILE SIDEBAR
+    ========================================================= */
+
+    if ($("hamburger")) {
+
+        $("hamburger")
+            .addEventListener(
+                "click",
+                () => {
+
+                    $("sidebar")
+                        .classList.toggle(
+                        "open"
+                    );
+                }
+            );
+    }
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    if ($("logoutBtn")) {
+
+        $("logoutBtn")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const result =
+                        await Swal.fire({
+
+                            icon:
+                                "question",
+
+                            title:
+                                "Logout?",
+
+                            text:
+                                "Are you sure you want to logout?",
+
+                            showCancelButton:
+                                true,
+
+                            confirmButtonText:
+                                "Logout",
+
+                            cancelButtonText:
+                                "Cancel",
+
+                            confirmButtonColor:
+                                "#B76E79"
+                        });
+
+                    if (
+                        result.isConfirmed
+                    ) {
+
+                        localStorage.removeItem(
+                            "token"
+                        );
+
+                        localStorage.removeItem(
+                            "jwt"
+                        );
+
+                        sessionStorage.clear();
+
+                        window.location.href =
+                            "login.html";
+                    }
+                }
+            );
+    }
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    async function initialize() {
+
+        setToday();
+
+        try {
+
+            /*
+             * IMPORTANT ORDER:
+             *
+             * 1. Invoices
+             * 2. Appointments
+             * 3. Payments
+             *
+             * Because:
+             *
+             * Appointment
+             *      ↓
+             * Invoice
+             *      ↓
+             * Payment
+             */
+
+            await loadInvoices();
+
+            await loadAppointments();
+
+            await loadPayments();
+
+        } catch (error) {
+
+            console.error(
+                "Initialization error:",
+                error
+            );
+        }
+    }
+
+
+    /* =========================================================
+       START APPLICATION
+    ========================================================= */
+
+    initialize();
+
+</script>
+
+</body>
+</html>

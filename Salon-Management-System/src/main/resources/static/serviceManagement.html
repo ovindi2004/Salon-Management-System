@@ -1427,95 +1427,44 @@
 
 <body>
 
-<!-- =========================================================
-     SIDEBAR
-========================================================= -->
 
+
+<!-- ============ SIDEBAR ============ -->
 <aside class="sidebar" id="sidebar">
-
     <div class="brand">
-        <div class="brand-icon">
-            <i class="fa-solid fa-spa"></i>
-        </div>
-
+        <div class="brand-icon"><i class="fa-solid fa-spa"></i></div>
         <div>
             <div class="brand-name">PINK BEAUTY</div>
-            <div class="brand-tag">
-                Luxury Beauty Meets Smart Technology
-            </div>
+            <div class="brand-tag">Luxury Beauty Meets Smart Technology</div>
         </div>
     </div>
-
     <nav class="nav">
-
         <div class="nav-label">Main Menu</div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-gauge-high"></i>
-            <span>Dashboard</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-users"></i>
-            <span>User Management</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-user-group"></i>
-            <span>Customer Management</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-user-tie"></i>
-            <span>Staff Management</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-calendar-check"></i>
-            <span>Appointment Management</span>
-        </div>
-
-        <div class="nav-item active">
-            <i class="fa-solid fa-scissors"></i>
-            <span>Service Management</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-credit-card"></i>
-            <span>Payment Management</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Reports</span>
-        </div>
-
-        <div class="nav-item">
-            <i class="fa-solid fa-gear"></i>
-            <span>Settings</span>
-        </div>
-
+        <div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></div>
+        <div class="nav-item" onclick="window.location.href='userMangemnt.html'"><i class="fa-solid fa-users"></i><span>User Management</span></div>
+        <div class="nav-item " onclick="window.location.href='customerManagement.html'" ><i class="fa-solid fa-user-group"></i><span>Customer </span></div>
+        <div class="nav-item " onclick="window.location.href='staffManagement.html'"><i class="fa-solid fa-user-tie"></i><span>Staff </span></div>
+        <div class="nav-item" onclick="window.location.href='appointmentManagement.html'"><i class="fa-solid fa-calendar-check"></i><span>Appointment </span></div>
+        <div class="nav-item active" onclick="window.location.href='serviceManagement.html'"><i class="fa-solid fa-scissors"></i><span>Service </span></div>
+        <div class="nav-item" onclick="window.location.href='productManagement.html'"><i class="fa-solid fa-box"></i><span>Product </span></div>
+        <div class="nav-item" onclick="window.location.href='inventoryMangement.html'"><i class="fa-solid fa-warehouse"></i><span>Inventory </span></div>
+        <div class="nav-item" onclick="window.location.href='paymentManagement.html'"><i class="fa-solid fa-credit-card"></i><span>Payment </span></div>
+        <div class="nav-item" onclick="window.location.href='feedback.html'"><i class="fa-solid fa-comments"></i><span>Feedback &amp; Ratings</span></div>
+        <div class="nav-item" onclick="window.location.href='report.html'"><i class="fa-solid fa-chart-line"></i><span>Reports</span></div>
+        <div class="nav-item" onclick="window.location.href='settings.html'"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
     </nav>
-
     <div class="sidebar-footer">
-
         <div class="profile-mini">
             <div class="avatar">A</div>
-
             <div class="info">
                 <div class="name">Admin</div>
                 <div class="role">Administrator</div>
             </div>
         </div>
-
-        <button class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Logout
-        </button>
-
+        <button class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
-
 </aside>
+
 
 <div class="overlay-bg" id="overlay" onclick="toggleSidebar()"></div>
 

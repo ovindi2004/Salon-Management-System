@@ -9,7 +9,15 @@ import java.util.List;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
     List<Appointment> findByCustomer_CustomerId(Long customerId);
+
     List<Appointment> findByStaff_StaffId(Long staffId);
+
     List<Appointment> findByAppointmentDate(LocalDate date);
+
+    List<Appointment> findByStaff_StaffIdAndAppointmentDate(
+            Long staffId,
+            java.time.LocalDate appointmentDate
+    );
 }

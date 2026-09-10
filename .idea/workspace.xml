@@ -8,17 +8,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b96d63c-3fb9-4a1b-9a78-74d50568a5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/settings.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/InvoiceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/InvoiceDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/InvoiceItemDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/ProductDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/InvoiceItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/enumiration/InvoiceItemType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/enumiration/InvoiceStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/enumiration/ProductStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/InvoiceItemRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/InvoiceRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/InvoiceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/InvoiceServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/inventoryMangement.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/productManagement.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/SalonSettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/SalonSettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/SalonSettingsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/SalonSettingsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/SalonSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/SalonSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/SalonSettingsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/SalonSettingsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AppointmentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/AppointmentDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/PaymentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/dto/PaymentDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/SalonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/SalonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/AppointmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/AppointmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/PaymentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/SalonSettingsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/SalonSettingsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/SalonSettingsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/SalonSettingsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/CustomerManagement.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/CustomerManagement.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/appoiment.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/AppointmentManagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/AppointmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/AppointmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/AppointmentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/AppointmentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/service/impl/PaymentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/CustomerManagement.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/customerManagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/UserMangemnt.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/userMangemnt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/appoiment.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/appointmentManagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/feedb.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/pyment.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/paymentMangement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/service.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/serviceManagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/Salon-Management-System/src/main/resources/static/staffManagement.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +216,7 @@
       <workItem from="1787629754538" duration="16603000" />
       <workItem from="1787849573631" duration="17623000" />
       <workItem from="1788189717470" duration="109120000" />
-      <workItem from="1788983932747" duration="2252000" />
+      <workItem from="1788983932747" duration="46716000" />
     </task>
     <servers />
   </component>
@@ -195,6 +230,11 @@
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Salon-Management-System/src/main/java/com/example/Salon_Management_System/repository/CustomerRepository.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

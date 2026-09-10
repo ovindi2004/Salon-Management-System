@@ -14,10 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalonService {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long serviceId;
+
     private String serviceName;
+
     private String category;
 
     @Column(length = 1000)
@@ -27,6 +30,7 @@ public class SalonService {
     private BigDecimal price;
 
     private Integer duration;
+
     private String status = "Active";
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -37,8 +41,9 @@ public class SalonService {
     )
     private List<Staff> staff = new ArrayList<>();
 
-    @OneToMany( mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "service")
     private List<Appointment> appointments = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "service")
+    private List<InvoiceItem> invoiceItems = new ArrayList<>();
 }

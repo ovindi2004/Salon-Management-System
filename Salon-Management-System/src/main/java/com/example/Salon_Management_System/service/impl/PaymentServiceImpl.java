@@ -2,19 +2,22 @@ package com.example.Salon_Management_System.service.impl;
 
 import com.example.Salon_Management_System.dto.PaymentDTO;
 import com.example.Salon_Management_System.entity.Appointment;
+import com.example.Salon_Management_System.entity.Customer;
+import com.example.Salon_Management_System.entity.Invoice;
 import com.example.Salon_Management_System.entity.Payment;
-
+import com.example.Salon_Management_System.enumiration.InvoiceStatus;
+import com.example.Salon_Management_System.enumiration.PaymentMethod;
 import com.example.Salon_Management_System.enumiration.PaymentStatus;
-import com.example.Salon_Management_System.repository.AppointmentRepository;
+import com.example.Salon_Management_System.repository.InvoiceRepository;
 import com.example.Salon_Management_System.repository.PaymentRepository;
 import com.example.Salon_Management_System.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,46 +25,117 @@ import java.util.stream.Collectors;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
-    private final AppointmentRepository appointmentRepository;
+    private final InvoiceRepository invoiceRepository;
+
+
+    // =========================================================
+    // CREATE PAYMENT
+    // =========================================================
 
     @Override
     public PaymentDTO createPayment(PaymentDTO dto) {
 
-        if (dto.getAppointmentId() == null) {
-            throw new RuntimeException("Appointment is required");
-        }
-
-        Appointment appointment = appointmentRepository
-                .findById(dto.getAppointmentId())
-                .orElseThrow(() ->
-                        new RuntimeException("Appointment not found")
-                );
-
-        if (paymentRepository.existsByAppointmentAppointmentId(
-                dto.getAppointmentId())) {
-
+        if (dto == null) {
             throw new RuntimeException(
-                    "A payment already exists for this appointment"
+                    "Payment data is required"
             );
         }
 
-        if (dto.getAmount() == null ||
-                dto.getAmount().signum() < 0) {
-
-            throw new RuntimeException("Invalid payment amount");
+        if (dto.getInvoiceId() == null) {
+            throw new RuntimeException(
+                    "Invoice is required"
+            );
         }
+
+        Invoice invoice = invoiceRepository
+                .findById(dto.getInvoiceId())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Invoice not found"
+                        )
+                );
+
+
+        // =====================================================
+        // AMOUNT VALIDATION
+        // =====================================================
+
+        if (dto.getAmount() == null) {
+
+            throw new RuntimeException(
+                    "Payment amount is required"
+            );
+        }
+
+        if (dto.getAmount().signum() <= 0) {
+
+            throw new RuntimeException(
+                    "Payment amount must be greater than zero"
+            );
+        }
+
+
+        // =====================================================
+        // CHECK BALANCE
+        // =====================================================
+
+        BigDecimal currentBalance =
+                BigDecimal.valueOf(
+                        invoice.getBalanceDue() != null
+                                ? invoice.getBalanceDue()
+                                : 0.0
+                );
+
+        if (dto.getAmount().compareTo(currentBalance) > 0) {
+
+            throw new RuntimeException(
+                    "Payment amount cannot be greater than invoice balance"
+            );
+        }
+
+
+        // =====================================================
+        // PAYMENT METHOD
+        // =====================================================
+
+        if (dto.getPaymentMethod() == null) {
+
+            throw new RuntimeException(
+                    "Payment method is required"
+            );
+        }
+
+
+        // =====================================================
+        // CREATE PAYMENT
+        // =====================================================
 
         Payment payment = new Payment();
 
-        payment.setAppointment(appointment);
-        payment.setAmount(dto.getAmount());
-        payment.setPaymentMethod(dto.getPaymentMethod());
+        payment.setInvoice(invoice);
+
+        payment.setAmount(
+                dto.getAmount()
+        );
+
+        payment.setPaymentMethod(
+                dto.getPaymentMethod()
+        );
+
 
         if (dto.getPaymentStatus() == null) {
-            payment.setPaymentStatus(PaymentStatus.PENDING);
+
+            payment.setPaymentStatus(
+                    PaymentStatus.PENDING
+            );
+
         } else {
-            payment.setPaymentStatus(dto.getPaymentStatus());
+
+            payment.setPaymentStatus(
+                    dto.getPaymentStatus()
+            );
         }
+
 
         payment.setPaymentDate(
                 dto.getPaymentDate() != null
@@ -73,33 +147,55 @@ public class PaymentServiceImpl implements PaymentService {
                 dto.getTransactionReference()
         );
 
-        payment.setNotes(dto.getNotes());
-
-        Payment saved = paymentRepository.save(payment);
-
-        /*
-         * Keep Appointment.paymentStatus synchronized.
-         */
-        appointment.setPaymentStatus(
-                payment.getPaymentStatus()
+        payment.setNotes(
+                dto.getNotes()
         );
 
-        appointmentRepository.save(appointment);
 
-        return convertToDTO(saved);
+        Payment savedPayment =
+                paymentRepository.save(payment);
+
+
+        // =====================================================
+        // UPDATE INVOICE PAYMENT SUMMARY
+        // =====================================================
+
+        updateInvoicePaymentSummary(invoice);
+
+
+        return convertToDTO(savedPayment);
     }
+
+
+    // =========================================================
+    // GET PAYMENT BY ID
+    // =========================================================
 
     @Override
     @Transactional(readOnly = true)
     public PaymentDTO getPaymentById(Long id) {
 
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Payment not found")
-                );
+        if (id == null) {
+            throw new RuntimeException(
+                    "Payment ID is required"
+            );
+        }
+
+        Payment payment =
+                paymentRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Payment not found"
+                                )
+                        );
 
         return convertToDTO(payment);
     }
+
+
+    // =========================================================
+    // GET ALL PAYMENTS
+    // =========================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -108,8 +204,13 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll()
                 .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
+
+
+    // =========================================================
+    // UPDATE PAYMENT
+    // =========================================================
 
     @Override
     public PaymentDTO updatePayment(
@@ -117,89 +218,172 @@ public class PaymentServiceImpl implements PaymentService {
             PaymentDTO dto
     ) {
 
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Payment not found")
-                );
+        if (id == null) {
+            throw new RuntimeException(
+                    "Payment ID is required"
+            );
+        }
+
+        if (dto == null) {
+            throw new RuntimeException(
+                    "Payment data is required"
+            );
+        }
+
+
+        Payment payment =
+                paymentRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Payment not found"
+                                )
+                        );
+
+
+        Invoice invoice =
+                payment.getInvoice();
+
+
+        // =====================================================
+        // AMOUNT
+        // =====================================================
 
         if (dto.getAmount() != null) {
-            if (dto.getAmount().signum() < 0) {
+
+            if (dto.getAmount().signum() <= 0) {
+
                 throw new RuntimeException(
-                        "Invalid payment amount"
+                        "Payment amount must be greater than zero"
                 );
             }
 
-            payment.setAmount(dto.getAmount());
+            payment.setAmount(
+                    dto.getAmount()
+            );
         }
 
+
+        // =====================================================
+        // PAYMENT METHOD
+        // =====================================================
+
         if (dto.getPaymentMethod() != null) {
+
             payment.setPaymentMethod(
                     dto.getPaymentMethod()
             );
         }
 
+
+        // =====================================================
+        // PAYMENT STATUS
+        // =====================================================
+
         if (dto.getPaymentStatus() != null) {
+
             payment.setPaymentStatus(
                     dto.getPaymentStatus()
             );
-
-            payment.getAppointment().setPaymentStatus(
-                    dto.getPaymentStatus()
-            );
-
-            appointmentRepository.save(
-                    payment.getAppointment()
-            );
         }
 
+
+        // =====================================================
+        // PAYMENT DATE
+        // =====================================================
+
         if (dto.getPaymentDate() != null) {
+
             payment.setPaymentDate(
                     dto.getPaymentDate()
             );
         }
 
+
+        // =====================================================
+        // OTHER DETAILS
+        // =====================================================
+
         payment.setTransactionReference(
                 dto.getTransactionReference()
         );
 
-        payment.setNotes(dto.getNotes());
+        payment.setNotes(
+                dto.getNotes()
+        );
 
-        Payment updated = paymentRepository.save(payment);
 
-        return convertToDTO(updated);
+        // =====================================================
+        // SAVE
+        // =====================================================
+
+        Payment updatedPayment =
+                paymentRepository.save(payment);
+
+
+        // =====================================================
+        // UPDATE INVOICE
+        // =====================================================
+
+        updateInvoicePaymentSummary(invoice);
+
+
+        return convertToDTO(updatedPayment);
     }
+
+
+    // =========================================================
+    // DELETE PAYMENT
+    // =========================================================
 
     @Override
     public void deletePayment(Long id) {
 
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Payment not found")
-                );
-
-        Appointment appointment = payment.getAppointment();
-
-        /*
-         * When payment is deleted, appointment becomes pending.
-         */
-        if (appointment != null) {
-            appointment.setPaymentStatus(
-                    PaymentStatus.PENDING
+        if (id == null) {
+            throw new RuntimeException(
+                    "Payment ID is required"
             );
-
-            appointmentRepository.save(appointment);
         }
 
+        Payment payment =
+                paymentRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Payment not found"
+                                )
+                        );
+
+        Invoice invoice =
+                payment.getInvoice();
+
         paymentRepository.delete(payment);
+
+
+        // Update invoice after payment deletion
+        updateInvoicePaymentSummary(invoice);
     }
+
+
+    // =========================================================
+    // REFUND PAYMENT
+    // =========================================================
 
     @Override
     public PaymentDTO refundPayment(Long id) {
 
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Payment not found")
-                );
+        if (id == null) {
+            throw new RuntimeException(
+                    "Payment ID is required"
+            );
+        }
+
+        Payment payment =
+                paymentRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Payment not found"
+                                )
+                        );
+
 
         if (payment.getPaymentStatus()
                 != PaymentStatus.PAID) {
@@ -209,22 +393,29 @@ public class PaymentServiceImpl implements PaymentService {
             );
         }
 
+
         payment.setPaymentStatus(
                 PaymentStatus.REFUNDED
         );
 
-        payment.getAppointment().setPaymentStatus(
-                PaymentStatus.REFUNDED
+
+        Payment savedPayment =
+                paymentRepository.save(payment);
+
+
+        // Update invoice after refund
+        updateInvoicePaymentSummary(
+                payment.getInvoice()
         );
 
-        appointmentRepository.save(
-                payment.getAppointment()
-        );
 
-        Payment saved = paymentRepository.save(payment);
-
-        return convertToDTO(saved);
+        return convertToDTO(savedPayment);
     }
+
+
+    // =========================================================
+    // GET PAYMENTS BY DATE RANGE
+    // =========================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -233,77 +424,264 @@ public class PaymentServiceImpl implements PaymentService {
             LocalDate to
     ) {
 
+        if (from == null || to == null) {
+
+            throw new RuntimeException(
+                    "From date and to date are required"
+            );
+        }
+
+        if (from.isAfter(to)) {
+
+            throw new RuntimeException(
+                    "From date cannot be after to date"
+            );
+        }
+
         return paymentRepository
                 .findByPaymentDateBetween(from, to)
                 .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    private PaymentDTO convertToDTO(Payment payment) {
 
-        Appointment appointment = payment.getAppointment();
+    // =========================================================
+    // GET PAYMENTS BY INVOICE
+    // =========================================================
 
-        PaymentDTO dto = new PaymentDTO();
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentDTO> getPaymentsByInvoice(
+            Long invoiceId
+    ) {
 
-        dto.setPaymentId(payment.getPaymentId());
+        if (invoiceId == null) {
 
-        dto.setAppointmentId(
-                appointment.getAppointmentId()
-        );
-
-        if (appointment.getCustomer() != null) {
-
-            dto.setCustomerId(
-                    appointment.getCustomer().getCustomerId()
-            );
-
-            dto.setCustomerName(
-                    appointment.getCustomer().getCustomerName()
-            );
-
-            dto.setCustomerPhone(
-                    appointment.getCustomer().getCustomerPhone()
+            throw new RuntimeException(
+                    "Invoice ID is required"
             );
         }
 
-        if (appointment.getService() != null) {
+        return paymentRepository
+                .findByInvoiceInvoiceId(invoiceId)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
 
-            dto.setServiceId(
-                    appointment.getService().getServiceId()
-            );
 
-            dto.setServiceName(
-                    appointment.getService().getServiceName()
-            );
+    // =========================================================
+    // GET PAYMENTS BY STATUS
+    // =========================================================
 
-            dto.setServicePrice(
-                    appointment.getService().getPrice()
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentDTO> getPaymentsByStatus(
+            String status
+    ) {
+
+        if (status == null || status.trim().isEmpty()) {
+
+            throw new RuntimeException(
+                    "Payment status is required"
             );
         }
 
-        if (appointment.getStaff() != null) {
+        PaymentStatus paymentStatus;
 
-            dto.setStaffId(
-                    appointment.getStaff().getStaffId()
-            );
+        try {
 
-            dto.setStaffName(
-                    appointment.getStaff().getStaffName()
+            paymentStatus =
+                    PaymentStatus.valueOf(
+                            status.trim().toUpperCase()
+                    );
+
+        } catch (IllegalArgumentException e) {
+
+            throw new RuntimeException(
+                    "Invalid payment status"
             );
         }
 
-        dto.setAppointmentDate(
-                appointment.getAppointmentDate()
+
+        return paymentRepository
+                .findByPaymentStatus(paymentStatus)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+
+    // =========================================================
+    // GET PAYMENTS BY METHOD
+    // =========================================================
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentDTO> getPaymentsByMethod(
+            String method
+    ) {
+
+        if (method == null || method.trim().isEmpty()) {
+
+            throw new RuntimeException(
+                    "Payment method is required"
+            );
+        }
+
+        PaymentMethod paymentMethod;
+
+        try {
+
+            paymentMethod =
+                    PaymentMethod.valueOf(
+                            method.trim().toUpperCase()
+                    );
+
+        } catch (IllegalArgumentException e) {
+
+            throw new RuntimeException(
+                    "Invalid payment method"
+            );
+        }
+
+
+        return paymentRepository
+                .findByPaymentMethod(paymentMethod)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+
+    // =========================================================
+    // UPDATE INVOICE PAYMENT SUMMARY
+    // =========================================================
+
+    private void updateInvoicePaymentSummary(
+            Invoice invoice
+    ) {
+
+        if (invoice == null) {
+            return;
+        }
+
+
+        List<Payment> payments =
+                paymentRepository
+                        .findByInvoiceInvoiceId(
+                                invoice.getInvoiceId()
+                        );
+
+
+        double totalPaid = 0.0;
+
+
+        for (Payment payment : payments) {
+
+            if (payment.getPaymentStatus()
+                    == PaymentStatus.PAID) {
+
+                if (payment.getAmount() != null) {
+
+                    totalPaid +=
+                            payment.getAmount()
+                                    .doubleValue();
+                }
+            }
+        }
+
+
+        double totalAmount =
+                invoice.getTotalAmount() != null
+                        ? invoice.getTotalAmount()
+                        : 0.0;
+
+
+        double balance =
+                totalAmount - totalPaid;
+
+
+        if (balance < 0) {
+            balance = 0;
+        }
+
+
+        invoice.setAmountPaid(
+                totalPaid
         );
 
-        dto.setAppointmentTime(
-                appointment.getStartTime() != null
-                        ? appointment.getStartTime().toString()
-                        : null
+        invoice.setBalanceDue(
+                balance
         );
 
-        dto.setAmount(payment.getAmount());
+
+        // =====================================================
+        // UPDATE INVOICE STATUS
+        // =====================================================
+
+        if (invoice.getStatus() != InvoiceStatus.DRAFT) {
+
+            if (totalPaid <= 0) {
+
+                if (invoice.getDueDate() != null
+                        && invoice.getDueDate()
+                        .isBefore(LocalDate.now())) {
+
+                    invoice.setStatus(
+                            InvoiceStatus.OVERDUE
+                    );
+
+                } else {
+
+                    invoice.setStatus(
+                            InvoiceStatus.UNPAID
+                    );
+                }
+
+            } else if (totalPaid < totalAmount) {
+
+                invoice.setStatus(
+                        InvoiceStatus.PARTIAL
+                );
+
+            } else {
+
+                invoice.setStatus(
+                        InvoiceStatus.PAID
+                );
+            }
+        }
+
+
+        invoiceRepository.save(invoice);
+    }
+
+
+    // =========================================================
+    // CONVERT PAYMENT ENTITY → DTO
+    // =========================================================
+
+    private PaymentDTO convertToDTO(
+            Payment payment
+    ) {
+
+        PaymentDTO dto =
+                new PaymentDTO();
+
+
+        // =====================================================
+        // PAYMENT
+        // =====================================================
+
+        dto.setPaymentId(
+                payment.getPaymentId()
+        );
+
+        dto.setAmount(
+                payment.getAmount()
+        );
 
         dto.setPaymentMethod(
                 payment.getPaymentMethod()
@@ -321,7 +699,122 @@ public class PaymentServiceImpl implements PaymentService {
                 payment.getTransactionReference()
         );
 
-        dto.setNotes(payment.getNotes());
+        dto.setNotes(
+                payment.getNotes()
+        );
+
+
+        // =====================================================
+        // INVOICE
+        // =====================================================
+
+        Invoice invoice =
+                payment.getInvoice();
+
+        if (invoice == null) {
+            return dto;
+        }
+
+
+        dto.setInvoiceId(
+                invoice.getInvoiceId()
+        );
+
+        dto.setInvoiceNumber(
+                invoice.getInvoiceNumber()
+        );
+
+
+        // =====================================================
+        // APPOINTMENT
+        // =====================================================
+
+        Appointment appointment =
+                invoice.getAppointment();
+
+        if (appointment == null) {
+            return dto;
+        }
+
+
+        dto.setAppointmentId(
+                appointment.getAppointmentId()
+        );
+
+        dto.setAppointmentDate(
+                appointment.getAppointmentDate()
+        );
+
+        dto.setAppointmentTime(
+                appointment.getStartTime() != null
+                        ? appointment.getStartTime().toString()
+                        : null
+        );
+
+
+        // =====================================================
+        // CUSTOMER
+        // =====================================================
+
+        Customer customer =
+                appointment.getCustomer();
+
+        if (customer != null) {
+
+            dto.setCustomerId(
+                    customer.getCustomerId()
+            );
+
+            dto.setCustomerName(
+                    customer.getCustomerName()
+            );
+
+            dto.setCustomerPhone(
+                    customer.getCustomerPhone()
+            );
+        }
+
+
+        // =====================================================
+        // SERVICE
+        // =====================================================
+
+        if (appointment.getService() != null) {
+
+            dto.setServiceId(
+                    appointment.getService()
+                            .getServiceId()
+            );
+
+            dto.setServiceName(
+                    appointment.getService()
+                            .getServiceName()
+            );
+
+            dto.setServicePrice(
+                    appointment.getService()
+                            .getPrice()
+            );
+        }
+
+
+        // =====================================================
+        // STAFF
+        // =====================================================
+
+        if (appointment.getStaff() != null) {
+
+            dto.setStaffId(
+                    appointment.getStaff()
+                            .getStaffId()
+            );
+
+            dto.setStaffName(
+                    appointment.getStaff()
+                            .getStaffName()
+            );
+        }
+
 
         return dto;
     }

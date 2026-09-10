@@ -3,11 +3,10 @@ package com.example.Salon_Management_System.entity;
 import com.example.Salon_Management_System.enumiration.UserRole;
 import com.example.Salon_Management_System.enumiration.UserStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+
 
 @Entity
 @Data
@@ -41,14 +40,23 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    // =========================
+    // CUSTOMER RELATIONSHIP
+    // =========================
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL
+    )
+    @EqualsAndHashCode.Exclude
     private Customer customer;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    // =========================
+    // STAFF RELATIONSHIP
+    // =========================
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL
+    )
+    @EqualsAndHashCode.Exclude
     private Staff staff;
-
-
-
-
-
 }
