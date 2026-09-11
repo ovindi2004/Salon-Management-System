@@ -7,26 +7,42 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "customer")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
+
+    // ============================================================
+    // CUSTOMER DETAILS
+    // ============================================================
+
     private String customerName;
+
     private String customerEmail;
+
     private String customerPhone;
+
     private String customerAddress;
+
     private LocalDate dateOfBirth;
+
     private String gender;
+
 
     @Column(length = 1000)
     private String customerNotes;
+
+
+    // ============================================================
+    // CUSTOMER VISIT INFORMATION
+    // ============================================================
 
     private Integer totalVisits = 0;
 
@@ -36,16 +52,33 @@ public class Customer {
 
     private LocalDate createdAt;
 
+
+    // ============================================================
+    // AUTO CREATED DATE
+    // ============================================================
+
     @PrePersist
     public void onCreate() {
+
         if (createdAt == null) {
             createdAt = LocalDate.now();
         }
+
+        if (totalVisits == null) {
+            totalVisits = 0;
+        }
+
+        if (customerStatus == null) {
+            customerStatus = "Active";
+        }
     }
 
-    // =========================
+
+    // ============================================================
     // USER RELATIONSHIP
-    // =========================
+    // One Customer → One User
+    // ============================================================
+
     @OneToOne
     @JoinColumn(
             name = "userId",
@@ -55,25 +88,33 @@ public class Customer {
     @EqualsAndHashCode.Exclude
     private User user;
 
-    // =========================
-    // APPOINTMENTS
-    // =========================
-    @OneToMany(
-            mappedBy = "customer",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @EqualsAndHashCode.Exclude
-    private List<Appointment> appointments = new ArrayList<>();
 
-    // =========================
-    // FEEDBACKS
-    // =========================
+    // ============================================================
+    // CUSTOMER → APPOINTMENTS
+    // One Customer → Many Appointments
+    // ============================================================
+
     @OneToMany(
             mappedBy = "customer",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @EqualsAndHashCode.Exclude
-    private List<Feedback> feedbacks = new ArrayList<>();
+    private List<Appointment> appointments =
+            new ArrayList<>();
+
+
+    // ============================================================
+    // CUSTOMER → FEEDBACKS
+    // One Customer → Many Feedbacks
+    // ============================================================
+
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @EqualsAndHashCode.Exclude
+    private List<Feedback> feedbacks =
+            new ArrayList<>();
 }

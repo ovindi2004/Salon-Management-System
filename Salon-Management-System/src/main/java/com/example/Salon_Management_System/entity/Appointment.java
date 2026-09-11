@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "appointment")
@@ -22,20 +20,49 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
-    // Customer → Appointments
+
+    // ============================================================
+    // CUSTOMER → APPOINTMENT
+    // Many Appointments belong to One Customer
+    // ============================================================
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(
+            name = "customer_id",
+            nullable = false
+    )
     private Customer customer;
 
-    // Service → Appointments
+
+    // ============================================================
+    // SERVICE → APPOINTMENT
+    // Many Appointments belong to One Service
+    // ============================================================
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", nullable = false)
+    @JoinColumn(
+            name = "service_id",
+            nullable = false
+    )
     private SalonService service;
 
-    // Staff → Appointments
+
+    // ============================================================
+    // STAFF → APPOINTMENT
+    // Many Appointments belong to One Staff
+    // ============================================================
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "staff_id", nullable = false)
+    @JoinColumn(
+            name = "staff_id",
+            nullable = false
+    )
     private Staff staff;
+
+
+    // ============================================================
+    // APPOINTMENT DETAILS
+    // ============================================================
 
     @Column(nullable = false)
     private LocalDate appointmentDate;
@@ -46,22 +73,50 @@ public class Appointment {
     @Column(nullable = false)
     private Integer duration;
 
+
+    // ============================================================
+    // APPOINTMENT STATUS
+    // ============================================================
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private AppointmentStatus status = AppointmentStatus.SCHEDULED;
+    @Column(
+            nullable = false,
+            length = 20
+    )
+    private AppointmentStatus status =
+            AppointmentStatus.SCHEDULED;
+
+
+    // ============================================================
+    // NOTES
+    // ============================================================
 
     @Column(length = 1000)
     private String notes;
 
-    // Appointment → Invoice
-    @OneToOne(mappedBy = "appointment", fetch = FetchType.LAZY)
+
+    // ============================================================
+    // APPOINTMENT → INVOICE
+    // One Appointment can have Zero or One Invoice
+    // ============================================================
+
+    @OneToOne(
+            mappedBy = "appointment",
+            fetch = FetchType.LAZY
+    )
     private Invoice invoice;
 
-    // Appointment → Feedbacks
-    @OneToMany(
+
+    // ============================================================
+    // APPOINTMENT → FEEDBACK
+    // One Appointment can have Zero or One Feedback
+    // ============================================================
+
+    @OneToOne(
             mappedBy = "appointment",
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Feedback> feedbacks = new ArrayList<>();
+    private Feedback feedback;
 }

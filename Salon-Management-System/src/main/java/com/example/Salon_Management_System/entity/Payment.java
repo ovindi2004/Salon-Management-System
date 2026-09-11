@@ -21,26 +21,70 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
+
+    // ============================================================
+    // INVOICE → PAYMENT
+    // Many Payments can belong to One Invoice
+    // ============================================================
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "invoice_id", nullable = false)
+    @JoinColumn(
+            name = "invoice_id",
+            nullable = false
+    )
     private Invoice invoice;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+
+    // ============================================================
+    // PAYMENT AMOUNT
+    // ============================================================
+
+    @Column(
+            nullable = false,
+            precision = 10,
+            scale = 2
+    )
     private BigDecimal amount;
+
+
+    // ============================================================
+    // PAYMENT METHOD
+    // ============================================================
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentMethod paymentMethod;
 
+
+    // ============================================================
+    // PAYMENT STATUS
+    // ============================================================
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
+    private PaymentStatus paymentStatus =
+            PaymentStatus.PENDING;
+
+
+    // ============================================================
+    // PAYMENT DATE
+    // ============================================================
 
     @Column(nullable = false)
     private LocalDate paymentDate;
 
+
+    // ============================================================
+    // TRANSACTION REFERENCE
+    // ============================================================
+
     @Column(length = 100)
     private String transactionReference;
+
+
+    // ============================================================
+    // NOTES
+    // ============================================================
 
     @Column(length = 1000)
     private String notes;

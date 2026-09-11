@@ -1,5 +1,6 @@
 package com.example.Salon_Management_System.controller;
 
+import com.example.Salon_Management_System.dto.CommonResponse;
 import com.example.Salon_Management_System.dto.FeedbackDTO;
 import com.example.Salon_Management_System.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,14 @@ public class FeedbackController {
 
     private final FeedbackService feedbackService;
 
-    // CREATE
+
+    // ============================================================
+    // SAVE FEEDBACK
+    // POST /api/v1/feedback
+    // ============================================================
+
     @PostMapping
-    public ResponseEntity<?> saveFeedback(
+    public ResponseEntity<CommonResponse> saveFeedback(
             @RequestBody FeedbackDTO dto) {
 
         try {
@@ -30,124 +36,332 @@ public class FeedbackController {
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(saved);
+                    .body(
+                            new CommonResponse(
+                                    201,
+                                    saved,
+                                    "Feedback saved successfully"
+                            )
+                    );
 
         } catch (Exception e) {
 
             return ResponseEntity
                     .badRequest()
-                    .body(Map.of(
-                            "message",
-                            e.getMessage()
-                    ));
+                    .body(
+                            new CommonResponse(
+                                    400,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
         }
     }
 
-    // GET ALL
-    @GetMapping
-    public ResponseEntity<List<FeedbackDTO>> getAllFeedback() {
 
-        return ResponseEntity.ok(
-                feedbackService.getAllFeedback()
-        );
+    // ============================================================
+    // GET ALL FEEDBACK
+    // GET /api/v1/feedback
+    // ============================================================
+
+    @GetMapping
+    public ResponseEntity<CommonResponse> getAllFeedback() {
+
+        try {
+
+            List<FeedbackDTO> feedbackList =
+                    feedbackService.getAllFeedback();
+
+            return ResponseEntity.ok(
+                    new CommonResponse(
+                            200,
+                            feedbackList,
+                            "Feedback retrieved successfully"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                            new CommonResponse(
+                                    500,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
+        }
     }
 
-    // GET BY ID
+
+    // ============================================================
+    // GET FEEDBACK BY ID
+    // GET /api/v1/feedback/{id}
+    // ============================================================
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getFeedbackById(
+    public ResponseEntity<CommonResponse> getFeedbackById(
             @PathVariable Long id) {
 
         try {
 
+            FeedbackDTO feedback =
+                    feedbackService.getFeedbackById(id);
+
             return ResponseEntity.ok(
-                    feedbackService.getFeedbackById(id)
+                    new CommonResponse(
+                            200,
+                            feedback,
+                            "Feedback retrieved successfully"
+                    )
             );
 
         } catch (Exception e) {
 
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(Map.of(
-                            "message",
-                            e.getMessage()
-                    ));
+                    .body(
+                            new CommonResponse(
+                                    404,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
         }
     }
 
-    // CUSTOMER FEEDBACK
+
+    // ============================================================
+    // GET CUSTOMER FEEDBACK
+    // GET /api/v1/feedback/customer/{customerId}
+    // ============================================================
+
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<FeedbackDTO>> getCustomerFeedback(
+    public ResponseEntity<CommonResponse> getCustomerFeedback(
             @PathVariable Long customerId) {
-
-        return ResponseEntity.ok(
-                feedbackService.getCustomerFeedback(customerId)
-        );
-    }
-
-    // SEARCH
-    @GetMapping("/search")
-    public ResponseEntity<List<FeedbackDTO>> searchFeedback(
-            @RequestParam String keyword) {
-
-        return ResponseEntity.ok(
-                feedbackService.searchFeedback(keyword)
-        );
-    }
-
-    // STATISTICS
-    @GetMapping("/statistics")
-    public ResponseEntity<Map<String, Object>> getStatistics() {
-
-        return ResponseEntity.ok(
-                feedbackService.getStatistics()
-        );
-    }
-
-    // RATING DISTRIBUTION
-    @GetMapping("/rating-distribution")
-    public ResponseEntity<Map<Integer, Long>>
-    getRatingDistribution() {
-
-        return ResponseEntity.ok(
-                feedbackService.getRatingDistribution()
-        );
-    }
-
-    // SERVICE PERFORMANCE
-    @GetMapping("/service-performance")
-    public ResponseEntity<List<Map<String, Object>>>
-    getServicePerformance() {
-
-        return ResponseEntity.ok(
-                feedbackService.getServicePerformance()
-        );
-    }
-
-    // MARK REVIEWED
-    @PatchMapping("/{id}/reviewed")
-    public ResponseEntity<?> markAsReviewed(
-            @PathVariable Long id) {
 
         try {
 
+            List<FeedbackDTO> feedbackList =
+                    feedbackService.getCustomerFeedback(
+                            customerId
+                    );
+
             return ResponseEntity.ok(
-                    feedbackService.markAsReviewed(id)
+                    new CommonResponse(
+                            200,
+                            feedbackList,
+                            "Customer feedback retrieved successfully"
+                    )
             );
 
         } catch (Exception e) {
 
             return ResponseEntity
                     .badRequest()
-                    .body(Map.of(
-                            "message",
-                            e.getMessage()
-                    ));
+                    .body(
+                            new CommonResponse(
+                                    400,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
         }
     }
 
-    // DELETE
+
+    // ============================================================
+    // SEARCH FEEDBACK
+    // GET /api/v1/feedback/search?keyword=...
+    // ============================================================
+
+    @GetMapping("/search")
+    public ResponseEntity<CommonResponse> searchFeedback(
+            @RequestParam String keyword) {
+
+        try {
+
+            List<FeedbackDTO> feedbackList =
+                    feedbackService.searchFeedback(keyword);
+
+            return ResponseEntity.ok(
+                    new CommonResponse(
+                            200,
+                            feedbackList,
+                            "Feedback search completed successfully"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            new CommonResponse(
+                                    400,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
+        }
+    }
+
+
+    // ============================================================
+    // STATISTICS
+    // GET /api/v1/feedback/statistics
+    // ============================================================
+
+    @GetMapping("/statistics")
+    public ResponseEntity<CommonResponse> getStatistics() {
+
+        try {
+
+            Map<String, Object> statistics =
+                    feedbackService.getStatistics();
+
+            return ResponseEntity.ok(
+                    new CommonResponse(
+                            200,
+                            statistics,
+                            "Feedback statistics retrieved successfully"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                            new CommonResponse(
+                                    500,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
+        }
+    }
+
+
+    // ============================================================
+    // RATING DISTRIBUTION
+    // GET /api/v1/feedback/rating-distribution
+    // ============================================================
+
+    @GetMapping("/rating-distribution")
+    public ResponseEntity<CommonResponse>
+    getRatingDistribution() {
+
+        try {
+
+            Map<Integer, Long> distribution =
+                    feedbackService.getRatingDistribution();
+
+            return ResponseEntity.ok(
+                    new CommonResponse(
+                            200,
+                            distribution,
+                            "Rating distribution retrieved successfully"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                            new CommonResponse(
+                                    500,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
+        }
+    }
+
+
+    // ============================================================
+    // SERVICE PERFORMANCE
+    // GET /api/v1/feedback/service-performance
+    // ============================================================
+
+    @GetMapping("/service-performance")
+    public ResponseEntity<CommonResponse>
+    getServicePerformance() {
+
+        try {
+
+            List<Map<String, Object>> performance =
+                    feedbackService.getServicePerformance();
+
+            return ResponseEntity.ok(
+                    new CommonResponse(
+                            200,
+                            performance,
+                            "Service performance retrieved successfully"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                            new CommonResponse(
+                                    500,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
+        }
+    }
+
+
+    // ============================================================
+    // MARK AS REVIEWED
+    // PATCH /api/v1/feedback/{id}/reviewed
+    // ============================================================
+
+    @PatchMapping("/{id}/reviewed")
+    public ResponseEntity<CommonResponse> markAsReviewed(
+            @PathVariable Long id) {
+
+        try {
+
+            FeedbackDTO updated =
+                    feedbackService.markAsReviewed(id);
+
+            return ResponseEntity.ok(
+                    new CommonResponse(
+                            200,
+                            updated,
+                            "Feedback marked as reviewed"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            new CommonResponse(
+                                    400,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
+        }
+    }
+
+
+    // ============================================================
+    // DELETE FEEDBACK
+    // DELETE /api/v1/feedback/{id}
+    // ============================================================
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFeedback(
+    public ResponseEntity<CommonResponse> deleteFeedback(
             @PathVariable Long id) {
 
         try {
@@ -155,8 +369,9 @@ public class FeedbackController {
             feedbackService.deleteFeedback(id);
 
             return ResponseEntity.ok(
-                    Map.of(
-                            "message",
+                    new CommonResponse(
+                            200,
+                            null,
                             "Feedback deleted successfully"
                     )
             );
@@ -165,10 +380,13 @@ public class FeedbackController {
 
             return ResponseEntity
                     .badRequest()
-                    .body(Map.of(
-                            "message",
-                            e.getMessage()
-                    ));
+                    .body(
+                            new CommonResponse(
+                                    400,
+                                    null,
+                                    e.getMessage()
+                            )
+                    );
         }
     }
 }

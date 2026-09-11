@@ -90,7 +90,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/services/status/*").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/services/assign-staff/*").permitAll()
 
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // Appointment
                         .requestMatchers(HttpMethod.POST, "/api/v1/appointment/save").permitAll()

@@ -973,32 +973,7 @@
             </div>
         </section>
 
-        <!-- Rating Trends -->
-        <section class="rating-trends card">
-            <div class="card-header">
-                <div>
-                    <h2>Rating Trends</h2>
-                    <p class="card-subtitle">Customer satisfaction over the last 6 months</p>
-                </div>
-            </div>
-            <div class="chart-wrap">
-                <canvas id="trendsChart"></canvas>
-            </div>
-            <div class="trends-footer">
-                <div class="trends-stat">
-                    <span class="trends-stat-label">Average Rating</span>
-                    <span class="trends-stat-value" id="trendAvg">4.7</span>
-                </div>
-                <div class="trends-stat">
-                    <span class="trends-stat-label">Total Reviews</span>
-                    <span class="trends-stat-value" id="trendTotal">248</span>
-                </div>
-                <div class="trends-stat">
-                    <span class="trends-stat-label">Trend</span>
-                    <span class="trends-stat-value trends-up" id="trendPct">+8.4%</span>
-                </div>
-            </div>
-        </section>
+
 
         <!-- Service Performance -->
         <section class="service-performance card">
@@ -1133,810 +1108,1811 @@
 
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
+<script>
 
-<script >/* ============================================================
-   PINK BEAUTY SALON
-   FEEDBACK & RATINGS - ADMIN
-   Backend:
-   /api/v1/feedback
-   ============================================================ */
+    /* ============================================================
+       PINK BEAUTY SALON
+       Feedback & Ratings Management
+       Frontend API Integration
+       ============================================================ */
 
-const API = {
-    feedback: "http://localhost:8080/api/v1/feedback"
-};
+    const API_BASE_URL = "http://localhost:8080/api/v1/feedback";
 
-let feedbackData = [];
-let filteredData = [];
-let currentPage = 1;
-const pageSize = 8;
+    /* ============================================================
+       GLOBAL VARIABLES
+       ============================================================ */
 
-let selectedFeedbackId = null;
-let deleteFeedbackId = null;
-let trendsChart = null;
+    let feedbackData = [];
+    let filteredFeedback = [];
+
+    let currentPage = 1;
+    const pageSize = 8;
+
+    let selectedFeedbackId = null;
+
+    let trendsChart = null;
 
 
-// ============================================================
-// AUTH
-// ============================================================
+    /* ============================================================
+       DOM ELEMENTS
+       ============================================================ */
 
-function getToken() {
-    return localStorage.getItem("token");
-}
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
 
-async function apiFetch(url, options = {}) {
+    const feedbackTableBody =
+        document.getElementById("feedbackTableBody");
 
-    const token = getToken();
+    const pagination =
+        document.getElementById("pagination");
 
-    const headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        ...(options.headers || {})
-    };
+    const resultCount =
+        document.getElementById("resultCount");
 
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-    }
+    const searchInput =
+        document.getElementById("searchInput");
 
-    const response = await fetch(url, {
-        ...options,
-        headers
+    const ratingFilter =
+        document.getElementById("ratingFilter");
+
+    const serviceFilter =
+        document.getElementById("serviceFilter");
+
+    const statusFilter =
+        document.getElementById("statusFilter");
+
+    const dateFilter =
+        document.getElementById("dateFilter");
+
+    const resetFiltersBtn =
+        document.getElementById("resetFiltersBtn");
+
+    const refreshBtn =
+        document.getElementById("refreshBtn");
+
+    const exportBtn =
+        document.getElementById("exportBtn");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    const notificationBtn =
+        document.getElementById("notificationBtn");
+
+
+    /* ============================================================
+       MODALS
+       ============================================================ */
+
+    const feedbackModal =
+        document.getElementById("feedbackModal");
+
+    const feedbackModalBody =
+        document.getElementById("feedbackModalBody");
+
+    const feedbackModalClose =
+        document.getElementById("feedbackModalClose");
+
+    const feedbackModalCloseBtn =
+        document.getElementById("feedbackModalCloseBtn");
+
+    const markReviewedBtn =
+        document.getElementById("markReviewedBtn");
+
+    const deleteModal =
+        document.getElementById("deleteModal");
+
+    const deleteModalClose =
+        document.getElementById("deleteModalClose");
+
+    const deleteCancelBtn =
+        document.getElementById("deleteCancelBtn");
+
+    const deleteConfirmBtn =
+        document.getElementById("deleteConfirmBtn");
+
+    const toastContainer =
+        document.getElementById("toastContainer");
+
+
+    /* ============================================================
+       INITIALIZATION
+       ============================================================ */
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        initializeEvents();
+
+        loadFeedbackPage();
+
     });
 
-    if (response.status === 401 || response.status === 403) {
-        showToast(
-            "Authentication Error",
-            "Please login again.",
-            "danger"
+
+    /* ============================================================
+       INITIALIZE EVENTS
+       ============================================================ */
+
+    function initializeEvents() {
+
+        /* Mobile sidebar */
+
+        hamburgerBtn?.addEventListener(
+            "click",
+            openSidebar
         );
 
-        return null;
+        sidebarOverlay?.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+
+        /* Search */
+
+        searchInput?.addEventListener(
+            "input",
+            applyFilters
+        );
+
+
+        /* Filters */
+
+        ratingFilter?.addEventListener(
+            "change",
+            applyFilters
+        );
+
+        serviceFilter?.addEventListener(
+            "change",
+            applyFilters
+        );
+
+        statusFilter?.addEventListener(
+            "change",
+            applyFilters
+        );
+
+        dateFilter?.addEventListener(
+            "change",
+            applyFilters
+        );
+
+
+        /* Reset */
+
+        resetFiltersBtn?.addEventListener(
+            "click",
+            resetFilters
+        );
+
+
+        /* Refresh */
+
+        refreshBtn?.addEventListener(
+            "click",
+            async () => {
+
+                const icon =
+                    refreshBtn.querySelector("i");
+
+                icon?.classList.add("fa-spin");
+
+                await loadFeedbackPage();
+
+                setTimeout(() => {
+                    icon?.classList.remove("fa-spin");
+                }, 500);
+
+                showToast(
+                    "success",
+                    "Data Refreshed",
+                    "Feedback data has been updated."
+                );
+            }
+        );
+
+
+        /* Export */
+
+        exportBtn?.addEventListener(
+            "click",
+            exportFeedback
+        );
+
+
+        /* Notification */
+
+        notificationBtn?.addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "info",
+                    "Notifications",
+                    "Feedback notification panel is ready."
+                );
+
+            }
+        );
+
+
+        /* Logout */
+
+        logoutBtn?.addEventListener(
+            "click",
+            () => {
+
+                const confirmed =
+                    confirm("Are you sure you want to logout?");
+
+                if (confirmed) {
+
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+
+                    showToast(
+                        "info",
+                        "Logged Out",
+                        "You have been logged out."
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* Feedback modal */
+
+        feedbackModalClose?.addEventListener(
+            "click",
+            closeFeedbackModal
+        );
+
+        feedbackModalCloseBtn?.addEventListener(
+            "click",
+            closeFeedbackModal
+        );
+
+
+        /* Delete modal */
+
+        deleteModalClose?.addEventListener(
+            "click",
+            closeDeleteModal
+        );
+
+        deleteCancelBtn?.addEventListener(
+            "click",
+            closeDeleteModal
+        );
+
+
+        /* Mark reviewed */
+
+        markReviewedBtn?.addEventListener(
+            "click",
+            markSelectedAsReviewed
+        );
+
+
+        /* Delete */
+
+        deleteConfirmBtn?.addEventListener(
+            "click",
+            deleteSelectedFeedback
+        );
+
+
+        /* Click outside modal */
+
+        feedbackModal?.addEventListener(
+            "click",
+            (event) => {
+
+                if (event.target === feedbackModal) {
+                    closeFeedbackModal();
+                }
+
+            }
+        );
+
+        deleteModal?.addEventListener(
+            "click",
+            (event) => {
+
+                if (event.target === deleteModal) {
+                    closeDeleteModal();
+                }
+
+            }
+        );
+
+
+        /* ESC key */
+
+        document.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (event.key === "Escape") {
+
+                    closeFeedbackModal();
+                    closeDeleteModal();
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
     }
 
-    if (!response.ok) {
 
-        let message = `HTTP ${response.status}`;
+    /* ============================================================
+       LOAD COMPLETE PAGE
+       ============================================================ */
+
+    async function loadFeedbackPage() {
 
         try {
-            const error = await response.json();
-            message = error.message || message;
-        } catch (_) {}
 
-        throw new Error(message);
-    }
+            await Promise.all([
+                loadFeedback(),
+                loadStatistics(),
+                loadRatingDistribution(),
+                loadServicePerformance()
+            ]);
 
-    if (response.status === 204) {
-        return null;
-    }
+            populateServiceFilter();
 
-    return response.json();
-}
+            applyFilters();
 
+        } catch (error) {
 
-// ============================================================
-// INITIAL LOAD
-// ============================================================
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-    setupEvents();
-
-    await loadFeedback();
-    await loadStatistics();
-    await loadRatingDistribution();
-    await loadServicePerformance();
-});
-
-
-// ============================================================
-// LOAD FEEDBACK
-// ============================================================
-
-async function loadFeedback() {
-
-    try {
-
-        const data = await apiFetch(API.feedback);
-
-        if (!data) return;
-
-        feedbackData = Array.isArray(data) ? data : [];
-
-        applyFilters();
-
-    } catch (error) {
-
-        console.error("Feedback loading error:", error);
-
-        showToast(
-            "Error",
-            "Unable to load feedback.",
-            "danger"
-        );
-    }
-}
-
-
-// ============================================================
-// STATISTICS
-// ============================================================
-
-async function loadStatistics() {
-
-    try {
-
-        const stats =
-            await apiFetch(
-                `${API.feedback}/statistics`
+            console.error(
+                "Feedback page loading error:",
+                error
             );
 
-        if (!stats) return;
-
-        document.getElementById("statTotal").textContent =
-            stats.totalFeedback ?? 0;
-
-        document.getElementById("statAvg").textContent =
-            `${Number(stats.averageRating || 0).toFixed(1)} / 5.0`;
-
-        document.getElementById("statPositive").textContent =
-            `${stats.positiveFeedback ?? 0}%`;
-
-        document.getElementById("statPositiveCount").textContent =
-            stats.positiveCount ?? 0;
-
-        document.getElementById("statPending").textContent =
-            stats.pendingReview ?? 0;
-
-        document.getElementById("bigRating").textContent =
-            Number(stats.averageRating || 0).toFixed(1);
-
-        document.getElementById("bigRatingCount").textContent =
-            stats.totalFeedback ?? 0;
-
-        document.getElementById("trendAvg").textContent =
-            Number(stats.averageRating || 0).toFixed(1);
-
-        document.getElementById("trendTotal").textContent =
-            stats.totalFeedback ?? 0;
-
-        document.getElementById("statAvgStars").textContent =
-            createStars(Number(stats.averageRating || 0), false);
-
-        document.getElementById("bigStars").textContent =
-            createStars(Number(stats.averageRating || 0), false);
-
-    } catch (error) {
-
-        console.error("Statistics error:", error);
-    }
-}
-
-
-// ============================================================
-// RATING DISTRIBUTION
-// ============================================================
-
-async function loadRatingDistribution() {
-
-    try {
-
-        const distribution =
-            await apiFetch(
-                `${API.feedback}/rating-distribution`
+            showToast(
+                "danger",
+                "Loading Failed",
+                "Unable to load feedback data."
             );
 
-        if (!distribution) return;
+        }
+
+    }
+
+
+    /* ============================================================
+       GET ALL FEEDBACK
+       ============================================================ */
+
+    async function loadFeedback() {
+
+        const response =
+            await fetch(API_BASE_URL);
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Failed to load feedback. HTTP ${response.status}`
+            );
+
+        }
+
+        const result =
+            await response.json();
+
+        if (result.status !== 200) {
+
+            throw new Error(
+                result.message || "Failed to retrieve feedback"
+            );
+
+        }
+
+        feedbackData =
+            Array.isArray(result.body)
+                ? result.body
+                : [];
+
+    }
+
+
+    /* ============================================================
+       GET STATISTICS
+       ============================================================ */
+
+    async function loadStatistics() {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/statistics`
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Statistics request failed. HTTP ${response.status}`
+            );
+
+        }
+
+        const result =
+            await response.json();
+
+        if (result.status !== 200) {
+
+            throw new Error(
+                result.message || "Failed to retrieve statistics"
+            );
+
+        }
+
+        const statistics =
+            result.body || {};
+
+        updateStatistics(statistics);
+
+    }
+
+
+    /* ============================================================
+       UPDATE STATISTICS
+       ============================================================ */
+
+    function updateStatistics(statistics) {
 
         const total =
-            Object.values(distribution)
-                .reduce(
-                    (sum, value) =>
-                        sum + Number(value),
-                    0
-                );
+            Number(statistics.totalFeedback || 0);
+
+        const average =
+            Number(statistics.averageRating || 0);
+
+        const positive =
+            Number(statistics.positiveFeedback || 0);
+
+        const positiveCount =
+            Number(statistics.positiveCount || 0);
+
+        const pending =
+            Number(statistics.pendingReview || 0);
+
+
+        /* Summary cards */
+
+        const statTotal =
+            document.getElementById("statTotal");
+
+        const statAvg =
+            document.getElementById("statAvg");
+
+        const statPositive =
+            document.getElementById("statPositive");
+
+        const statPositiveCount =
+            document.getElementById("statPositiveCount");
+
+        const statPending =
+            document.getElementById("statPending");
+
+
+        if (statTotal) {
+            statTotal.textContent = total;
+        }
+
+        if (statAvg) {
+            statAvg.textContent =
+                `${average.toFixed(1)} / 5.0`;
+        }
+
+        if (statPositive) {
+            statPositive.textContent =
+                `${positive}%`;
+        }
+
+        if (statPositiveCount) {
+            statPositiveCount.textContent =
+                positiveCount;
+        }
+
+        if (statPending) {
+            statPending.textContent =
+                pending;
+        }
+
+
+        /* Stars */
+
+        const statAvgStars =
+            document.getElementById("statAvgStars");
+
+        if (statAvgStars) {
+
+            statAvgStars.innerHTML =
+                createStars(average);
+
+        }
+
+
+        /* Rating overview */
+
+        const bigRating =
+            document.getElementById("bigRating");
+
+        const bigStars =
+            document.getElementById("bigStars");
+
+        const bigRatingCount =
+            document.getElementById("bigRatingCount");
+
+
+        if (bigRating) {
+            bigRating.textContent =
+                average.toFixed(1);
+        }
+
+        if (bigStars) {
+            bigStars.innerHTML =
+                createStars(average);
+        }
+
+        if (bigRatingCount) {
+            bigRatingCount.textContent =
+                total;
+        }
+
+
+        /* Trends footer */
+
+        const trendAvg =
+            document.getElementById("trendAvg");
+
+        const trendTotal =
+            document.getElementById("trendTotal");
+
+        if (trendAvg) {
+            trendAvg.textContent =
+                average.toFixed(1);
+        }
+
+        if (trendTotal) {
+            trendTotal.textContent =
+                total;
+        }
+
+
+        /*
+           Current backend does not provide
+           monthly trend data.
+
+           Therefore we keep this as
+           a neutral label instead of
+           displaying fake statistics.
+        */
+
+        const trendPct =
+            document.getElementById("trendPct");
+
+        if (trendPct) {
+
+            trendPct.textContent =
+                "Current";
+
+            trendPct.classList.remove(
+                "trends-up"
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       RATING DISTRIBUTION
+       ============================================================ */
+
+    async function loadRatingDistribution() {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/rating-distribution`
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Rating distribution request failed. HTTP ${response.status}`
+            );
+
+        }
+
+        const result =
+            await response.json();
+
+        if (result.status !== 200) {
+
+            throw new Error(
+                result.message ||
+                "Failed to retrieve rating distribution"
+            );
+
+        }
+
+        renderRatingDistribution(
+            result.body || {}
+        );
+
+    }
+
+
+    /* ============================================================
+       RENDER RATING DISTRIBUTION
+       ============================================================ */
+
+    function renderRatingDistribution(distribution) {
 
         const container =
             document.getElementById(
                 "ratingDistribution"
             );
 
+        if (!container) {
+            return;
+        }
+
         container.innerHTML = "";
 
-        [5, 4, 3, 2, 1].forEach(rating => {
+        const total =
+            Object.values(distribution)
+                .reduce(
+                    (sum, value) =>
+                        sum + Number(value || 0),
+                    0
+                );
+
+
+        for (let rating = 5; rating >= 1; rating--) {
 
             const count =
-                Number(distribution[rating] || 0);
+                Number(
+                    distribution[rating] || 0
+                );
 
             const percentage =
                 total === 0
                     ? 0
                     : (count / total) * 100;
 
+
             const row =
                 document.createElement("div");
 
-            row.className = "dist-row";
+            row.className =
+                "dist-row";
 
             row.innerHTML = `
-                <div class="dist-label">
-                    ${rating}
-                    <i class="fa-solid fa-star"></i>
-                </div>
+            <div class="dist-label">
+                <span>${rating}</span>
+                <i class="fa-solid fa-star"></i>
+            </div>
 
-                <div class="dist-bar">
-                    <div
-                        class="dist-bar-fill"
-                        style="width:${percentage}%">
-                    </div>
+            <div class="dist-bar">
+                <div
+                    class="dist-bar-fill"
+                    style="width: ${percentage}%">
                 </div>
+            </div>
 
-                <div class="dist-meta">
-                    <strong>${count}</strong>
-                    (${percentage.toFixed(0)}%)
-                </div>
-            `;
+            <div class="dist-meta">
+                <strong>${count}</strong>
+                (${Math.round(percentage)}%)
+            </div>
+        `;
 
             container.appendChild(row);
-        });
 
-    } catch (error) {
+        }
 
-        console.error(
-            "Rating distribution error:",
-            error
-        );
     }
-}
 
 
-// ============================================================
-// SERVICE PERFORMANCE
-// ============================================================
+    /* ============================================================
+       SERVICE PERFORMANCE
+       ============================================================ */
 
-async function loadServicePerformance() {
+    async function loadServicePerformance() {
 
-    try {
-
-        const data =
-            await apiFetch(
-                `${API.feedback}/service-performance`
+        const response =
+            await fetch(
+                `${API_BASE_URL}/service-performance`
             );
 
-        if (!data) return;
+        if (!response.ok) {
+
+            throw new Error(
+                `Service performance request failed. HTTP ${response.status}`
+            );
+
+        }
+
+        const result =
+            await response.json();
+
+        if (result.status !== 200) {
+
+            throw new Error(
+                result.message ||
+                "Failed to retrieve service performance"
+            );
+
+        }
+
+        renderServicePerformance(
+            result.body || []
+        );
+
+    }
+
+
+    /* ============================================================
+       RENDER SERVICE PERFORMANCE
+       ============================================================ */
+
+    function renderServicePerformance(data) {
 
         const container =
             document.getElementById(
                 "serviceList"
             );
 
+        if (!container) {
+            return;
+        }
+
         container.innerHTML = "";
 
-        if (!data.length) {
+        if (!Array.isArray(data) || data.length === 0) {
 
             container.innerHTML = `
-                <div class="empty-row">
-                    <i class="fa-solid fa-scissors"></i>
-                    No service feedback available
-                </div>
-            `;
+            <div class="empty-row">
+                <i class="fa-solid fa-chart-simple"></i>
+                <div>No service performance data available.</div>
+            </div>
+        `;
 
             return;
         }
 
+
         data.forEach(item => {
 
-            const rating =
-                Number(item.averageRating || 0);
+            const serviceName =
+                item.serviceName ||
+                "Unknown Service";
 
-            const width =
-                Math.min(
-                    (rating / 5) * 100,
-                    100
+            const rating =
+                Number(
+                    item.averageRating || 0
                 );
 
-            const div =
+            const reviewCount =
+                Number(
+                    item.reviewCount || 0
+                );
+
+            const percentage =
+                Math.min(
+                    100,
+                    (rating / 5) * 100
+                );
+
+
+            const serviceItem =
                 document.createElement("div");
 
-            div.className = "service-item";
+            serviceItem.className =
+                "service-item";
 
-            div.innerHTML = `
-                <div class="service-item-head">
+            serviceItem.innerHTML = `
+            <div class="service-item-head">
 
-                    <span class="service-item-name">
-                        ${escapeHtml(
-                item.serviceName ||
-                "Unknown Service"
-            )}
+                <span class="service-item-name">
+                    ${escapeHtml(serviceName)}
+                </span>
+
+                <div class="service-item-meta">
+
+                    <span class="service-item-stars">
+                        ${createStars(rating)}
                     </span>
 
-                    <div class="service-item-meta">
+                    <span class="service-item-rating">
+                        ${rating.toFixed(1)}
+                    </span>
 
-                        <span class="service-item-rating">
-                            ${rating.toFixed(1)}
-                        </span>
+                    <span class="service-item-count">
+                        (${reviewCount} reviews)
+                    </span>
 
-                        <span class="service-item-stars">
-                            ${createStars(rating, false)}
-                        </span>
-
-                        <span class="service-item-count">
-                            ${item.reviewCount || 0} reviews
-                        </span>
-
-                    </div>
                 </div>
 
-                <div class="service-bar">
-                    <div
-                        class="service-bar-fill"
-                        style="width:${width}%">
-                    </div>
-                </div>
-            `;
+            </div>
 
-            container.appendChild(div);
+            <div class="service-bar">
+                <div
+                    class="service-bar-fill"
+                    style="width: ${percentage}%">
+                </div>
+            </div>
+        `;
+
+            container.appendChild(
+                serviceItem
+            );
+
         });
 
-    } catch (error) {
-
-        console.error(
-            "Service performance error:",
-            error
-        );
     }
-}
 
 
-// ============================================================
-// TABLE
-// ============================================================
+    /* ============================================================
+       POPULATE SERVICE FILTER
+       ============================================================ */
 
-function renderTable() {
+    function populateServiceFilter() {
 
-    const tbody =
-        document.getElementById(
-            "feedbackTableBody"
-        );
+        if (!serviceFilter) {
+            return;
+        }
 
-    tbody.innerHTML = "";
+        const currentValue =
+            serviceFilter.value;
 
-    const start =
-        (currentPage - 1) * pageSize;
+        const services =
+            [
+                ...new Set(
+                    feedbackData
+                        .map(item => item.serviceName)
+                        .filter(Boolean)
+                )
+            ]
+                .sort();
 
-    const end =
-        start + pageSize;
 
-    const pageData =
-        filteredData.slice(start, end);
+        serviceFilter.innerHTML = `
+        <option value="">All Services</option>
+    `;
 
-    if (!pageData.length) {
 
-        tbody.innerHTML = `
+        services.forEach(service => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = service;
+            option.textContent = service;
+
+            serviceFilter.appendChild(
+                option
+            );
+
+        });
+
+
+        if (
+            services.includes(currentValue)
+        ) {
+            serviceFilter.value =
+                currentValue;
+        }
+
+    }
+
+
+    /* ============================================================
+       APPLY FILTERS
+       ============================================================ */
+
+    function applyFilters() {
+
+        const search =
+            (
+                searchInput?.value || ""
+            )
+                .trim()
+                .toLowerCase();
+
+
+        const rating =
+            ratingFilter?.value || "";
+
+
+        const service =
+            serviceFilter?.value || "";
+
+
+        const status =
+            statusFilter?.value || "";
+
+
+        const date =
+            dateFilter?.value || "";
+
+
+        filteredFeedback =
+            feedbackData.filter(item => {
+
+                /* Search */
+
+                const customerName =
+                    (
+                        item.customerName || ""
+                    ).toLowerCase();
+
+                const customerEmail =
+                    (
+                        item.customerEmail || ""
+                    ).toLowerCase();
+
+                const comment =
+                    (
+                        item.comment || ""
+                    ).toLowerCase();
+
+                const serviceName =
+                    (
+                        item.serviceName || ""
+                    ).toLowerCase();
+
+                const staffName =
+                    (
+                        item.staffName || ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    customerName.includes(search) ||
+                    customerEmail.includes(search) ||
+                    comment.includes(search) ||
+                    serviceName.includes(search) ||
+                    staffName.includes(search);
+
+
+                /* Rating */
+
+                const matchesRating =
+                    !rating ||
+                    Number(item.rating) ===
+                    Number(rating);
+
+
+                /* Service */
+
+                const matchesService =
+                    !service ||
+                    item.serviceName === service;
+
+
+                /* Status */
+
+                const matchesStatus =
+                    !status ||
+                    String(item.status || "")
+                        .toLowerCase() ===
+                    status.toLowerCase();
+
+
+                /* Date */
+
+                const matchesDate =
+                    matchesDateFilter(
+                        item.feedbackDate,
+                        date
+                    );
+
+
+                return (
+                    matchesSearch &&
+                    matchesRating &&
+                    matchesService &&
+                    matchesStatus &&
+                    matchesDate
+                );
+
+            });
+
+
+        currentPage = 1;
+
+        renderFeedbackTable();
+
+    }
+
+
+    /* ============================================================
+       DATE FILTER
+       ============================================================ */
+
+    function matchesDateFilter(
+        feedbackDate,
+        filter
+    ) {
+
+        if (!filter) {
+            return true;
+        }
+
+        if (!feedbackDate) {
+            return false;
+        }
+
+        const date =
+            new Date(feedbackDate);
+
+        if (Number.isNaN(date.getTime())) {
+            return false;
+        }
+
+        const now =
+            new Date();
+
+
+        if (filter === "today") {
+
+            return (
+                date.getFullYear() ===
+                now.getFullYear() &&
+                date.getMonth() ===
+                now.getMonth() &&
+                date.getDate() ===
+                now.getDate()
+            );
+
+        }
+
+
+        if (filter === "week") {
+
+            const start =
+                new Date(now);
+
+            start.setHours(
+                0, 0, 0, 0
+            );
+
+            const day =
+                start.getDay();
+
+            const diff =
+                day === 0
+                    ? 6
+                    : day - 1;
+
+            start.setDate(
+                start.getDate() - diff
+            );
+
+            const end =
+                new Date(start);
+
+            end.setDate(
+                end.getDate() + 7
+            );
+
+            return (
+                date >= start &&
+                date < end
+            );
+
+        }
+
+
+        if (filter === "month") {
+
+            return (
+                date.getFullYear() ===
+                now.getFullYear() &&
+                date.getMonth() ===
+                now.getMonth()
+            );
+
+        }
+
+
+        /*
+           Custom date selector is not
+           currently implemented in HTML.
+           Treat it as all dates.
+        */
+
+        if (filter === "custom") {
+            return true;
+        }
+
+
+        return true;
+
+    }
+
+
+    /* ============================================================
+       RENDER FEEDBACK TABLE
+       ============================================================ */
+
+    function renderFeedbackTable() {
+
+        if (!feedbackTableBody) {
+            return;
+        }
+
+        feedbackTableBody.innerHTML = "";
+
+
+        const total =
+            filteredFeedback.length;
+
+
+        if (resultCount) {
+
+            resultCount.textContent =
+                `${total} ${
+                    total === 1
+                        ? "record"
+                        : "records"
+                }`;
+
+        }
+
+
+        if (total === 0) {
+
+            feedbackTableBody.innerHTML = `
             <tr>
-                <td colspan="7" class="empty-row">
+                <td
+                    colspan="7"
+                    class="empty-row">
+
                     <i class="fa-solid fa-comments"></i>
-                    No feedback found
+
+                    <div>
+                        No feedback found.
+                    </div>
+
                 </td>
             </tr>
         `;
 
-        return;
+            renderPagination(0);
+
+            return;
+        }
+
+
+        const totalPages =
+            Math.ceil(
+                total / pageSize
+            );
+
+
+        if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
+
+
+        const startIndex =
+            (currentPage - 1) *
+            pageSize;
+
+
+        const pageItems =
+            filteredFeedback.slice(
+                startIndex,
+                startIndex + pageSize
+            );
+
+
+        pageItems.forEach(
+            feedback => {
+
+                const row =
+                    document.createElement("tr");
+
+                row.innerHTML = `
+                <td>
+                    ${renderCustomerCell(feedback)}
+                </td>
+
+                <td>
+                    <span class="service-badge">
+                        ${escapeHtml(
+                    feedback.serviceName ||
+                    "Unknown"
+                )}
+                    </span>
+                </td>
+
+                <td>
+                    <span class="rating-stars">
+                        ${createStars(
+                    Number(feedback.rating || 0)
+                )}
+                    </span>
+                </td>
+
+                <td>
+                    <div
+                        class="feedback-text"
+                        title="${escapeHtml(
+                    feedback.comment || ""
+                )}">
+                        ${escapeHtml(
+                    feedback.comment ||
+                    "No comment"
+                )}
+                    </div>
+                </td>
+
+                <td>
+                    ${formatDate(
+                    feedback.feedbackDate
+                )}
+                </td>
+
+                <td>
+                    ${renderStatusBadge(
+                    feedback.status
+                )}
+                </td>
+
+                <td>
+                    <div class="action-btns">
+
+                        <button
+                            class="action-btn action-view"
+                            title="View Feedback"
+                            onclick="viewFeedback(${feedback.feedbackId})">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                        <button
+                            class="action-btn action-delete"
+                            title="Delete Feedback"
+                            onclick="openDeleteModal(${feedback.feedbackId})">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+                </td>
+            `;
+
+                feedbackTableBody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        renderPagination(total);
+
     }
 
-    pageData.forEach(feedback => {
 
-        const tr =
-            document.createElement("tr");
+    /* ============================================================
+       CUSTOMER CELL
+       ============================================================ */
 
-        const customerName =
+    function renderCustomerCell(feedback) {
+
+        const name =
             feedback.customerName ||
             "Unknown Customer";
 
-        const initials =
-            getInitials(customerName);
-
-        tr.innerHTML = `
-            <td>
-                <div class="customer-cell">
-
-                    <div class="avatar">
-                        ${escapeHtml(initials)}
-                    </div>
-
-                    <div class="cust-info">
-
-                        <span class="cust-name">
-                            ${escapeHtml(
-            customerName
-        )}
-                        </span>
-
-                        <span class="cust-email">
-                            ${escapeHtml(
+        const email =
             feedback.customerEmail ||
-            "-"
-        )}
-                        </span>
+            "No email";
 
-                    </div>
-                </div>
-            </td>
 
-            <td>
-                <span class="service-badge">
-                    ${escapeHtml(
-            feedback.serviceName ||
-            "Unknown"
-        )}
+        const initials =
+            getInitials(name);
+
+
+        return `
+        <div class="customer-cell">
+
+            <div class="avatar">
+                ${escapeHtml(initials)}
+            </div>
+
+            <div class="cust-info">
+
+                <span class="cust-name">
+                    ${escapeHtml(name)}
                 </span>
-            </td>
 
-            <td>
-                <span class="rating-stars">
-                    ${createStars(
-            feedback.rating || 0,
-            true
-        )}
+                <span class="cust-email">
+                    ${escapeHtml(email)}
                 </span>
-            </td>
 
-            <td>
-                <div class="feedback-text"
-                     title="${escapeHtml(
-            feedback.comment || ""
-        )}">
-                    ${escapeHtml(
-            feedback.comment || "-"
-        )}
-                </div>
-            </td>
+            </div>
 
-            <td>
-                ${formatDate(
-            feedback.feedbackDate
-        )}
-            </td>
+        </div>
+    `;
 
-            <td>
-                ${getStatusBadge(
-            feedback.status
-        )}
-            </td>
+    }
 
-            <td>
-                <div class="action-btns">
 
-                    <button
-                        class="action-btn action-view"
-                        onclick="viewFeedback(${feedback.feedbackId})"
-                        title="View">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
+    /* ============================================================
+       STATUS BADGE
+       ============================================================ */
 
-                    <button
-                        class="action-btn action-delete"
-                        onclick="openDeleteModal(${feedback.feedbackId})"
-                        title="Delete">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+    function renderStatusBadge(status) {
 
-                </div>
-            </td>
+        const normalized =
+            String(status || "")
+                .toUpperCase();
+
+
+        if (normalized === "REVIEWED") {
+
+            return `
+            <span class="status-badge status-reviewed">
+                <i class="fa-solid fa-circle-check"></i>
+                Reviewed
+            </span>
         `;
 
-        tbody.appendChild(tr);
-    });
-
-    renderPagination();
-}
+        }
 
 
-// ============================================================
-// FILTERS
-// ============================================================
+        return `
+        <span class="status-badge status-pending">
+            <i class="fa-solid fa-clock"></i>
+            Pending
+        </span>
+    `;
 
-function applyFilters() {
+    }
 
-    const search =
-        document.getElementById(
-            "searchInput"
-        ).value
-            .trim()
-            .toLowerCase();
 
-    const rating =
-        document.getElementById(
-            "ratingFilter"
-        ).value;
+    /* ============================================================
+       PAGINATION
+       ============================================================ */
 
-    const service =
-        document.getElementById(
-            "serviceFilter"
-        ).value;
+    function renderPagination(totalItems) {
 
-    const status =
-        document.getElementById(
-            "statusFilter"
-        ).value;
+        if (!pagination) {
+            return;
+        }
 
-    filteredData =
-        feedbackData.filter(feedback => {
+        pagination.innerHTML = "";
 
-            const matchesSearch =
-                !search ||
-                (feedback.customerName || "")
-                    .toLowerCase()
-                    .includes(search) ||
-                (feedback.customerEmail || "")
-                    .toLowerCase()
-                    .includes(search) ||
-                (feedback.comment || "")
-                    .toLowerCase()
-                    .includes(search);
 
-            const matchesRating =
-                !rating ||
-                String(feedback.rating) === rating;
+        if (totalItems === 0) {
+            return;
+        }
 
-            const matchesService =
-                !service ||
-                feedback.serviceName === service;
 
-            const matchesStatus =
-                !status ||
-                feedback.status === status.toUpperCase();
-
-            return (
-                matchesSearch &&
-                matchesRating &&
-                matchesService &&
-                matchesStatus
+        const totalPages =
+            Math.ceil(
+                totalItems / pageSize
             );
-        });
-
-    currentPage = 1;
-
-    document.getElementById(
-        "resultCount"
-    ).textContent =
-        `${filteredData.length} records`;
-
-    renderTable();
-}
 
 
-// ============================================================
-// PAGINATION
-// ============================================================
+        const start =
+            ((currentPage - 1) * pageSize) + 1;
 
-function renderPagination() {
 
-    const container =
-        document.getElementById(
-            "pagination"
-        );
+        const end =
+            Math.min(
+                currentPage * pageSize,
+                totalItems
+            );
 
-    container.innerHTML = "";
 
-    const totalPages =
-        Math.ceil(
-            filteredData.length / pageSize
-        );
+        const pageInfo =
+            document.createElement("div");
 
-    if (totalPages <= 1) return;
+        pageInfo.className =
+            "page-info";
 
-    const info =
-        document.createElement("div");
+        pageInfo.innerHTML = `
+        Showing
+        <strong>${start}</strong>
+        -
+        <strong>${end}</strong>
+        of
+        <strong>${totalItems}</strong>
+    `;
 
-    info.className = "page-info";
 
-    const start =
-        (currentPage - 1) * pageSize + 1;
+        const pageButtons =
+            document.createElement("div");
 
-    const end =
-        Math.min(
-            currentPage * pageSize,
-            filteredData.length
-        );
+        pageButtons.className =
+            "page-btns";
 
-    info.innerHTML =
-        `Showing <strong>${start}</strong> -
-         <strong>${end}</strong> of
-         <strong>${filteredData.length}</strong>`;
 
-    const buttons =
-        document.createElement("div");
+        /* Previous */
 
-    buttons.className = "page-btns";
+        const previousBtn =
+            document.createElement("button");
 
-    const previous =
-        createPageButton(
-            "‹",
-            currentPage === 1,
+        previousBtn.className =
+            "page-btn";
+
+        previousBtn.innerHTML =
+            `<i class="fa-solid fa-chevron-left"></i>`;
+
+        previousBtn.disabled =
+            currentPage === 1;
+
+        previousBtn.addEventListener(
+            "click",
             () => {
-                currentPage--;
-                renderTable();
+
+                if (currentPage > 1) {
+
+                    currentPage--;
+
+                    renderFeedbackTable();
+
+                }
+
             }
         );
 
-    buttons.appendChild(previous);
+        pageButtons.appendChild(
+            previousBtn
+        );
 
-    for (let i = 1; i <= totalPages; i++) {
 
-        if (
-            totalPages > 7 &&
-            i > 3 &&
-            i < totalPages - 2 &&
-            Math.abs(i - currentPage) > 1
+        /* Page numbers */
+
+        for (
+            let page = 1;
+            page <= totalPages;
+            page++
         ) {
-            continue;
-        }
 
-        const button =
-            createPageButton(
-                i,
-                false,
+            if (
+                totalPages > 7 &&
+                page > 3 &&
+                page < totalPages - 2 &&
+                Math.abs(page - currentPage) > 1
+            ) {
+
+                if (
+                    page === 4 ||
+                    page === totalPages - 3
+                ) {
+
+                    const dots =
+                        document.createElement("span");
+
+                    dots.className =
+                        "page-btn";
+
+                    dots.textContent =
+                        "...";
+
+                    pageButtons.appendChild(
+                        dots
+                    );
+
+                }
+
+                continue;
+
+            }
+
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "page-btn";
+
+            if (page === currentPage) {
+                button.classList.add("active");
+            }
+
+            button.textContent =
+                page;
+
+            button.addEventListener(
+                "click",
                 () => {
-                    currentPage = i;
-                    renderTable();
+
+                    currentPage =
+                        page;
+
+                    renderFeedbackTable();
+
                 }
             );
 
-        if (i === currentPage) {
-            button.classList.add("active");
+            pageButtons.appendChild(
+                button
+            );
+
         }
 
-        buttons.appendChild(button);
-    }
 
-    const next =
-        createPageButton(
-            "›",
-            currentPage === totalPages,
+        /* Next */
+
+        const nextBtn =
+            document.createElement("button");
+
+        nextBtn.className =
+            "page-btn";
+
+        nextBtn.innerHTML =
+            `<i class="fa-solid fa-chevron-right"></i>`;
+
+        nextBtn.disabled =
+            currentPage === totalPages;
+
+        nextBtn.addEventListener(
+            "click",
             () => {
-                currentPage++;
-                renderTable();
+
+                if (
+                    currentPage <
+                    totalPages
+                ) {
+
+                    currentPage++;
+
+                    renderFeedbackTable();
+
+                }
+
             }
         );
 
-    buttons.appendChild(next);
-
-    container.appendChild(info);
-    container.appendChild(buttons);
-}
-
-function createPageButton(
-    text,
-    disabled,
-    action
-) {
-
-    const button =
-        document.createElement("button");
-
-    button.className = "page-btn";
-
-    button.textContent = text;
-
-    button.disabled = disabled;
-
-    button.addEventListener(
-        "click",
-        action
-    );
-
-    return button;
-}
-
-
-// ============================================================
-// VIEW FEEDBACK
-// ============================================================
-
-function viewFeedback(id) {
-
-    const feedback =
-        feedbackData.find(
-            item =>
-                Number(item.feedbackId) ===
-                Number(id)
+        pageButtons.appendChild(
+            nextBtn
         );
 
-    if (!feedback) return;
 
-    selectedFeedbackId = id;
+        pagination.appendChild(
+            pageInfo
+        );
 
-    document.getElementById(
-        "feedbackModalBody"
-    ).innerHTML = `
+        pagination.appendChild(
+            pageButtons
+        );
+
+    }
+
+
+    /* ============================================================
+       VIEW FEEDBACK
+       ============================================================ */
+
+    async function viewFeedback(id) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/${id}`
+                );
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+
+            }
+
+            const result =
+                await response.json();
+
+            if (result.status !== 200) {
+
+                throw new Error(
+                    result.message ||
+                    "Unable to load feedback"
+                );
+
+            }
+
+            const feedback =
+                result.body;
+
+            selectedFeedbackId =
+                feedback.feedbackId;
+
+            renderFeedbackModal(
+                feedback
+            );
+
+            openFeedbackModal();
+
+        } catch (error) {
+
+            console.error(
+                "View feedback error:",
+                error
+            );
+
+            showToast(
+                "danger",
+                "Unable to Load",
+                "Could not load feedback details."
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       FEEDBACK DETAIL MODAL
+       ============================================================ */
+
+    function renderFeedbackModal(feedback) {
+
+        if (!feedbackModalBody) {
+            return;
+        }
+
+        const status =
+            String(feedback.status || "")
+                .toUpperCase();
+
+
+        feedbackModalBody.innerHTML = `
 
         <div class="detail-grid">
 
             <div class="detail-item">
+
                 <span class="detail-label">
                     Customer
                 </span>
+
                 <span class="detail-value">
                     ${escapeHtml(
-        feedback.customerName || "-"
-    )}
+            feedback.customerName ||
+            "Unknown"
+        )}
                 </span>
+
             </div>
 
+
             <div class="detail-item">
+
                 <span class="detail-label">
                     Email
                 </span>
+
                 <span class="detail-value">
                     ${escapeHtml(
-        feedback.customerEmail || "-"
-    )}
+            feedback.customerEmail ||
+            "N/A"
+        )}
                 </span>
+
             </div>
 
-            <div class="detail-item">
-                <span class="detail-label">
-                    Service
-                </span>
-                <span class="detail-value">
-                    ${escapeHtml(
-        feedback.serviceName || "-"
-    )}
-                </span>
-            </div>
 
             <div class="detail-item">
-                <span class="detail-label">
-                    Staff
-                </span>
-                <span class="detail-value">
-                    ${escapeHtml(
-        feedback.staffName || "-"
-    )}
-                </span>
-            </div>
 
-            <div class="detail-item">
                 <span class="detail-label">
                     Appointment ID
                 </span>
+
                 <span class="detail-value">
-                    #${feedback.appointmentId || "-"}
+                    #${feedback.appointmentId ?? "N/A"}
                 </span>
+
             </div>
 
+
             <div class="detail-item">
+
                 <span class="detail-label">
-                    Date
+                    Feedback ID
                 </span>
+
                 <span class="detail-value">
-                    ${formatDate(
-        feedback.feedbackDate
-    )}
+                    #${feedback.feedbackId ?? "N/A"}
                 </span>
+
             </div>
 
+
             <div class="detail-item">
+
+                <span class="detail-label">
+                    Service
+                </span>
+
+                <span class="detail-value">
+                    ${escapeHtml(
+            feedback.serviceName ||
+            "N/A"
+        )}
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Staff
+                </span>
+
+                <span class="detail-value">
+                    ${escapeHtml(
+            feedback.staffName ||
+            "N/A"
+        )}
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
                 <span class="detail-label">
                     Rating
                 </span>
+
                 <span class="detail-value stars">
                     ${createStars(
-        feedback.rating || 0,
-        false
-    )}
+            Number(feedback.rating || 0)
+        )}
                 </span>
+
             </div>
 
+
             <div class="detail-item">
+
+                <span class="detail-label">
+                    Date
+                </span>
+
+                <span class="detail-value">
+                    ${formatDate(
+            feedback.feedbackDate
+        )}
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
                 <span class="detail-label">
                     Status
                 </span>
-                <span class="detail-value">
-                    ${getStatusBadge(
-        feedback.status
-    )}
-                </span>
+
+                <div class="detail-status-row">
+                    ${renderStatusBadge(
+            feedback.status
+        )}
+                </div>
+
             </div>
+
 
             <div class="detail-item full">
 
@@ -1945,9 +2921,10 @@ function viewFeedback(id) {
                 </span>
 
                 <div class="detail-comment">
-                    “${escapeHtml(
-        feedback.comment || "-"
-    )}”
+                    "${escapeHtml(
+            feedback.comment ||
+            "No comment"
+        )}"
                 </div>
 
             </div>
@@ -1955,432 +2932,687 @@ function viewFeedback(id) {
         </div>
     `;
 
-    const markBtn =
-        document.getElementById(
-            "markReviewedBtn"
-        );
 
-    if (
-        feedback.status === "REVIEWED"
-    ) {
-        markBtn.style.display = "none";
-    } else {
-        markBtn.style.display = "inline-flex";
-    }
+        /* Mark Reviewed button */
 
-    openModal("feedbackModal");
-}
+        if (markReviewedBtn) {
 
+            if (status === "REVIEWED") {
 
-// ============================================================
-// MARK REVIEWED
-// ============================================================
+                markReviewedBtn.style.display =
+                    "none";
 
-async function markAsReviewed() {
+            } else {
 
-    if (!selectedFeedbackId) return;
+                markReviewedBtn.style.display =
+                    "inline-flex";
 
-    try {
-
-        await apiFetch(
-            `${API.feedback}/${selectedFeedbackId}/reviewed`,
-            {
-                method: "PATCH"
             }
-        );
 
-        closeModal("feedbackModal");
+        }
 
-        showToast(
-            "Success",
-            "Feedback marked as reviewed.",
-            "success"
-        );
-
-        await loadFeedback();
-        await loadStatistics();
-
-    } catch (error) {
-
-        showToast(
-            "Error",
-            error.message,
-            "danger"
-        );
     }
-}
 
 
-// ============================================================
-// DELETE
-// ============================================================
+    /* ============================================================
+       MARK AS REVIEWED
+       ============================================================ */
 
-function openDeleteModal(id) {
+    async function markSelectedAsReviewed() {
 
-    deleteFeedbackId = id;
+        if (!selectedFeedbackId) {
+            return;
+        }
 
-    openModal("deleteModal");
-}
 
-async function deleteFeedback() {
+        const originalText =
+            markReviewedBtn.innerHTML;
 
-    if (!deleteFeedbackId) return;
 
-    try {
+        markReviewedBtn.disabled =
+            true;
 
-        await apiFetch(
-            `${API.feedback}/${deleteFeedbackId}`,
-            {
-                method: "DELETE"
+        markReviewedBtn.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <span>Updating...</span>
+    `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/${selectedFeedbackId}/reviewed`,
+                    {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        }
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok ||
+                result.status !== 200) {
+
+                throw new Error(
+                    result.message ||
+                    "Unable to update feedback"
+                );
+
             }
-        );
-
-        closeModal("deleteModal");
-
-        showToast(
-            "Deleted",
-            "Feedback deleted successfully.",
-            "success"
-        );
-
-        deleteFeedbackId = null;
-
-        await loadFeedback();
-        await loadStatistics();
-        await loadRatingDistribution();
-        await loadServicePerformance();
-
-    } catch (error) {
-
-        showToast(
-            "Error",
-            error.message,
-            "danger"
-        );
-    }
-}
 
 
-// ============================================================
-// EXPORT CSV
-// ============================================================
+            const updated =
+                result.body;
 
-function exportFeedback() {
 
-    if (!filteredData.length) {
+            /* Update local array */
 
-        showToast(
-            "No Data",
-            "There is no feedback to export.",
-            "info"
-        );
+            const index =
+                feedbackData.findIndex(
+                    item =>
+                        item.feedbackId ===
+                        selectedFeedbackId
+                );
 
-        return;
-    }
 
-    const headers = [
-        "Feedback ID",
-        "Customer",
-        "Email",
-        "Service",
-        "Staff",
-        "Rating",
-        "Comment",
-        "Date",
-        "Status"
-    ];
+            if (index !== -1) {
 
-    const rows =
-        filteredData.map(f => [
+                feedbackData[index] =
+                    updated;
 
-            f.feedbackId,
-            f.customerName || "",
-            f.customerEmail || "",
-            f.serviceName || "",
-            f.staffName || "",
-            f.rating || "",
-            f.comment || "",
-            f.feedbackDate || "",
-            f.status || ""
-        ]);
-
-    const csv = [
-        headers,
-        ...rows
-    ]
-        .map(row =>
-            row.map(value =>
-                `"${String(value)
-                    .replace(/"/g, '""')}"`
-            ).join(",")
-        )
-        .join("\n");
-
-    const blob =
-        new Blob(
-            [csv],
-            {
-                type:
-                    "text/csv;charset=utf-8;"
             }
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const link =
-        document.createElement("a");
-
-    link.href = url;
-
-    link.download =
-        `pink-beauty-feedback-${new Date()
-            .toISOString()
-            .slice(0, 10)}.csv`;
-
-    link.click();
-
-    URL.revokeObjectURL(url);
-
-    showToast(
-        "Exported",
-        "Feedback exported successfully.",
-        "success"
-    );
-}
 
 
-// ============================================================
-// EVENTS
-// ============================================================
+            /* Refresh table */
 
-function setupEvents() {
+            applyFilters();
 
-    document.getElementById(
-        "searchInput"
-    ).addEventListener(
-        "input",
-        applyFilters
-    );
 
-    document.getElementById(
-        "ratingFilter"
-    ).addEventListener(
-        "change",
-        applyFilters
-    );
+            /* Close modal */
 
-    document.getElementById(
-        "serviceFilter"
-    ).addEventListener(
-        "change",
-        applyFilters
-    );
+            closeFeedbackModal();
 
-    document.getElementById(
-        "statusFilter"
-    ).addEventListener(
-        "change",
-        applyFilters
-    );
-
-    document.getElementById(
-        "dateFilter"
-    ).addEventListener(
-        "change",
-        applyFilters
-    );
-
-    document.getElementById(
-        "resetFiltersBtn"
-    ).addEventListener(
-        "click",
-        resetFilters
-    );
-
-    document.getElementById(
-        "refreshBtn"
-    ).addEventListener(
-        "click",
-        async () => {
-
-            await loadFeedback();
-            await loadStatistics();
-            await loadRatingDistribution();
-            await loadServicePerformance();
 
             showToast(
-                "Refreshed",
-                "Feedback data updated.",
-                "success"
+                "success",
+                "Feedback Reviewed",
+                "Feedback has been marked as reviewed."
             );
+
+
+            /*
+               Reload statistics because
+               pending review count changed.
+            */
+
+            await loadStatistics();
+
+
+        } catch (error) {
+
+            console.error(
+                "Mark reviewed error:",
+                error
+            );
+
+            showToast(
+                "danger",
+                "Update Failed",
+                error.message ||
+                "Could not mark feedback as reviewed."
+            );
+
+        } finally {
+
+            markReviewedBtn.disabled =
+                false;
+
+            markReviewedBtn.innerHTML =
+                originalText;
+
         }
-    );
 
-    document.getElementById(
-        "exportBtn"
-    ).addEventListener(
-        "click",
-        exportFeedback
-    );
-
-    document.getElementById(
-        "markReviewedBtn"
-    ).addEventListener(
-        "click",
-        markAsReviewed
-    );
-
-    document.getElementById(
-        "deleteConfirmBtn"
-    ).addEventListener(
-        "click",
-        deleteFeedback
-    );
-
-    document.getElementById(
-        "feedbackModalClose"
-    ).addEventListener(
-        "click",
-        () => closeModal("feedbackModal")
-    );
-
-    document.getElementById(
-        "feedbackModalCloseBtn"
-    ).addEventListener(
-        "click",
-        () => closeModal("feedbackModal")
-    );
-
-    document.getElementById(
-        "deleteModalClose"
-    ).addEventListener(
-        "click",
-        () => closeModal("deleteModal")
-    );
-
-    document.getElementById(
-        "deleteCancelBtn"
-    ).addEventListener(
-        "click",
-        () => closeModal("deleteModal")
-    );
-
-    document.getElementById(
-        "hamburgerBtn"
-    ).addEventListener(
-        "click",
-        () => {
-
-            document
-                .getElementById("sidebar")
-                .classList.add("show");
-
-            document
-                .getElementById("sidebarOverlay")
-                .classList.add("show");
-        }
-    );
-
-    document.getElementById(
-        "sidebarOverlay"
-    ).addEventListener(
-        "click",
-        closeSidebar
-    );
-
-    document.getElementById(
-        "logoutBtn"
-    ).addEventListener(
-        "click",
-        logout
-    );
-}
+    }
 
 
-// ============================================================
-// RESET FILTERS
-// ============================================================
+    /* ============================================================
+       DELETE MODAL
+       ============================================================ */
 
-function resetFilters() {
+    function openDeleteModal(id) {
 
-    document.getElementById(
-        "searchInput"
-    ).value = "";
+        selectedFeedbackId =
+            Number(id);
 
-    document.getElementById(
-        "ratingFilter"
-    ).value = "";
-
-    document.getElementById(
-        "serviceFilter"
-    ).value = "";
-
-    document.getElementById(
-        "statusFilter"
-    ).value = "";
-
-    document.getElementById(
-        "dateFilter"
-    ).value = "";
-
-    applyFilters();
-}
-
-
-// ============================================================
-// MODALS
-// ============================================================
-
-function openModal(id) {
-
-    document
-        .getElementById(id)
-        .classList.add("show");
-}
-
-function closeModal(id) {
-
-    document
-        .getElementById(id)
-        .classList.remove("show");
-}
-
-
-// ============================================================
-// TOAST
-// ============================================================
-
-function showToast(
-    title,
-    message,
-    type = "success"
-) {
-
-    const container =
-        document.getElementById(
-            "toastContainer"
+        deleteModal?.classList.add(
+            "show"
         );
 
-    const toast =
-        document.createElement("div");
+    }
 
-    toast.className =
-        `toast toast-${type}`;
 
-    let icon =
-        type === "success"
-            ? "fa-check"
-            : type === "danger"
-                ? "fa-xmark"
-                : "fa-info";
+    function closeDeleteModal() {
 
-    toast.innerHTML = `
+        deleteModal?.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    /* ============================================================
+       DELETE FEEDBACK
+       ============================================================ */
+
+    async function deleteSelectedFeedback() {
+
+        if (!selectedFeedbackId) {
+            return;
+        }
+
+
+        const originalText =
+            deleteConfirmBtn.innerHTML;
+
+
+        deleteConfirmBtn.disabled =
+            true;
+
+        deleteConfirmBtn.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <span>Deleting...</span>
+    `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/${selectedFeedbackId}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok ||
+                result.status !== 200) {
+
+                throw new Error(
+                    result.message ||
+                    "Unable to delete feedback"
+                );
+
+            }
+
+
+            /* Remove from local array */
+
+            feedbackData =
+                feedbackData.filter(
+                    item =>
+                        item.feedbackId !==
+                        selectedFeedbackId
+                );
+
+
+            closeDeleteModal();
+
+            applyFilters();
+
+
+            /* Update statistics */
+
+            await loadStatistics();
+
+            await loadRatingDistribution();
+
+            await loadServicePerformance();
+
+
+            showToast(
+                "success",
+                "Feedback Deleted",
+                "Feedback has been permanently deleted."
+            );
+
+
+            selectedFeedbackId =
+                null;
+
+
+        } catch (error) {
+
+            console.error(
+                "Delete feedback error:",
+                error
+            );
+
+            showToast(
+                "danger",
+                "Delete Failed",
+                error.message ||
+                "Could not delete feedback."
+            );
+
+        } finally {
+
+            deleteConfirmBtn.disabled =
+                false;
+
+            deleteConfirmBtn.innerHTML =
+                originalText;
+
+        }
+
+    }
+
+
+    /* ============================================================
+       MODAL HELPERS
+       ============================================================ */
+
+    function openFeedbackModal() {
+
+        feedbackModal?.classList.add(
+            "show"
+        );
+
+    }
+
+
+    function closeFeedbackModal() {
+
+        feedbackModal?.classList.remove(
+            "show"
+        );
+
+        selectedFeedbackId =
+            null;
+
+    }
+
+
+    /* ============================================================
+       RESET FILTERS
+       ============================================================ */
+
+    function resetFilters() {
+
+        if (searchInput) {
+            searchInput.value = "";
+        }
+
+        if (ratingFilter) {
+            ratingFilter.value = "";
+        }
+
+        if (serviceFilter) {
+            serviceFilter.value = "";
+        }
+
+        if (statusFilter) {
+            statusFilter.value = "";
+        }
+
+        if (dateFilter) {
+            dateFilter.value = "";
+        }
+
+
+        currentPage = 1;
+
+        applyFilters();
+
+
+        showToast(
+            "info",
+            "Filters Reset",
+            "All filters have been cleared."
+        );
+
+    }
+
+
+    /* ============================================================
+       EXPORT FEEDBACK CSV
+       ============================================================ */
+
+    function exportFeedback() {
+
+        if (
+            !filteredFeedback ||
+            filteredFeedback.length === 0
+        ) {
+
+            showToast(
+                "info",
+                "Nothing to Export",
+                "There are no feedback records to export."
+            );
+
+            return;
+
+        }
+
+
+        const headers = [
+            "Feedback ID",
+            "Appointment ID",
+            "Customer",
+            "Email",
+            "Service",
+            "Staff",
+            "Rating",
+            "Comment",
+            "Date",
+            "Status"
+        ];
+
+
+        const rows =
+            filteredFeedback.map(
+                item => [
+
+                    item.feedbackId ?? "",
+
+                    item.appointmentId ?? "",
+
+                    item.customerName ?? "",
+
+                    item.customerEmail ?? "",
+
+                    item.serviceName ?? "",
+
+                    item.staffName ?? "",
+
+                    item.rating ?? "",
+
+                    item.comment ?? "",
+
+                    item.feedbackDate ?? "",
+
+                    item.status ?? ""
+
+                ]
+            );
+
+
+        const csvContent = [
+            headers,
+            ...rows
+        ]
+            .map(
+                row =>
+                    row
+                        .map(value =>
+                            `"${String(value)
+                                .replace(/"/g, '""')}"`
+                        )
+                        .join(",")
+            )
+            .join("\n");
+
+
+        const blob =
+            new Blob(
+                [csvContent],
+                {
+                    type:
+                        "text/csv;charset=utf-8;"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            `feedback-export-${getTodayString()}.csv`;
+
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+        URL.revokeObjectURL(url);
+
+
+        showToast(
+            "success",
+            "Export Complete",
+            `${filteredFeedback.length} feedback records exported.`
+        );
+
+    }
+
+
+    /* ============================================================
+       STAR GENERATOR
+       ============================================================ */
+
+    function createStars(rating) {
+
+        const numericRating =
+            Number(rating || 0);
+
+
+        const rounded =
+            Math.round(
+                numericRating
+            );
+
+
+        let html = "";
+
+
+        for (let i = 1; i <= 5; i++) {
+
+            if (i <= rounded) {
+
+                html +=
+                    `<i class="fa-solid fa-star"></i>`;
+
+            } else {
+
+                html +=
+                    `<i class="fa-regular fa-star empty"></i>`;
+
+            }
+
+        }
+
+
+        return html;
+
+    }
+
+
+    /* ============================================================
+       FORMAT DATE
+       ============================================================ */
+
+    function formatDate(dateString) {
+
+        if (!dateString) {
+            return "N/A";
+        }
+
+
+        const date =
+            new Date(
+                `${dateString}T00:00:00`
+            );
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return dateString;
+
+        }
+
+
+        return date.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+    }
+
+
+    /* ============================================================
+       INITIALS
+       ============================================================ */
+
+    function getInitials(name) {
+
+        if (!name) {
+            return "CU";
+        }
+
+
+        const parts =
+            name
+                .trim()
+                .split(/\s+/);
+
+
+        if (parts.length === 1) {
+
+            return parts[0]
+                .substring(0, 2)
+                .toUpperCase();
+
+        }
+
+
+        return (
+            parts[0][0] +
+            parts[parts.length - 1][0]
+        ).toUpperCase();
+
+    }
+
+
+    /* ============================================================
+       ESCAPE HTML
+       ============================================================ */
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* ============================================================
+       TODAY STRING
+       ============================================================ */
+
+    function getTodayString() {
+
+        const now =
+            new Date();
+
+        const year =
+            now.getFullYear();
+
+        const month =
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                now.getDate()
+            ).padStart(2, "0");
+
+
+        return `${year}-${month}-${day}`;
+
+    }
+
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+
+    function showToast(
+        type,
+        title,
+        message
+    ) {
+
+        if (!toastContainer) {
+            return;
+        }
+
+
+        const toast =
+            document.createElement("div");
+
+
+        const iconMap = {
+            success:
+                "fa-circle-check",
+            info:
+                "fa-circle-info",
+            danger:
+                "fa-circle-xmark"
+        };
+
+
+        const icon =
+            iconMap[type] ||
+            "fa-circle-info";
+
+
+        toast.className =
+            `toast toast-${type}`;
+
+
+        toast.innerHTML = `
+
         <div class="toast-icon">
+
             <i class="fa-solid ${icon}"></i>
+
         </div>
 
         <div class="toast-body">
+
             <span class="toast-title">
                 ${escapeHtml(title)}
             </span>
@@ -2388,176 +3620,202 @@ function showToast(
             <span class="toast-msg">
                 ${escapeHtml(message)}
             </span>
+
         </div>
+
     `;
 
-    container.appendChild(toast);
 
-    requestAnimationFrame(() => {
-        toast.classList.add("show");
-    });
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-        toast.classList.add("hide");
-
-        setTimeout(
-            () => toast.remove(),
-            400
+        toastContainer.appendChild(
+            toast
         );
 
-    }, 3500);
-}
+
+        requestAnimationFrame(() => {
+
+            toast.classList.add(
+                "show"
+            );
+
+        });
 
 
-// ============================================================
-// HELPERS
-// ============================================================
+        setTimeout(() => {
 
-function createStars(
-    rating,
-    allowEmpty = true
-) {
+            toast.classList.add(
+                "hide"
+            );
 
-    const rounded =
-        Math.round(Number(rating) || 0);
 
-    let result = "";
+            setTimeout(() => {
 
-    for (let i = 1; i <= 5; i++) {
+                toast.remove();
 
-        if (i <= rounded) {
-            result += "★";
-        } else {
-            result += allowEmpty
-                ? `<span class="empty">★</span>`
-                : "☆";
-        }
+            }, 400);
+
+        }, 3500);
+
     }
 
-    return result;
-}
 
+    /* ============================================================
+       MOBILE SIDEBAR
+       ============================================================ */
 
-function getStatusBadge(status) {
+    function openSidebar() {
 
-    const reviewed =
-        status === "REVIEWED";
+        sidebar?.classList.add(
+            "show"
+        );
 
-    return `
-        <span class="status-badge ${
-        reviewed
-            ? "status-reviewed"
-            : "status-pending"
-    }">
+        sidebarOverlay?.classList.add(
+            "show"
+        );
 
-            <i class="fa-solid ${
-        reviewed
-            ? "fa-check"
-            : "fa-clock"
-    }"></i>
-
-            ${reviewed
-        ? "Reviewed"
-        : "Pending"}
-
-        </span>
-    `;
-}
-
-
-function formatDate(date) {
-
-    if (!date) return "-";
-
-    const d = new Date(date);
-
-    if (isNaN(d.getTime())) {
-        return date;
     }
 
-    return d.toLocaleDateString(
-        "en-GB",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
-}
 
+    function closeSidebar() {
 
-function getInitials(name) {
+        sidebar?.classList.remove(
+            "show"
+        );
 
-    return name
-        .split(" ")
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(word =>
-            word.charAt(0)
-        )
-        .join("")
-        .toUpperCase();
-}
+        sidebarOverlay?.classList.remove(
+            "show"
+        );
 
-
-function escapeHtml(value) {
-
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-// ============================================================
-// SIDEBAR
-// ============================================================
-
-function closeSidebar() {
-
-    document
-        .getElementById("sidebar")
-        .classList.remove("show");
-
-    document
-        .getElementById("sidebarOverlay")
-        .classList.remove("show");
-}
-
-
-// ============================================================
-// LOGOUT
-// ============================================================
-
-function logout() {
-
-    localStorage.removeItem("token");
-
-    window.location.href =
-        "login.html";
-}
-
-
-// ============================================================
-// ESCAPE KEY
-// ============================================================
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Escape") {
-
-            closeModal("feedbackModal");
-            closeModal("deleteModal");
-
-            closeSidebar();
-        }
     }
-);</script>
+
+
+    /* ============================================================
+       OPTIONAL CHART SUPPORT
+       ============================================================ */
+
+    /*
+       The current backend does not have a
+       monthly rating-trends endpoint.
+
+       Therefore we intentionally do NOT
+       generate fake 6-month data.
+
+       This function is kept ready for the
+       future endpoint.
+    */
+
+    function renderRatingTrendChart(
+        labels,
+        values
+    ) {
+
+        const canvas =
+            document.getElementById(
+                "trendsChart"
+            );
+
+        if (!canvas ||
+            typeof Chart === "undefined") {
+            return;
+        }
+
+
+        if (trendsChart) {
+
+            trendsChart.destroy();
+
+        }
+
+
+        trendsChart =
+            new Chart(
+                canvas,
+                {
+                    type: "line",
+
+                    data: {
+
+                        labels: labels,
+
+                        datasets: [
+
+                            {
+                                label:
+                                    "Average Rating",
+
+                                data:
+                                values,
+
+                                borderWidth: 2,
+
+                                tension: 0.4,
+
+                                fill: true,
+
+                                pointRadius: 4,
+
+                                pointHoverRadius: 6
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio:
+                            false,
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            }
+
+                        },
+
+                        scales: {
+
+                            y: {
+
+                                min: 0,
+
+                                max: 5,
+
+                                ticks: {
+                                    stepSize: 1
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* ============================================================
+       GLOBAL FUNCTIONS
+       ============================================================ */
+
+    window.viewFeedback =
+        viewFeedback;
+
+    window.openDeleteModal =
+        openDeleteModal;
+
+    window.closeDeleteModal =
+        closeDeleteModal;
+
+    window.closeFeedbackModal =
+        closeFeedbackModal;
+
+
+</script>
 </body>
 </html>
