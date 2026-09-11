@@ -1,10 +1,10 @@
 package com.example.Salon_Management_System.controller;
 
+import com.example.Salon_Management_System.dto.CommonResponse;
 import com.example.Salon_Management_System.dto.ProductDTO;
 import com.example.Salon_Management_System.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -30,348 +30,76 @@ public class ProductController {
 
     private final ProductService productService;
 
-
-    // ==========================================
-    // SAVE PRODUCT
-    // POST /api/v1/product/save
-    // ==========================================
-    @PostMapping("/save")
-    public ResponseEntity<?> saveProduct(
-            @RequestBody ProductDTO dto
-    ) {
-
-        try {
-
-            ProductDTO savedProduct =
-                    productService.saveProduct(dto);
-
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(savedProduct);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse saveProduct(@RequestBody ProductDTO dto) {
+        ProductDTO savedProduct = productService.saveProduct(dto);
+        return new CommonResponse(0, savedProduct, "Product saved successfully");
     }
 
-
-    // ==========================================
-    // GET ALL PRODUCTS
-    // GET /api/v1/product/all
-    // ==========================================
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllProducts() {
-
-        try {
-
-            List<ProductDTO> products =
-                    productService.getAllProducts();
-
-            return ResponseEntity.ok(products);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getAllProducts() {
+        List<ProductDTO> products = productService.getAllProducts();
+        return new CommonResponse(0, products, "All products retrieved successfully");
     }
 
-
-    // ==========================================
-    // GET PRODUCT BY ID
-    // GET /api/v1/product/{productId}
-    // ==========================================
-    @GetMapping("/{productId:\\d+}")
-    public ResponseEntity<?> getProductById(
-            @PathVariable Long productId
-    ) {
-
-        try {
-
-            ProductDTO product =
-                    productService.getProductById(productId);
-
-            return ResponseEntity.ok(product);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(errorResponse(e.getMessage()));
-        }
+    @GetMapping(value = "/{productId:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getProductById(@PathVariable Long productId) {
+        ProductDTO product = productService.getProductById(productId);
+        return new CommonResponse(0, product, "Product retrieved successfully");
     }
 
-
-    // ==========================================
-    // SEARCH PRODUCTS
-    // GET /api/v1/product/search?keyword=shampoo
-    // ==========================================
-    @GetMapping("/search")
-    public ResponseEntity<?> searchProducts(
-            @RequestParam String keyword
-    ) {
-
-        try {
-
-            List<ProductDTO> products =
-                    productService.searchProducts(keyword);
-
-            return ResponseEntity.ok(products);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse searchProducts(@RequestParam String keyword) {
+        List<ProductDTO> products = productService.searchProducts(keyword);
+        return new CommonResponse(0, products, "Product search completed successfully");
     }
 
-
-    // ==========================================
-    // UPDATE PRODUCT
-    // PUT /api/v1/product/update/{productId}
-    // ==========================================
-    @PutMapping("/update/{productId}")
-    public ResponseEntity<?> updateProduct(
-            @PathVariable Long productId,
-            @RequestBody ProductDTO dto
-    ) {
-
-        try {
-
-            ProductDTO updatedProduct =
-                    productService.updateProduct(
-                            productId,
-                            dto
-                    );
-
-            return ResponseEntity.ok(updatedProduct);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @PutMapping(value = "/update/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse updateProduct(@PathVariable Long productId, @RequestBody ProductDTO dto) {
+        ProductDTO updatedProduct = productService.updateProduct(productId, dto);
+        return new CommonResponse(0, updatedProduct, "Product updated successfully");
     }
 
-
-    // ==========================================
-    // DELETE PRODUCT
-    // DELETE /api/v1/product/delete/{productId}
-    // ==========================================
-    @DeleteMapping("/delete/{productId}")
-    public ResponseEntity<?> deleteProduct(
-            @PathVariable Long productId
-    ) {
-
-        try {
-
-            productService.deleteProduct(productId);
-
-            Map<String, Object> response =
-                    new HashMap<>();
-
-            response.put("status", 1);
-            response.put(
-                    "message",
-                    "Product deleted successfully"
-            );
-            response.put(
-                    "productId",
-                    productId
-            );
-
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @DeleteMapping(value = "/delete/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("productId", productId);
+        return new CommonResponse(0, response, "Product deleted successfully");
     }
 
-
-    // ==========================================
-    // UPDATE STOCK
-    // PATCH /api/v1/product/{productId}/stock
-    //
-    // adjustment = add / remove / set
-    // quantity = number
-    // ==========================================
-    @PatchMapping("/{productId}/stock")
-    public ResponseEntity<?> updateStock(
-            @PathVariable Long productId,
-            @RequestParam String adjustment,
-            @RequestParam Integer quantity
-    ) {
-
-        try {
-
-            ProductDTO updatedProduct =
-                    productService.updateStock(
-                            productId,
-                            adjustment,
-                            quantity
-                    );
-
-            return ResponseEntity.ok(updatedProduct);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @PatchMapping(value = "/{productId}/stock", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse updateStock(@PathVariable Long productId, @RequestParam String adjustment, @RequestParam Integer quantity) {
+        ProductDTO updatedProduct = productService.updateStock(productId, adjustment, quantity);
+        return new CommonResponse(0, updatedProduct, "Product stock updated successfully");
     }
 
+    @PatchMapping(value = "/{productId}/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse updateStatus(@PathVariable Long productId, @RequestParam String status) {
+        ProductDTO updatedProduct = productService.updateStatus(productId, status);
 
-    // ==========================================
-    // UPDATE STATUS
-    // PATCH /api/v1/product/{productId}/status
-    //
-    // status = ACTIVE / INACTIVE
-    // ==========================================
-    @PatchMapping("/{productId}/status")
-    public ResponseEntity<?> updateStatus(
-            @PathVariable Long productId,
-            @RequestParam String status
-    ) {
-
-        try {
-
-            ProductDTO updatedProduct =
-                    productService.updateStatus(
-                            productId,
-                            status
-                    );
-
-            return ResponseEntity.ok(updatedProduct);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
-    }
-
-
-    // ==========================================
-    // PRODUCT STATISTICS
-    // GET /api/v1/product/stats
-    // ==========================================
-    @GetMapping("/stats")
-    public ResponseEntity<?> getStats() {
-
-        try {
-
-            Map<String, Object> stats =
-                    new HashMap<>();
-
-            stats.put(
-                    "totalProducts",
-                    productService.getTotalProducts()
-            );
-
-            stats.put(
-                    "lowStock",
-                    productService.getLowStockCount()
-            );
-
-            stats.put(
-                    "outOfStock",
-                    productService.getOutOfStockCount()
-            );
-
-            stats.put(
-                    "inventoryValue",
-                    productService.getInventoryValue()
-            );
-
-            return ResponseEntity.ok(stats);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
-    }
-
-
-    // ==========================================
-    // ERROR RESPONSE
-    // ==========================================
-    private Map<String, Object> errorResponse(
-            String message
-    ) {
-
-        Map<String, Object> response =
-                new HashMap<>();
-
-        response.put(
-                "status",
-                0
+        return new CommonResponse(0, updatedProduct, "Product status updated successfully"
         );
-
-        response.put(
-                "message",
-                message == null
-                        ? "Something went wrong"
-                        : message
-        );
-
-        return response;
     }
 
-    // ==========================================
-// GET LOW STOCK PRODUCTS
-// GET /api/v1/product/low-stock
-// ==========================================
-    @GetMapping("/low-stock")
-    public ResponseEntity<?> getLowStockProducts() {
-
-        try {
-
-            List<ProductDTO> products =
-                    productService.getLowStockProducts();
-
-            return ResponseEntity.ok(products);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @GetMapping(value = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getStats() {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalProducts", productService.getTotalProducts());
+        stats.put("lowStock", productService.getLowStockCount());
+        stats.put("outOfStock", productService.getOutOfStockCount());
+        stats.put("inventoryValue", productService.getInventoryValue());
+        return new CommonResponse(0, stats, "Product statistics retrieved successfully");
+    }
+    @GetMapping(value = "/low-stock", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getLowStockProducts() {
+        List<ProductDTO> products = productService.getLowStockProducts();
+        return new CommonResponse(0, products, "Low stock products retrieved successfully");
     }
 
-
-    // ==========================================
-// GET OUT OF STOCK PRODUCTS
-// GET /api/v1/product/out-of-stock
-// ==========================================
-    @GetMapping("/out-of-stock")
-    public ResponseEntity<?> getOutOfStockProducts() {
-
-        try {
-
-            List<ProductDTO> products =
-                    productService.getOutOfStockProducts();
-
-            return ResponseEntity.ok(products);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(errorResponse(e.getMessage()));
-        }
+    @GetMapping(value = "/out-of-stock", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getOutOfStockProducts() {
+        List<ProductDTO> products = productService.getOutOfStockProducts();
+        return new CommonResponse(0, products, "Out of stock products retrieved successfully");
     }
 }

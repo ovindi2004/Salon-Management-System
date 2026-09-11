@@ -1,91 +1,35 @@
 package com.example.Salon_Management_System.controller;
 
+import com.example.Salon_Management_System.dto.CommonResponse;
 import com.example.Salon_Management_System.dto.DashboardDTO;
 import com.example.Salon_Management_System.service.DashboardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/v1/dashboard")
 @RequiredArgsConstructor
-@CrossOrigin(
-        origins = {
-                "http://localhost:*",
-                "http://127.0.0.1:*",
-                "null"
-        }
-)
+@RequestMapping("/api/v1/dashboard")
 public class DashboardController {
 
     private final DashboardService dashboardService;
 
-
-    // =========================================================
-    // GET DASHBOARD
-    // =========================================================
-    //
-    // Example:
-    //
-    // GET /api/v1/dashboard
-    //
-    // Default:
-    // Current month → today
-    //
-    // =========================================================
-
-    @GetMapping
-    public ResponseEntity<DashboardDTO> getDashboard(
-
-            @RequestParam(required = false)
-            LocalDate fromDate,
-
-            @RequestParam(required = false)
-            LocalDate toDate
-
-    ) {
-
-        DashboardDTO dashboard =
-                dashboardService.getDashboard(
-                        fromDate,
-                        toDate
-                );
-
-        return ResponseEntity.ok(dashboard);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getDashboard(@RequestParam(required = false) LocalDate fromDate,
+                                       @RequestParam(required = false) LocalDate toDate) {
+        DashboardDTO dashboard = dashboardService.getDashboard(fromDate, toDate);
+        return new CommonResponse(0, dashboard, "Dashboard data loaded successfully");
     }
 
+    @GetMapping(value = "/date-range", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getDashboardByDateRange(
+            @RequestParam LocalDate fromDate,
+            @RequestParam LocalDate toDate) {
 
-    // =========================================================
-    // GET DASHBOARD BY DATE RANGE
-    // =========================================================
-    //
-    // Example:
-    //
-    // GET /api/v1/dashboard/date-range
-    //      ?fromDate=2026-09-01
-    //      &toDate=2026-09-10
-    //
-    // =========================================================
+        DashboardDTO dashboard = dashboardService.getDashboard(fromDate, toDate);
 
-    @GetMapping("/date-range")
-    public ResponseEntity<DashboardDTO> getDashboardByDateRange(
-
-            @RequestParam
-            LocalDate fromDate,
-
-            @RequestParam
-            LocalDate toDate
-
-    ) {
-
-        DashboardDTO dashboard =
-                dashboardService.getDashboard(
-                        fromDate,
-                        toDate
-                );
-
-        return ResponseEntity.ok(dashboard);
+        return new CommonResponse(0, dashboard, "Dashboard data loaded successfully");
     }
 }

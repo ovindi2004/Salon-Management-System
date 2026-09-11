@@ -43,7 +43,11 @@ public class AdminUserController {
 
     @PutMapping(value="/update/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody AdminUserRequestDTO r){
-        try { validate(r,true); User u=userRepository.findById(id).orElse(null); if(u==null)return ResponseEntity.status(404).body(new ErrorResponse("User not found"));
+        try {
+            validate(r,true);
+            User u=userRepository.findById(id).orElse(null);
+            if(u==null)
+                return ResponseEntity.status(404).body(new ErrorResponse("User not found"));
             var same=userRepository.findByUserEmail(r.getEmail()); if(same.isPresent()&&!same.get().getUserId().equals(id)) return ResponseEntity.status(409).body(new ErrorResponse("Email already exists"));
             apply(r,u,false); return ResponseEntity.ok(toResponse(userRepository.save(u)));
         } catch(IllegalArgumentException e){ return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage())); }

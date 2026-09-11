@@ -2619,19 +2619,21 @@
 
   </nav>
 
+  <div class="sidebar-user">
 
-  <div class="sidebar-footer">
+    <div class="user-avatar" id="sidebarAvatar">
+      PB
+    </div>
 
-    <div class="sidebar-user">
+    <div class="user-details">
 
-      <div class="user-avatar">
-        PB
-      </div>
+      <strong id="sidebarUserName">
+        Salon Manager
+      </strong>
 
-      <div class="user-details">
-        <strong>Salon Manager</strong>
-        <span>Pink Beauty Salon</span>
-      </div>
+      <span id="sidebarUserRole">
+            Administrator
+        </span>
 
     </div>
 
@@ -2690,13 +2692,20 @@
 
       <div class="profile">
 
-        <div class="profile-avatar">
+        <div class="profile-avatar" id="profileAvatar">
           PB
         </div>
 
         <div class="profile-details">
-          <strong>Salon Manager</strong>
-          <span>Administrator</span>
+
+          <strong id="profileUserName">
+            Salon Manager
+          </strong>
+
+          <span id="profileUserRole">
+            Administrator
+        </span>
+
         </div>
 
       </div>
@@ -5588,7 +5597,123 @@ function showToast(
           3000
   );
 
-}</script>
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const userName = localStorage.getItem("userName");
+  const userRole = localStorage.getItem("userRole");
+
+  /*
+   * If no logged-in user is found
+   */
+  if (!userName) {
+    return;
+  }
+
+  /*
+   * Convert backend role to display text
+   */
+  let displayRole = "User";
+
+  switch (userRole) {
+
+    case "OWNER":
+      displayRole = "Administrator";
+      break;
+
+    case "RECEPTIONIST":
+      displayRole = "Receptionist";
+      break;
+
+    case "STAFF":
+      displayRole = "Staff";
+      break;
+
+    case "CUSTOMER":
+      displayRole = "Customer";
+      break;
+
+    default:
+      displayRole = userRole || "User";
+  }
+
+
+  /*
+   * Create initials
+   *
+   * Example:
+   * Ovindi Jayawardena → OJ
+   * Oshan → OS
+   */
+  const nameParts = userName.trim().split(/\s+/);
+
+  let initials = "";
+
+  if (nameParts.length >= 2) {
+    initials =
+            nameParts[0].charAt(0) +
+            nameParts[nameParts.length - 1].charAt(0);
+  } else {
+    initials = nameParts[0].substring(0, 2);
+  }
+
+  initials = initials.toUpperCase();
+
+
+  /*
+   * TOP RIGHT PROFILE
+   */
+  const profileName =
+          document.getElementById("profileUserName");
+
+  const profileRole =
+          document.getElementById("profileUserRole");
+
+  const profileAvatar =
+          document.getElementById("profileAvatar");
+
+
+  if (profileName) {
+    profileName.textContent = userName;
+  }
+
+  if (profileRole) {
+    profileRole.textContent = displayRole;
+  }
+
+  if (profileAvatar) {
+    profileAvatar.textContent = initials;
+  }
+
+
+  /*
+   * SIDEBAR USER
+   */
+  const sidebarUserName =
+          document.getElementById("sidebarUserName");
+
+  const sidebarUserRole =
+          document.getElementById("sidebarUserRole");
+
+  const sidebarAvatar =
+          document.getElementById("sidebarAvatar");
+
+
+  if (sidebarUserName) {
+    sidebarUserName.textContent = userName;
+  }
+
+  if (sidebarUserRole) {
+    sidebarUserRole.textContent = displayRole;
+  }
+
+  if (sidebarAvatar) {
+    sidebarAvatar.textContent = initials;
+  }
+
+});</script>
 
 </body>
 </html>

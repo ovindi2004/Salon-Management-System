@@ -592,13 +592,17 @@
 
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script>
-    function handleLogin(){
+
+    function handleLogin() {
+
         let userEmail = $("#userEmail").val().trim();
         let password = $("#password").val().trim();
 
-        if (!userEmail || !password){
+        if (!userEmail || !password) {
             alert("Please enter email and password");
             return;
         }
@@ -609,21 +613,178 @@
         });
 
         $.ajax({
-          url: "http://localhost:8080/api/v1/user/login",
-          method: "POST",
-          contentType: "application/json",
-          data: obj,
+
+            url: "http://localhost:8080/api/v1/user/login",
+
+            method: "POST",
+
+            contentType: "application/json",
+
+            data: obj,
+
             success: function(response) {
-                console.log(response);
-                alert(response.message || "Login successful");
-                window.location.href = "index.html";
+
+                console.log("Login Response:", response);
+
+                /*
+                 * Backend response:
+                 *
+                 * response.body.userId
+                 * response.body.userName
+                 * response.body.token
+                 * response.body.userRole
+                 */
+
+                const userData = response.body;
+
+                if (!userData) {
+
+                    alert(
+                        "Login successful, but user data was not found."
+                    );
+
+                    console.error(
+                        "User data missing:",
+                        response
+                    );
+
+                    return;
+                }
+
+
+                // Get logged-in user details
+
+                const userId = userData.userId;
+
+                const userName = userData.userName;
+
+                const token = userData.token;
+
+                const userRole = userData.userRole;
+
+
+                // Check user name
+
+                if (!userName) {
+
+                    alert(
+                        "Login successful, but user name was not found."
+                    );
+
+                    console.error(
+                        "User name missing:",
+                        userData
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * ==========================================
+                 * SAVE USER INFORMATION
+                 * ==========================================
+                 */
+
+                localStorage.setItem(
+                    "userId",
+                    userId
+                );
+
+                localStorage.setItem(
+                    "userName",
+                    userName
+                );
+
+                localStorage.setItem(
+                    "token",
+                    token
+                );
+
+                localStorage.setItem(
+                    "userRole",
+                    userRole
+                );
+
+
+                /*
+                 * ==========================================
+                 * SAVE AS ONE OBJECT
+                 * ==========================================
+                 */
+
+                localStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify({
+                        userId: userId,
+                        userName: userName,
+                        token: token,
+                        userRole: userRole
+                    })
+                );
+
+
+                /*
+                 * ==========================================
+                 * CHECK IN CONSOLE
+                 * ==========================================
+                 */
+
+                console.log("Login successful!");
+                console.log("User ID:", userId);
+                console.log("User Name:", userName);
+                console.log("User Role:", userRole);
+
+
+                /*
+                 * ==========================================
+                 * WELCOME MESSAGE
+                 * ==========================================
+                 */
+
+                alert(
+                    "Welcome, " + userName + "!"
+                );
+
+
+                /*
+                 * ==========================================
+                 * GO TO DASHBOARD
+                 * ==========================================
+                 */
+
+                window.location.href = "dashboard.html";
+
             },
-          error: function (response){
-            console.log(response);
-            alert(response.message || "Login failed");
-          }
-        })
+
+
+            error: function(xhr) {
+
+                console.error(
+                    "Login Error:",
+                    xhr
+                );
+
+                let errorMessage = "Login failed";
+
+                if (xhr.responseJSON) {
+
+                    if (xhr.responseJSON.message) {
+
+                        errorMessage =
+                            xhr.responseJSON.message;
+
+                    }
+
+                }
+
+                alert(errorMessage);
+            }
+
+        });
     }
+
 </script>
+
 </body>
 </html>

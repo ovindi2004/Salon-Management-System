@@ -1,6 +1,7 @@
 package com.example.Salon_Management_System.controller;
 
 import com.example.Salon_Management_System.dto.AppointmentAnalyticsDTO;
+import com.example.Salon_Management_System.dto.CommonResponse;
 import com.example.Salon_Management_System.dto.ReportAnalyticsDTO;
 import com.example.Salon_Management_System.dto.ReportDTO;
 import com.example.Salon_Management_System.dto.RevenueAnalyticsDTO;
@@ -8,7 +9,7 @@ import com.example.Salon_Management_System.dto.ServicePerformanceDTO;
 import com.example.Salon_Management_System.dto.StaffPerformanceDTO;
 import com.example.Salon_Management_System.service.ReportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -20,312 +21,73 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ReportController {
 
-    private final ReportService reportService;
+    private final ReportService reportService;@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse saveReport(@RequestBody ReportDTO dto) {
+        ReportDTO savedReport = reportService.saveReport(dto);
+        return new CommonResponse(0, savedReport, "Report saved successfully");
+    }
 
+    @GetMapping(value = "/{reportId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getReportById(@PathVariable Long reportId) {
+        ReportDTO report = reportService.getReportById(reportId);
+        return new CommonResponse(0, report, "Report retrieved successfully");
+    }
 
-    // ============================================================
-    // SAVE REPORT
-    // POST: /api/v1/reports/save
-    // ============================================================
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getAllReports() {
+        List<ReportDTO> reports = reportService.getAllReports();
+        return new CommonResponse(0, reports, "All reports retrieved successfully");
+    }
 
-    @PostMapping("/save")
-    public ResponseEntity<?> saveReport(
-            @RequestBody ReportDTO dto) {
+    @GetMapping(value = "/type/{reportType}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getReportsByType(@PathVariable String reportType) {
+        List<ReportDTO> reports = reportService.getReportsByType(reportType);
+        return new CommonResponse(0, reports, "Reports retrieved successfully by type");
+    }
 
-        try {
-
-            ReportDTO savedReport =
-                    reportService.saveReport(dto);
-
-            return ResponseEntity.ok(savedReport);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+    @GetMapping(value = "/date-range", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getReportsByDateRange(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        List<ReportDTO> reports = reportService.getReportsByDateRange(fromDate, toDate);
+        return new CommonResponse(0, reports, "Reports retrieved successfully for the selected date range");
     }
 
 
-    // ============================================================
-    // GET REPORT BY ID
-    // GET: /api/v1/reports/{reportId}
-    // ============================================================
-
-    @GetMapping("/{reportId}")
-    public ResponseEntity<?> getReportById(
-            @PathVariable Long reportId) {
-
-        try {
-
-            ReportDTO report =
-                    reportService.getReportById(reportId);
-
-            return ResponseEntity.ok(report);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+    @DeleteMapping(value = "/{reportId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse deleteReport(@PathVariable Long reportId) {
+        reportService.deleteReport(reportId);
+        return new CommonResponse(0, null, "Report deleted successfully");
     }
 
 
-    // ============================================================
-    // GET ALL REPORTS
-    // GET: /api/v1/reports/all
-    // ============================================================
-
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllReports() {
-
-        try {
-
-            List<ReportDTO> reports =
-                    reportService.getAllReports();
-
-            return ResponseEntity.ok(reports);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+    @GetMapping(value = "/analytics/overall", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getOverallAnalytics(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        ReportAnalyticsDTO analytics = reportService.getOverallAnalytics(fromDate, toDate);
+        return new CommonResponse(0, analytics, "Overall report analytics retrieved successfully");
     }
 
 
-    // ============================================================
-    // GET REPORTS BY TYPE
-    // GET: /api/v1/reports/type/{reportType}
-    // ============================================================
+    @GetMapping(value = "/analytics/revenue", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getRevenueAnalytics(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        List<RevenueAnalyticsDTO> revenue = reportService.getRevenueAnalytics(fromDate, toDate);
+        return new CommonResponse(0, revenue, "Revenue analytics retrieved successfully");
+    }
 
-    @GetMapping("/type/{reportType}")
-    public ResponseEntity<?> getReportsByType(
-            @PathVariable String reportType) {
-
-        try {
-
-            List<ReportDTO> reports =
-                    reportService.getReportsByType(reportType);
-
-            return ResponseEntity.ok(reports);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+    @GetMapping(value = "/analytics/appointments", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getAppointmentAnalytics(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        AppointmentAnalyticsDTO analytics = reportService.getAppointmentAnalytics(fromDate, toDate);
+        return new CommonResponse(0, analytics, "Appointment analytics retrieved successfully");
     }
 
 
-    // ============================================================
-    // GET REPORTS BY DATE RANGE
-    // GET: /api/v1/reports/date-range
-    //
-    // Example:
-    // /api/v1/reports/date-range?fromDate=2026-09-01&toDate=2026-09-10
-    // ============================================================
-
-    @GetMapping("/date-range")
-    public ResponseEntity<?> getReportsByDateRange(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
-
-        try {
-
-            List<ReportDTO> reports =
-                    reportService.getReportsByDateRange(
-                            fromDate,
-                            toDate
-                    );
-
-            return ResponseEntity.ok(reports);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+    @GetMapping(value = "/analytics/staff", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getStaffPerformance(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        List<StaffPerformanceDTO> performance = reportService.getStaffPerformance(fromDate, toDate);
+        return new CommonResponse(0, performance, "Staff performance retrieved successfully");
     }
 
-
-    // ============================================================
-    // DELETE REPORT
-    // DELETE: /api/v1/reports/{reportId}
-    // ============================================================
-
-    @DeleteMapping("/{reportId}")
-    public ResponseEntity<?> deleteReport(
-            @PathVariable Long reportId) {
-
-        try {
-
-            reportService.deleteReport(reportId);
-
-            return ResponseEntity.ok(
-                    "Report deleted successfully"
-            );
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-    }
-
-
-    // ============================================================
-    // OVERALL ANALYTICS
-    // GET: /api/v1/reports/analytics/overall
-    //
-    // Example:
-    // /api/v1/reports/analytics/overall
-    //      ?fromDate=2026-09-01
-    //      &toDate=2026-09-10
-    // ============================================================
-
-    @GetMapping("/analytics/overall")
-    public ResponseEntity<?> getOverallAnalytics(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
-
-        try {
-
-            ReportAnalyticsDTO analytics =
-                    reportService.getOverallAnalytics(
-                            fromDate,
-                            toDate
-                    );
-
-            return ResponseEntity.ok(analytics);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-    }
-
-
-    // ============================================================
-    // REVENUE ANALYTICS
-    // GET: /api/v1/reports/analytics/revenue
-    // ============================================================
-
-    @GetMapping("/analytics/revenue")
-    public ResponseEntity<?> getRevenueAnalytics(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
-
-        try {
-
-            List<RevenueAnalyticsDTO> revenue =
-                    reportService.getRevenueAnalytics(
-                            fromDate,
-                            toDate
-                    );
-
-            return ResponseEntity.ok(revenue);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-    }
-
-
-    // ============================================================
-    // APPOINTMENT ANALYTICS
-    // GET: /api/v1/reports/analytics/appointments
-    // ============================================================
-
-    @GetMapping("/analytics/appointments")
-    public ResponseEntity<?> getAppointmentAnalytics(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
-
-        try {
-
-            AppointmentAnalyticsDTO analytics =
-                    reportService.getAppointmentAnalytics(
-                            fromDate,
-                            toDate
-                    );
-
-            return ResponseEntity.ok(analytics);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-    }
-
-
-    // ============================================================
-    // STAFF PERFORMANCE
-    // GET: /api/v1/reports/analytics/staff
-    // ============================================================
-
-    @GetMapping("/analytics/staff")
-    public ResponseEntity<?> getStaffPerformance(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
-
-        try {
-
-            List<StaffPerformanceDTO> performance =
-                    reportService.getStaffPerformance(
-                            fromDate,
-                            toDate
-                    );
-
-            return ResponseEntity.ok(performance);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-    }
-
-
-    // ============================================================
-    // SERVICE PERFORMANCE
-    // GET: /api/v1/reports/analytics/services
-    // ============================================================
-
-    @GetMapping("/analytics/services")
-    public ResponseEntity<?> getServicePerformance(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
-
-        try {
-
-            List<ServicePerformanceDTO> performance =
-                    reportService.getServicePerformance(
-                            fromDate,
-                            toDate
-                    );
-
-            return ResponseEntity.ok(performance);
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+    @GetMapping(value = "/analytics/services", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getServicePerformance(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        List<ServicePerformanceDTO> performance = reportService.getServicePerformance(fromDate, toDate);
+        return new CommonResponse(0, performance, "Service performance retrieved successfully");
     }
 }

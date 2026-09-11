@@ -1,11 +1,11 @@
 package com.example.Salon_Management_System.controller;
 
+import com.example.Salon_Management_System.dto.CommonResponse;
 import com.example.Salon_Management_System.dto.PaymentDTO;
 import com.example.Salon_Management_System.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,182 +14,68 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/payments")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class PaymentController {
 
     private final PaymentService paymentService;
 
-
-    // =========================================================
-    // SAVE PAYMENT
-    // =========================================================
-
-    @PostMapping("/save")
-    public ResponseEntity<PaymentDTO> savePayment(
-            @RequestBody PaymentDTO dto
-    ) {
-
-        return new ResponseEntity<>(
-                paymentService.createPayment(dto),
-                HttpStatus.CREATED
-        );
+    @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse savePayment(@RequestBody PaymentDTO dto) {
+        PaymentDTO savedPayment = paymentService.createPayment(dto);
+        return new CommonResponse(0, savedPayment, "Payment created successfully");
     }
 
-
-    // =========================================================
-    // GET ALL PAYMENTS
-    // =========================================================
-
-    @GetMapping("/all")
-    public ResponseEntity<List<PaymentDTO>> getAllPayments() {
-
-        return ResponseEntity.ok(
-                paymentService.getAllPayments()
-        );
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getAllPayments() {
+        List<PaymentDTO> payments = paymentService.getAllPayments();
+        return new CommonResponse(0, payments, "All payments retrieved successfully");
     }
 
-
-    // =========================================================
-    // GET PAYMENT BY ID
-    // =========================================================
-
-    @GetMapping("/{id}")
-    public ResponseEntity<PaymentDTO> getPaymentById(
-            @PathVariable Long id
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.getPaymentById(id)
-        );
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getPaymentById(@PathVariable Long id) {
+        PaymentDTO payment = paymentService.getPaymentById(id);
+        return new CommonResponse(0, payment, "Payment retrieved successfully");
     }
 
-
-    // =========================================================
-    // UPDATE PAYMENT
-    // =========================================================
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<PaymentDTO> updatePayment(
-            @PathVariable Long id,
-            @RequestBody PaymentDTO dto
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.updatePayment(
-                        id,
-                        dto
-                )
-        );
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse updatePayment(@PathVariable Long id, @RequestBody PaymentDTO dto) {
+        PaymentDTO updatedPayment = paymentService.updatePayment(id, dto);
+        return new CommonResponse(0, updatedPayment, "Payment updated successfully");
     }
 
-
-    // =========================================================
-    // DELETE PAYMENT
-    // =========================================================
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePayment(
-            @PathVariable Long id
-    ) {
-
-        paymentService.deletePayment(id);
-
-        return ResponseEntity.ok(
-                "Payment deleted successfully"
-        );
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse deletePayment(@PathVariable Long id) {
+        paymentService.deletePayment(id);return new CommonResponse(0, null, "Payment deleted successfully");
     }
 
-
-    // =========================================================
-    // REFUND PAYMENT
-    // =========================================================
-
-    @PatchMapping("/refund/{id}")
-    public ResponseEntity<PaymentDTO> refundPayment(
-            @PathVariable Long id
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.refundPayment(id)
-        );
+    @PatchMapping(value = "/refund/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse refundPayment(@PathVariable Long id) {
+        PaymentDTO refundedPayment = paymentService.refundPayment(id);
+        return new CommonResponse(0, refundedPayment, "Payment refunded successfully");
     }
 
-
-    // =========================================================
-    // GET PAYMENTS BY DATE RANGE
-    // =========================================================
-
-    @GetMapping("/date-range")
-    public ResponseEntity<List<PaymentDTO>> getByDateRange(
-            @RequestParam
-            @DateTimeFormat(
-                    iso = DateTimeFormat.ISO.DATE
-            )
-            LocalDate from,
-
-            @RequestParam
-            @DateTimeFormat(
-                    iso = DateTimeFormat.ISO.DATE
-            )
-            LocalDate to
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.getPaymentsByDateRange(
-                        from,
-                        to
-                )
-        );
+    @GetMapping(value = "/date-range", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getByDateRange(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate from, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
+        List<PaymentDTO> payments = paymentService.getPaymentsByDateRange(from, to);
+        return new CommonResponse(0, payments, "Payments retrieved successfully for the selected date range");
     }
 
-
-    // =========================================================
-    // GET PAYMENTS BY INVOICE
-    // =========================================================
-
-    @GetMapping("/invoice/{invoiceId}")
-    public ResponseEntity<List<PaymentDTO>> getPaymentsByInvoice(
-            @PathVariable Long invoiceId
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.getPaymentsByInvoice(
-                        invoiceId
-                )
-        );
+    @GetMapping(value = "/invoice/{invoiceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getPaymentsByInvoice(@PathVariable Long invoiceId) {
+        List<PaymentDTO> payments = paymentService.getPaymentsByInvoice(invoiceId);
+        return new CommonResponse(0, payments, "Invoice payments retrieved successfully");
     }
 
-
-    // =========================================================
-    // GET PAYMENTS BY STATUS
-    // =========================================================
-
-    @GetMapping("/status")
-    public ResponseEntity<List<PaymentDTO>> getPaymentsByStatus(
-            @RequestParam String status
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.getPaymentsByStatus(
-                        status
-                )
-        );
+    @GetMapping(value = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getPaymentsByStatus(@RequestParam String status) {
+        List<PaymentDTO> payments = paymentService.getPaymentsByStatus(status);
+        return new CommonResponse(0, payments, "Payments retrieved successfully by status");
     }
 
-
-    // =========================================================
-    // GET PAYMENTS BY METHOD
-    // =========================================================
-
-    @GetMapping("/method")
-    public ResponseEntity<List<PaymentDTO>> getPaymentsByMethod(
-            @RequestParam String method
-    ) {
-
-        return ResponseEntity.ok(
-                paymentService.getPaymentsByMethod(
-                        method
-                )
-        );
+    @GetMapping(value = "/method", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getPaymentsByMethod(@RequestParam String method) {
+        List<PaymentDTO> payments = paymentService.getPaymentsByMethod(method);
+        return new CommonResponse(0, payments, "Payments retrieved successfully by method");
     }
 }

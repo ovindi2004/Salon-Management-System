@@ -193,6 +193,8 @@ public class SecurityConfig {
                         //Invoice
                         .requestMatchers("/api/v1/invoices/**").permitAll()
 
+                                .requestMatchers("/api/v1/settings/**").permitAll()
+
                         // Other APIs require JWT
                         .anyRequest()
                         .authenticated()

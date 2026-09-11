@@ -1,0 +1,2106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pink Beauty Salon — Beauty That Makes You Feel Beautifully You</title>
+    <meta name="description" content="Pink Beauty Salon — premium beauty treatments, expert styling, and relaxing care. Book your appointment today." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        /* ===================== RESET & BASE ===================== */
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --pink-50:#fdf2f4;--pink-100:#fce7ec;--pink-200:#f8c9d4;--pink-300:#f0a3b8;--pink-400:#e4799a;--pink-500:#d65a82;--pink-600:#c0446c;
+            --gold-300:#e8c87a;--gold-400:#d4af37;--gold-500:#b8941f;
+            --charcoal:#2a2326;--charcoal-soft:#3d3338;--ink:#1a1517;
+            --cream:#faf6f3;--blush:#f9eef0;--white:#fff;
+            --gray-50:#f7f5f4;--gray-100:#eee9e7;--gray-200:#ddd5d2;--gray-400:#9b9396;--gray-500:#7a7276;--gray-600:#5c5558;
+            --success:#2d8659;--warning:#c98a2e;--error:#c5453b;
+            --radius-sm:8px;--radius:16px;--radius-lg:24px;--radius-xl:32px;
+            --shadow-sm:0 2px 8px rgba(42,35,38,.06);--shadow:0 8px 30px rgba(42,35,38,.08);--shadow-lg:0 20px 60px rgba(42,35,38,.12);
+            --font-head:'Cormorant Garamond',serif;--font-body:'Jost',system-ui,sans-serif;
+            --maxw:1280px;--transition:.35s cubic-bezier(.4,0,.2,1);
+        }
+        html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%}
+        body{font-family:var(--font-body);background:var(--cream);color:var(--charcoal);line-height:1.6;overflow-x:hidden}
+        img{max-width:100%;display:block}
+        a{color:inherit;text-decoration:none}
+        button{font-family:inherit;cursor:pointer;border:none;background:none}
+        input,textarea,select{font-family:inherit;font-size:inherit}
+        ul{list-style:none}
+        section{position:relative}
+        h1,h2,h3,h4{font-family:var(--font-head);font-weight:600;line-height:1.15;color:var(--charcoal)}
+        .container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+        .section{padding:100px 0}
+        .section-head{text-align:center;max-width:640px;margin:0 auto 56px}
+        .eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink-500);font-weight:500;margin-bottom:14px;display:block}
+        .section-head h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:16px}
+        .section-head p{color:var(--gray-500);font-size:1.02rem}
+        .gold-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-400),transparent);margin:0 auto 20px}
+        /* ===================== BUTTONS ===================== */
+        .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-size:.92rem;font-weight:500;letter-spacing:.04em;transition:var(--transition);position:relative;overflow:hidden}
+        .btn-primary{background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;box-shadow:0 8px 24px rgba(214,90,130,.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(214,90,130,.4)}
+        .btn-outline{background:transparent;border:1.5px solid var(--charcoal);color:var(--charcoal)}
+        .btn-outline:hover{background:var(--charcoal);color:#fff}
+        .btn-gold{background:linear-gradient(135deg,var(--gold-300),var(--gold-500));color:var(--ink);box-shadow:0 8px 24px rgba(212,175,55,.25)}
+        .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(212,175,55,.35)}
+        .btn-ghost{background:var(--white);color:var(--charcoal);box-shadow:var(--shadow-sm)}
+        .btn-ghost:hover{background:var(--pink-50);transform:translateY(-1px)}
+        .btn-sm{padding:10px 22px;font-size:.82rem}
+        /* ===================== NAVBAR ===================== */
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;transition:var(--transition);padding:18px 0}
+        .navbar.scrolled{background:rgba(250,246,243,.85);backdrop-filter:blur(20px);box-shadow:var(--shadow-sm);padding:12px 0}
+        .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px}
+        .nav-logo{font-family:var(--font-head);font-size:1.6rem;font-weight:700;color:var(--charcoal);display:flex;align-items:center;gap:6px}
+        .nav-logo .pink-dot{color:var(--pink-400)}
+        .nav-links{display:flex;align-items:center;gap:28px}
+        .nav-links a{font-size:.88rem;font-weight:400;color:var(--charcoal);transition:color .2s;position:relative}
+        .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--pink-400);transition:width .3s}
+        .nav-links a:hover{color:var(--pink-500)}
+        .nav-links a:hover::after{width:100%}
+        .nav-actions{display:flex;align-items:center;gap:12px}
+        .nav-icon-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--charcoal);transition:var(--transition);background:rgba(255,255,255,.5)}
+        .navbar.scrolled .nav-icon-btn{background:var(--white)}
+        .nav-icon-btn:hover{background:var(--pink-100);color:var(--pink-500)}
+        .nav-icon-btn svg{width:20px;height:20px}
+        .nav-booking{display:flex;align-items:center;gap:8px}
+        .hamburger{display:none;flex-direction:column;gap:5px;width:28px;height:28px;align-items:center;justify-content:center}
+        .hamburger span{width:22px;height:2px;background:var(--charcoal);border-radius:2px;transition:var(--transition)}
+        .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+        .hamburger.active span:nth-child(2){opacity:0}
+        .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+        .mobile-menu{position:fixed;top:0;right:-100%;width:80%;max-width:340px;height:100vh;background:var(--cream);box-shadow:-10px 0 40px rgba(0,0,0,.1);z-index:999;transition:right .4s cubic-bezier(.4,0,.2,1);padding:80px 28px 28px;display:flex;flex-direction:column;gap:6px}
+        .mobile-menu.open{right:0}
+        .mobile-menu a{font-size:1.1rem;padding:14px 0;border-bottom:1px solid var(--gray-100);color:var(--charcoal);transition:color .2s}
+        .mobile-menu a:hover{color:var(--pink-500)}
+        .mobile-menu .btn{margin-top:20px}
+        .overlay-bg{position:fixed;inset:0;background:rgba(26,21,23,.3);backdrop-filter:blur(4px);z-index:998;opacity:0;visibility:hidden;transition:var(--transition)}
+        .overlay-bg.show{opacity:1;visibility:visible}
+        /* ===================== HERO ===================== */
+        .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+        .hero-bg{position:absolute;inset:0;z-index:0}
+        .hero-bg::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(250,246,243,.92) 0%,rgba(252,231,236,.7) 50%,rgba(250,246,243,.85) 100%)}
+        .hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.35}
+        .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;width:100%}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);padding:8px 18px;border-radius:50px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink-500);font-weight:500;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+        .hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--pink-400);animation:pulse 2s infinite}
+        .hero h1{font-size:clamp(2.6rem,5.5vw,4.5rem);line-height:1.05;margin-bottom:22px;font-weight:600}
+        .hero h1 .accent{color:var(--pink-400);font-style:italic}
+        .hero-sub{font-size:1.08rem;color:var(--gray-600);max-width:480px;margin-bottom:32px;line-height:1.7}
+        .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
+        .hero-trust{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+        .stars{display:flex;gap:2px;color:var(--gold-400)}
+        .stars svg{width:18px;height:18px}
+        .trust-text{font-size:.88rem;color:var(--gray-600)}
+        .trust-text strong{color:var(--charcoal)}
+        .hero-tags{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap}
+        .hero-tag{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--gray-600)}
+        .hero-tag svg{width:18px;height:18px;color:var(--pink-400)}
+        .hero-visual{position:relative}
+        .hero-img-main{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/5}
+        .hero-img-main img{width:100%;height:100%;object-fit:cover}
+        .hero-img-float{position:absolute;bottom:-20px;left:-30px;width:180px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);border:4px solid #fff;aspect-ratio:1}
+        .hero-img-float img{width:100%;height:100%;object-fit:cover}
+        .hero-deco{position:absolute;border-radius:50%;background:radial-gradient(circle,var(--pink-200),transparent);filter:blur(40px);z-index:0}
+        .hero-deco-1{width:300px;height:300px;top:-60px;right:-60px;opacity:.5}
+        .hero-deco-2{width:200px;height:200px;bottom:40px;left:-40px;opacity:.4}
+        .float-anim{animation:floatY 5s ease-in-out infinite}
+        /* ===================== MARQUEE ===================== */
+        .marquee{background:var(--charcoal);color:var(--cream);padding:14px 0;overflow:hidden;white-space:nowrap}
+        .marquee-track{display:inline-flex;gap:40px;animation:marquee 30s linear infinite}
+        .marquee span{font-family:var(--font-head);font-size:1.1rem;letter-spacing:.1em;display:inline-flex;align-items:center;gap:40px}
+        .marquee span::after{content:'✦';color:var(--gold-400);font-size:.8rem}
+        /* ===================== ABOUT ===================== */
+        .about{background:var(--white)}
+        .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+        .about-images{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .about-images img{border-radius:var(--radius);box-shadow:var(--shadow);width:100%;height:100%;object-fit:cover}
+        .about-images .img-tall{grid-row:span 2;aspect-ratio:3/5}
+        .about-images .img-top{aspect-ratio:4/3}
+        .about-images .img-bottom{aspect-ratio:4/3}
+        .about-images .badge-circle{position:absolute;bottom:-20px;right:-10px;width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--gold-300),var(--gold-500));display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink);font-family:var(--font-head);box-shadow:var(--shadow-lg);text-align:center}
+        .about-images .badge-circle .num{font-size:1.8rem;font-weight:700;line-height:1}
+        .about-images .badge-circle .lbl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+        .about-text h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:20px}
+        .about-text>p{color:var(--gray-600);margin-bottom:24px;font-size:1.02rem;line-height:1.7}
+        .about-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+        .about-feature{display:flex;gap:12px;align-items:flex-start}
+        .about-feature svg{width:22px;height:22px;color:var(--pink-400);flex-shrink:0;margin-top:2px}
+        .about-feature h4{font-family:var(--font-body);font-size:.95rem;font-weight:500}
+        .about-feature p{font-size:.85rem;color:var(--gray-500);margin-top:2px}
+        .about-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:80px}
+        .stat-card{text-align:center;padding:32px 16px;background:var(--blush);border-radius:var(--radius);transition:var(--transition)}
+        .stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+        .stat-card .num{font-family:var(--font-head);font-size:2.6rem;font-weight:700;color:var(--pink-500);line-height:1}
+        .stat-card .lbl{font-size:.82rem;color:var(--gray-600);margin-top:8px;letter-spacing:.05em}
+        /* ===================== SERVICES ===================== */
+        .services{background:var(--cream)}
+        .service-filters{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+        .filter-btn{padding:10px 24px;border-radius:50px;font-size:.85rem;font-weight:500;color:var(--gray-600);background:var(--white);border:1px solid var(--gray-200);transition:var(--transition)}
+        .filter-btn:hover{border-color:var(--pink-300);color:var(--pink-500)}
+        .filter-btn.active{background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(214,90,130,.25)}
+        .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+        .service-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:var(--transition);cursor:pointer;display:flex;flex-direction:column}
+        .service-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        .service-card.hidden{display:none}
+        .service-img{height:180px;overflow:hidden;position:relative}
+        .service-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .service-card:hover .service-img img{transform:scale(1.06)}
+        .service-img .price-tag{position:absolute;bottom:12px;right:12px;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);padding:6px 14px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--pink-500)}
+        .service-body{padding:20px;flex:1;display:flex;flex-direction:column}
+        .service-body h3{font-size:1.2rem;margin-bottom:6px}
+        .service-body p{font-size:.86rem;color:var(--gray-500);margin-bottom:14px;flex:1}
+        .service-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+        .service-meta .duration{font-size:.8rem;color:var(--gray-500);display:flex;align-items:center;gap:5px}
+        .service-meta .duration svg{width:15px;height:15px}
+        .service-book{width:100%;padding:10px;border-radius:50px;font-size:.82rem;font-weight:500;background:var(--pink-50);color:var(--pink-500);transition:var(--transition)}
+        .service-book:hover{background:var(--pink-400);color:#fff}
+        /* ===================== OFFER ===================== */
+        .offer{padding:80px 0;background:linear-gradient(135deg,var(--charcoal),var(--charcoal-soft));color:var(--cream);overflow:hidden}
+        .offer-inner{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+        .offer h2{color:var(--cream);font-size:clamp(2rem,4vw,3rem);margin-bottom:16px}
+        .offer h2 .gold{color:var(--gold-400)}
+        .offer p{color:rgba(250,246,243,.8);margin-bottom:28px;font-size:1.05rem}
+        .offer-card{background:rgba(255,255,255,.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:40px;text-align:center}
+        .offer-card .discount{font-family:var(--font-head);font-size:4rem;font-weight:700;color:var(--gold-400);line-height:1}
+        .offer-card .discount-lbl{font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,246,243,.7);margin-top:8px}
+        .offer-card .terms{font-size:.78rem;color:rgba(250,246,243,.5);margin-top:20px}
+        /* ===================== STAFF ===================== */
+        .staff{background:var(--white)}
+        .staff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+        .staff-card{background:var(--cream);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:var(--transition);text-align:center}
+        .staff-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        .staff-img{height:280px;overflow:hidden;position:relative}
+        .staff-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .staff-card:hover .staff-img img{transform:scale(1.05)}
+        .staff-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,21,23,.6),transparent 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;opacity:0;transition:var(--transition)}
+        .staff-card:hover .staff-overlay{opacity:1}
+        .staff-social{display:flex;gap:10px}
+        .staff-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .staff-social a:hover{background:var(--pink-400)}
+        .staff-social svg{width:16px;height:16px;color:var(--charcoal)}
+        .staff-social a:hover svg{color:#fff}
+        .staff-body{padding:20px}
+        .staff-body h3{font-size:1.25rem;margin-bottom:4px}
+        .staff-role{font-size:.82rem;color:var(--pink-500);font-weight:500;margin-bottom:10px}
+        .staff-meta{display:flex;justify-content:center;gap:16px;font-size:.8rem;color:var(--gray-500)}
+        .staff-meta span{display:flex;align-items:center;gap:4px}
+        .staff-meta svg{width:14px;height:14px;color:var(--gold-400)}
+        .staff-view{margin-top:14px;padding:8px 20px;border-radius:50px;font-size:.82rem;font-weight:500;background:transparent;border:1px solid var(--pink-300);color:var(--pink-500);transition:var(--transition)}
+        .staff-view:hover{background:var(--pink-400);color:#fff;border-color:transparent}
+        /* ===================== PRODUCTS ===================== */
+        .products{background:var(--cream)}
+        .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+        .product-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:var(--transition);position:relative}
+        .product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        .product-img{height:220px;overflow:hidden;position:relative;background:var(--blush)}
+        .product-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .product-card:hover .product-img img{transform:scale(1.06)}
+        .product-discount{position:absolute;top:12px;left:12px;background:var(--pink-400);color:#fff;padding:4px 12px;border-radius:50px;font-size:.72rem;font-weight:600}
+        .wishlist-btn{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .wishlist-btn:hover{background:#fff;transform:scale(1.1)}
+        .wishlist-btn svg{width:18px;height:18px;color:var(--gray-400);transition:var(--transition)}
+        .wishlist-btn.active svg{color:var(--pink-500);fill:var(--pink-500)}
+        .product-body{padding:18px}
+        .product-cat{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-400);font-weight:500;margin-bottom:6px}
+        .product-name{font-family:var(--font-head);font-size:1.2rem;font-weight:600;margin-bottom:8px}
+        .product-rating{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+        .product-rating .stars svg{width:14px;height:14px}
+        .product-rating span{font-size:.78rem;color:var(--gray-500)}
+        .product-price{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+        .product-price .price{font-size:1.15rem;font-weight:600;color:var(--charcoal)}
+        .product-price .old-price{font-size:.9rem;color:var(--gray-400);text-decoration:line-through}
+        .product-add{width:100%;padding:11px;border-radius:50px;font-size:.84rem;font-weight:500;background:var(--charcoal);color:#fff;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px}
+        .product-add:hover{background:var(--pink-500);transform:scale(1.02)}
+        .product-add svg{width:16px;height:16px}
+        /* ===================== TESTIMONIALS ===================== */
+        .testimonials{background:var(--white);overflow:hidden}
+        .testimonial-slider{position:relative;max-width:800px;margin:0 auto;overflow:hidden}
+        .testimonial-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+        .testimonial-slide{min-width:100%;padding:20px;text-align:center}
+        .testimonial-quote{font-family:var(--font-head);font-size:1.5rem;line-height:1.5;color:var(--charcoal);margin-bottom:24px;font-style:italic}
+        .testimonial-stars{display:flex;justify-content:center;gap:3px;margin-bottom:16px}
+        .testimonial-stars svg{width:20px;height:20px;color:var(--gold-400)}
+        .testimonial-author{font-size:.95rem;font-weight:500;color:var(--charcoal)}
+        .testimonial-role{font-size:.82rem;color:var(--gray-500)}
+        .testimonial-nav{display:flex;justify-content:center;gap:8px;margin-top:30px}
+        .testimonial-dot{width:10px;height:10px;border-radius:50%;background:var(--gray-200);transition:var(--transition);cursor:pointer}
+        .testimonial-dot.active{background:var(--pink-400);width:28px;border-radius:50px}
+        .testimonial-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:var(--white);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;z-index:2;transition:var(--transition)}
+        .testimonial-arrow:hover{background:var(--pink-100);color:var(--pink-500)}
+        .testimonial-arrow.prev{left:-10px}
+        .testimonial-arrow.next{right:-10px}
+        .testimonial-arrow svg{width:20px;height:20px}
+        /* ===================== GALLERY ===================== */
+        .gallery{background:var(--cream)}
+        .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:16px}
+        .gallery-item{border-radius:var(--radius);overflow:hidden;cursor:pointer;position:relative}
+        .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .gallery-item:hover img{transform:scale(1.08)}
+        .gallery-item::after{content:'';position:absolute;inset:0;background:rgba(26,21,23,.3);opacity:0;transition:var(--transition);display:flex;align-items:center;justify-content:center}
+        .gallery-item:hover::after{opacity:1}
+        .gallery-item .zoom-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);opacity:0;transition:var(--transition);z-index:2;color:#fff}
+        .gallery-item:hover .zoom-icon{transform:translate(-50%,-50%) scale(1);opacity:1}
+        .gallery-item .zoom-icon svg{width:28px;height:28px}
+        .gallery-item.tall{grid-row:span 2}
+        .gallery-item.wide{grid-column:span 2}
+        /* ===================== BOOKING ===================== */
+        .booking{background:linear-gradient(135deg,var(--blush),var(--cream))}
+        .booking-inner{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:start}
+        .booking-info h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:16px}
+        .booking-info>p{color:var(--gray-600);margin-bottom:28px;font-size:1.02rem;line-height:1.7}
+        .booking-info-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+        .booking-info-item svg{width:22px;height:22px;color:var(--pink-400);flex-shrink:0;margin-top:2px}
+        .booking-info-item h4{font-size:.95rem;font-weight:500;margin-bottom:2px}
+        .booking-info-item p{font-size:.85rem;color:var(--gray-500)}
+        .booking-form{background:var(--white);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .form-group{margin-bottom:18px}
+        .form-group label{display:block;font-size:.82rem;font-weight:500;margin-bottom:6px;color:var(--charcoal)}
+        .form-group label .req{color:var(--pink-500)}
+        .form-control{width:100%;padding:12px 16px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);font-size:.9rem;background:var(--cream);transition:var(--transition);color:var(--charcoal)}
+        .form-control:focus{outline:none;border-color:var(--pink-400);background:#fff;box-shadow:0 0 0 3px rgba(228,121,154,.1)}
+        .form-control.error{border-color:var(--error);background:rgba(197,69,59,.04)}
+        .form-error{font-size:.78rem;color:var(--error);margin-top:4px;display:none}
+        .form-error.show{display:block}
+        textarea.form-control{resize:vertical;min-height:80px}
+        select.form-control{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%235c5558' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+        .time-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+        .time-slot{padding:10px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);text-align:center;font-size:.82rem;cursor:pointer;transition:var(--transition);background:var(--cream)}
+        .time-slot:hover{border-color:var(--pink-300)}
+        .time-slot.active{background:var(--pink-400);color:#fff;border-color:transparent}
+        .time-slot.disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+        /* ===================== CONTACT ===================== */
+        .contact{background:var(--white)}
+        .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:50px}
+        .contact-info h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:16px}
+        .contact-info>p{color:var(--gray-600);margin-bottom:28px;font-size:1.02rem;line-height:1.7}
+        .contact-detail{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px}
+        .contact-detail svg{width:22px;height:22px;color:var(--pink-400);flex-shrink:0;margin-top:2px}
+        .contact-detail h4{font-size:.95rem;font-weight:500;margin-bottom:2px}
+        .contact-detail p{font-size:.88rem;color:var(--gray-500)}
+        .contact-detail .hours-day{display:flex;justify-content:space-between;max-width:260px}
+        .contact-detail .hours-day span:last-child{color:var(--gray-600)}
+        .contact-form{background:var(--cream);border-radius:var(--radius-lg);padding:36px}
+        .contact-map{margin-top:30px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+        .contact-map iframe{width:100%;height:200px;border:0;filter:grayscale(.3)}
+        /* ===================== FOOTER ===================== */
+        .footer{background:var(--charcoal);color:var(--cream);padding:60px 0 24px}
+        .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+        .footer-brand .nav-logo{color:var(--cream);margin-bottom:16px}
+        .footer-brand p{color:rgba(250,246,243,.6);font-size:.92rem;max-width:300px;line-height:1.6}
+        .footer-social{display:flex;gap:12px;margin-top:20px}
+        .footer-social a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .footer-social a:hover{background:var(--pink-400)}
+        .footer-social svg{width:18px;height:18px;color:var(--cream)}
+        .footer-col h4{color:var(--cream);font-family:var(--font-body);font-size:.9rem;font-weight:600;margin-bottom:16px;letter-spacing:.05em}
+        .footer-col ul li{margin-bottom:10px}
+        .footer-col ul li a{font-size:.88rem;color:rgba(250,246,243,.6);transition:color .2s}
+        .footer-col ul li a:hover{color:var(--pink-300)}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;text-align:center;font-size:.84rem;color:rgba(250,246,243,.5)}
+        /* ===================== MODALS ===================== */
+        .modal-overlay{position:fixed;inset:0;background:rgba(26,21,23,.5);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:var(--transition)}
+        .modal-overlay.show{opacity:1;visibility:visible}
+        .modal{background:var(--white);border-radius:var(--radius-lg);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(30px) scale(.96);transition:transform .35s cubic-bezier(.4,0,.2,1);position:relative}
+        .modal-overlay.show .modal{transform:translateY(0) scale(1)}
+        .modal-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;z-index:10;transition:var(--transition);box-shadow:var(--shadow-sm)}
+        .modal-close:hover{background:var(--pink-100);transform:rotate(90deg)}
+        .modal-close svg{width:18px;height:18px;color:var(--charcoal)}
+        .modal-img{width:100%;height:280px;overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+        .modal-img img{width:100%;height:100%;object-fit:cover}
+        .modal-body{padding:32px}
+        .modal-body h2{font-size:1.8rem;margin-bottom:8px}
+        .modal-price-row{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+        .modal-price-row .mp{display:flex;align-items:center;gap:6px;font-size:.9rem;color:var(--gray-600)}
+        .modal-price-row .mp strong{color:var(--charcoal)}
+        .modal-price-row .mp svg{width:18px;height:18px;color:var(--pink-400)}
+        .modal-desc{color:var(--gray-600);margin-bottom:20px;line-height:1.7}
+        .modal-benefits{margin-bottom:20px}
+        .modal-benefits h4{font-size:.95rem;margin-bottom:10px}
+        .modal-benefits ul{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .modal-benefits li{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--gray-600)}
+        .modal-benefits li svg{width:16px;height:16px;color:var(--success)}
+        .modal-staff{margin-bottom:24px}
+        .modal-staff h4{font-size:.95rem;margin-bottom:10px}
+        .modal-staff-list{display:flex;gap:10px;flex-wrap:wrap}
+        .modal-staff-chip{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:50px;background:var(--blush);font-size:.82rem;color:var(--charcoal)}
+        .modal-staff-chip img{width:24px;height:24px;border-radius:50%;object-fit:cover}
+        /* Staff profile modal */
+        .staff-profile-header{display:flex;gap:24px;align-items:center;margin-bottom:24px}
+        .staff-profile-header img{width:100px;height:100px;border-radius:50%;object-fit:cover}
+        .staff-profile-header h2{font-size:1.6rem;margin-bottom:4px}
+        .staff-profile-header .role{color:var(--pink-500);font-size:.9rem;font-weight:500}
+        .staff-profile-section{margin-bottom:20px}
+        .staff-profile-section h4{font-size:.9rem;font-weight:600;margin-bottom:8px;color:var(--charcoal)}
+        .staff-profile-section p{font-size:.88rem;color:var(--gray-600);line-height:1.6}
+        .staff-tags{display:flex;flex-wrap:wrap;gap:8px}
+        .staff-tag{padding:5px 14px;border-radius:50px;background:var(--blush);font-size:.8rem;color:var(--pink-500)}
+        /* ===================== CART DRAWER ===================== */
+        .cart-drawer{position:fixed;top:0;right:-100%;width:400px;max-width:90%;height:100vh;background:var(--white);z-index:2100;transition:right .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.1)}
+        .cart-drawer.open{right:0}
+        .cart-header{padding:20px;border-bottom:1px solid var(--gray-100);display:flex;justify-content:space-between;align-items:center}
+        .cart-header h3{font-size:1.2rem}
+        .cart-header .close-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .cart-header .close-btn:hover{background:var(--pink-50)}
+        .cart-header .close-btn svg{width:18px;height:18px}
+        .cart-items{flex:1;overflow-y:auto;padding:16px 20px}
+        .cart-empty{text-align:center;padding:60px 20px;color:var(--gray-400)}
+        .cart-empty svg{width:60px;height:60px;margin:0 auto 16px;opacity:.4}
+        .cart-empty p{font-size:.9rem}
+        .cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--gray-100)}
+        .cart-item img{width:70px;height:70px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0}
+        .cart-item-info{flex:1}
+        .cart-item-info h4{font-family:var(--font-body);font-size:.88rem;font-weight:500;margin-bottom:4px}
+        .cart-item-info .cart-item-price{font-size:.82rem;color:var(--pink-500);font-weight:600}
+        .cart-item-controls{display:flex;align-items:center;gap:10px;margin-top:8px}
+        .cart-qty-btn{width:28px;height:28px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--transition)}
+        .cart-qty-btn:hover{background:var(--pink-100)}
+        .cart-qty-val{font-size:.85rem;font-weight:600;min-width:24px;text-align:center}
+        .cart-remove{margin-left:auto;color:var(--gray-400);transition:color .2s}
+        .cart-remove:hover{color:var(--error)}
+        .cart-remove svg{width:16px;height:16px}
+        .cart-footer{padding:20px;border-top:1px solid var(--gray-100)}
+        .cart-subtotal{display:flex;justify-content:space-between;font-size:1rem;font-weight:600;margin-bottom:16px}
+        .cart-footer .btn{width:100%;justify-content:center;margin-bottom:8px}
+        .cart-continue{font-size:.82rem;color:var(--gray-500);text-align:center;width:100%;padding:8px;transition:color .2s}
+        .cart-continue:hover{color:var(--pink-500)}
+        .cart-badge{position:absolute;top:-4px;right:-4px;background:var(--pink-500);color:#fff;font-size:.68rem;font-weight:600;min-width:18px;height:18px;border-radius:50px;display:flex;align-items:center;justify-content:center;padding:0 5px;transition:var(--transition)}
+        .cart-badge.bump{animation:cartBump .4s}
+        /* ===================== AUTH MODAL ===================== */
+        .auth-modal{max-width:440px}
+        .auth-tabs{display:flex;gap:0;margin-bottom:28px;border-bottom:2px solid var(--gray-100)}
+        .auth-tab{flex:1;padding:12px;text-align:center;font-size:.92rem;font-weight:500;color:var(--gray-500);transition:var(--transition);position:relative}
+        .auth-tab.active{color:var(--pink-500)}
+        .auth-tab.active::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background:var(--pink-400)}
+        .auth-form{display:none}
+        .auth-form.active{display:block}
+        .auth-form .form-group{margin-bottom:16px}
+        .auth-options{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:.82rem}
+        .auth-options label{display:flex;align-items:center;gap:6px;color:var(--gray-600);cursor:pointer}
+        .auth-options a{color:var(--pink-500)}
+        .auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--gray-400);font-size:.8rem}
+        .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--gray-100)}
+        .auth-alt{display:flex;gap:10px}
+        .auth-alt-btn{flex:1;padding:10px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;gap:8px;font-size:.82rem;transition:var(--transition)}
+        .auth-alt-btn:hover{border-color:var(--pink-300);background:var(--pink-50)}
+        .auth-alt-btn svg{width:18px;height:18px}
+        /* ===================== ACCOUNT DASHBOARD ===================== */
+        .account-modal{max-width:600px}
+        .account-header{display:flex;gap:16px;align-items:center;padding:24px 32px;border-bottom:1px solid var(--gray-100)}
+        .account-header img{width:60px;height:60px;border-radius:50%;object-fit:cover;background:var(--pink-100)}
+        .account-header h3{font-size:1.2rem;margin-bottom:2px}
+        .account-header p{font-size:.82rem;color:var(--gray-500)}
+        .account-tabs{display:flex;gap:0;padding:0 32px;border-bottom:1px solid var(--gray-100);flex-wrap:wrap}
+        .account-tab{padding:12px 16px;font-size:.85rem;font-weight:500;color:var(--gray-500);transition:color .2s;border-bottom:2px solid transparent}
+        .account-tab.active{color:var(--pink-500);border-color:var(--pink-400)}
+        .account-content{padding:28px 32px;max-height:400px;overflow-y:auto}
+        .account-panel{display:none}
+        .account-panel.active{display:block}
+        .account-panel h4{font-size:1rem;margin-bottom:12px}
+        .account-info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-100);font-size:.88rem}
+        .account-info-row span:first-child{color:var(--gray-500)}
+        .account-info-row span:last-child{font-weight:500}
+        .account-appointment{display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--blush);border-radius:var(--radius-sm);margin-bottom:10px}
+        .account-appointment .info h5{font-size:.9rem;font-weight:500;margin-bottom:2px}
+        .account-appointment .info p{font-size:.78rem;color:var(--gray-500)}
+        .account-appointment .status{font-size:.72rem;padding:4px 10px;border-radius:50px;font-weight:600}
+        .status-upcoming{background:var(--gold-300);color:var(--ink)}
+        .status-past{background:var(--gray-100);color:var(--gray-600)}
+        .account-empty{text-align:center;padding:30px;color:var(--gray-400);font-size:.88rem}
+        .account-logout{margin-top:20px;width:100%;padding:10px;border-radius:var(--radius-sm);font-size:.85rem;font-weight:500;background:var(--error);color:#fff;transition:var(--transition)}
+        .account-logout:hover{opacity:.9}
+        /* ===================== CHATBOT ===================== */
+        .chat-toggle{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));box-shadow:0 8px 24px rgba(214,90,130,.4);display:flex;align-items:center;justify-content:center;z-index:1500;transition:var(--transition);cursor:pointer}
+        .chat-toggle:hover{transform:scale(1.08)}
+        .chat-toggle svg{width:28px;height:28px;color:#fff}
+        .chat-toggle .chat-badge{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--gold-400);border:2px solid #fff;animation:pulse 2s infinite}
+        .chat-panel{position:fixed;bottom:96px;right:24px;width:360px;max-width:calc(100vw - 48px);height:500px;max-height:calc(100vh - 140px);background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:1500;display:flex;flex-direction:column;transform:translateY(20px) scale(.95);opacity:0;visibility:hidden;transition:var(--transition);transform-origin:bottom right}
+        .chat-panel.open{transform:translateY(0) scale(1);opacity:1;visibility:visible}
+        .chat-header{padding:18px 20px;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;border-radius:var(--radius-lg) var(--radius-lg) 0 0;display:flex;align-items:center;gap:12px}
+        .chat-header .avatar{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+        .chat-header h4{color:#fff;font-size:1rem;margin-bottom:2px}
+        .chat-header p{font-size:.76rem;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px}
+        .chat-header p::before{content:'';width:7px;height:7px;border-radius:50%;background:#5fcf80;box-shadow:0 0 6px #5fcf80}
+        .chat-header .chat-close{margin-left:auto;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .chat-header .chat-close:hover{background:rgba(255,255,255,.15)}
+        .chat-header .chat-close svg{width:18px;height:18px;color:#fff}
+        .chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--cream)}
+        .chat-msg{max-width:80%;padding:10px 16px;border-radius:16px;font-size:.86rem;line-height:1.5;animation:msgIn .3s}
+        .chat-msg.bot{background:var(--white);border:1px solid var(--gray-100);border-bottom-left-radius:4px;align-self:flex-start;box-shadow:var(--shadow-sm)}
+        .chat-msg.user{background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+        .chat-typing{display:flex;gap:4px;padding:12px 16px;background:var(--white);border:1px solid var(--gray-100);border-radius:16px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content;box-shadow:var(--shadow-sm)}
+        .chat-typing span{width:8px;height:8px;border-radius:50%;background:var(--pink-300);animation:typing 1.4s infinite}
+        .chat-typing span:nth-child(2){animation-delay:.2s}
+        .chat-typing span:nth-child(3){animation-delay:.4s}
+        .chat-quick{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px;background:var(--cream)}
+        .chat-quick-btn{padding:6px 14px;border-radius:50px;background:var(--white);border:1px solid var(--pink-200);font-size:.78rem;color:var(--pink-500);transition:var(--transition)}
+        .chat-quick-btn:hover{background:var(--pink-100)}
+        .chat-input-area{padding:14px 16px;border-top:1px solid var(--gray-100);display:flex;gap:10px;background:var(--white);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+        .chat-input{flex:1;padding:10px 16px;border:1.5px solid var(--gray-200);border-radius:50px;font-size:.85rem;transition:var(--transition)}
+        .chat-input:focus{outline:none;border-color:var(--pink-400)}
+        .chat-send{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
+        .chat-send:hover{transform:scale(1.08)}
+        .chat-send svg{width:18px;height:18px;color:#fff}
+        /* ===================== SEARCH OVERLAY ===================== */
+        .search-overlay{position:fixed;inset:0;background:rgba(250,246,243,.97);backdrop-filter:blur(20px);z-index:1800;display:flex;flex-direction:column;align-items:center;padding:80px 24px 40px;opacity:0;visibility:hidden;transition:var(--transition)}
+        .search-overlay.show{opacity:1;visibility:visible}
+        .search-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .search-close:hover{background:var(--pink-100)}
+        .search-close svg{width:22px;height:22px;color:var(--charcoal)}
+        .search-box{width:100%;max-width:600px;position:relative;margin-bottom:30px}
+        .search-box svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:22px;height:22px;color:var(--gray-400)}
+        .search-input{width:100%;padding:18px 20px 18px 52px;border:none;border-bottom:2px solid var(--pink-300);background:transparent;font-size:1.3rem;font-family:var(--font-head);color:var(--charcoal)}
+        .search-input:focus{outline:none;border-color:var(--pink-500)}
+        .search-results{width:100%;max-width:600px;overflow-y:auto;max-height:calc(100vh - 200px)}
+        .search-result{display:flex;gap:14px;align-items:center;padding:14px;border-radius:var(--radius-sm);transition:var(--transition);cursor:pointer}
+        .search-result:hover{background:var(--pink-50)}
+        .search-result img{width:50px;height:50px;border-radius:var(--radius-sm);object-fit:cover}
+        .search-result h4{font-size:.95rem;margin-bottom:2px}
+        .search-result p{font-size:.8rem;color:var(--gray-500)}
+        .search-empty{text-align:center;padding:40px;color:var(--gray-400)}
+        .search-empty svg{width:50px;height:50px;margin:0 auto 12px;opacity:.4}
+        /* ===================== LIGHTBOX ===================== */
+        .lightbox{position:fixed;inset:0;background:rgba(26,21,23,.92);z-index:2200;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:var(--transition);padding:40px}
+        .lightbox.show{opacity:1;visibility:visible}
+        .lightbox img{max-width:90%;max-height:85vh;border-radius:var(--radius);box-shadow:var(--shadow-lg);transform:scale(.95);transition:transform .35s}
+        .lightbox.show img{transform:scale(1)}
+        .lightbox-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .lightbox-close:hover{background:rgba(255,255,255,.2)}
+        .lightbox-close svg{width:22px;height:22px;color:#fff}
+        .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:var(--transition);z-index:2}
+        .lightbox-nav:hover{background:rgba(255,255,255,.2)}
+        .lightbox-nav svg{width:24px;height:24px;color:#fff}
+        .lightbox-nav.prev{left:24px}
+        .lightbox-nav.next{right:24px}
+        /* ===================== TOAST ===================== */
+        .toast-container{position:fixed;top:100px;right:24px;z-index:3000;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+        .toast{background:var(--white);border-radius:var(--radius);padding:14px 20px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;min-width:280px;max-width:380px;transform:translateX(120%);transition:transform .4s cubic-bezier(.4,0,.2,1);pointer-events:auto;border-left:4px solid var(--success)}
+        .toast.show{transform:translateX(0)}
+        .toast.error{border-left-color:var(--error)}
+        .toast.info{border-left-color:var(--pink-400)}
+        .toast-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .toast.success .toast-icon{background:rgba(45,134,89,.1);color:var(--success)}
+        .toast.error .toast-icon{background:rgba(197,69,59,.1);color:var(--error)}
+        .toast.info .toast-icon{background:var(--pink-50);color:var(--pink-500)}
+        .toast-icon svg{width:18px;height:18px}
+        .toast-content h5{font-size:.88rem;font-weight:500;margin-bottom:2px}
+        .toast-content p{font-size:.78rem;color:var(--gray-500)}
+        /* ===================== BACK TO TOP ===================== */
+        .back-top{position:fixed;bottom:24px;left:24px;width:48px;height:48px;border-radius:50%;background:var(--charcoal);color:#fff;display:flex;align-items:center;justify-content:center;z-index:1400;opacity:0;visibility:hidden;transition:var(--transition);box-shadow:var(--shadow)}
+        .back-top.show{opacity:1;visibility:visible}
+        .back-top:hover{background:var(--pink-500);transform:translateY(-4px)}
+        .back-top svg{width:22px;height:22px}
+        /* ===================== SCROLL REVEAL ===================== */
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        .reveal-delay-1{transition-delay:.1s}
+        .reveal-delay-2{transition-delay:.2s}
+        .reveal-delay-3{transition-delay:.3s}
+        /* ===================== ANIMATIONS ===================== */
+        @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
+        @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        @keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes typing{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-8px);opacity:1}}
+        @keyframes cartBump{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+        @keyframes heartPop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+        /* ===================== RESPONSIVE ===================== */
+        @media(max-width:1100px){
+            .services-grid,.products-grid,.staff-grid{grid-template-columns:repeat(3,1fr)}
+            .gallery-grid{grid-template-columns:repeat(3,1fr)}
+            .footer-top{grid-template-columns:2fr 1fr 1fr}
+            .footer-top .footer-col:last-child{grid-column:span 3}
+        }
+        @media(max-width:900px){
+            .nav-links{display:none}
+            .hamburger{display:flex}
+            .nav-booking .btn span{display:none}
+            .nav-booking .btn{padding:10px 14px}
+            .hero-inner{grid-template-columns:1fr;text-align:center}
+            .hero-visual{max-width:400px;margin:0 auto;order:-1}
+            .hero-cta,.hero-trust,.hero-tags{justify-content:center}
+            .hero-sub{margin-left:auto;margin-right:auto}
+            .about-grid,.booking-inner,.contact-inner,.offer-inner{grid-template-columns:1fr}
+            .about-images{max-width:500px;margin:0 auto}
+            .about-stats{grid-template-columns:repeat(2,1fr)}
+            .offer-card{max-width:400px;margin:0 auto}
+            .booking-info{margin-bottom:20px}
+            .contact-map{display:none}
+            .testimonial-arrow.prev{left:0}
+            .testimonial-arrow.next{right:0}
+            .footer-top{grid-template-columns:1fr 1fr}
+            .footer-top .footer-brand{grid-column:span 2}
+            .footer-top .footer-col:last-child{grid-column:span 2}
+            .gallery-grid{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:600px){
+            .section{padding:60px 0}
+            .services-grid,.products-grid,.staff-grid{grid-template-columns:repeat(2,1fr)}
+            .about-stats{grid-template-columns:repeat(2,1fr)}
+            .about-features{grid-template-columns:1fr}
+            .form-row{grid-template-columns:1fr}
+            .time-slots{grid-template-columns:repeat(3,1fr)}
+            .modal-body{padding:24px}
+            .modal-benefits ul{grid-template-columns:1fr}
+            .footer-top{grid-template-columns:1fr}
+            .footer-top .footer-brand,.footer-top .footer-col:last-child{grid-column:span 1}
+            .hero-cta{flex-direction:column;align-items:stretch}
+            .hero-cta .btn{justify-content:center}
+            .hero-img-float{width:120px}
+            .toast-container{right:12px;left:12px}
+            .toast{min-width:auto;max-width:none}
+            .chat-panel{right:12px;width:calc(100vw - 24px)}
+            .chat-toggle{right:16px;bottom:16px}
+            .back-top{left:16px;bottom:16px}
+        }
+        @media(max-width:380px){
+            .services-grid,.products-grid,.staff-grid{grid-template-columns:1fr}
+            .gallery-grid{grid-template-columns:1fr}
+            .time-slots{grid-template-columns:repeat(2,1fr)}
+        }
+    </style>
+    <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+        <a href="#home" class="nav-logo">Pink<span class="pink-dot">.</span>Beauty</a>
+        <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#staff">Staff</a>
+            <a href="#products">Products</a>
+            <a href="#booking">Booking</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+            <button class="nav-icon-btn" id="accountBtn" aria-label="Account">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+            <button class="nav-icon-btn" id="cartBtn" aria-label="Cart" style="position:relative">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+            </button>
+            <div class="nav-booking">
+                <a href="#booking" class="btn btn-primary btn-sm"><span>Book Now</span></a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#staff">Staff</a>
+    <a href="#products">Products</a>
+    <a href="#booking">Booking</a>
+    <a href="#contact">Contact</a>
+    <a href="#booking" class="btn btn-primary">Book Now</a>
+</div>
+<div class="overlay-bg" id="overlayBg"></div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home">
+    <div class="hero-bg">
+        <img src="https://images.pexels.com/photos/7195803/pexels-photo-7195803.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Luxury salon interior" />
+    </div>
+    <div class="hero-deco hero-deco-1"></div>
+    <div class="hero-deco hero-deco-2"></div>
+    <div class="container hero-inner">
+        <div class="hero-content reveal">
+            <span class="hero-badge"><span class="dot"></span> Welcome to Pink Beauty Salon</span>
+            <h1>Beauty that makes you feel <span class="accent">beautifully you.</span></h1>
+            <p class="hero-sub">Experience personalized beauty care, expert styling, and relaxing treatments in a space designed just for you.</p>
+            <div class="hero-cta">
+                <a href="#booking" class="btn btn-primary">Book an Appointment</a>
+                <a href="#services" class="btn btn-outline">Explore Services</a>
+            </div>
+            <div class="hero-trust">
+                <div class="stars">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                </div>
+                <span class="trust-text"><strong>4.9/5</strong> Customer Experience</span>
+            </div>
+            <div class="hero-tags">
+                <div class="hero-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                    Professional Stylists
+                </div>
+                <div class="hero-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                    Premium Products
+                </div>
+                <div class="hero-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                    Personalized Care
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual reveal reveal-delay-1">
+            <div class="hero-img-main">
+                <img src="https://images.pexels.com/photos/3993290/pexels-photo-3993290.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Hair styling at Pink Beauty Salon" loading="eager" />
+            </div>
+            <div class="hero-img-float float-anim">
+                <img src="https://images.pexels.com/photos/5149734/pexels-photo-5149734.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Makeup application" loading="lazy" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== MARQUEE ===================== -->
+<div class="marquee">
+    <div class="marquee-track">
+        <span>Hair Styling</span><span>Hair Coloring</span><span>Bridal Makeup</span><span>Facial Treatments</span><span>Nail Art</span><span>Skin Care</span><span>Waxing</span><span>Bridal Packages</span>
+        <span>Hair Styling</span><span>Hair Coloring</span><span>Bridal Makeup</span><span>Facial Treatments</span><span>Nail Art</span><span>Skin Care</span><span>Waxing</span><span>Bridal Packages</span>
+    </div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="section about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-images reveal">
+                <img class="img-tall" src="https://images.pexels.com/photos/7195799/pexels-photo-7195799.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Salon interior" loading="lazy" />
+                <img class="img-top" src="https://images.pexels.com/photos/696285/pexels-photo-696285.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Hair styling service" loading="lazy" />
+                <img class="img-bottom" src="https://images.pexels.com/photos/7446659/pexels-photo-7446659.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Facial treatment" loading="lazy" />
+                <div class="badge-circle">
+                    <span class="num">10+</span>
+                    <span class="lbl">Years</span>
+                </div>
+            </div>
+            <div class="about-text reveal reveal-delay-1">
+                <span class="eyebrow">About Us</span>
+                <h2>Where beauty meets confidence.</h2>
+                <p>Pink Beauty Salon is a modern professional salon focused on personalized beauty experiences. Our team of expert stylists and therapists combine skill, premium products, and a warm atmosphere to make every visit special.</p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                        <div><h4>Professional Service</h4><p>Expert care in every treatment</p></div>
+                    </div>
+                    <div class="about-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                        <div><h4>Experienced Staff</h4><p>10+ years of expertise</p></div>
+                    </div>
+                    <div class="about-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                        <div><h4>Premium Products</h4><p>Only the finest beauty brands</p></div>
+                    </div>
+                    <div class="about-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+                        <div><h4>Personalized Care</h4><p>Treatments tailored to you</p></div>
+                    </div>
+                </div>
+                <a href="#booking" class="btn btn-gold">Book Your Visit</a>
+            </div>
+        </div>
+        <div class="about-stats">
+            <div class="stat-card reveal"><div class="num" data-count="10">0</div><div class="lbl">Years Experience</div></div>
+            <div class="stat-card reveal reveal-delay-1"><div class="num" data-count="5" data-suffix="K+">0</div><div class="lbl">Happy Clients</div></div>
+            <div class="stat-card reveal reveal-delay-2"><div class="num" data-count="20" data-suffix="+">0</div><div class="lbl">Beauty Services</div></div>
+            <div class="stat-card reveal reveal-delay-3"><div class="num" data-count="4.9" data-decimal="true">0</div><div class="lbl">Rating</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="section services" id="services">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="gold-line"></div>
+            <span class="eyebrow">What We Offer</span>
+            <h2>Our Signature Services</h2>
+            <p>Everything you need to look and feel your best.</p>
+        </div>
+        <div class="service-filters reveal" id="serviceFilters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="hair">Hair</button>
+            <button class="filter-btn" data-filter="makeup">Makeup</button>
+            <button class="filter-btn" data-filter="nails">Nails</button>
+            <button class="filter-btn" data-filter="skin">Skin</button>
+            <button class="filter-btn" data-filter="bridal">Bridal</button>
+        </div>
+        <div class="services-grid" id="servicesGrid"></div>
+    </div>
+</section>
+
+<!-- ===================== OFFER ===================== -->
+<section class="offer">
+    <div class="container offer-inner">
+        <div class="reveal">
+            <span class="eyebrow" style="color:var(--gold-400)">Special Offer</span>
+            <h2>Glow More, <span class="gold">Save More</span></h2>
+            <p>Enjoy 20% OFF selected beauty treatments this month. Treat yourself to the premium salon experience you deserve.</p>
+            <button class="btn btn-gold" onclick="claimOffer()">Claim Offer</button>
+        </div>
+        <div class="offer-card reveal reveal-delay-1">
+            <div class="discount">20%</div>
+            <div class="discount-lbl">Off This Month</div>
+            <p class="terms">*Valid on selected treatments. Cannot be combined with other offers.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== STAFF ===================== -->
+<section class="section staff" id="staff">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="gold-line"></div>
+            <span class="eyebrow">Our Team</span>
+            <h2>Meet Our Beauty Experts</h2>
+            <p>Skilled professionals dedicated to making you look and feel your best.</p>
+        </div>
+        <div class="staff-grid" id="staffGrid"></div>
+    </div>
+</section>
+
+<!-- ===================== PRODUCTS ===================== -->
+<section class="section products" id="products">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="gold-line"></div>
+            <span class="eyebrow">Shop</span>
+            <h2>Beauty Essentials</h2>
+            <p>Premium products used and loved by our experts — now available for you.</p>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="section testimonials">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="gold-line"></div>
+            <span class="eyebrow">Reviews</span>
+            <h2>Loved by Our Clients</h2>
+        </div>
+        <div class="testimonial-slider reveal" id="testimonialSlider">
+            <button class="testimonial-arrow prev" id="testimonialPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button class="testimonial-arrow next" id="testimonialNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+            <div class="testimonial-track" id="testimonialTrack"></div>
+            <div class="testimonial-nav" id="testimonialNav"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== GALLERY ===================== -->
+<section class="section gallery">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="gold-line"></div>
+            <span class="eyebrow">Gallery</span>
+            <h2>Our Beauty Moments</h2>
+            <p>A glimpse into the Pink Beauty Salon experience.</p>
+        </div>
+        <div class="gallery-grid reveal" id="galleryGrid"></div>
+    </div>
+</section>
+
+<!-- ===================== BOOKING ===================== -->
+<section class="section booking" id="booking">
+    <div class="container">
+        <div class="booking-inner">
+            <div class="booking-info reveal">
+                <span class="eyebrow">Reservation</span>
+                <h2>Book Your Beauty Appointment</h2>
+                <p>Reserve your spot with our expert stylists. Choose your service, preferred staff member, and a time that works for you.</p>
+                <div class="booking-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <div><h4>Easy Scheduling</h4><p>Pick your date and time in seconds</p></div>
+                </div>
+                <div class="booking-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <div><h4>Expert Staff</h4><p>Choose your preferred beauty expert</p></div>
+                </div>
+                <div class="booking-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                    <div><h4>Premium Experience</h4><p>Relax and enjoy top-tier service</p></div>
+                </div>
+            </div>
+            <div class="booking-form reveal reveal-delay-1">
+                <form id="bookingForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name <span class="req">*</span></label>
+                            <input type="text" class="form-control" name="name" required />
+                            <span class="form-error">Please enter your name</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Email <span class="req">*</span></label>
+                            <input type="email" class="form-control" name="email" required />
+                            <span class="form-error">Please enter a valid email</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone <span class="req">*</span></label>
+                            <input type="tel" class="form-control" name="phone" required />
+                            <span class="form-error">Please enter your phone number</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Service <span class="req">*</span></label>
+                            <select class="form-control" name="service" id="bookingService" required>
+                                <option value="">Choose a service</option>
+                            </select>
+                            <span class="form-error">Please select a service</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Staff Member</label>
+                            <select class="form-control" name="staff" id="bookingStaff">
+                                <option value="">Any available expert</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Date <span class="req">*</span></label>
+                            <input type="date" class="form-control" name="date" id="bookingDate" required />
+                            <span class="form-error">Please select a date</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Time <span class="req">*</span></label>
+                        <div class="time-slots" id="timeSlots"></div>
+                        <input type="hidden" name="time" id="bookingTime" required />
+                        <span class="form-error" id="timeError">Please select a time slot</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea class="form-control" name="notes" placeholder="Any special requests or preferences..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="section contact" id="contact">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="gold-line"></div>
+            <span class="eyebrow">Get In Touch</span>
+            <h2>Let's Make You Feel Beautiful</h2>
+        </div>
+        <div class="contact-inner">
+            <div class="contact-info reveal">
+                <div class="contact-detail">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div><h4>Visit Us</h4><p>123 Rose Avenue, Beauty District<br>New York, NY 10001</p></div>
+                </div>
+                <div class="contact-detail">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <div><h4>Call Us</h4><p>+1 (555) 123-4567</p></div>
+                </div>
+                <div class="contact-detail">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <div><h4>Email Us</h4><p>hello@pinkbeautysalon.com</p></div>
+                </div>
+                <div class="contact-detail">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <div>
+                        <h4>Opening Hours</h4>
+                        <div class="hours-day"><span>Monday – Saturday</span><span>9:00 AM – 7:00 PM</span></div>
+                        <div class="hours-day"><span>Sunday</span><span>10:00 AM – 5:00 PM</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form reveal reveal-delay-1">
+                <form id="contactForm" novalidate>
+                    <div class="form-group">
+                        <label>Name <span class="req">*</span></label>
+                        <input type="text" class="form-control" name="name" required />
+                        <span class="form-error">Please enter your name</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span class="req">*</span></label>
+                        <input type="email" class="form-control" name="email" required />
+                        <span class="form-error">Please enter a valid email</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Message <span class="req">*</span></label>
+                        <textarea class="form-control" name="message" placeholder="Tell us how we can help..." required></textarea>
+                        <span class="form-error">Please enter your message</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="nav-logo">Pink<span class="pink-dot">.</span>Beauty</div>
+                <p>Beauty, confidence, and care — all in one place. Your premier destination for luxury beauty treatments.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.24 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg></a>
+                    <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.88 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.8 1h.01a7.94 7.94 0 0 0 7.94-7.94 7.86 7.86 0 0 0-2.35-5.64zM12.05 18.5h-.01a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.43-.16-.25a6.59 6.59 0 0 1 10.2-8.17 6.56 6.56 0 0 1 1.93 4.67 6.6 6.6 0 0 1-6.53 6.59zm3.62-4.94c-.2-.1-1.17-.58-1.36-.64-.18-.07-.31-.1-.45.1-.13.2-.51.64-.63.77-.12.13-.23.15-.43.05-.2-.1-.84-.31-1.6-.99-.6-.53-1-1.18-1.12-1.38-.12-.2-.01-.31.09-.41.09-.09.2-.23.3-.35.1-.12.13-.2.2-.33.07-.13.03-.25-.02-.35-.05-.1-.45-1.08-.62-1.48-.16-.39-.33-.34-.45-.34l-.38-.01a.73.73 0 0 0-.53.25c-.18.2-.7.69-.7 1.67 0 .99.72 1.95.82 2.08.1.13 1.42 2.17 3.44 3.04.48.21.86.33 1.15.42.48.15.92.13 1.27.08.39-.06 1.17-.48 1.34-.94.17-.46.17-.86.12-.94-.05-.08-.18-.13-.38-.23z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#staff">Staff</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>More</h4>
+                <ul>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#booking">Booking</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+                    <li><a href="mailto:hello@pinkbeautysalon.com">hello@pinkbeautysalon.com</a></li>
+                    <li>123 Rose Avenue, NY</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Pink Beauty Salon. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- ===================== MODALS ===================== -->
+<!-- Service Modal -->
+<div class="modal-overlay" id="serviceModal">
+    <div class="modal">
+        <button class="modal-close" data-close="serviceModal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="modal-img" id="serviceModalImg"></div>
+        <div class="modal-body" id="serviceModalBody"></div>
+    </div>
+</div>
+
+<!-- Staff Modal -->
+<div class="modal-overlay" id="staffModal">
+    <div class="modal">
+        <button class="modal-close" data-close="staffModal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="modal-body" id="staffModalBody"></div>
+    </div>
+</div>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+    <div class="modal auth-modal">
+        <button class="modal-close" data-close="authModal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="modal-body">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Create Account</button>
+            </div>
+            <form class="auth-form active" id="loginForm" novalidate>
+                <div class="form-group">
+                    <label>Email <span class="req">*</span></label>
+                    <input type="email" class="form-control" name="email" required />
+                    <span class="form-error">Please enter a valid email</span>
+                </div>
+                <div class="form-group">
+                    <label>Password <span class="req">*</span></label>
+                    <input type="password" class="form-control" name="password" required />
+                    <span class="form-error">Please enter your password</span>
+                </div>
+                <div class="auth-options">
+                    <label><input type="checkbox" name="remember" /> Remember me</label>
+                    <a href="#" onclick="toast('Password reset link sent to your email','info');return false">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Login</button>
+                <div class="auth-divider">or continue with</div>
+                <div class="auth-alt">
+                    <button type="button" class="auth-alt-btn" onclick="toast('Social login is not available in demo','info')">
+                        <svg viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" fill="#34A853"/><path d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" fill="#EA4335"/></svg>
+                        Google
+                    </button>
+                    <button type="button" class="auth-alt-btn" onclick="toast('Social login is not available in demo','info')">
+                        <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+                        Facebook
+                    </button>
+                </div>
+            </form>
+            <form class="auth-form" id="registerForm" novalidate>
+                <div class="form-group">
+                    <label>Full Name <span class="req">*</span></label>
+                    <input type="text" class="form-control" name="name" required />
+                    <span class="form-error">Please enter your name</span>
+                </div>
+                <div class="form-group">
+                    <label>Email <span class="req">*</span></label>
+                    <input type="email" class="form-control" name="email" required />
+                    <span class="form-error">Please enter a valid email</span>
+                </div>
+                <div class="form-group">
+                    <label>Phone <span class="req">*</span></label>
+                    <input type="tel" class="form-control" name="phone" required />
+                    <span class="form-error">Please enter your phone number</span>
+                </div>
+                <div class="form-group">
+                    <label>Password <span class="req">*</span></label>
+                    <input type="password" class="form-control" name="password" required />
+                    <span class="form-error">Password must be at least 6 characters</span>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password <span class="req">*</span></label>
+                    <input type="password" class="form-control" name="confirm" required />
+                    <span class="form-error">Passwords do not match</span>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Account Modal -->
+<div class="modal-overlay" id="accountModal">
+    <div class="modal account-modal">
+        <button class="modal-close" data-close="accountModal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="account-header" id="accountHeader"></div>
+        <div class="account-tabs" id="accountTabs">
+            <button class="account-tab active" data-atab="profile">My Profile</button>
+            <button class="account-tab" data-atab="appointments">My Appointments</button>
+            <button class="account-tab" data-atab="orders">My Orders</button>
+            <button class="account-tab" data-atab="wishlist">Wishlist</button>
+            <button class="account-tab" data-atab="settings">Settings</button>
+        </div>
+        <div class="account-content" id="accountContent"></div>
+    </div>
+</div>
+
+<!-- Booking Confirmation Modal -->
+<div class="modal-overlay" id="bookingConfirmModal">
+    <div class="modal" style="max-width:480px;text-align:center">
+        <button class="modal-close" data-close="bookingConfirmModal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="modal-body" id="bookingConfirmBody"></div>
+    </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Shopping Cart</h3>
+        <button class="close-btn" id="cartClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="searchOverlay">
+    <button class="search-close" id="searchClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search services, products, staff..." />
+    </div>
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button class="lightbox-nav prev" id="lightboxPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <img id="lightboxImg" src="" alt="" />
+    <button class="lightbox-nav next" id="lightboxNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+</div>
+
+<!-- Chatbot -->
+<button class="chat-toggle" id="chatToggle" aria-label="Pink Beauty Assistant">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="chat-badge"></span>
+</button>
+<div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+        <div class="avatar">💗</div>
+        <div><h4>Pink Beauty Assistant</h4><p>Online now</p></div>
+        <button class="chat-close" id="chatClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-quick" id="chatQuick"></div>
+    <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." />
+        <button class="chat-send" id="chatSend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+</div>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+    /* ===================== DATA ===================== */
+    const services = [
+        {id:1,name:"Hair Styling",cat:"hair",price:25,duration:"60 min",img:"https://images.pexels.com/photos/3993290/pexels-photo-3993290.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Expert cuts and styling tailored to your face shape and lifestyle. From sleek blowouts to voluminous waves, our stylists create looks that turn heads.",benefits:["Personalized consultation","Wash & blow-dry included","Style maintenance tips","Premium products used"],staff:[1,2]},
+        {id:2,name:"Hair Coloring",cat:"hair",price:65,duration:"120 min",img:"https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Transform your look with professional hair coloring — from subtle highlights to bold fashion shades, using ammonia-free premium dyes.",benefits:["Ammonia-free dyes","Color consultation","Gloss treatment included","Aftercare guidance"],staff:[1]},
+        {id:3,name:"Hair Treatments",cat:"hair",price:40,duration:"45 min",img:"https://images.pexels.com/photos/8834018/pexels-photo-8834018.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Deep nourishing treatments for dry, damaged, or frizzy hair. Restore shine, strength, and softness with our keratin and argan oil therapies.",benefits:["Deep conditioning","Keratin repair","Scalp treatment","Frizz control"],staff:[1,2]},
+        {id:4,name:"Bridal Makeup",cat:"bridal",price:150,duration:"90 min",img:"https://images.pexels.com/photos/38928309/pexels-photo-38928309.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Look radiant on your special day with our complete bridal makeup package. Includes trial session, lashes, and touch-up kit.",benefits:["Trial session included","Premium makeup brands","Long-lasting finish","Touch-up kit provided"],staff:[2]},
+        {id:5,name:"Party Makeup",cat:"makeup",price:55,duration:"45 min",img:"https://images.pexels.com/photos/5149734/pexels-photo-5149734.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Glamorous party-ready makeup that photographs beautifully. Smoky eyes, bold lips, or natural glow — your choice, flawlessly executed.",benefits:["Custom look design","False lashes included","Setting spray finish","Skin prep included"],staff:[2]},
+        {id:6,name:"Facial Treatments",cat:"skin",price:45,duration:"50 min",img:"https://images.pexels.com/photos/7446659/pexels-photo-7446659.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Rejuvenating facials customized to your skin type. Deep cleanse, exfoliation, mask, and massage for a radiant, refreshed complexion.",benefits:["Deep cleansing","Exfoliation & extraction","Custom mask treatment","Relaxing facial massage"],staff:[4]},
+        {id:7,name:"Manicure & Pedicure",cat:"nails",price:30,duration:"60 min",img:"https://images.pexels.com/photos/3997384/pexels-photo-3997384.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Pamper your hands and feet with our luxury manicure and pedicure. Includes soak, shape, cuticle care, massage, and polish.",benefits:["Soak & exfoliation","Cuticle treatment","Hand/foot massage","Premium polish"],staff:[3]},
+        {id:8,name:"Nail Art",cat:"nails",price:35,duration:"75 min",img:"https://images.pexels.com/photos/34997574/pexels-photo-34997574.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Express yourself with custom nail art — from elegant French tips to intricate designs, gel extensions, and embellishments.",benefits:["Custom designs","Gel extension options","3D nail art available","Long-lasting gel finish"],staff:[3]},
+        {id:9,name:"Eyebrow & Lash",cat:"makeup",price:25,duration:"30 min",img:"https://images.pexels.com/photos/696285/pexels-photo-696285.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Frame your eyes perfectly with eyebrow shaping, tinting, and lash lifts or extensions for a naturally glamorous look.",benefits:["Eyebrow shaping","Lash tint or lift","Tinting available","Precision tools"],staff:[2]},
+        {id:10,name:"Waxing",cat:"skin",price:20,duration:"30 min",img:"https://images.pexels.com/photos/6978043/pexels-photo-6978043.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Smooth, hair-free skin with our gentle waxing services. Soft and hard wax options for all areas, suitable for sensitive skin.",benefits:["Soft & hard wax","Sensitive skin friendly","Smooth long-lasting results","Soothing after-wax lotion"],staff:[4]},
+        {id:11,name:"Skin Care",cat:"skin",price:50,duration:"60 min",img:"https://images.pexels.com/photos/12115040/pexels-photo-12115040.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Advanced skin care treatments including chemical peels, microdermabrasion, and LED therapy for acne, aging, or pigmentation concerns.",benefits:["Skin analysis","Peel or microdermabrasion","LED light therapy","Personalized skincare plan"],staff:[4]},
+        {id:12,name:"Bridal Packages",cat:"bridal",price:350,duration:"180 min",img:"https://images.pexels.com/photos/6001129/pexels-photo-6001129.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Complete bridal beauty package including hair, makeup, nails, facial, and skincare. Look stunning from every angle on your big day.",benefits:["Hair styling & makeup","Manicure & pedicure","Facial treatment","Pre-wedding trial session"],staff:[1,2,3,4]}
+    ];
+
+    const staff = [
+        {id:1,name:"Sophia Williams",role:"Senior Hair Stylist",exp:"12 years",rating:4.9,specialties:["Hair Styling","Hair Coloring","Hair Treatments"],img:"https://images.pexels.com/photos/29852852/pexels-photo-29852852.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Sophia brings over 12 years of experience in luxury hair styling. Trained in London and Milan, she specializes in precision cuts, creative coloring, and bridal updos. Her passion is helping clients discover their perfect look.",services:[1,2,3,12]},
+        {id:2,name:"Amelia Rose",role:"Makeup Artist",exp:"8 years",rating:4.8,specialties:["Bridal Makeup","Party Makeup","Eyebrow & Lash"],img:"https://images.pexels.com/photos/30198184/pexels-photo-30198184.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Amelia is a celebrated makeup artist known for her flawless bridal and editorial looks. With 8 years in the industry, she has worked on fashion shows and weddings, creating timeless beauty for every occasion.",services:[4,5,9,12]},
+        {id:3,name:"Olivia James",role:"Nail Specialist",exp:"6 years",rating:4.9,specialties:["Manicure & Pedicure","Nail Art","Gel Extensions"],img:"https://images.pexels.com/photos/38197025/pexels-photo-38197025.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Olivia is a creative nail artist with a passion for intricate designs and nail health. She stays ahead of trends and loves bringing clients' nail art visions to life with precision and care.",services:[7,8,12]},
+        {id:4,name:"Emma Grace",role:"Skin Therapist",exp:"10 years",rating:5.0,specialties:["Facial Treatments","Skin Care","Waxing"],img:"https://images.pexels.com/photos/30004325/pexels-photo-30004325.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Emma is a certified skin therapist with a decade of experience in advanced skincare. She creates personalized treatment plans that address each client's unique skin concerns for lasting, visible results.",services:[6,10,11,12]}
+    ];
+
+    const products = [
+        {id:1,name:"Luxury Hair Serum",cat:"Hair Care",price:32,oldPrice:42,rating:4.8,img:"https://images.pexels.com/photos/7428099/pexels-photo-7428099.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:2,name:"Rose Glow Face Cream",cat:"Skin Care",price:28,oldPrice:null,rating:4.9,img:"https://images.pexels.com/photos/36339062/pexels-photo-36339062.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:3,name:"Repair Hair Mask",cat:"Hair Care",price:24,oldPrice:34,rating:4.7,img:"https://images.pexels.com/photos/7428102/pexels-photo-7428102.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:4,name:"Vitamin C Serum",cat:"Skin Care",price:38,oldPrice:48,rating:4.9,img:"https://images.pexels.com/photos/4119559/pexels-photo-4119559.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:5,name:"Professional Nail Kit",cat:"Nail Care",price:45,oldPrice:null,rating:4.6,img:"https://images.pexels.com/photos/29228984/pexels-photo-29228984.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:6,name:"Silk Hair Treatment",cat:"Hair Care",price:35,oldPrice:45,rating:4.8,img:"https://images.pexels.com/photos/7428103/pexels-photo-7428103.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:7,name:"Hydrating Face Mask",cat:"Skin Care",price:22,oldPrice:null,rating:4.7,img:"https://images.pexels.com/photos/12124912/pexels-photo-12124912.jpeg?auto=compress&cs=tinysrgb&w=600"},
+        {id:8,name:"Beauty Care Set",cat:"Bundle",price:89,oldPrice:120,rating:5.0,img:"https://images.pexels.com/photos/915160/pexels-photo-915160.jpeg?auto=compress&cs=tinysrgb&w=600"}
+    ];
+
+    const testimonials = [
+        {text:"Absolutely beautiful experience. The team understood exactly what I wanted and delivered beyond my expectations.",author:"Sarah M.",role:"Regular Client",rating:5},
+        {text:"Professional service, relaxing environment, and amazing results. I leave feeling refreshed every single time.",author:"Emily R.",role:"Member since 2022",rating:5},
+        {text:"Pink Beauty Salon has become my go-to place for every special occasion. Their bridal package was incredible!",author:"Jessica L.",role:"Bride, 2025",rating:5},
+        {text:"The staff are true professionals. Sophia gave me the best haircut I've had in years. Highly recommend!",author:"Megan T.",role:"Hair Client",rating:5},
+        {text:"From the moment you walk in, you feel pampered. The facial treatments left my skin glowing for days.",author:"Amanda K.",role:"Skincare Client",rating:5}
+    ];
+
+    const galleryImages = [
+        {img:"https://images.pexels.com/photos/3993290/pexels-photo-3993290.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Hair Styling",cls:"tall"},
+        {img:"https://images.pexels.com/photos/5149734/pexels-photo-5149734.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Makeup",cls:""},
+        {img:"https://images.pexels.com/photos/34997574/pexels-photo-34997574.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Nails",cls:""},
+        {img:"https://images.pexels.com/photos/7446659/pexels-photo-7446659.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Facial",cls:""},
+        {img:"https://images.pexels.com/photos/7195803/pexels-photo-7195803.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Salon Interior",cls:"wide"},
+        {img:"https://images.pexels.com/photos/6001129/pexels-photo-6001129.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Bridal Look",cls:""},
+        {img:"https://images.pexels.com/photos/1571585/beauty-fashion-background-shop-1571585.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Beauty Products",cls:""},
+        {img:"https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg?auto=compress&cs=tinysrgb&w=600",label:"Hair Coloring",cls:"tall"}
+    ];
+
+    const timeSlots = ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM"];
+
+    const chatResponses = {
+        "hairstyle":"For the best hairstyle for you, consider your face shape! Oval faces suit almost any style, round faces look great with layered cuts or side-swept bangs, square faces benefit from soft waves, and heart-shaped faces pair beautifully with chin-length bobs. Book a consultation with Sophia — she'll recommend the perfect look!",
+        "facial":"Our facial treatments are customized to your skin type. For dry skin, try our Hydrating Facial. For acne-prone skin, our Deep Cleanse Facial is ideal. For anti-aging, the Gold Glow Facial is perfect. Emma, our skin therapist, will assess your skin and recommend the best treatment!",
+        "wedding":"For your wedding day, our Bridal Package is the ultimate choice! It includes hair styling, makeup, manicure, pedicure, and a facial — a complete beauty experience. We also offer a pre-wedding trial session. Book early as wedding dates fill up quickly!",
+        "damaged":"For damaged hair, I recommend our Hair Treatment service — it includes deep conditioning with keratin repair and argan oil therapy. Pair it with our Luxury Hair Serum and Repair Hair Mask for at-home care. Sophia specializes in hair repair treatments!",
+        "skincare":"The best skincare treatment depends on your concerns! For general glow, try our Facial Treatment. For specific concerns like acne or pigmentation, our advanced Skin Care service includes chemical peels and LED therapy. Emma will create a personalized plan for you!",
+        "package":"Our Bridal Package at $350 is our most popular — it includes hair, makeup, nails, facial, and skincare! For a lighter option, you can mix and match individual services. Would you like me to help you book a specific service?",
+        "price":"Our services start from $20 for waxing, $25 for hair styling and eyebrow/lash, $30 for manicure & pedicure, $45 for facials, $55 for party makeup, and $150 for bridal makeup. Check our Services section for full pricing!",
+        "book":"You can book an appointment by clicking the 'Book Now' button or visiting our Booking section. Choose your service, preferred staff member, date, and time — it's that easy!",
+        "hours":"We're open Monday to Saturday 9:00 AM – 7:00 PM, and Sunday 10:00 AM – 5:00 PM. We'd love to see you!",
+        "location":"We're located at 123 Rose Avenue, Beauty District, New York, NY 10001. You can find us in the Contact section with a map!",
+        "default":"That's a great question! I'd recommend browsing our Services section to find what suits you best, or booking a consultation with one of our experts. You can also call us at +1 (555) 123-4567 for personalized advice!"
+    };
+
+    const quickQuestions = [
+        "Which hairstyle suits me?",
+        "Which facial should I choose?",
+        "What should I book for a wedding?",
+        "Which service is best for damaged hair?",
+        "What skincare treatment should I choose?",
+        "Help me choose a beauty package"
+    ];
+
+    /* ===================== HELPERS ===================== */
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+    const starSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>';
+    const starRow = n => Array(n).fill(starSvg).join('');
+
+    function toast(msg, type='success', title='') {
+        const icons = {
+            success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>',
+            error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+            info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+        };
+        const t = document.createElement('div');
+        t.className = `toast ${type}`;
+        t.innerHTML = `<div class="toast-icon">${icons[type]}</div><div class="toast-content"><h5>${title|| (type==='success'?'Success':type==='error'?'Oops!':'Info')}</h5><p>${msg}</p></div>`;
+        $('#toastContainer').appendChild(t);
+        requestAnimationFrame(() => t.classList.add('show'));
+        setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+    }
+
+    function openModal(id) {
+        $('#'+id).classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+        $('#'+id).classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    /* ===================== NAVBAR ===================== */
+    window.addEventListener('scroll', () => {
+        const nav = $('#navbar');
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+        $('#backTop').classList.toggle('show', window.scrollY > 500);
+    });
+
+    $('#hamburger').addEventListener('click', () => {
+        $('#hamburger').classList.toggle('active');
+        $('#mobileMenu').classList.toggle('open');
+        $('#overlayBg').classList.toggle('show');
+    });
+    $('#overlayBg').addEventListener('click', () => {
+        $('#hamburger').classList.remove('active');
+        $('#mobileMenu').classList.remove('open');
+        $('#overlayBg').classList.remove('show');
+    });
+    $$('#mobileMenu a').forEach(a => a.addEventListener('click', () => {
+        $('#hamburger').classList.remove('active');
+        $('#mobileMenu').classList.remove('open');
+        $('#overlayBg').classList.remove('show');
+    }));
+
+    /* ===================== RENDER SERVICES ===================== */
+    function renderServices() {
+        const grid = $('#servicesGrid');
+        grid.innerHTML = services.map(s => `
+    <div class="service-card" data-cat="${s.cat}" data-id="${s.id}">
+      <div class="service-img">
+        <img src="${s.img}" alt="${s.name}" loading="lazy" />
+        <span class="price-tag">From $${s.price}</span>
+      </div>
+      <div class="service-body">
+        <h3>${s.name}</h3>
+        <p>${s.desc.substring(0,80)}...</p>
+        <div class="service-meta">
+          <span class="duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${s.duration}</span>
+        </div>
+        <button class="service-book" onclick="event.stopPropagation();openServiceModal(${s.id})">Book Now</button>
+      </div>
+    </div>
+  `).join('');
+        grid.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', () => openServiceModal(parseInt(card.dataset.id)));
+        });
+    }
+
+    $('#serviceFilters').addEventListener('click', e => {
+        if (!e.target.classList.contains('filter-btn')) return;
+        $$('#serviceFilters .filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        const filter = e.target.dataset.filter;
+        $$('.service-card').forEach(card => {
+            card.classList.toggle('hidden', filter !== 'all' && card.dataset.cat !== filter);
+        });
+    });
+
+    function openServiceModal(id) {
+        const s = services.find(x => x.id === id);
+        if (!s) return;
+        $('#serviceModalImg').innerHTML = `<img src="${s.img}" alt="${s.name}" />`;
+        const staffNames = s.staff.map(sid => staff.find(p => p.id === sid)).filter(Boolean);
+        $('#serviceModalBody').innerHTML = `
+    <h2>${s.name}</h2>
+    <div class="modal-price-row">
+      <span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <strong>From $${s.price}</strong></span>
+      <span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <strong>${s.duration}</strong></span>
+    </div>
+    <p class="modal-desc">${s.desc}</p>
+    <div class="modal-benefits">
+      <h4>Benefits</h4>
+      <ul>${s.benefits.map(b => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> ${b}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-staff">
+      <h4>Available Staff</h4>
+      <div class="modal-staff-list">
+        ${staffNames.map(p => `<div class="modal-staff-chip"><img src="${p.img}" alt="${p.name}" /> ${p.name}</div>`).join('')}
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('serviceModal');document.querySelector('#booking').scrollIntoView({behavior:'smooth'});setTimeout(()=>{document.querySelector('#bookingService').value='${s.id}';toast('Service selected! Fill in your details to continue.','info','Booking')},600)">Book Appointment</button>
+  `;
+        openModal('serviceModal');
+    }
+
+    /* ===================== RENDER STAFF ===================== */
+    function renderStaff() {
+        $('#staffGrid').innerHTML = staff.map(p => `
+    <div class="staff-card" data-id="${p.id}">
+      <div class="staff-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" />
+        <div class="staff-overlay">
+          <div class="staff-social">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="staff-body">
+        <h3>${p.name}</h3>
+        <div class="staff-role">${p.role}</div>
+        <div class="staff-meta">
+          <span><svg viewBox="0 0 24 24" fill="currentColor">${starSvg}</svg> ${p.rating}</span>
+          <span>${p.exp}</span>
+        </div>
+        <button class="staff-view" onclick="openStaffModal(${p.id})">View Profile</button>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function openStaffModal(id) {
+        const p = staff.find(x => x.id === id);
+        if (!p) return;
+        const sNames = p.services.map(sid => services.find(s => s.id === sid)?.name).filter(Boolean);
+        $('#staffModalBody').innerHTML = `
+    <div class="staff-profile-header">
+      <img src="${p.img}" alt="${p.name}" />
+      <div>
+        <h2>${p.name}</h2>
+        <div class="role">${p.role}</div>
+        <div class="staff-meta" style="margin-top:8px">
+          <span><svg viewBox="0 0 24 24" fill="currentColor">${starSvg}</svg> ${p.rating}</span>
+          <span>${p.exp} experience</span>
+        </div>
+      </div>
+    </div>
+    <div class="staff-profile-section">
+      <h4>About</h4>
+      <p>${p.bio}</p>
+    </div>
+    <div class="staff-profile-section">
+      <h4>Specialties</h4>
+      <div class="staff-tags">${p.specialties.map(s => `<span class="staff-tag">${s}</span>`).join('')}</div>
+    </div>
+    <div class="staff-profile-section">
+      <h4>Services</h4>
+      <div class="staff-tags">${sNames.map(s => `<span class="staff-tag">${s}</span>`).join('')}</div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal('staffModal');document.querySelector('#booking').scrollIntoView({behavior:'smooth'});setTimeout(()=>{document.querySelector('#bookingStaff').value='${p.id}';toast('Staff member selected!','info','Booking')},600)">Book with ${p.name.split(' ')[0]}</button>
+  `;
+        openModal('staffModal');
+    }
+
+    /* ===================== RENDER PRODUCTS ===================== */
+    function renderProducts() {
+        $('#productsGrid').innerHTML = products.map(p => {
+            const discount = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+            const wishlisted = isWishlisted(p.id);
+            return `
+      <div class="product-card" data-id="${p.id}">
+        <div class="product-img">
+          <img src="${p.img}" alt="${p.name}" loading="lazy" />
+          ${discount ? `<span class="product-discount">-${discount}%</span>` : ''}
+          <button class="wishlist-btn ${wishlisted?'active':''}" data-pid="${p.id}" aria-label="Add to wishlist">
+            <svg viewBox="0 0 24 24" fill="${wishlisted?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">${p.cat}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-rating"><div class="stars">${starRow(Math.round(p.rating))}</div><span>(${p.rating})</span></div>
+          <div class="product-price">
+            <span class="price">$${p.price}</span>
+            ${p.oldPrice ? `<span class="old-price">$${p.oldPrice}</span>` : ''}
+          </div>
+          <button class="product-add" data-pid="${p.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    `;
+        }).join('');
+        // Bind add to cart
+        $$('.product-add').forEach(btn => btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.pid))));
+        // Bind wishlist
+        $$('.wishlist-btn').forEach(btn => btn.addEventListener('click', () => toggleWishlist(parseInt(btn.dataset.pid), btn)));
+    }
+
+    /* ===================== CART ===================== */
+    function getCart() { return JSON.parse(localStorage.getItem('pbs_cart') || '[]'); }
+    function saveCart(c) { localStorage.setItem('pbs_cart', JSON.stringify(c)); updateCartBadge(); }
+
+    function updateCartBadge() {
+        const cart = getCart();
+        const count = cart.reduce((s,i) => s+i.qty, 0);
+        const badge = $('#cartBadge');
+        if (count > 0) {
+            badge.textContent = count;
+            badge.style.display = 'flex';
+            badge.classList.add('bump');
+            setTimeout(() => badge.classList.remove('bump'), 400);
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
+    function addToCart(pid) {
+        const product = products.find(p => p.id === pid);
+        if (!product) return;
+        const cart = getCart();
+        const existing = cart.find(i => i.id === pid);
+        if (existing) {
+            existing.qty++;
+        } else {
+            cart.push({id:product.id, name:product.name, price:product.price, img:product.img, qty:1});
+        }
+        saveCart(cart);
+        toast(`${product.name} added to cart`, 'success', 'Added!');
+    }
+
+    function removeFromCart(pid) {
+        let cart = getCart().filter(i => i.id !== pid);
+        saveCart(cart);
+        renderCart();
+    }
+
+    function changeQty(pid, delta) {
+        const cart = getCart();
+        const item = cart.find(i => i.id === pid);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) {
+            cart.splice(cart.indexOf(item), 1);
+        }
+        saveCart(cart);
+        renderCart();
+    }
+
+    function renderCart() {
+        const cart = getCart();
+        const itemsEl = $('#cartItems');
+        const footerEl = $('#cartFooter');
+        if (cart.length === 0) {
+            itemsEl.innerHTML = `<div class="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Your cart is empty</p></div>`;
+            footerEl.innerHTML = '';
+            return;
+        }
+        itemsEl.innerHTML = cart.map(i => `
+    <div class="cart-item">
+      <img src="${i.img}" alt="${i.name}" />
+      <div class="cart-item-info">
+        <h4>${i.name}</h4>
+        <div class="cart-item-price">$${i.price}</div>
+        <div class="cart-item-controls">
+          <button class="cart-qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+          <span class="cart-qty-val">${i.qty}</span>
+          <button class="cart-qty-btn" onclick="changeQty(${i.id},1)">+</button>
+          <button class="cart-remove" onclick="removeFromCart(${i.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+        const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+        footerEl.innerHTML = `
+    <div class="cart-subtotal"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+    <button class="cart-continue" id="cartContinue">Continue Shopping</button>
+  `;
+        $('#cartContinue').addEventListener('click', () => $('#cartDrawer').classList.remove('open'));
+    }
+
+    function checkout() {
+        const cart = getCart();
+        if (cart.length === 0) return;
+        const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+        // Save order
+        const orders = JSON.parse(localStorage.getItem('pbs_orders') || '[]');
+        orders.push({id:Date.now(), items:cart, total:subtotal, date:new Date().toISOString()});
+        localStorage.setItem('pbs_orders', JSON.stringify(orders));
+        saveCart([]);
+        renderCart();
+        $('#cartDrawer').classList.remove('open');
+        toast(`Order placed! Total: $${subtotal.toFixed(2)}. This is a demo checkout.`, 'success', 'Order Confirmed!');
+    }
+
+    $('#cartBtn').addEventListener('click', () => { renderCart(); $('#cartDrawer').classList.add('open'); });
+    $('#cartClose').addEventListener('click', () => $('#cartDrawer').classList.remove('open'));
+
+    /* ===================== WISHLIST ===================== */
+    function getWishlist() { return JSON.parse(localStorage.getItem('pbs_wishlist') || '[]'); }
+    function isWishlisted(pid) { return getWishlist().includes(pid); }
+    function toggleWishlist(pid, btn) {
+        let wl = getWishlist();
+        if (wl.includes(pid)) {
+            wl = wl.filter(id => id !== pid);
+            toast('Removed from wishlist', 'info', 'Wishlist');
+        } else {
+            wl.push(pid);
+            toast('Added to wishlist!', 'success', 'Wishlist');
+        }
+        localStorage.setItem('pbs_wishlist', JSON.stringify(wl));
+        if (btn) {
+            btn.classList.toggle('active');
+            const svg = btn.querySelector('svg');
+            svg.setAttribute('fill', wl.includes(pid) ? 'currentColor' : 'none');
+            svg.style.animation = 'heartPop .4s';
+            setTimeout(() => svg.style.animation = '', 400);
+        }
+    }
+
+    /* ===================== BOOKING ===================== */
+    function initBooking() {
+        // Populate services
+        $('#bookingService').innerHTML = '<option value="">Choose a service</option>' + services.map(s => `<option value="${s.id}">${s.name} — $${s.price}</option>`).join('');
+        // Populate staff
+        $('#bookingStaff').innerHTML = '<option value="">Any available expert</option>' + staff.map(p => `<option value="${p.id}">${p.name} — ${p.role}</option>`).join('');
+        // Date min = today
+        const today = new Date().toISOString().split('T')[0];
+        $('#bookingDate').min = today;
+        // Time slots
+        $('#timeSlots').innerHTML = timeSlots.map(t => `<div class="time-slot" data-time="${t}">${t}</div>`).join('');
+        $$('.time-slot').forEach(slot => {
+            slot.addEventListener('click', () => {
+                $$('.time-slot').forEach(s => s.classList.remove('active'));
+                slot.classList.add('active');
+                $('#bookingTime').value = slot.dataset.time;
+                $('#timeError').classList.remove('show');
+            });
+        });
+    }
+
+    $('#bookingForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target;
+        let valid = true;
+        // Validate fields
+        form.querySelectorAll('[required]').forEach(field => {
+            const errEl = field.parentElement.querySelector('.form-error');
+            if (field.type === 'hidden') return; // time handled separately
+            if (!field.value.trim() || (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value))) {
+                field.classList.add('error');
+                if (errEl) errEl.classList.add('show');
+                valid = false;
+            } else {
+                field.classList.remove('error');
+                if (errEl) errEl.classList.remove('show');
+            }
+        });
+        // Validate time
+        if (!$('#bookingTime').value) {
+            $('#timeError').classList.add('show');
+            valid = false;
+        }
+        if (!valid) { toast('Please fill in all required fields', 'error', 'Check the form'); return; }
+
+        const data = {
+            id: Date.now(),
+            name: form.name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            service: services.find(s => s.id == form.service.value)?.name || '',
+            staff: staff.find(p => p.id == form.staff.value)?.name || 'Any available expert',
+            date: form.date.value,
+            time: $('#bookingTime').value,
+            notes: form.notes.value,
+            status: 'upcoming'
+        };
+        // Save
+        const bookings = JSON.parse(localStorage.getItem('pbs_bookings') || '[]');
+        bookings.push(data);
+        localStorage.setItem('pbs_bookings', JSON.stringify(bookings));
+        // Confirmation
+        const dateFmt = new Date(data.date).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        $('#bookingConfirmBody').innerHTML = `
+    <div style="font-size:3rem;margin-bottom:10px">✨</div>
+    <h2 style="margin-bottom:8px">Appointment Confirmed!</h2>
+    <p style="color:var(--gray-500);margin-bottom:24px">Your appointment has been successfully scheduled.</p>
+    <div style="text-align:left;background:var(--blush);padding:20px;border-radius:12px;margin-bottom:20px">
+      <div class="account-info-row"><span>Customer</span><span>${data.name}</span></div>
+      <div class="account-info-row"><span>Service</span><span>${data.service}</span></div>
+      <div class="account-info-row"><span>Staff</span><span>${data.staff}</span></div>
+      <div class="account-info-row"><span>Date</span><span>${dateFmt}</span></div>
+      <div class="account-info-row" style="border:none"><span>Time</span><span>${data.time}</span></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('bookingConfirmModal')">Done</button>
+  `;
+        openModal('bookingConfirmModal');
+        form.reset();
+        $$('.time-slot').forEach(s => s.classList.remove('active'));
+        $('#bookingTime').value = '';
+        toast('Appointment booked successfully!', 'success', 'Confirmed!');
+    });
+
+    /* ===================== CONTACT FORM ===================== */
+    $('#contactForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target;
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(field => {
+            const errEl = field.parentElement.querySelector('.form-error');
+            if (!field.value.trim() || (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value))) {
+                field.classList.add('error');
+                if (errEl) errEl.classList.add('show');
+                valid = false;
+            } else {
+                field.classList.remove('error');
+                if (errEl) errEl.classList.remove('show');
+            }
+        });
+        if (!valid) { toast('Please fill in all required fields', 'error'); return; }
+        form.reset();
+        toast('Your message has been sent! We\'ll get back to you soon.', 'success', 'Message Sent!');
+    });
+
+    /* ===================== AUTH ===================== */
+    $$('.auth-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            $$('.auth-tab').forEach(t => t.classList.remove('active'));
+            $$('.auth-form').forEach(f => f.classList.remove('active'));
+            tab.classList.add('active');
+            $('#'+tab.dataset.tab+'Form').classList.add('active');
+        });
+    });
+
+    $('#loginForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target;
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(field => {
+            const errEl = field.parentElement.querySelector('.form-error');
+            if (!field.value.trim() || (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value))) {
+                field.classList.add('error');
+                if (errEl) errEl.classList.add('show');
+                valid = false;
+            } else {
+                field.classList.remove('error');
+                if (errEl) errEl.classList.remove('show');
+            }
+        });
+        if (!valid) return;
+        const email = form.email.value;
+        const users = JSON.parse(localStorage.getItem('pbs_users') || '[]');
+        const user = users.find(u => u.email === email);
+        if (!user) {
+            toast('No account found with this email. Please create an account.', 'error', 'Login Failed');
+            return;
+        }
+        if (user.password !== form.password.value) {
+            toast('Incorrect password. Please try again.', 'error', 'Login Failed');
+            return;
+        }
+        localStorage.setItem('pbs_currentUser', JSON.stringify(user));
+        closeModal('authModal');
+        form.reset();
+        toast(`Welcome back, ${user.name}!`, 'success', 'Logged In!');
+        updateAccountUI();
+    });
+
+    $('#registerForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target;
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(field => {
+            const errEl = field.parentElement.querySelector('.form-error');
+            const val = field.value.trim();
+            let fieldValid = !!val;
+            if (field.type === 'email') fieldValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+            if (field.name === 'password') fieldValid = val.length >= 6;
+            if (field.name === 'confirm') fieldValid = val === form.password.value;
+            if (!fieldValid) {
+                field.classList.add('error');
+                if (errEl) errEl.classList.add('show');
+                valid = false;
+            } else {
+                field.classList.remove('error');
+                if (errEl) errEl.classList.remove('show');
+            }
+        });
+        if (!valid) return;
+        const users = JSON.parse(localStorage.getItem('pbs_users') || '[]');
+        if (users.find(u => u.email === form.email.value)) {
+            toast('An account with this email already exists.', 'error', 'Already Registered');
+            return;
+        }
+        const user = {id:Date.now(), name:form.name.value, email:form.email.value, phone:form.phone.value, password:form.password.value};
+        users.push(user);
+        localStorage.setItem('pbs_users', JSON.stringify(users));
+        localStorage.setItem('pbs_currentUser', JSON.stringify(user));
+        closeModal('authModal');
+        form.reset();
+        toast(`Welcome to Pink Beauty, ${user.name}!`, 'success', 'Account Created!');
+        updateAccountUI();
+    });
+
+    function getCurrentUser() { return JSON.parse(localStorage.getItem('pbs_currentUser') || 'null'); }
+
+    function updateAccountUI() {
+        const user = getCurrentUser();
+        const btn = $('#accountBtn');
+        if (user) {
+            btn.style.background = 'linear-gradient(135deg,var(--pink-400),var(--pink-600))';
+            btn.style.color = '#fff';
+        } else {
+            btn.style.background = '';
+            btn.style.color = '';
+        }
+    }
+
+    $('#accountBtn').addEventListener('click', () => {
+        const user = getCurrentUser();
+        if (user) {
+            renderAccount(user);
+            openModal('accountModal');
+        } else {
+            openModal('authModal');
+        }
+    });
+
+    function renderAccount(user) {
+        $('#accountHeader').innerHTML = `
+    <img src="https://images.pexels.com/photos/29852852/pexels-photo-29852852.jpeg?auto=compress&cs=tinysrgb&w=200" alt="${user.name}" />
+    <div><h3>${user.name}</h3><p>${user.email}</p></div>
+  `;
+        renderAccountPanel('profile', user);
+    }
+
+    $$('.account-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            $$('.account-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            renderAccountPanel(tab.dataset.atab, getCurrentUser());
+        });
+    });
+
+    function renderAccountPanel(panel, user) {
+        const el = $('#accountContent');
+        const bookings = JSON.parse(localStorage.getItem('pbs_bookings') || '[]').filter(b => b.email === user.email);
+        const orders = JSON.parse(localStorage.getItem('pbs_orders') || '[]');
+        const wishlist = getWishlist().map(id => products.find(p => p.id === id)).filter(Boolean);
+        const now = new Date();
+        const upcoming = bookings.filter(b => new Date(b.date + 'T00:00') >= now);
+        const past = bookings.filter(b => new Date(b.date + 'T00:00') < now);
+
+        if (panel === 'profile') {
+            el.innerHTML = `
+      <h4>My Profile</h4>
+      <div class="account-info-row"><span>Full Name</span><span>${user.name}</span></div>
+      <div class="account-info-row"><span>Email</span><span>${user.email}</span></div>
+      <div class="account-info-row"><span>Phone</span><span>${user.phone || '—'}</span></div>
+      <div class="account-info-row" style="border:none"><span>Member Since</span><span>${new Date(user.id).toLocaleDateString('en-US',{month:'long',year:'numeric'})}</span></div>
+    `;
+        } else if (panel === 'appointments') {
+            el.innerHTML = `<h4>My Appointments</h4>` +
+                (bookings.length === 0 ? '<div class="account-empty">No appointments yet. Book one to get started!</div>' :
+                    (upcoming.length > 0 ? '<h5 style="margin:10px 0;color:var(--gray-500);font-size:.82rem">Upcoming</h5>' + upcoming.map(b => `
+        <div class="account-appointment">
+          <div class="info"><h5>${b.service}</h5><p>${new Date(b.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} at ${b.time} • ${b.staff}</p></div>
+          <span class="status status-upcoming">Upcoming</span>
+        </div>`).join('') : '') +
+                    (past.length > 0 ? '<h5 style="margin:14px 0 10px;color:var(--gray-500);font-size:.82rem">Previous</h5>' + past.map(b => `
+        <div class="account-appointment">
+          <div class="info"><h5>${b.service}</h5><p>${new Date(b.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} at ${b.time}</p></div>
+          <span class="status status-past">Completed</span>
+        </div>`).join('') : ''));
+        } else if (panel === 'orders') {
+            el.innerHTML = `<h4>My Orders</h4>` +
+                (orders.length === 0 ? '<div class="account-empty">No orders yet. Visit our shop to find beauty essentials!</div>' :
+                    orders.map(o => `
+        <div class="account-appointment">
+          <div class="info"><h5>Order #${o.id}</h5><p>${o.items.length} items • ${new Date(o.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</p></div>
+          <span class="status status-past">$${o.total.toFixed(2)}</span>
+        </div>
+      `).join(''));
+        } else if (panel === 'wishlist') {
+            el.innerHTML = `<h4>My Wishlist</h4>` +
+                (wishlist.length === 0 ? '<div class="account-empty">Your wishlist is empty. Tap the heart on any product to save it!</div>' :
+                    wishlist.map(p => `
+        <div class="account-appointment">
+          <img src="${p.img}" alt="${p.name}" style="width:50px;height:50px;border-radius:8px;object-fit:cover" />
+          <div class="info" style="flex:1"><h5>${p.name}</h5><p>$${p.price}</p></div>
+          <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id});renderAccountPanel('wishlist',getCurrentUser())">Add</button>
+        </div>
+      `).join(''));
+        } else if (panel === 'settings') {
+            el.innerHTML = `
+      <h4>Account Settings</h4>
+      <div class="form-group"><label>Name</label><input type="text" class="form-control" value="${user.name}" id="setName" /></div>
+      <div class="form-group"><label>Phone</label><input type="tel" class="form-control" value="${user.phone||''}" id="setPhone" /></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" onclick="updateProfile()">Save Changes</button>
+      <button class="account-logout" onclick="logout()">Logout</button>
+    `;
+        }
+    }
+
+    function updateProfile() {
+        const user = getCurrentUser();
+        user.name = $('#setName').value;
+        user.phone = $('#setPhone').value;
+        localStorage.setItem('pbs_currentUser', JSON.stringify(user));
+        const users = JSON.parse(localStorage.getItem('pbs_users') || '[]');
+        const idx = users.findIndex(u => u.id === user.id);
+        if (idx >= 0) users[idx] = user;
+        localStorage.setItem('pbs_users', JSON.stringify(users));
+        renderAccount(user);
+        toast('Profile updated successfully!', 'success', 'Saved!');
+        updateAccountUI();
+    }
+
+    function logout() {
+        localStorage.removeItem('pbs_currentUser');
+        closeModal('accountModal');
+        toast('You have been logged out.', 'info', 'Goodbye!');
+        updateAccountUI();
+    }
+
+    /* ===================== SEARCH ===================== */
+    const searchBtn = $('#searchBtn');
+    const searchOverlay = $('#searchOverlay');
+    const searchInput = $('#searchInput');
+    const searchResults = $('#searchResults');
+
+    searchBtn.addEventListener('click', () => { searchOverlay.classList.add('show'); setTimeout(() => searchInput.focus(), 200); });
+    $('#searchClose').addEventListener('click', () => searchOverlay.classList.remove('show'));
+
+    searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim().toLowerCase();
+        if (!q) { searchResults.innerHTML = ''; return; }
+        const sResults = services.filter(s => s.name.toLowerCase().includes(q) || s.cat.includes(q)).map(s => ({type:'Service', name:s.name, sub:`From $${s.price}`, img:s.img, id:s.id}));
+        const pResults = products.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q)).map(p => ({type:'Product', name:p.name, sub:`$${p.price}`, img:p.img, id:p.id}));
+        const stResults = staff.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q)).map(p => ({type:'Staff', name:p.name, sub:p.role, img:p.img, id:p.id}));
+        const all = [...sResults, ...pResults, ...stResults];
+        if (all.length === 0) {
+            searchResults.innerHTML = `<div class="search-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><p>No results found for "${q}"</p></div>`;
+            return;
+        }
+        searchResults.innerHTML = all.map(r => `
+    <div class="search-result" data-type="${r.type}" data-id="${r.id}">
+      <img src="${r.img}" alt="${r.name}" />
+      <div><h4>${r.name}</h4><p>${r.type} • ${r.sub}</p></div>
+    </div>
+  `).join('');
+        searchResults.querySelectorAll('.search-result').forEach(item => {
+            item.addEventListener('click', () => {
+                searchOverlay.classList.remove('show');
+                searchInput.value = '';
+                const type = item.dataset.type;
+                const id = parseInt(item.dataset.id);
+                if (type === 'Service') openServiceModal(id);
+                else if (type === 'Staff') openStaffModal(id);
+                else if (type === 'Product') { addToCart(id); $('#cartBtn').click(); }
+            });
+        });
+    });
+
+    /* ===================== TESTIMONIALS ===================== */
+    let testimonialIndex = 0;
+    function renderTestimonials() {
+        $('#testimonialTrack').innerHTML = testimonials.map(t => `
+    <div class="testimonial-slide">
+      <div class="testimonial-stars">${starRow(t.rating)}</div>
+      <p class="testimonial-quote">"${t.text}"</p>
+      <div class="testimonial-author">${t.author}</div>
+      <div class="testimonial-role">${t.role}</div>
+    </div>
+  `).join('');
+        $('#testimonialNav').innerHTML = testimonials.map((_,i) => `<div class="testimonial-dot ${i===0?'active':''}" data-i="${i}"></div>`).join('');
+        $$('.testimonial-dot').forEach(d => d.addEventListener('click', () => goToTestimonial(parseInt(d.dataset.i))));
+    }
+    function goToTestimonial(i) {
+        testimonialIndex = (i + testimonials.length) % testimonials.length;
+        $('#testimonialTrack').style.transform = `translateX(-${testimonialIndex*100}%)`;
+        $$('.testimonial-dot').forEach((d, idx) => d.classList.toggle('active', idx === testimonialIndex));
+    }
+    $('#testimonialPrev').addEventListener('click', () => goToTestimonial(testimonialIndex - 1));
+    $('#testimonialNext').addEventListener('click', () => goToTestimonial(testimonialIndex + 1));
+    let testimonialTimer = setInterval(() => goToTestimonial(testimonialIndex + 1), 5000);
+    $('#testimonialSlider').addEventListener('mouseenter', () => clearInterval(testimonialTimer));
+    $('#testimonialSlider').addEventListener('mouseleave', () => { testimonialTimer = setInterval(() => goToTestimonial(testimonialIndex + 1), 5000); });
+
+    /* ===================== GALLERY ===================== */
+    function renderGallery() {
+        $('#galleryGrid').innerHTML = galleryImages.map((g, i) => `
+    <div class="gallery-item ${g.cls}" data-i="${i}">
+      <img src="${g.img}" alt="${g.label}" loading="lazy" />
+      <div class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+    </div>
+  `).join('');
+        $$('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => openLightbox(parseInt(item.dataset.i)));
+        });
+    }
+
+    let lightboxIndex = 0;
+    function openLightbox(i) {
+        lightboxIndex = i;
+        $('#lightboxImg').src = galleryImages[i].img;
+        $('#lightboxImg').alt = galleryImages[i].label;
+        $('#lightbox').classList.add('show');
+    }
+    $('#lightboxClose').addEventListener('click', () => $('#lightbox').classList.remove('show'));
+    $('#lightboxPrev').addEventListener('click', () => openLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length));
+    $('#lightboxNext').addEventListener('click', () => openLightbox((lightboxIndex + 1) % galleryImages.length));
+    $('#lightbox').addEventListener('click', e => { if (e.target === $('#lightbox')) $('#lightbox').classList.remove('show'); });
+
+    /* ===================== CHATBOT ===================== */
+    function getChatResponse(msg) {
+        const lower = msg.toLowerCase();
+        if (lower.includes('hairstyle') || lower.includes('hair style') || lower.includes('hair cut')) return chatResponses.hairstyle;
+        if (lower.includes('facial')) return chatResponses.facial;
+        if (lower.includes('wedding') || lower.includes('bridal')) return chatResponses.wedding;
+        if (lower.includes('damage') || lower.includes('damaged')) return chatResponses.damaged;
+        if (lower.includes('skincare') || lower.includes('skin care') || lower.includes('skin')) return chatResponses.skincare;
+        if (lower.includes('package')) return chatResponses.package;
+        if (lower.includes('price') || lower.includes('cost') || lower.includes('how much')) return chatResponses.price;
+        if (lower.includes('book') || lower.includes('appointment')) return chatResponses.book;
+        if (lower.includes('hour') || lower.includes('open') || lower.includes('time')) return chatResponses.hours;
+        if (lower.includes('location') || lower.includes('where') || lower.includes('address')) return chatResponses.location;
+        return chatResponses.default;
+    }
+
+    function initChat() {
+        $('#chatMessages').innerHTML = `<div class="chat-msg bot">Hi! I'm your Pink Beauty Assistant 💗 How can I help you today?</div>`;
+        $('#chatQuick').innerHTML = quickQuestions.map(q => `<button class="chat-quick-btn">${q}</button>`).join('');
+        $$('.chat-quick-btn').forEach(btn => btn.addEventListener('click', () => sendChatMessage(btn.textContent)));
+    }
+
+    function sendChatMessage(msg) {
+        if (!msg.trim()) return;
+        const messages = $('#chatMessages');
+        messages.innerHTML += `<div class="chat-msg user">${msg}</div>`;
+        messages.scrollTop = messages.scrollHeight;
+        // Typing indicator
+        const typing = document.createElement('div');
+        typing.className = 'chat-typing';
+        typing.innerHTML = '<span></span><span></span><span></span>';
+        messages.appendChild(typing);
+        messages.scrollTop = messages.scrollHeight;
+        setTimeout(() => {
+            typing.remove();
+            messages.innerHTML += `<div class="chat-msg bot">${getChatResponse(msg)}</div>`;
+            messages.scrollTop = messages.scrollHeight;
+        }, 800 + Math.random() * 600);
+    }
+
+    $('#chatToggle').addEventListener('click', () => {
+        $('#chatPanel').classList.toggle('open');
+        const badge = $('#chatToggle .chat-badge');
+        if (badge) badge.style.display = 'none';
+    });
+    $('#chatClose').addEventListener('click', () => $('#chatPanel').classList.remove('open'));
+    $('#chatSend').addEventListener('click', () => {
+        const input = $('#chatInput');
+        sendChatMessage(input.value);
+        input.value = '';
+    });
+    $('#chatInput').addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            sendChatMessage(e.target.value);
+            e.target.value = '';
+        }
+    });
+
+    /* ===================== BACK TO TOP ===================== */
+    $('#backTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    /* ===================== MODAL CLOSE ===================== */
+    $$('.modal-close').forEach(btn => {
+        btn.addEventListener('click', () => closeModal(btn.dataset.close));
+    });
+    $$('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) overlay.classList.remove('show'), document.body.style.overflow='';
+        });
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            $$('.modal-overlay').forEach(m => { if (m.classList.contains('show')) { m.classList.remove('show'); document.body.style.overflow=''; }});
+            $('#searchOverlay').classList.remove('show');
+            $('#lightbox').classList.remove('show');
+            $('#chatPanel').classList.remove('open');
+        }
+    });
+
+    /* ===================== OFFER ===================== */
+    function claimOffer() {
+        toast('20% OFF offer claimed! Use code GLOW20 at booking.', 'success', 'Offer Claimed!');
+    }
+
+    /* ===================== SCROLL REVEAL ===================== */
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Animate stat counters
+                if (entry.target.querySelector('[data-count]')) {
+                    entry.target.querySelectorAll('[data-count]').forEach(el => {
+                        if (el.dataset.done) return;
+                        el.dataset.done = '1';
+                        const target = parseFloat(el.dataset.count);
+                        const decimal = el.dataset.decimal === 'true';
+                        const suffix = el.dataset.suffix || '';
+                        let current = 0;
+                        const steps = 40;
+                        const inc = target / steps;
+                        const timer = setInterval(() => {
+                            current += inc;
+                            if (current >= target) { current = target; clearInterval(timer); }
+                            el.textContent = (decimal ? current.toFixed(1) : Math.floor(current)) + suffix;
+                        }, 30);
+                    });
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    /* ===================== INIT ===================== */
+    renderServices();
+    renderStaff();
+    renderProducts();
+    renderTestimonials();
+    renderGallery();
+    initBooking();
+    initChat();
+    updateCartBadge();
+    updateAccountUI();
+
+    // Observe reveal elements
+    $$('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchor links
+    $$('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = a.getAttribute('href');
+            if (target === '#' || target.length < 2) return;
+            const el = document.querySelector(target);
+            if (el) {
+                e.preventDefault();
+                el.scrollIntoView({behavior:'smooth'});
+            }
+        });
+    });
+</script>
+</body>
+</html>

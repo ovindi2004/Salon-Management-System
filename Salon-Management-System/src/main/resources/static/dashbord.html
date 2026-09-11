@@ -1,0 +1,5719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pink Beauty Salon | Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+    <style>/* =========================================================
+   PINK BEAUTY SALON
+   DASHBOARD CSS
+========================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+
+        --rose-gold: #B76E79;
+        --dark-rose: #9A5862;
+        --soft-pink: #F8D7DA;
+
+        --champagne: #E8C07D;
+
+        --background: #FFF9FB;
+        --white: #FFFFFF;
+
+        --text: #2B2024;
+        --muted: #6B5D62;
+
+        --border: #F0DDE1;
+
+        --success: #3A9975;
+        --warning: #C58A2B;
+        --danger: #C65D68;
+        --info: #5E85AA;
+        --purple: #8768A6;
+        --teal: #388F89;
+
+        --sidebar-width: 260px;
+
+        --shadow-sm:
+                0 3px 12px rgba(43, 32, 36, .045);
+
+        --shadow-md:
+                0 10px 28px rgba(43, 32, 36, .075);
+
+        --shadow-lg:
+                0 18px 45px rgba(43, 32, 36, .13);
+
+        --radius: 16px;
+
+        --transition: .25s ease;
+    }
+
+    body {
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+
+        color: var(--text);
+
+        min-height: 100vh;
+
+        -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    button,
+    input,
+    select {
+        font-family: inherit;
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+    }
+
+
+    /* =========================================================
+       SCROLLBAR
+    ========================================================= */
+
+    ::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #E2B7BF;
+        border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    .sidebar {
+
+        position: fixed;
+
+        left: 0;
+        top: 0;
+        bottom: 0;
+
+        width: var(--sidebar-width);
+
+        display: flex;
+        flex-direction: column;
+
+        background:
+                linear-gradient(
+                        180deg,
+                        #712E3D 0%,
+                        #54212C 100%
+                );
+
+        color: white;
+
+        z-index: 1000;
+
+        box-shadow:
+                5px 0 25px rgba(84, 33, 44, .14);
+
+        transition: .25s ease;
+    }
+
+    .sidebar-header {
+
+        height: 72px;
+
+        padding: 14px 19px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        border-bottom:
+                1px solid rgba(255,255,255,.08);
+    }
+
+    .brand-logo {
+
+        width: 42px;
+        height: 42px;
+
+        flex-shrink: 0;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 12px;
+
+        background:
+                linear-gradient(
+                        135deg,
+                        #D9919D,
+                        #B76E79
+                );
+
+        box-shadow:
+                0 7px 18px rgba(0,0,0,.16);
+
+        font-size: 18px;
+    }
+
+    .brand-info {
+
+        display: flex;
+        flex-direction: column;
+
+        white-space: nowrap;
+    }
+
+    .brand-info h2 {
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 18px;
+
+        line-height: 1;
+    }
+
+    .brand-info span {
+
+        margin-top: 5px;
+
+        color: #F1C9D0;
+
+        font-size: 8px;
+
+        letter-spacing: 1.2px;
+
+        text-transform: uppercase;
+    }
+
+
+    /* NAV */
+
+    .sidebar-nav {
+
+        flex: 1;
+
+        overflow-y: auto;
+
+        padding: 14px 12px;
+    }
+
+    .nav-section-title {
+
+        padding:
+                13px 11px
+                6px;
+
+        color:
+                rgba(255,255,255,.36);
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.4px;
+    }
+
+    .nav-item {
+
+        min-height: 43px;
+
+        margin: 3px 0;
+
+        padding: 9px 12px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        border-radius: 10px;
+
+        color:
+                rgba(255,255,255,.68);
+
+        font-size: 11px;
+
+        font-weight: 500;
+
+        transition: .2s ease;
+    }
+
+    .nav-item i {
+
+        width: 19px;
+
+        text-align: center;
+
+        font-size: 14px;
+    }
+
+    .nav-item:hover {
+
+        color: white;
+
+        background:
+                rgba(255,255,255,.07);
+    }
+
+    .nav-item.active {
+
+        color: white;
+
+        background:
+                linear-gradient(
+                        135deg,
+                        #C57B88,
+                        #A95D6A
+                );
+
+        box-shadow:
+                0 7px 18px rgba(0,0,0,.15);
+    }
+
+
+    /* FOOTER */
+
+    .sidebar-footer {
+
+        padding: 13px;
+
+        border-top:
+                1px solid rgba(255,255,255,.08);
+    }
+
+    .sidebar-user {
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+
+        padding: 8px;
+
+        border-radius: 11px;
+
+        background:
+                rgba(255,255,255,.055);
+    }
+
+    .user-avatar {
+
+        width: 36px;
+        height: 36px;
+
+        display: grid;
+        place-items: center;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background:
+                linear-gradient(
+                        135deg,
+                        #E8C07D,
+                        #B76E79
+                );
+
+        font-size: 10px;
+
+        font-weight: 700;
+    }
+
+    .user-details {
+
+        display: flex;
+        flex-direction: column;
+
+        white-space: nowrap;
+    }
+
+    .user-details strong {
+        font-size: 10px;
+    }
+
+    .user-details span {
+
+        margin-top: 3px;
+
+        color: #EAC8CE;
+
+        font-size: 8px;
+    }
+
+
+    /* =========================================================
+       MAIN
+    ========================================================= */
+
+    .main-wrapper {
+
+        min-height: 100vh;
+
+        margin-left:
+                var(--sidebar-width);
+    }
+
+
+    /* =========================================================
+       TOPBAR
+    ========================================================= */
+
+    .topbar {
+
+        height: 72px;
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 900;
+
+        padding:
+                0 27px;
+
+        display: flex;
+        align-items: center;
+
+        background:
+                rgba(255,255,255,.92);
+
+        border-bottom:
+                1px solid var(--border);
+
+        backdrop-filter:
+                blur(14px);
+    }
+
+    .sidebar-toggle {
+
+        width: 39px;
+        height: 39px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 10px;
+
+        color: var(--muted);
+
+        background: transparent;
+
+        transition: .2s ease;
+    }
+
+    .sidebar-toggle:hover {
+
+        color: var(--rose-gold);
+
+        background:
+                #FFF1F4;
+    }
+
+    .topbar-title {
+
+        margin-left: 12px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topbar-title span {
+
+        color: var(--rose-gold);
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.3px;
+
+        text-transform: uppercase;
+    }
+
+    .topbar-title strong {
+
+        margin-top: 2px;
+
+        font-size: 15px;
+    }
+
+    .topbar-actions {
+
+        margin-left: auto;
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+    }
+
+    .icon-button {
+
+        width: 39px;
+        height: 39px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 10px;
+
+        color: var(--muted);
+
+        background: transparent;
+
+        transition: .2s ease;
+    }
+
+    .icon-button:hover {
+
+        color: var(--rose-gold);
+
+        background:
+                #FFF1F4;
+    }
+
+    .topbar-date {
+
+        height: 37px;
+
+        padding:
+                0 12px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 7px;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: 10px;
+
+        color: var(--dark-rose);
+
+        background: #FFF9FA;
+
+        font-size: 9px;
+
+        font-weight: 600;
+    }
+
+    .profile {
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        padding:
+                4px 10px 4px 4px;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: 30px;
+
+        background: white;
+    }
+
+    .profile-avatar {
+
+        width: 33px;
+        height: 33px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 50%;
+
+        color: white;
+
+        background:
+                linear-gradient(
+                        135deg,
+                        #D58A97,
+                        #B76E79
+                );
+
+        font-size: 9px;
+
+        font-weight: 700;
+    }
+
+    .profile-details {
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-details strong {
+        font-size: 9px;
+    }
+
+    .profile-details span {
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+
+    /* =========================================================
+       CONTENT
+    ========================================================= */
+
+    .content {
+
+        padding: 25px;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+
+    /* =========================================================
+       WELCOME
+    ========================================================= */
+
+    .welcome-banner {
+
+        min-height: 190px;
+
+        padding:
+                30px 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 25px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        color: white;
+
+        border-radius: 20px;
+
+        background:
+                linear-gradient(
+                        120deg,
+                        #6D2A39,
+                        #9A5862 55%,
+                        #C17A86
+                );
+
+        box-shadow:
+                0 14px 35px rgba(154,88,98,.18);
+    }
+
+    .welcome-banner::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 310px;
+        height: 310px;
+
+        right: -80px;
+        top: -160px;
+
+        border:
+                1px solid
+                rgba(255,255,255,.13);
+
+        border-radius: 50%;
+    }
+
+    .welcome-content {
+
+        position: relative;
+
+        z-index: 1;
+
+        max-width: 700px;
+    }
+
+    .welcome-label {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        color: #F8DCE1;
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+        letter-spacing: .5px;
+    }
+
+    .welcome-content h1 {
+
+        margin-top: 7px;
+
+        font-family:
+                "Playfair Display",
+                serif;
+
+        font-size: 30px;
+    }
+
+    .welcome-content p {
+
+        max-width: 620px;
+
+        margin-top: 7px;
+
+        color:
+                rgba(255,255,255,.82);
+
+        font-size: 11px;
+
+        line-height: 1.7;
+    }
+
+    .welcome-date {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        margin-top: 13px;
+
+        padding:
+                7px 11px;
+
+        border:
+                1px solid
+                rgba(255,255,255,.16);
+
+        border-radius: 20px;
+
+        background:
+                rgba(255,255,255,.08);
+
+        font-size: 9px;
+    }
+
+    .welcome-actions {
+
+        position: relative;
+
+        z-index: 1;
+
+        display: flex;
+
+        gap: 8px;
+    }
+
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
+    .btn {
+
+        min-height: 39px;
+
+        padding:
+                0 14px;
+
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 7px;
+
+        border-radius: 10px;
+
+        font-size: 10px;
+
+        font-weight: 600;
+
+        transition: .2s ease;
+    }
+
+    .btn-white {
+
+        color: var(--dark-rose);
+
+        background: white;
+    }
+
+    .btn-white:hover {
+
+        transform:
+                translateY(-1px);
+
+        box-shadow:
+                0 8px 18px rgba(0,0,0,.13);
+    }
+
+    .btn-outline-light {
+
+        color: white;
+
+        background:
+                rgba(255,255,255,.08);
+
+        border:
+                1px solid
+                rgba(255,255,255,.24);
+    }
+
+    .btn-outline-light:hover {
+
+        background:
+                rgba(255,255,255,.17);
+    }
+
+    .btn-primary {
+
+        color: white;
+
+        background:
+                var(--rose-gold);
+
+        box-shadow:
+                0 5px 14px
+                rgba(183,110,121,.17);
+    }
+
+    .btn-primary:hover {
+
+        background:
+                var(--dark-rose);
+
+        transform:
+                translateY(-1px);
+    }
+
+
+    /* =========================================================
+       FILTER
+    ========================================================= */
+
+    .filter-card {
+
+        padding:
+                14px 17px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 20px;
+
+        background: white;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: 15px;
+
+        box-shadow:
+                var(--shadow-sm);
+    }
+
+    .filter-heading {
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+    }
+
+    .filter-icon {
+
+        width: 37px;
+        height: 37px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 10px;
+
+        color: var(--rose-gold);
+
+        background:
+                #FFF0F3;
+    }
+
+    .filter-heading strong {
+
+        display: block;
+
+        font-size: 10px;
+    }
+
+    .filter-heading span {
+
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+    .filter-controls {
+
+        display: flex;
+        align-items: end;
+
+        gap: 8px;
+    }
+
+    .date-input {
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+    .date-input label {
+
+        color: var(--muted);
+
+        font-size: 8px;
+
+        font-weight: 600;
+    }
+
+    .date-input input,
+    .filter-controls select {
+
+        height: 36px;
+
+        padding:
+                0 9px;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: 9px;
+
+        outline: none;
+
+        color: var(--text);
+
+        background:
+                #FFFCFD;
+
+        font-size: 9px;
+    }
+
+    .date-input input:focus,
+    .filter-controls select:focus {
+
+        border-color:
+                #D5A0A8;
+
+        box-shadow:
+                0 0 0 3px #FFF1F4;
+    }
+
+    .filter-controls select {
+
+        min-width: 120px;
+    }
+
+
+    /* =========================================================
+       STAT CARDS
+    ========================================================= */
+
+    .stats-grid {
+
+        display: grid;
+
+        grid-template-columns:
+        repeat(4, 1fr);
+
+        gap: 13px;
+    }
+
+    .stat-card {
+
+        min-height: 143px;
+
+        padding: 17px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        background: white;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: var(--radius);
+
+        box-shadow:
+                var(--shadow-sm);
+
+        transition: .2s ease;
+    }
+
+    .stat-card:hover {
+
+        transform:
+                translateY(-2px);
+
+        box-shadow:
+                var(--shadow-md);
+    }
+
+    .stat-card::before {
+
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        top: 0;
+
+        height: 3px;
+
+        background:
+                var(--rose-gold);
+    }
+
+    .stat-card:nth-child(2)::before {
+        background: var(--champagne);
+    }
+
+    .stat-card:nth-child(3)::before {
+        background: #D59B42;
+    }
+
+    .stat-card:nth-child(4)::before {
+        background: #6E9BC2;
+    }
+
+    .stat-card:nth-child(5)::before {
+        background: #5BAA89;
+    }
+
+    .stat-card:nth-child(6)::before {
+        background: #9A7BB8;
+    }
+
+    .stat-card:nth-child(7)::before {
+        background: #D7798A;
+    }
+
+    .stat-card:nth-child(8)::before {
+        background: #57A9A1;
+    }
+
+    .stat-top {
+
+        display: flex;
+        align-items: center;
+
+        justify-content: space-between;
+    }
+
+    .stat-icon {
+
+        width: 40px;
+        height: 40px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 11px;
+
+        font-size: 15px;
+    }
+
+    .stat-icon.pink {
+        color: var(--rose-gold);
+        background: #FFF0F3;
+    }
+
+    .stat-icon.gold {
+        color: #B9872E;
+        background: #FFF7E6;
+    }
+
+    .stat-icon.orange {
+        color: #C88929;
+        background: #FFF3E2;
+    }
+
+    .stat-icon.blue {
+        color: #5A84AA;
+        background: #EDF5FC;
+    }
+
+    .stat-icon.green {
+        color: var(--success);
+        background: #EAF7F1;
+    }
+
+    .stat-icon.purple {
+        color: var(--purple);
+        background: #F4EFFA;
+    }
+
+    .stat-icon.rose {
+        color: #C66778;
+        background: #FDECEF;
+    }
+
+    .stat-icon.teal {
+        color: var(--teal);
+        background: #EAF8F7;
+    }
+
+    .stat-tag {
+
+        padding:
+                4px 8px;
+
+        border-radius: 20px;
+
+        color: var(--muted);
+
+        background:
+                #FAF6F7;
+
+        font-size: 7px;
+
+        font-weight: 600;
+    }
+
+    .stat-value {
+
+        margin-top: 17px;
+
+        font-size: 21px;
+
+        font-weight: 700;
+
+        letter-spacing: -.4px;
+    }
+
+    .stat-label {
+
+        margin-top: 7px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+    }
+
+
+    /* =========================================================
+       TODAY
+    ========================================================= */
+
+    .today-card {
+
+        min-height: 76px;
+
+        padding:
+                13px 17px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 0;
+
+        background:
+                linear-gradient(
+                        100deg,
+                        #FFFDF8,
+                        #FFF8FA
+                );
+
+        border:
+                1px solid #F0E2D5;
+
+        border-radius: 15px;
+    }
+
+    .today-heading {
+
+        min-width: 220px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+    }
+
+    .today-icon {
+
+        width: 38px;
+        height: 38px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 11px;
+
+        color: #C18D35;
+
+        background: #FFF2D8;
+    }
+
+    .today-heading h3 {
+
+        font-family:
+                "Playfair Display",
+                serif;
+
+        font-size: 14px;
+    }
+
+    .today-heading p {
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+    .today-stat {
+
+        min-width: 105px;
+
+        padding:
+                0 15px;
+
+        text-align: center;
+
+        border-left:
+                1px solid var(--border);
+    }
+
+    .today-stat strong {
+
+        display: block;
+
+        font-size: 15px;
+    }
+
+    .today-stat span {
+
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+    .today-stat.revenue strong {
+
+        color: var(--rose-gold);
+
+        font-size: 12px;
+    }
+
+
+    /* =========================================================
+       CARDS
+    ========================================================= */
+
+    .card {
+
+        overflow: hidden;
+
+        background: white;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: var(--radius);
+
+        box-shadow:
+                var(--shadow-sm);
+    }
+
+    .card-header {
+
+        padding:
+                20px 20px 0;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 15px;
+    }
+
+    .section-label {
+
+        color: var(--rose-gold);
+
+        font-size: 7px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.2px;
+    }
+
+    .card-header h2 {
+
+        margin-top: 4px;
+
+        font-family:
+                "Playfair Display",
+                serif;
+
+        font-size: 17px;
+    }
+
+    .card-header p {
+
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+    .section-header {
+
+        padding-bottom: 16px;
+    }
+
+    .view-link {
+
+        padding:
+                7px 9px;
+
+        display: inline-flex;
+        align-items: center;
+
+        gap: 6px;
+
+        border-radius: 8px;
+
+        color: var(--rose-gold);
+
+        font-size: 8px;
+
+        font-weight: 700;
+    }
+
+    .view-link:hover {
+
+        background:
+                #FFF1F4;
+    }
+
+
+    /* =========================================================
+       CHARTS
+    ========================================================= */
+
+    .charts-grid {
+
+        display: grid;
+
+        grid-template-columns:
+        1.55fr 1fr;
+
+        gap: 15px;
+    }
+
+    .chart-card {
+
+        min-height: 390px;
+    }
+
+    .chart-total {
+
+        text-align: right;
+    }
+
+    .chart-total span {
+
+        display: block;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+    .chart-total strong {
+
+        display: block;
+
+        margin-top: 3px;
+
+        color: var(--rose-gold);
+
+        font-size: 12px;
+    }
+
+    .chart-container {
+
+        height: 290px;
+
+        padding:
+                15px 20px 20px;
+
+        position: relative;
+    }
+
+    .donut-container {
+
+        height: 275px;
+
+        padding:
+                25px 55px 10px;
+
+        position: relative;
+    }
+
+    .donut-center {
+
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform:
+                translate(-50%, -45%);
+
+        text-align: center;
+
+        pointer-events: none;
+    }
+
+    .donut-center strong {
+
+        display: block;
+
+        font-size: 24px;
+    }
+
+    .donut-center span {
+
+        display: block;
+
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+    .chart-legend {
+
+        padding:
+                0 20px 18px;
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 8px 14px;
+    }
+
+    .legend-item {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+    .legend-dot {
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+    }
+
+
+    /* =========================================================
+       TABLE
+    ========================================================= */
+
+    .table-container {
+
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+    table {
+
+        width: 100%;
+
+        min-width: 760px;
+
+        border-collapse: collapse;
+    }
+
+    thead {
+
+        background:
+                #FFFAFB;
+    }
+
+    th {
+
+        padding:
+                10px 20px;
+
+        border-top:
+                1px solid var(--border);
+
+        border-bottom:
+                1px solid var(--border);
+
+        color: #89777D;
+
+        text-align: left;
+
+        font-size: 7px;
+
+        font-weight: 700;
+
+        letter-spacing: .7px;
+
+        text-transform: uppercase;
+    }
+
+    td {
+
+        padding:
+                12px 20px;
+
+        border-bottom:
+                1px solid #F6EDEF;
+
+        font-size: 9px;
+    }
+
+    tbody tr:hover {
+
+        background:
+                #FFFAFB;
+    }
+
+    .customer-cell {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+    }
+
+    .avatar-small {
+
+        width: 30px;
+        height: 30px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 50%;
+
+        color: white;
+
+        background:
+                linear-gradient(
+                        135deg,
+                        #D28A97,
+                        #B76E79
+                );
+
+        font-size: 8px;
+
+        font-weight: 700;
+    }
+
+    .primary-text {
+
+        font-weight: 600;
+    }
+
+    .secondary-text {
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+
+    /* STATUS */
+
+    .status {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        padding:
+                5px 9px;
+
+        border-radius: 20px;
+
+        font-size: 7px;
+
+        font-weight: 700;
+    }
+
+    .status::before {
+
+        content: "";
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+    }
+
+    .status-scheduled {
+
+        color: #B67D1F;
+
+        background: #FFF5E1;
+    }
+
+    .status-scheduled::before {
+        background: #D59B42;
+    }
+
+    .status-confirmed {
+
+        color: #557FA4;
+
+        background: #EDF5FC;
+    }
+
+    .status-confirmed::before {
+        background: #6E9BC2;
+    }
+
+    .status-completed {
+
+        color: #2E8C67;
+
+        background: #EAF7F1;
+    }
+
+    .status-completed::before {
+        background: #5BAA89;
+    }
+
+    .status-cancelled {
+
+        color: #B85863;
+
+        background: #FDEDEF;
+    }
+
+    .status-cancelled::before {
+        background: #C85D68;
+    }
+
+    .status-no_show {
+
+        color: #7B6770;
+
+        background: #F4F0F2;
+    }
+
+    .status-no_show::before {
+        background: #8A7A82;
+    }
+
+
+    /* =========================================================
+       TWO COLUMN
+    ========================================================= */
+
+    .two-column {
+
+        display: grid;
+
+        grid-template-columns:
+        1fr 1fr;
+
+        gap: 15px;
+    }
+
+
+    /* =========================================================
+       SERVICES
+    ========================================================= */
+
+    .service-list {
+
+        padding:
+                0 20px 20px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .service-row {
+
+        padding: 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        border:
+                1px solid #F5E9EC;
+
+        border-radius: 11px;
+
+        transition: .2s ease;
+    }
+
+    .service-row:hover {
+
+        background:
+                #FFFAFB;
+
+        border-color:
+                #EBC9D0;
+    }
+
+    .service-icon {
+
+        width: 35px;
+        height: 35px;
+
+        flex-shrink: 0;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 10px;
+
+        color: var(--rose-gold);
+
+        background:
+                #FFF0F3;
+    }
+
+    .service-main {
+
+        flex: 1;
+
+        min-width: 0;
+    }
+
+    .service-main strong {
+
+        display: block;
+
+        font-size: 9px;
+    }
+
+    .service-main span {
+
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+    .progress {
+
+        width: 70px;
+
+        height: 4px;
+
+        margin-top: 5px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: #F4ECEE;
+    }
+
+    .progress-bar {
+
+        height: 100%;
+
+        border-radius: 10px;
+
+        background:
+                linear-gradient(
+                        90deg,
+                        #B76E79,
+                        #D89AA5
+                );
+    }
+
+    .service-count {
+
+        text-align: right;
+    }
+
+    .service-count strong {
+
+        display: block;
+
+        font-size: 12px;
+    }
+
+    .service-count span {
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+
+    /* =========================================================
+       STAFF
+    ========================================================= */
+
+    .staff-list {
+
+        padding:
+                0 20px 20px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .staff-row {
+
+        padding: 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        border:
+                1px solid #F5E9EC;
+
+        border-radius: 11px;
+    }
+
+    .staff-avatar {
+
+        width: 35px;
+        height: 35px;
+
+        display: grid;
+        place-items: center;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        color: white;
+
+        background:
+                linear-gradient(
+                        135deg,
+                        #D28A97,
+                        #A85F6C
+                );
+
+        font-size: 8px;
+
+        font-weight: 700;
+    }
+
+    .staff-main {
+
+        flex: 1;
+
+        min-width: 0;
+    }
+
+    .staff-main strong {
+
+        display: block;
+
+        font-size: 9px;
+    }
+
+    .staff-main span {
+
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+    .staff-stats {
+
+        display: flex;
+
+        gap: 7px;
+    }
+
+    .staff-stat {
+
+        min-width: 37px;
+
+        text-align: center;
+    }
+
+    .staff-stat strong {
+
+        display: block;
+
+        font-size: 10px;
+    }
+
+    .staff-stat span {
+
+        display: block;
+
+        margin-top: 1px;
+
+        color: var(--muted);
+
+        font-size: 6px;
+    }
+
+
+    /* =========================================================
+       QUICK ACTIONS
+    ========================================================= */
+
+    .quick-card {
+
+        padding-bottom: 20px;
+    }
+
+    .quick-actions {
+
+        padding:
+                0 20px;
+
+        display: grid;
+
+        grid-template-columns:
+        repeat(6, 1fr);
+
+        gap: 9px;
+    }
+
+    .quick-action {
+
+        min-height: 100px;
+
+        padding: 12px 8px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: 12px;
+
+        transition: .2s ease;
+    }
+
+    .quick-action:hover {
+
+        transform:
+                translateY(-2px);
+
+        border-color:
+                #E4B9C1;
+
+        background:
+                #FFF8FA;
+
+        box-shadow:
+                var(--shadow-sm);
+    }
+
+    .quick-icon {
+
+        width: 38px;
+        height: 38px;
+
+        display: grid;
+        place-items: center;
+
+        margin-bottom: 7px;
+
+        border-radius: 10px;
+    }
+
+    .quick-icon.pink {
+        color: var(--rose-gold);
+        background: #FFF0F3;
+    }
+
+    .quick-icon.gold {
+        color: #B9872E;
+        background: #FFF7E6;
+    }
+
+    .quick-icon.purple {
+        color: var(--purple);
+        background: #F4EFFA;
+    }
+
+    .quick-icon.green {
+        color: var(--success);
+        background: #EAF7F1;
+    }
+
+    .quick-icon.blue {
+        color: var(--info);
+        background: #EDF5FC;
+    }
+
+    .quick-icon.rose {
+        color: #C66778;
+        background: #FDECEF;
+    }
+
+    .quick-action strong {
+
+        display: block;
+
+        font-size: 8px;
+    }
+
+    .quick-action span {
+
+        display: block;
+
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+
+    /* =========================================================
+       EMPTY / ERROR
+    ========================================================= */
+
+    .empty-state,
+    .error-state {
+
+        padding:
+                35px 20px;
+
+        text-align: center;
+    }
+
+    .empty-state i,
+    .error-state i {
+
+        display: block;
+
+        margin-bottom: 9px;
+
+        color: #D8A5AE;
+
+        font-size: 25px;
+    }
+
+    .empty-state strong,
+    .error-state strong {
+
+        display: block;
+
+        font-size: 10px;
+    }
+
+    .empty-state span,
+    .error-state span {
+
+        display: block;
+
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+    }
+
+    .retry-button {
+
+        margin-top: 11px;
+
+        padding:
+                7px 11px;
+
+        border-radius: 8px;
+
+        color: white;
+
+        background:
+                var(--rose-gold);
+
+        font-size: 8px;
+
+        font-weight: 600;
+    }
+
+
+    /* =========================================================
+       MOBILE APPOINTMENTS
+    ========================================================= */
+
+    .mobile-appointments {
+        display: none;
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    .toast-container {
+
+        position: fixed;
+
+        right: 22px;
+        top: 85px;
+
+        z-index: 3000;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .toast {
+
+        min-width: 270px;
+
+        padding: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        background: white;
+
+        border:
+                1px solid var(--border);
+
+        border-radius: 12px;
+
+        box-shadow:
+                var(--shadow-lg);
+
+        animation:
+                toastIn .25s ease;
+    }
+
+    .toast-icon {
+
+        width: 30px;
+        height: 30px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 9px;
+    }
+
+    .toast.success .toast-icon {
+
+        color: var(--success);
+
+        background: #EAF7F1;
+    }
+
+    .toast.error .toast-icon {
+
+        color: var(--danger);
+
+        background: #FDEDEF;
+    }
+
+    .toast strong {
+
+        display: block;
+
+        font-size: 9px;
+    }
+
+    .toast span {
+
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 7px;
+    }
+
+    @keyframes toastIn {
+
+        from {
+            opacity: 0;
+            transform: translateX(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1250px) {
+
+        .stats-grid {
+            grid-template-columns:
+            repeat(3, 1fr);
+        }
+
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .quick-actions {
+            grid-template-columns:
+            repeat(3, 1fr);
+        }
+    }
+
+
+    @media (max-width: 1000px) {
+
+        .today-card {
+            overflow-x: auto;
+        }
+
+        .today-heading {
+            min-width: 190px;
+        }
+
+        .filter-card {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .filter-controls {
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .two-column {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    @media (max-width: 760px) {
+
+        .sidebar {
+
+            transform:
+                    translateX(-100%);
+        }
+
+        .sidebar.mobile-open {
+
+            transform:
+                    translateX(0);
+        }
+
+        .sidebar-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 999;
+
+            background:
+                    rgba(43,32,36,.4);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: .2s ease;
+        }
+
+        .sidebar-overlay.open {
+
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+        .main-wrapper {
+
+            margin-left: 0;
+        }
+
+        .content {
+
+            padding: 15px;
+        }
+
+        .topbar {
+
+            padding:
+                    0 15px;
+        }
+
+        .topbar-title,
+        .profile-details,
+        .topbar-date {
+
+            display: none;
+        }
+
+        .welcome-banner {
+
+            align-items: flex-start;
+
+            flex-direction: column;
+
+            padding: 25px;
+        }
+
+        .welcome-actions {
+
+            width: 100%;
+        }
+
+        .welcome-actions .btn {
+
+            flex: 1;
+        }
+
+        .stats-grid {
+
+            grid-template-columns:
+            repeat(2, 1fr);
+        }
+
+        .filter-controls {
+
+            display: grid;
+
+            grid-template-columns:
+            1fr 1fr;
+
+            width: 100%;
+        }
+
+        .filter-controls select,
+        .filter-controls .btn {
+
+            width: 100%;
+        }
+
+        .filter-controls select {
+
+            grid-column:
+                    1 / -1;
+        }
+
+        .filter-controls .btn {
+
+            grid-column:
+                    1 / -1;
+        }
+
+        .table-container {
+
+            display: none;
+        }
+
+        .mobile-appointments {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+            padding:
+                    0 14px 15px;
+        }
+
+        .mobile-appointment {
+
+            padding: 11px;
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 10px;
+        }
+
+        .mobile-top,
+        .mobile-bottom {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 8px;
+        }
+
+        .mobile-top strong {
+
+            font-size: 9px;
+        }
+
+        .mobile-bottom {
+
+            margin-top: 6px;
+
+            color: var(--muted);
+
+            font-size: 7px;
+        }
+
+        .quick-actions {
+
+            grid-template-columns:
+            repeat(2, 1fr);
+        }
+    }
+
+
+    @media (max-width: 480px) {
+
+        .stats-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+        .filter-controls {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .date-input,
+        .date-input input,
+        .filter-controls select,
+        .filter-controls .btn {
+
+            width: 100%;
+        }
+
+        .welcome-content h1 {
+
+            font-size: 25px;
+        }
+
+        .welcome-actions {
+
+            flex-direction: column;
+        }
+
+        .quick-actions {
+
+            grid-template-columns: 1fr;
+        }
+
+        .today-stat {
+
+            min-width: 90px;
+        }
+    }</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <div class="brand-logo">
+            <i class="fas fa-spa"></i>
+        </div>
+
+        <div class="brand-info">
+            <h2>Pink Beauty</h2>
+            <span>Salon Management</span>
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <div class="nav-section-title">MAIN</div>
+
+        <a href="Dashboard.html" class="nav-item active">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="CustomerManagement.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Customer Management</span>
+        </a>
+
+        <a href="StaffManagement.html" class="nav-item">
+            <i class="fas fa-user-tie"></i>
+            <span>Staff Management</span>
+        </a>
+
+        <a href="ServiceManagement.html" class="nav-item">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>Service Management</span>
+        </a>
+
+        <a href="AppointmentManagement.html" class="nav-item">
+            <i class="fas fa-calendar-check"></i>
+            <span>Appointment Management</span>
+        </a>
+
+
+        <div class="nav-section-title">BUSINESS</div>
+
+        <a href="ProductManagement.html" class="nav-item">
+            <i class="fas fa-box"></i>
+            <span>Product Management</span>
+        </a>
+
+        <a href="InvoiceManagement.html" class="nav-item">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Invoice Management</span>
+        </a>
+
+        <a href="FeedbackManagement.html" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Feedback & Ratings</span>
+        </a>
+
+        <a href="Reports.html" class="nav-item">
+            <i class="fas fa-chart-pie"></i>
+            <span>Reports & Analytics</span>
+        </a>
+
+
+        <div class="nav-section-title">SYSTEM</div>
+
+        <a href="Settings.html" class="nav-item">
+            <i class="fas fa-sliders"></i>
+            <span>Settings</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-user">
+
+        <div class="user-avatar" id="sidebarAvatar">
+            PB
+        </div>
+
+        <div class="user-details">
+
+            <strong id="sidebarUserName">
+                Salon Manager
+            </strong>
+
+            <span id="sidebarUserRole">
+            Administrator
+        </span>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="main-wrapper" id="mainWrapper">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+
+        <div class="topbar-title">
+
+            <span>Salon Management</span>
+
+            <strong>Dashboard</strong>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <button class="icon-button"
+                    id="refreshButton"
+                    title="Refresh Dashboard">
+
+                <i class="fas fa-rotate"></i>
+
+            </button>
+
+
+            <div class="topbar-date">
+
+                <i class="far fa-calendar"></i>
+
+                <span id="topbarDate">—</span>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar" id="profileAvatar">
+                    PB
+                </div>
+
+                <div class="profile-details">
+
+                    <strong id="profileUserName">
+                        Salon Manager
+                    </strong>
+
+                    <span id="profileUserRole">
+            Administrator
+        </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <!-- =====================================================
+             WELCOME BANNER
+        ====================================================== -->
+
+        <section class="welcome-banner">
+
+            <div class="welcome-content">
+
+                <span class="welcome-label">
+                    <i class="fas fa-sparkles"></i>
+                    Luxury Beauty Meets Smart Technology
+                </span>
+
+                <h1 id="welcomeTitle">
+                    Good Morning
+                </h1>
+
+                <p>
+                    Welcome back to Pink Beauty Salon.
+                    Monitor your appointments, revenue, customers
+                    and team performance from one place.
+                </p>
+
+                <div class="welcome-date">
+
+                    <i class="far fa-clock"></i>
+
+                    <span id="welcomeDate">—</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="welcome-actions">
+
+                <button class="btn btn-white"
+                        id="newAppointmentButton">
+
+                    <i class="fas fa-calendar-plus"></i>
+
+                    New Appointment
+
+                </button>
+
+
+                <button class="btn btn-outline-light"
+                        id="reportsButton">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Reports
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DATE FILTER
+        ====================================================== -->
+
+        <section class="filter-card">
+
+            <div class="filter-heading">
+
+                <div class="filter-icon">
+
+                    <i class="fas fa-calendar-days"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>Dashboard Period</strong>
+
+                    <span>
+                        Select the period you want to analyse
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-controls">
+
+                <div class="date-input">
+
+                    <label for="fromDate">From</label>
+
+                    <input type="date" id="fromDate">
+
+                </div>
+
+
+                <div class="date-input">
+
+                    <label for="toDate">To</label>
+
+                    <input type="date" id="toDate">
+
+                </div>
+
+
+                <select id="quickRange">
+
+                    <option value="">Quick Range</option>
+                    <option value="today">Today</option>
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                    <option value="month">This Month</option>
+
+                </select>
+
+
+                <button class="btn btn-primary"
+                        id="applyFilterButton">
+
+                    <i class="fas fa-filter"></i>
+
+                    Apply
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             KPI CARDS
+        ====================================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- Revenue -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon pink">
+                        <i class="fas fa-coins"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Paid
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="totalRevenue">
+                    LKR 0.00
+                </div>
+
+                <div class="stat-label">
+                    Total Revenue
+                </div>
+
+            </article>
+
+
+            <!-- Paid -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon gold">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Collected
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="paidRevenue">
+                    LKR 0.00
+                </div>
+
+                <div class="stat-label">
+                    Paid Revenue
+                </div>
+
+            </article>
+
+
+            <!-- Pending -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon orange">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Pending
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="pendingAmount">
+                    LKR 0.00
+                </div>
+
+                <div class="stat-label">
+                    Pending Amount
+                </div>
+
+            </article>
+
+
+            <!-- Appointments -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon blue">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Period
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="totalAppointments">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Total Appointments
+                </div>
+
+            </article>
+
+
+            <!-- Customers -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon green">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Active
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="activeCustomers">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Active Customers
+                </div>
+
+            </article>
+
+
+            <!-- Staff -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon purple">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Team
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="totalStaff">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Total Staff
+                </div>
+
+            </article>
+
+
+            <!-- Services -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon rose">
+                        <i class="fas fa-hand-sparkles"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Active
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="totalServices">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Total Services
+                </div>
+
+            </article>
+
+
+            <!-- Today -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon teal">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+
+                    <span class="stat-tag">
+                        Today
+                    </span>
+
+                </div>
+
+                <div class="stat-value"
+                     id="todayAppointments">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Today's Appointments
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             TODAY OVERVIEW
+        ====================================================== -->
+
+        <section class="today-card">
+
+            <div class="today-heading">
+
+                <div class="today-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+
+                <div>
+
+                    <h3>Today's Overview</h3>
+
+                    <p>
+                        Live appointment activity
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="today-stat">
+
+                <strong id="todayScheduled">0</strong>
+                <span>Scheduled</span>
+
+            </div>
+
+
+            <div class="today-stat">
+
+                <strong id="todayConfirmed">0</strong>
+                <span>Confirmed</span>
+
+            </div>
+
+
+            <div class="today-stat">
+
+                <strong id="todayCompleted">0</strong>
+                <span>Completed</span>
+
+            </div>
+
+
+            <div class="today-stat">
+
+                <strong id="todayCancelled">0</strong>
+                <span>Cancelled</span>
+
+            </div>
+
+
+            <div class="today-stat">
+
+                <strong id="todayNoShow">0</strong>
+                <span>No Show</span>
+
+            </div>
+
+
+            <div class="today-stat revenue">
+
+                <strong id="todayRevenue">
+                    LKR 0.00
+                </strong>
+
+                <span>Today's Revenue</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CHARTS
+        ====================================================== -->
+
+        <section class="charts-grid">
+
+
+            <!-- Revenue -->
+
+            <article class="card chart-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            FINANCIAL PERFORMANCE
+                        </span>
+
+                        <h2>Revenue Analytics</h2>
+
+                        <p>
+                            Paid revenue across the selected period
+                        </p>
+
+                    </div>
+
+
+                    <div class="chart-total">
+
+                        <span>Total</span>
+
+                        <strong id="chartRevenueTotal">
+                            LKR 0.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="revenueChart"></canvas>
+
+                </div>
+
+            </article>
+
+
+            <!-- Appointments -->
+
+            <article class="card chart-card appointment-chart">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            APPOINTMENT PERFORMANCE
+                        </span>
+
+                        <h2>Appointment Overview</h2>
+
+                        <p>
+                            Appointment status distribution
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="donut-container">
+
+                    <canvas id="appointmentChart"></canvas>
+
+                    <div class="donut-center">
+
+                        <strong id="donutTotal">
+                            0
+                        </strong>
+
+                        <span>
+                            Appointments
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-legend"
+                     id="appointmentLegend">
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             RECENT APPOINTMENTS
+        ====================================================== -->
+
+        <section class="card">
+
+            <div class="card-header section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        LATEST ACTIVITY
+                    </span>
+
+                    <h2>Recent Appointments</h2>
+
+                    <p>
+                        Latest appointments in the selected period
+                    </p>
+
+                </div>
+
+
+                <a href="AppointmentManagement.html"
+                   class="view-link">
+
+                    View All
+
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Staff</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="recentAppointmentsBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="mobile-appointments"
+                 id="mobileAppointments">
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TOP SERVICES + STAFF
+        ====================================================== -->
+
+        <section class="two-column">
+
+
+            <!-- TOP SERVICES -->
+
+            <article class="card">
+
+                <div class="card-header section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            SERVICE PERFORMANCE
+                        </span>
+
+                        <h2>Top Services</h2>
+
+                        <p>
+                            Most booked services
+                        </p>
+
+                    </div>
+
+
+                    <a href="ServiceManagement.html"
+                       class="view-link">
+
+                        View All
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="service-list"
+                     id="topServicesList">
+                </div>
+
+            </article>
+
+
+            <!-- STAFF -->
+
+            <article class="card">
+
+                <div class="card-header section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            TEAM PERFORMANCE
+                        </span>
+
+                        <h2>Staff Performance</h2>
+
+                        <p>
+                            Appointment activity by staff
+                        </p>
+
+                    </div>
+
+
+                    <a href="StaffManagement.html"
+                       class="view-link">
+
+                        View All
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="staff-list"
+                     id="staffPerformanceList">
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <section class="card quick-card">
+
+            <div class="card-header section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        SHORTCUTS
+                    </span>
+
+                    <h2>Quick Actions</h2>
+
+                    <p>
+                        Access common salon management tasks
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+
+                <a href="AppointmentManagement.html"
+                   class="quick-action">
+
+                    <div class="quick-icon pink">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+
+                    <strong>New Appointment</strong>
+
+                    <span>Book a client</span>
+
+                </a>
+
+
+                <a href="CustomerManagement.html"
+                   class="quick-action">
+
+                    <div class="quick-icon gold">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+
+                    <strong>Add Customer</strong>
+
+                    <span>Create customer</span>
+
+                </a>
+
+
+                <a href="ProductManagement.html"
+                   class="quick-action">
+
+                    <div class="quick-icon purple">
+                        <i class="fas fa-box"></i>
+                    </div>
+
+                    <strong>Products</strong>
+
+                    <span>Manage products</span>
+
+                </a>
+
+
+                <a href="InvoiceManagement.html"
+                   class="quick-action">
+
+                    <div class="quick-icon green">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+
+                    <strong>Invoices</strong>
+
+                    <span>Manage billing</span>
+
+                </a>
+
+
+                <a href="Reports.html"
+                   class="quick-action">
+
+                    <div class="quick-icon blue">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+
+                    <strong>Reports</strong>
+
+                    <span>View analytics</span>
+
+                </a>
+
+
+                <a href="FeedbackManagement.html"
+                   class="quick-action">
+
+                    <div class="quick-icon rose">
+                        <i class="fas fa-star"></i>
+                    </div>
+
+                    <strong>Feedback</strong>
+
+                    <span>Review ratings</span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- Toast -->
+
+<div class="toast-container"
+     id="toastContainer">
+</div>
+
+
+<script >/* =========================================================
+   PINK BEAUTY SALON
+   DASHBOARD JAVASCRIPT
+========================================================= */
+
+
+/* =========================================================
+   API CONFIGURATION
+========================================================= */
+
+const API_BASE_URL =
+    "http://localhost:8080/api/v1/dashboard";
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let dashboardData = null;
+
+let revenueChart = null;
+
+let appointmentChart = null;
+
+
+/* =========================================================
+   DOM READY
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    initializeDates();
+
+    initializeSidebar();
+
+    initializeEvents();
+
+    loadDashboard();
+
+});
+
+
+/* =========================================================
+   INITIAL DATES
+========================================================= */
+
+function initializeDates() {
+
+    const today = new Date();
+
+    const firstDay =
+        new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            1
+        );
+
+    document.getElementById("fromDate").value =
+        formatInputDate(firstDay);
+
+    document.getElementById("toDate").value =
+        formatInputDate(today);
+
+    updateDateDisplay(today);
+}
+
+
+/* =========================================================
+   DATE DISPLAY
+========================================================= */
+
+function updateDateDisplay(date) {
+
+    const formatted =
+        date.toLocaleDateString(
+            "en-LK",
+            {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+    document.getElementById("topbarDate")
+        .textContent = formatted;
+
+    document.getElementById("welcomeDate")
+        .textContent = formatted;
+
+
+    const hour = date.getHours();
+
+    let greeting = "Good Evening";
+
+    if (hour < 12) {
+
+        greeting = "Good Morning";
+
+    } else if (hour < 17) {
+
+        greeting = "Good Afternoon";
+
+    }
+
+    document.getElementById("welcomeTitle")
+        .textContent = greeting;
+}
+
+
+/* =========================================================
+   INPUT DATE FORMAT
+========================================================= */
+
+function formatInputDate(date) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function initializeSidebar() {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const toggle =
+        document.getElementById("sidebarToggle");
+
+    const overlay =
+        document.getElementById("sidebarOverlay");
+
+
+    toggle.addEventListener(
+        "click",
+        () => {
+
+            if (window.innerWidth <= 760) {
+
+                sidebar.classList.toggle(
+                    "mobile-open"
+                );
+
+                overlay.classList.toggle(
+                    "open"
+                );
+
+            }
+
+        }
+    );
+
+
+    overlay.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.remove(
+                "mobile-open"
+            );
+
+            overlay.classList.remove(
+                "open"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+function initializeEvents() {
+
+
+    document.getElementById(
+        "refreshButton"
+    ).addEventListener(
+        "click",
+        () => {
+
+            loadDashboard(true);
+
+        }
+    );
+
+
+    document.getElementById(
+        "applyFilterButton"
+    ).addEventListener(
+        "click",
+        () => {
+
+            loadDashboard();
+
+        }
+    );
+
+
+    document.getElementById(
+        "quickRange"
+    ).addEventListener(
+        "change",
+        applyQuickRange
+    );
+
+
+    document.getElementById(
+        "newAppointmentButton"
+    ).addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "AppointmentManagement.html";
+
+        }
+    );
+
+
+    document.getElementById(
+        "reportsButton"
+    ).addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "Reports.html";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   QUICK DATE RANGE
+========================================================= */
+
+function applyQuickRange() {
+
+    const value =
+        document.getElementById(
+            "quickRange"
+        ).value;
+
+
+    if (!value) {
+        return;
+    }
+
+
+    const today =
+        new Date();
+
+    let fromDate =
+        new Date(today);
+
+
+    if (value === "today") {
+
+        fromDate =
+            new Date(today);
+
+    }
+
+
+    else if (value === "7") {
+
+        fromDate.setDate(
+            today.getDate() - 6
+        );
+
+    }
+
+
+    else if (value === "30") {
+
+        fromDate.setDate(
+            today.getDate() - 29
+        );
+
+    }
+
+
+    else if (value === "90") {
+
+        fromDate.setDate(
+            today.getDate() - 89
+        );
+
+    }
+
+
+    else if (value === "month") {
+
+        fromDate =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                1
+            );
+
+    }
+
+
+    document.getElementById(
+        "fromDate"
+    ).value =
+        formatInputDate(fromDate);
+
+
+    document.getElementById(
+        "toDate"
+    ).value =
+        formatInputDate(today);
+
+
+    loadDashboard();
+}
+
+
+/* =========================================================
+   LOAD DASHBOARD
+========================================================= */
+
+async function loadDashboard(
+    showRefreshMessage = false
+) {
+
+    const fromDate =
+        document.getElementById(
+            "fromDate"
+        ).value;
+
+    const toDate =
+        document.getElementById(
+            "toDate"
+        ).value;
+
+
+    if (!fromDate || !toDate) {
+
+        showToast(
+            "error",
+            "Invalid Date",
+            "Please select both dates."
+        );
+
+        return;
+    }
+
+
+    if (fromDate > toDate) {
+
+        showToast(
+            "error",
+            "Invalid Period",
+            "From date cannot be after To date."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        document.body.style.cursor =
+            "wait";
+
+
+        const url =
+            `${API_BASE_URL}/date-range` +
+            `?fromDate=${encodeURIComponent(fromDate)}` +
+            `&toDate=${encodeURIComponent(toDate)}`;
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        dashboardData =
+            await response.json();
+
+
+        renderDashboard(
+            dashboardData
+        );
+
+
+        if (showRefreshMessage) {
+
+            showToast(
+                "success",
+                "Dashboard Refreshed",
+                "Latest salon data has been loaded."
+            );
+
+        }
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Dashboard API Error:",
+            error
+        );
+
+
+        showToast(
+            "error",
+            "Dashboard Error",
+            "Unable to load dashboard data."
+        );
+
+
+        renderErrorState();
+
+    }
+
+
+    finally {
+
+        document.body.style.cursor =
+            "default";
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER DASHBOARD
+========================================================= */
+
+function renderDashboard(data) {
+
+    renderStats(data);
+
+    renderTodayOverview(data);
+
+    renderRevenueChart(data);
+
+    renderAppointmentChart(data);
+
+    renderRecentAppointments(
+        data.recentAppointments || []
+    );
+
+    renderTopServices(
+        data.topServices || []
+    );
+
+    renderStaffPerformance(
+        data.topStaff || []
+    );
+
+}
+
+
+/* =========================================================
+   KPI STATS
+========================================================= */
+
+function renderStats(data) {
+
+    document.getElementById(
+        "totalRevenue"
+    ).textContent =
+        formatCurrency(
+            data.totalRevenue
+        );
+
+
+    document.getElementById(
+        "paidRevenue"
+    ).textContent =
+        formatCurrency(
+            data.paidRevenue
+        );
+
+
+    document.getElementById(
+        "pendingAmount"
+    ).textContent =
+        formatCurrency(
+            data.pendingAmount
+        );
+
+
+    document.getElementById(
+        "totalAppointments"
+    ).textContent =
+        formatNumber(
+            data.totalAppointments
+        );
+
+
+    document.getElementById(
+        "activeCustomers"
+    ).textContent =
+        formatNumber(
+            data.activeCustomers
+        );
+
+
+    document.getElementById(
+        "totalStaff"
+    ).textContent =
+        formatNumber(
+            data.totalStaff
+        );
+
+
+    document.getElementById(
+        "totalServices"
+    ).textContent =
+        formatNumber(
+            data.totalServices
+        );
+
+
+    document.getElementById(
+        "todayAppointments"
+    ).textContent =
+        formatNumber(
+            data.todayAppointments
+        );
+
+
+    document.getElementById(
+        "chartRevenueTotal"
+    ).textContent =
+        formatCurrency(
+            data.totalRevenue
+        );
+
+}
+
+
+/* =========================================================
+   TODAY OVERVIEW
+========================================================= */
+
+function renderTodayOverview(data) {
+
+    document.getElementById(
+        "todayScheduled"
+    ).textContent =
+        formatNumber(
+            data.todayScheduled
+        );
+
+
+    document.getElementById(
+        "todayConfirmed"
+    ).textContent =
+        formatNumber(
+            data.todayConfirmed
+        );
+
+
+    document.getElementById(
+        "todayCompleted"
+    ).textContent =
+        formatNumber(
+            data.todayCompleted
+        );
+
+
+    document.getElementById(
+        "todayCancelled"
+    ).textContent =
+        formatNumber(
+            data.todayCancelled
+        );
+
+
+    document.getElementById(
+        "todayNoShow"
+    ).textContent =
+        formatNumber(
+            data.todayNoShow
+        );
+
+
+    document.getElementById(
+        "todayRevenue"
+    ).textContent =
+        formatCurrency(
+            data.todayRevenue
+        );
+
+}
+
+
+/* =========================================================
+   REVENUE CHART
+========================================================= */
+
+function renderRevenueChart(data) {
+
+    const analytics =
+        data.revenueAnalytics || [];
+
+
+    const labels =
+        analytics.map(
+            item =>
+                formatShortDate(
+                    item.date
+                )
+        );
+
+
+    const values =
+        analytics.map(
+            item =>
+                Number(
+                    item.revenue || 0
+                )
+        );
+
+
+    const canvas =
+        document.getElementById(
+            "revenueChart"
+        );
+
+
+    const context =
+        canvas.getContext("2d");
+
+
+    if (revenueChart) {
+
+        revenueChart.destroy();
+
+    }
+
+
+    const gradient =
+        context.createLinearGradient(
+            0,
+            0,
+            0,
+            290
+        );
+
+
+    gradient.addColorStop(
+        0,
+        "rgba(183,110,121,.25)"
+    );
+
+    gradient.addColorStop(
+        1,
+        "rgba(183,110,121,.01)"
+    );
+
+
+    revenueChart =
+        new Chart(
+            context,
+            {
+                type: "line",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Paid Revenue",
+
+                            data:
+                            values,
+
+                            borderColor:
+                                "#B76E79",
+
+                            backgroundColor:
+                            gradient,
+
+                            fill: true,
+
+                            borderWidth: 2.5,
+
+                            pointRadius:
+                                values.length > 20
+                                    ? 0
+                                    : 3,
+
+                            pointHoverRadius: 5,
+
+                            pointBackgroundColor:
+                                "#B76E79",
+
+                            pointBorderColor:
+                                "#FFFFFF",
+
+                            pointBorderWidth: 2,
+
+                            tension: .38
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    interaction: {
+
+                        intersect: false,
+
+                        mode: "index"
+
+                    },
+
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        },
+
+                        tooltip: {
+
+                            backgroundColor:
+                                "#2B2024",
+
+                            padding: 10,
+
+                            displayColors:
+                                false,
+
+                            callbacks: {
+
+                                label:
+                                    context =>
+                                        formatCurrency(
+                                            context.raw
+                                        )
+
+                            }
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        x: {
+
+                            grid: {
+                                display: false
+                            },
+
+                            ticks: {
+
+                                color:
+                                    "#8A7A82",
+
+                                font: {
+                                    size: 8
+                                },
+
+                                maxTicksLimit: 8
+
+                            },
+
+                            border: {
+                                display: false
+                            }
+
+                        },
+
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            grid: {
+
+                                color:
+                                    "#F5E9EC"
+
+                            },
+
+                            ticks: {
+
+                                color:
+                                    "#8A7A82",
+
+                                font: {
+                                    size: 8
+                                },
+
+                                callback:
+                                    value =>
+                                        formatCompactCurrency(
+                                            value
+                                        )
+
+                            },
+
+                            border: {
+                                display: false
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   APPOINTMENT CHART
+========================================================= */
+
+function renderAppointmentChart(data) {
+
+    const values = [
+
+        Number(
+            data.scheduledAppointments || 0
+        ),
+
+        Number(
+            data.confirmedAppointments || 0
+        ),
+
+        Number(
+            data.completedAppointments || 0
+        ),
+
+        Number(
+            data.cancelledAppointments || 0
+        ),
+
+        Number(
+            data.noShowAppointments || 0
+        )
+
+    ];
+
+
+    const labels = [
+
+        "Scheduled",
+        "Confirmed",
+        "Completed",
+        "Cancelled",
+        "No Show"
+
+    ];
+
+
+    const colors = [
+
+        "#D59B42",
+        "#6E9BC2",
+        "#5BAA89",
+        "#C85D68",
+        "#8A7A82"
+
+    ];
+
+
+    document.getElementById(
+        "donutTotal"
+    ).textContent =
+        formatNumber(
+            data.totalAppointments
+        );
+
+
+    const canvas =
+        document.getElementById(
+            "appointmentChart"
+        );
+
+
+    const context =
+        canvas.getContext("2d");
+
+
+    if (appointmentChart) {
+
+        appointmentChart.destroy();
+
+    }
+
+
+    appointmentChart =
+        new Chart(
+            context,
+            {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [
+
+                        {
+
+                            data: values,
+
+                            backgroundColor:
+                            colors,
+
+                            borderColor:
+                                "#FFFFFF",
+
+                            borderWidth: 4,
+
+                            hoverOffset: 5
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    cutout: "72%",
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        },
+
+                        tooltip: {
+
+                            backgroundColor:
+                                "#2B2024",
+
+                            padding: 10,
+
+                            callbacks: {
+
+                                label:
+                                    context =>
+                                        ` ${context.label}: ${formatNumber(context.raw)}`
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+
+    document.getElementById(
+        "appointmentLegend"
+    ).innerHTML =
+
+        labels.map(
+            (label, index) => `
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-dot"
+                        style="background:${colors[index]}"
+                    ></span>
+
+                    ${escapeHtml(label)}
+                    (${values[index]})
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =========================================================
+   RECENT APPOINTMENTS
+========================================================= */
+
+function renderRecentAppointments(
+    appointments
+) {
+
+    const tableBody =
+        document.getElementById(
+            "recentAppointmentsBody"
+        );
+
+
+    const mobileContainer =
+        document.getElementById(
+            "mobileAppointments"
+        );
+
+
+    if (!appointments.length) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    ${emptyState(
+            "No Appointments Found",
+            "There are no appointments for this period."
+        )}
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        mobileContainer.innerHTML =
+            emptyState(
+                "No Appointments Found",
+                "There are no appointments for this period."
+            );
+
+        return;
+    }
+
+
+    tableBody.innerHTML =
+
+        appointments.map(
+            appointment => `
+
+                <tr>
+
+                    <td>
+
+                        <div class="customer-cell">
+
+                            <div class="avatar-small">
+
+                                ${escapeHtml(
+                getInitials(
+                    appointment.customerName
+                )
+            )}
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="primary-text">
+
+                                    ${escapeHtml(
+                appointment.customerName ||
+                "Unknown Customer"
+            )}
+
+                                </div>
+
+                                <div class="secondary-text">
+
+                                    #${appointment.appointmentId ?? "—"}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                appointment.serviceName || "—"
+            )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                appointment.staffName || "—"
+            )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDate(
+                appointment.appointmentDate
+            )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatTime(
+                appointment.startTime
+            )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                appointment.duration
+                    ? appointment.duration + " min"
+                    : "—"
+            }
+
+                    </td>
+
+
+                    <td>
+
+                        ${getStatusBadge(
+                appointment.status
+            )}
+
+                    </td>
+
+                </tr>
+
+            `
+        ).join("");
+
+
+    mobileContainer.innerHTML =
+
+        appointments.map(
+            appointment => `
+
+                <div class="mobile-appointment">
+
+                    <div class="mobile-top">
+
+                        <strong>
+
+                            ${escapeHtml(
+                appointment.customerName ||
+                "Unknown Customer"
+            )}
+
+                        </strong>
+
+                        ${getStatusBadge(
+                appointment.status
+            )}
+
+                    </div>
+
+
+                    <div class="mobile-bottom">
+
+                        <span>
+
+                            ${escapeHtml(
+                appointment.serviceName || "—"
+            )}
+
+                        </span>
+
+                        <span>
+
+                            ${formatDate(
+                appointment.appointmentDate
+            )}
+
+                            ·
+
+                            ${formatTime(
+                appointment.startTime
+            )}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =========================================================
+   TOP SERVICES
+========================================================= */
+
+function renderTopServices(
+    services
+) {
+
+    const container =
+        document.getElementById(
+            "topServicesList"
+        );
+
+
+    if (!services.length) {
+
+        container.innerHTML =
+            emptyState(
+                "No Service Activity",
+                "No service appointments were found."
+            );
+
+        return;
+    }
+
+
+    const maxAppointments =
+        Math.max(
+            ...services.map(
+                service =>
+                    Number(
+                        service.totalAppointments || 0
+                    )
+            ),
+            1
+        );
+
+
+    container.innerHTML =
+
+        services.map(
+            service => {
+
+                const count =
+                    Number(
+                        service.totalAppointments || 0
+                    );
+
+
+                const progress =
+                    Math.max(
+                        7,
+                        (count /
+                            maxAppointments) *
+                        100
+                    );
+
+
+                return `
+
+                    <div class="service-row">
+
+                        <div class="service-icon">
+
+                            <i class="${getServiceIcon(
+                    service.category
+                )}"></i>
+
+                        </div>
+
+
+                        <div class="service-main">
+
+                            <strong>
+
+                                ${escapeHtml(
+                    service.serviceName ||
+                    "Unnamed Service"
+                )}
+
+                            </strong>
+
+
+                            <span>
+
+                                ${escapeHtml(
+                    service.category ||
+                    "General"
+                )}
+
+                                ·
+
+                                ${formatCurrency(
+                    service.price
+                )}
+
+                            </span>
+
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar"
+                                    style="width:${progress}%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-count">
+
+                            <strong>
+                                ${count}
+                            </strong>
+
+                            <span>
+                                bookings
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================================================
+   STAFF PERFORMANCE
+========================================================= */
+
+function renderStaffPerformance(
+    staffList
+) {
+
+    const container =
+        document.getElementById(
+            "staffPerformanceList"
+        );
+
+
+    if (!staffList.length) {
+
+        container.innerHTML =
+            emptyState(
+                "No Staff Activity",
+                "No staff appointment activity was found."
+            );
+
+        return;
+    }
+
+
+    container.innerHTML =
+
+        staffList.map(
+            staff => `
+
+                <div class="staff-row">
+
+                    <div class="staff-avatar">
+
+                        ${escapeHtml(
+                getInitials(
+                    staff.staffName
+                )
+            )}
+
+                    </div>
+
+
+                    <div class="staff-main">
+
+                        <strong>
+
+                            ${escapeHtml(
+                staff.staffName ||
+                "Unknown Staff"
+            )}
+
+                        </strong>
+
+                        <span>
+
+                            ${escapeHtml(
+                staff.position ||
+                "Staff Member"
+            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="staff-stats">
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                staff.totalAppointments
+            )}
+                            </strong>
+
+                            <span>
+                                Total
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                staff.completedAppointments
+            )}
+                            </strong>
+
+                            <span>
+                                Done
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                staff.cancelledAppointments
+            )}
+                            </strong>
+
+                            <span>
+                                Cancel
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                staff.noShowAppointments
+            )}
+                            </strong>
+
+                            <span>
+                                No Show
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function getStatusBadge(status) {
+
+    const normalized =
+        String(
+            status || ""
+        )
+            .toLowerCase()
+            .replace(
+                /\s+/g,
+                "_"
+            );
+
+
+    const labels = {
+
+        scheduled: "Scheduled",
+
+        confirmed: "Confirmed",
+
+        completed: "Completed",
+
+        cancelled: "Cancelled",
+
+        no_show: "No Show"
+
+    };
+
+
+    return `
+
+        <span class="status status-${escapeHtml(
+        normalized
+    )}">
+
+            ${escapeHtml(
+        labels[normalized] ||
+        status ||
+        "Unknown"
+    )}
+
+        </span>
+
+    `;
+}
+
+
+/* =========================================================
+   SERVICE ICON
+========================================================= */
+
+function getServiceIcon(category) {
+
+    const value =
+        String(
+            category || ""
+        ).toLowerCase();
+
+
+    if (value.includes("hair")) {
+
+        return "fas fa-scissors";
+
+    }
+
+
+    if (value.includes("nail")) {
+
+        return "fas fa-hand-sparkles";
+
+    }
+
+
+    if (
+        value.includes("skin") ||
+        value.includes("facial")
+    ) {
+
+        return "fas fa-face-smile";
+
+    }
+
+
+    if (value.includes("make")) {
+
+        return "fas fa-wand-magic-sparkles";
+
+    }
+
+
+    return "fas fa-spa";
+}
+
+
+/* =========================================================
+   INITIALS
+========================================================= */
+
+function getInitials(name) {
+
+    if (!name) {
+        return "NA";
+    }
+
+
+    const words =
+        String(name)
+            .trim()
+            .split(/\s+/);
+
+
+    if (words.length === 1) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
+}
+
+
+/* =========================================================
+   CURRENCY
+========================================================= */
+
+function formatCurrency(value) {
+
+    const number =
+        Number(value || 0);
+
+
+    return new Intl.NumberFormat(
+        "en-LK",
+        {
+            style: "currency",
+            currency: "LKR",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ).format(number);
+}
+
+
+/* =========================================================
+   COMPACT CURRENCY
+========================================================= */
+
+function formatCompactCurrency(value) {
+
+    const number =
+        Number(value || 0);
+
+
+    if (number >= 1000000) {
+
+        return `LKR ${(number / 1000000).toFixed(1)}M`;
+
+    }
+
+
+    if (number >= 1000) {
+
+        return `LKR ${(number / 1000).toFixed(0)}K`;
+
+    }
+
+
+    return `LKR ${number}`;
+}
+
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
+function formatNumber(value) {
+
+    return new Intl.NumberFormat(
+        "en-LK"
+    ).format(
+        Number(value || 0)
+    );
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(
+            `${value}T00:00:00`
+        );
+
+
+    return date.toLocaleDateString(
+        "en-LK",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
+
+/* =========================================================
+   SHORT DATE
+========================================================= */
+
+function formatShortDate(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(
+            `${value}T00:00:00`
+        );
+
+
+    return date.toLocaleDateString(
+        "en-LK",
+        {
+            day: "2-digit",
+            month: "short"
+        }
+    );
+}
+
+
+/* =========================================================
+   TIME
+========================================================= */
+
+function formatTime(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const parts =
+        value.split(":");
+
+
+    const date =
+        new Date();
+
+
+    date.setHours(
+        Number(parts[0]),
+        Number(parts[1]),
+        0,
+        0
+    );
+
+
+    return date.toLocaleTimeString(
+        "en-LK",
+        {
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+function emptyState(
+    title,
+    description
+) {
+
+    return `
+
+        <div class="empty-state">
+
+            <i class="far fa-calendar-xmark"></i>
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(description)}
+            </span>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ERROR STATE
+========================================================= */
+
+function renderErrorState() {
+
+    document.getElementById(
+        "recentAppointmentsBody"
+    ).innerHTML = `
+
+        <tr>
+
+            <td colspan="7">
+
+                ${errorState(
+        "Dashboard Data Unavailable",
+        "Check that Spring Boot is running and try again."
+    )}
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+    document.getElementById(
+        "mobileAppointments"
+    ).innerHTML =
+
+        errorState(
+            "Dashboard Data Unavailable",
+            "Check that Spring Boot is running and try again."
+        );
+
+
+    document.getElementById(
+        "topServicesList"
+    ).innerHTML =
+
+        errorState(
+            "Unable to Load Services",
+            "Dashboard API did not return service data."
+        );
+
+
+    document.getElementById(
+        "staffPerformanceList"
+    ).innerHTML =
+
+        errorState(
+            "Unable to Load Staff",
+            "Dashboard API did not return staff data."
+        );
+
+}
+
+
+function errorState(
+    title,
+    description
+) {
+
+    return `
+
+        <div class="error-state">
+
+            <i class="fas fa-triangle-exclamation"></i>
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(description)}
+            </span>
+
+            <button
+                class="retry-button"
+                onclick="loadDashboard(true)"
+            >
+
+                <i class="fas fa-rotate"></i>
+
+                Retry
+
+            </button>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    type,
+    title,
+    message
+) {
+
+    const container =
+        document.getElementById(
+            "toastContainer"
+        );
+
+
+    const icon =
+        type === "success"
+            ? "fa-check"
+            : "fa-xmark";
+
+
+    const toast =
+        document.createElement("div");
+
+
+    toast.className =
+        `toast ${type}`;
+
+
+    toast.innerHTML = `
+
+        <div class="toast-icon">
+
+            <i class="fas ${icon}"></i>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(message)}
+            </span>
+
+        </div>
+
+    `;
+
+
+    container.appendChild(toast);
+
+
+    setTimeout(
+        () => {
+
+            toast.style.opacity = "0";
+
+            toast.style.transform =
+                "translateX(25px)";
+
+            toast.style.transition =
+                "all .25s ease";
+
+
+            setTimeout(
+                () => {
+                    toast.remove();
+                },
+                250
+            );
+
+        },
+        3000
+    );
+
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
+
+    /*
+     * If no logged-in user is found
+     */
+    if (!userName) {
+        return;
+    }
+
+    /*
+     * Convert backend role to display text
+     */
+    let displayRole = "User";
+
+    switch (userRole) {
+
+        case "OWNER":
+            displayRole = "Administrator";
+            break;
+
+        case "RECEPTIONIST":
+            displayRole = "Receptionist";
+            break;
+
+        case "STAFF":
+            displayRole = "Staff";
+            break;
+
+        case "CUSTOMER":
+            displayRole = "Customer";
+            break;
+
+        default:
+            displayRole = userRole || "User";
+    }
+
+
+    /*
+     * Create initials
+     *
+     * Example:
+     * Ovindi Jayawardena → OJ
+     * Oshan → OS
+     */
+    const nameParts = userName.trim().split(/\s+/);
+
+    let initials = "";
+
+    if (nameParts.length >= 2) {
+        initials =
+            nameParts[0].charAt(0) +
+            nameParts[nameParts.length - 1].charAt(0);
+    } else {
+        initials = nameParts[0].substring(0, 2);
+    }
+
+    initials = initials.toUpperCase();
+
+
+    /*
+     * TOP RIGHT PROFILE
+     */
+    const profileName =
+        document.getElementById("profileUserName");
+
+    const profileRole =
+        document.getElementById("profileUserRole");
+
+    const profileAvatar =
+        document.getElementById("profileAvatar");
+
+
+    if (profileName) {
+        profileName.textContent = userName;
+    }
+
+    if (profileRole) {
+        profileRole.textContent = displayRole;
+    }
+
+    if (profileAvatar) {
+        profileAvatar.textContent = initials;
+    }
+
+
+    /*
+     * SIDEBAR USER
+     */
+    const sidebarUserName =
+        document.getElementById("sidebarUserName");
+
+    const sidebarUserRole =
+        document.getElementById("sidebarUserRole");
+
+    const sidebarAvatar =
+        document.getElementById("sidebarAvatar");
+
+
+    if (sidebarUserName) {
+        sidebarUserName.textContent = userName;
+    }
+
+    if (sidebarUserRole) {
+        sidebarUserRole.textContent = displayRole;
+    }
+
+    if (sidebarAvatar) {
+        sidebarAvatar.textContent = initials;
+    }
+
+});</script>
+
+</body>
+</html>

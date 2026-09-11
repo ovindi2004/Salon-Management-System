@@ -1,2698 +1,3058 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <title>Settings | PINK BEAUTY SALON</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <style>/* ============== PINK BEAUTY SALON — SETTINGS ============== */
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>/* ============================================================
+   PINK BEAUTY SALON
+   SETTINGS MANAGEMENT
+   ============================================================ */
 
   :root {
+
     --rose-gold: #B76E79;
+    --dark-rose: #9A5862;
+
     --soft-pink: #F8D7DA;
     --champagne: #E8C07D;
-    --dark-rose: #8F4F5A;
-    --bg: #FFF9FB;
+    --soft-champagne: #F6E6C4;
+
+    --background: #FFF9FB;
     --white: #FFFFFF;
-    --text: #2F2528;
-    --muted: #8A777C;
-    --success: #4CAF50;
-    --warning: #F2A93B;
-    --danger: #D9534F;
-    --accent: #B76E79;
-    --border: #F0E1E4;
-    --shadow-sm: 0 2px 8px rgba(183, 110, 121, 0.06);
-    --shadow-md: 0 8px 24px rgba(183, 110, 121, 0.10);
-    --shadow-lg: 0 16px 48px rgba(183, 110, 121, 0.14);
+
+    --dark-text: #2B2024;
+    --muted-text: #6B5D62;
+    --light-text: #8A7A82;
+
+    --border: #F0DDE1;
+
+    --success: #3D8B68;
+    --success-bg: #EAF6F0;
+
+    --danger: #C65B67;
+    --danger-bg: #FCEDEF;
+
+    --sidebar-width: 260px;
+
+    --shadow-sm:
+            0 4px 15px rgba(80, 40, 50, 0.05);
+
+    --shadow-md:
+            0 10px 30px rgba(80, 40, 50, 0.08);
+
     --radius: 16px;
-    --radius-sm: 10px;
-    --sidebar-w: 260px;
-    --sidebar-collapsed-w: 84px;
-    --header-h: 72px;
   }
 
-  /* Dark theme */
-  body.theme-dark {
-    --bg: #1F1819;
-    --white: #2A2123;
-    --text: #F5E9EB;
-    --muted: #B5A0A4;
-    --border: #3A2D30;
-    --soft-pink: #3A2A2D;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+
+  /* ============================================================
+     RESET
+     ============================================================ */
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    scroll-behavior: smooth;
+  }
 
   body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
+    font-family: "Inter", sans-serif;
+    background: var(--background);
+    color: var(--dark-text);
     min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
 
-  /* ============== SIDEBAR ============== */
+  button {
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+
+  /* ============================================================
+     APP
+     ============================================================ */
+
+  .app-container {
+    min-height: 100vh;
+  }
+
+
+  /* ============================================================
+     SIDEBAR
+     ============================================================ */
+
   .sidebar {
-    position: fixed;
-    left: 0; top: 0;
-    width: var(--sidebar-w);
+    width: var(--sidebar-width);
     height: 100vh;
-    background: linear-gradient(180deg, #FFFFFF 0%, #FFF9FB 100%);
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #FFFFFF 0%,
+                    #FFF9FB 100%
+            );
+
     border-right: 1px solid var(--border);
+
+    padding: 24px 16px;
+
     display: flex;
     flex-direction: column;
-    z-index: 200;
-    transition: width 0.3s ease, transform 0.3s ease;
+
+    z-index: 1000;
   }
 
-  body.theme-dark .sidebar {
-    background: linear-gradient(180deg, #2A2123 0%, #1F1819 100%);
-  }
+
+  /* BRAND */
 
   .sidebar-brand {
-    padding: 24px 22px;
     display: flex;
     align-items: center;
     gap: 12px;
-    border-bottom: 1px solid var(--border);
+
+    padding: 4px 8px;
   }
 
-  .brand-mark {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
-    color: #fff;
-    display: grid; place-items: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 700;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.3);
+  .brand-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--rose-gold),
+                    var(--dark-rose)
+            );
+
+    box-shadow:
+            0 8px 20px rgba(183, 110, 121, 0.22);
   }
 
-  .brand-text h1 { font-size: 17px; color: var(--text); letter-spacing: 0.5px; }
-  .brand-text span { font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
+  .brand-icon i {
+    font-size: 18px;
+  }
+
+  .sidebar-brand h2 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 17px;
+    line-height: 1;
+
+    letter-spacing: 0.4px;
+  }
+
+  .sidebar-brand span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: var(--rose-gold);
+  }
+
+  .brand-tagline {
+    padding: 0 8px;
+    margin: 13px 0 24px;
+
+    font-size: 10px;
+    line-height: 1.5;
+
+    color: var(--light-text);
+  }
+
+
+  /* NAVIGATION */
 
   .sidebar-nav {
-    flex: 1;
-    padding: 16px 14px;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  .sidebar-nav::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .sidebar-nav::-webkit-scrollbar-thumb {
+    background: var(--soft-pink);
+    border-radius: 10px;
   }
 
   .nav-item {
+    min-height: 44px;
+
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 14px;
+    gap: 12px;
+
+    padding: 0 13px;
+
+    border-radius: 11px;
+
+    color: var(--muted-text);
+
+    font-size: 12px;
     font-weight: 500;
-    transition: all 0.2s ease;
-    white-space: nowrap;
+
+    transition: 0.2s ease;
   }
 
-  .nav-item i { width: 20px; text-align: center; font-size: 16px; }
+  .nav-item i {
+    width: 18px;
+    text-align: center;
+
+    font-size: 14px;
+  }
 
   .nav-item:hover {
-    background: var(--soft-pink);
-    color: var(--rose-gold);
+    background: #FFF0F3;
+    color: var(--dark-rose);
   }
 
   .nav-item.active {
-    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(183, 110, 121, 0.3);
+    background:
+            linear-gradient(
+                    135deg,
+                    #FBE4E7,
+                    #F9DCE0
+            );
+
+    color: var(--dark-rose);
+
+    font-weight: 700;
+
+    box-shadow:
+            inset 3px 0 0 var(--rose-gold);
   }
+
+  .nav-item.active i {
+    color: var(--rose-gold);
+  }
+
+
+  /* SIDEBAR FOOTER */
 
   .sidebar-footer {
-    padding: 16px;
-    border-top: 1px solid var(--border);
+    margin-top: auto;
+
+    padding: 15px 8px 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--light-text);
+
+    font-size: 9px;
   }
 
-  .admin-card {
+  .footer-decoration {
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--soft-pink);
+    color: var(--rose-gold);
+  }
+
+
+  /* ============================================================
+     MAIN CONTENT
+     ============================================================ */
+
+  .main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+  }
+
+
+  /* ============================================================
+     TOPBAR
+     ============================================================ */
+
+  .topbar {
+    height: 76px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 32px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+  }
+
+  .topbar-title {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .breadcrumb {
+    font-size: 10px;
+    color: var(--light-text);
+
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+  }
+
+  .topbar-title h1 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--border);
+    background: var(--white);
+
+    border-radius: 10px;
+
+    color: var(--muted-text);
+
+    transition: 0.2s ease;
+  }
+
+  .icon-btn:hover {
+    border-color: var(--rose-gold);
+    color: var(--rose-gold);
+    transform: translateY(-1px);
+  }
+
+  .topbar-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--border);
+  }
+
+  .admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .profile-avatar {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--dark-rose);
+
+    background: var(--soft-pink);
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .profile-info strong {
+    font-size: 11px;
+  }
+
+  .profile-info span {
+    font-size: 9px;
+    color: var(--light-text);
+  }
+
+  .mobile-menu-btn {
+    display: none;
+
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--border);
+    background: white;
+
+    border-radius: 10px;
+
+    color: var(--dark-text);
+  }
+
+
+  /* ============================================================
+     PAGE CONTENT
+     ============================================================ */
+
+  .page-content {
+    padding: 32px;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+
+
+  /* PAGE HEADING */
+
+  .page-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 26px;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+
+    color: var(--rose-gold);
+
+    letter-spacing: 2px;
+  }
+
+  .page-heading h2 {
+    margin-top: 6px;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 30px;
+    font-weight: 600;
+  }
+
+  .page-heading p {
+    margin-top: 7px;
+
+    max-width: 680px;
+
+    color: var(--muted-text);
+
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .settings-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    background: var(--success-bg);
+    color: var(--success);
+
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .settings-status i {
+    font-size: 8px;
+  }
+
+
+  /* ============================================================
+     SETTINGS CARD
+     ============================================================ */
+
+  .settings-card {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 26px;
+
+    margin-bottom: 20px;
+
+    box-shadow: var(--shadow-sm);
+  }
+
+
+  /* CARD HEADER */
+
+  .card-header {
+    padding-bottom: 22px;
+
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid #F7E9EC;
+  }
+
+  .card-title-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+  }
+
+  .card-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-icon.rose {
+    background: #FBE7EA;
+    color: var(--rose-gold);
+  }
+
+  .card-icon.champagne {
+    background: var(--soft-champagne);
+    color: #A97931;
+  }
+
+  .card-icon.purple {
+    background: #F0E9F8;
+    color: #8B6AA8;
+  }
+
+  .card-icon.green {
+    background: #EAF6F0;
+    color: var(--success);
+  }
+
+  .card-title-wrapper h3 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .card-title-wrapper p {
+    margin-top: 5px;
+
+    color: var(--light-text);
+
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+
+  /* ============================================================
+     FORM
+     ============================================================ */
+
+  .form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+
+  .form-group {
+    min-width: 0;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--dark-text);
+
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .form-group label span {
+    color: var(--danger);
+  }
+
+  .input-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .input-wrapper > i:first-child {
+    position: absolute;
+    left: 14px;
+
+    color: var(--light-text);
+
+    font-size: 12px;
+
+    pointer-events: none;
+
+    z-index: 1;
+  }
+
+  .input-wrapper input,
+  .input-wrapper select,
+  .input-wrapper textarea {
+    width: 100%;
+
+    border: 1px solid var(--border);
+
+    background: #FFFCFD;
+
+    color: var(--dark-text);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 12px;
+
+    transition: 0.2s ease;
+  }
+
+  .input-wrapper input,
+  .input-wrapper select {
+    height: 44px;
+
+    padding: 0 14px 0 39px;
+  }
+
+  .input-wrapper textarea {
+    min-height: 95px;
+
+    padding: 13px 14px 13px 39px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+  }
+
+  .input-wrapper input:focus,
+  .input-wrapper select:focus,
+  .input-wrapper textarea:focus {
+    border-color: var(--rose-gold);
+
+    background: #FFFFFF;
+
+    box-shadow:
+            0 0 0 3px rgba(183, 110, 121, 0.08);
+  }
+
+  .input-wrapper input::placeholder,
+  .input-wrapper textarea::placeholder {
+    color: #B8A9AE;
+  }
+
+  .input-wrapper select {
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .input-wrapper .select-arrow {
+    position: absolute;
+
+    right: 14px;
+
+    color: var(--light-text);
+
+    font-size: 9px;
+
+    pointer-events: none;
+  }
+
+  .textarea-wrapper {
+    align-items: flex-start;
+  }
+
+  .textarea-wrapper > i:first-child {
+    top: 15px;
+  }
+
+  .field-help {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--light-text);
+
+    font-size: 10px;
+  }
+
+
+  /* ============================================================
+     BUSINESS HOURS
+     ============================================================ */
+
+  .hours-layout {
+    display: grid;
+
+    grid-template-columns: 1fr 45px 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .time-box {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+
+    background: #FFFCFD;
+
+    border-radius: 12px;
+  }
+
+  .time-box-icon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--soft-champagne);
+
+    color: #A97931;
+
+    flex-shrink: 0;
+  }
+
+  .time-box-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    flex: 1;
+  }
+
+  .time-box-content span {
+    color: var(--light-text);
+
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .time-box-content input {
+    border: none;
+    background: transparent;
+
+    color: var(--dark-text);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    outline: none;
+
+    width: 100%;
+  }
+
+  .time-separator {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FFF2F4;
+
+    color: var(--rose-gold);
+
+    font-size: 11px;
+  }
+
+  .business-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-top: 17px;
+
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    background: #FFF8EE;
+
+    color: #8B6B35;
+
+    font-size: 10px;
+  }
+
+  .business-note i {
+    color: #C5964A;
+  }
+
+
+  /* ============================================================
+     NOTIFICATION SETTINGS
+     ============================================================ */
+
+  .notification-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 17px 0;
+
+    border-bottom: 1px solid #F7E9EC;
+
+    gap: 20px;
+  }
+
+  .notification-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .notification-item:first-child {
+    padding-top: 0;
+  }
+
+  .notification-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  }
+
+  .notification-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+  }
+
+  .notification-icon.email {
+    background: #FBE7EA;
+    color: var(--rose-gold);
+  }
+
+  .notification-icon.sms {
+    background: #F0E9F8;
+    color: #8B6AA8;
+  }
+
+  .notification-icon.reminder {
+    background: #EAF6F0;
+    color: var(--success);
+  }
+
+  .notification-info h4 {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .notification-info p {
+    margin-top: 4px;
+
+    max-width: 650px;
+
+    color: var(--light-text);
+
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+
+  /* TOGGLE */
+
+  .toggle {
+    position: relative;
+
+    width: 48px;
+    height: 26px;
+
+    flex-shrink: 0;
+  }
+
+  .toggle input {
+    display: none;
+  }
+
+  .toggle-slider {
+    position: absolute;
+
+    inset: 0;
+
+    background: #E6DDE0;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+  }
+
+  .toggle-slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 20px;
+    height: 20px;
+
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+
+    background: #FFFFFF;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+
+    transition: 0.25s ease;
+  }
+
+  .toggle input:checked + .toggle-slider {
+    background: var(--rose-gold);
+  }
+
+  .toggle input:checked + .toggle-slider::before {
+    transform: translateX(22px);
+  }
+
+
+  /* ============================================================
+     SAVE SECTION
+     ============================================================ */
+
+  .save-section {
+    background:
+            linear-gradient(
+                    135deg,
+                    #FFF4F6,
+                    #FFF9FB
+            );
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 20px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    box-shadow: var(--shadow-sm);
+  }
+
+  .save-message {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px;
-    border-radius: 12px;
-    background: var(--bg);
   }
 
-  .admin-avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--champagne), var(--rose-gold));
-    color: #fff;
-    display: grid; place-items: center;
-    font-weight: 600;
-    flex-shrink: 0;
+  .save-message-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FBE4E7;
+    color: var(--rose-gold);
   }
-  .admin-avatar.sm { width: 36px; height: 36px; font-size: 14px; }
 
-  .admin-meta { flex: 1; min-width: 0; }
-  .admin-meta strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); }
-  .admin-meta span { font-size: 11px; color: var(--muted); }
+  .save-message strong {
+    display: block;
 
-  .logout-btn {
+    font-size: 11px;
+  }
+
+  .save-message span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 9px;
+
+    color: var(--light-text);
+  }
+
+  .save-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+
+  /* BUTTONS */
+
+  .btn {
+    min-height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 10px;
+
     border: none;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    width: 34px; height: 34px;
-    border-radius: 8px;
-    transition: all 0.2s;
-  }
-  .logout-btn:hover { background: var(--danger); color: #fff; }
 
-  /* Compact sidebar */
-  body.compact-sidebar .sidebar { width: var(--sidebar-collapsed-w); }
-  body.compact-sidebar .brand-text,
-  body.compact-sidebar .nav-item span,
-  body.compact-sidebar .admin-meta,
-  body.compact-sidebar .logout-btn i { display: none; }
-  body.compact-sidebar .nav-item { justify-content: center; padding: 14px; }
-  body.compact-sidebar .sidebar-brand { justify-content: center; }
-  body.compact-sidebar .admin-card { justify-content: center; }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+  }
+
+  .btn-secondary {
+    background: #FFFFFF;
+
+    color: var(--muted-text);
+
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--rose-gold);
+
+    color: var(--dark-rose);
+
+    background: #FFFDFD;
+  }
+
+  .btn-primary {
+    color: #FFFFFF;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    var(--rose-gold),
+                    var(--dark-rose)
+            );
+
+    box-shadow:
+            0 6px 16px rgba(183, 110, 121, 0.22);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 9px 20px rgba(183, 110, 121, 0.28);
+  }
+
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+
+  .btn i {
+    font-size: 11px;
+  }
+
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+
+  .page-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 28px 0 12px;
+
+    color: var(--light-text);
+
+    font-size: 9px;
+
+    letter-spacing: 0.3px;
+  }
+
+  .page-footer span:first-child {
+    color: var(--rose-gold);
+    font-weight: 700;
+  }
+
+  .footer-dot {
+    color: var(--soft-pink);
+  }
+
+
+  /* ============================================================
+     TOAST
+     ============================================================ */
+
+  .toast-container {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 5000;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .toast {
+    min-width: 280px;
+
+    background: #FFFFFF;
+
+    border: 1px solid var(--border);
+
+    border-left: 4px solid var(--rose-gold);
+
+    border-radius: 11px;
+
+    padding: 13px 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    box-shadow:
+            0 12px 35px rgba(50, 25, 30, 0.12);
+
+    animation: toastIn 0.25s ease;
+  }
+
+  .toast.success {
+    border-left-color: var(--success);
+  }
+
+  .toast.error {
+    border-left-color: var(--danger);
+  }
+
+  .toast-icon {
+    width: 29px;
+    height: 29px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FBE7EA;
+
+    color: var(--rose-gold);
+  }
+
+  .toast.success .toast-icon {
+    background: var(--success-bg);
+    color: var(--success);
+  }
+
+  .toast.error .toast-icon {
+    background: var(--danger-bg);
+    color: var(--danger);
+  }
+
+  .toast-content strong {
+    display: block;
+
+    font-size: 10px;
+  }
+
+  .toast-content span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--light-text);
+
+    font-size: 9px;
+  }
+
+  @keyframes toastIn {
+
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  }
+
+
+  /* ============================================================
+     SIDEBAR OVERLAY
+     ============================================================ */
 
   .sidebar-overlay {
     display: none;
-    position: fixed; inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 150;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .sidebar-overlay.show { display: block; opacity: 1; }
 
-  /* ============== MAIN WRAPPER ============== */
-  .main-wrapper {
-    margin-left: var(--sidebar-w);
-    min-height: 100vh;
-    transition: margin-left 0.3s ease;
-  }
-  body.compact-sidebar .main-wrapper { margin-left: var(--sidebar-collapsed-w); }
-
-  /* ============== TOP HEADER ============== */
-  .top-header {
-    position: sticky; top: 0;
-    height: var(--header-h);
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 28px;
-    z-index: 100;
-  }
-  body.theme-dark .top-header { background: rgba(42, 33, 35, 0.85); }
-
-  .header-left { display: flex; align-items: center; gap: 16px; }
-  .header-right { display: flex; align-items: center; gap: 20px; }
-
-  .hamburger {
-    display: none;
-    border: none; background: transparent;
-    font-size: 22px; color: var(--text);
-    cursor: pointer;
-  }
-
-  .page-title { font-size: 20px; color: var(--text); font-family: 'Poppins', sans-serif; font-weight: 600; }
-
-  .icon-btn {
-    position: relative;
-    border: none; background: transparent;
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .icon-btn:hover { background: var(--soft-pink); color: var(--rose-gold); }
-  .badge {
-    position: absolute; top: 6px; right: 8px;
-    background: var(--danger); color: #fff;
-    font-size: 10px; font-weight: 600;
-    min-width: 18px; height: 18px;
-    border-radius: 9px;
-    display: grid; place-items: center;
-    padding: 0 4px;
-  }
-
-  .header-admin {
-    display: flex; align-items: center; gap: 10px;
-    padding: 6px 12px; border-radius: 12px;
-    cursor: pointer; transition: background 0.2s;
-  }
-  .header-admin:hover { background: var(--soft-pink); }
-  .header-admin .admin-meta strong { font-size: 13px; }
-  .header-admin .fa-chevron-down { font-size: 12px; color: var(--muted); }
-
-  /* ============== MAIN CONTENT ============== */
-  .main-content { padding: 32px 28px; }
-
-  .page-header { margin-bottom: 28px; }
-  .page-header h1 { font-size: 30px; color: var(--text); margin-bottom: 6px; }
-  .page-header p { color: var(--muted); font-size: 15px; }
-
-  /* ============== SETTINGS LAYOUT ============== */
-  .settings-layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 24px;
-    align-items: start;
-  }
-
-  /* Settings nav */
-  .settings-nav {
-    position: sticky;
-    top: calc(var(--header-h) + 24px);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 10px;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .settings-tab {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    border: none;
-    background: transparent;
-    border-radius: 10px;
-    color: var(--muted);
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-  .settings-tab i { width: 18px; text-align: center; font-size: 15px; }
-  .settings-tab:hover { background: var(--soft-pink); color: var(--rose-gold); }
-  .settings-tab.active {
-    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.25);
-  }
-
-  /* Settings content */
-  .settings-content { min-height: 400px; }
-
-  .settings-section { display: none; animation: fadeIn 0.3s ease; }
-  .settings-section.active { display: block; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  body.no-animations .settings-section,
-  body.no-animations * { animation: none !important; transition: none !important; }
-
-  .section-head { margin-bottom: 20px; }
-  .section-head h3 { font-size: 22px; color: var(--text); margin-bottom: 4px; }
-  .section-head p { color: var(--muted); font-size: 14px; }
-
-  /* ============== CARD ============== */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.3s;
-  }
-  .card:hover { box-shadow: var(--shadow-md); }
-
-  .card-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 18px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* ============== FORM ============== */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .field { display: flex; flex-direction: column; gap: 8px; }
-  .field.full { grid-column: 1 / -1; }
-
-  .field label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .field input,
-  .field select,
-  .field textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    transition: all 0.2s;
-  }
-
-  .field input:focus,
-  .field select:focus,
-  .field textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.12);
-    background: var(--white);
-  }
-
-  .field input[readonly] { background: var(--soft-pink); color: var(--muted); cursor: not-allowed; }
-  .field textarea { resize: vertical; min-height: 80px; }
-
-  .input-wrap { position: relative; }
-  .input-wrap input { padding-right: 44px; }
-  .toggle-eye {
-    position: absolute; right: 8px; top: 50%;
-    transform: translateY(-50%);
-    border: none; background: transparent;
-    color: var(--muted); cursor: pointer;
-    padding: 8px; border-radius: 8px;
-    transition: all 0.2s;
-  }
-  .toggle-eye:hover { color: var(--accent); background: var(--soft-pink); }
-
-  /* Radio + checkbox groups */
-  .radio-group { display: flex; gap: 16px; padding-top: 4px; }
-  .radio, .check {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--text);
-    cursor: pointer;
-  }
-  .radio input, .check input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
-
-  .checkbox-group {
-    display: flex; flex-wrap: wrap;
-    gap: 12px;
-    padding-top: 4px;
-  }
-
-  /* ============== FORM ACTIONS ============== */
-  .form-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-
-  /* ============== BUTTONS ============== */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 22px;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(183, 110, 121, 0.25);
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(183, 110, 121, 0.35); }
-  .btn-ghost {
-    background: var(--bg);
-    color: var(--text);
-    border: 1.5px solid var(--border);
-  }
-  .btn-ghost:hover { background: var(--soft-pink); border-color: var(--accent); }
-  .btn-danger {
-    background: linear-gradient(135deg, var(--danger), #B9413D);
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(217, 83, 79, 0.25);
-  }
-  .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(217, 83, 79, 0.35); }
-
-  /* ============== SALON LOGO ============== */
-  .salon-card { padding-top: 28px; }
-  .logo-block {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    padding-bottom: 24px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-  .logo-preview {
-    width: 100px; height: 100px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, var(--soft-pink), var(--champagne));
-    display: grid; place-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    border: 2px solid var(--border);
-  }
-  .logo-preview span {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px; font-weight: 700;
-    color: var(--rose-gold);
-  }
-  .logo-preview img { width: 100%; height: 100%; object-fit: cover; }
-  .logo-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-  /* ============== ACCOUNT CARD ============== */
-  .account-card { text-align: center; }
-  .profile-avatar {
-    width: 96px; height: 96px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
-    color: #fff;
-    display: grid; place-items: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 40px; font-weight: 700;
-    margin: 0 auto 28px;
-    box-shadow: 0 8px 24px rgba(183, 110, 121, 0.3);
-  }
-
-  /* ============== PASSWORD STRENGTH ============== */
-  .strength-block {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 20px;
-  }
-  .strength-meter {
-    flex: 1;
-    height: 8px;
-    background: var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .strength-bar {
-    height: 100%;
-    width: 10%;
-    background: var(--danger);
-    border-radius: 4px;
-    transition: all 0.3s ease;
-  }
-  .strength-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    min-width: 60px;
-    text-align: right;
-  }
-
-  .password-reqs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 10px;
-    margin-top: 18px;
-    padding: 16px;
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-  .req {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .req i { font-size: 8px; color: var(--muted); }
-  .req.valid { color: var(--success); }
-  .req.valid i { color: var(--success); }
-
-  /* ============== TOGGLE SWITCH ============== */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 48px; height: 26px;
-    flex-shrink: 0;
-  }
-  .switch input { opacity: 0; width: 0; height: 0; }
-  .slider {
-    position: absolute; inset: 0;
-    background: var(--border);
-    border-radius: 26px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .slider::before {
-    content: '';
-    position: absolute;
-    width: 20px; height: 20px;
-    left: 3px; top: 3px;
-    background: #fff;
-    border-radius: 50%;
-    transition: 0.3s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  .switch input:checked + .slider { background: var(--accent); }
-  .switch input:checked + .slider::before { transform: translateX(22px); }
-
-  /* ============== TOGGLE LIST ============== */
-  .toggle-list { display: flex; flex-direction: column; }
-  .toggle-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .toggle-row:last-child { border-bottom: none; }
-  .toggle-row strong { font-size: 14px; font-weight: 600; color: var(--text); display: block; }
-  .toggle-row p { font-size: 13px; }
-
-  .muted { color: var(--muted); font-size: 13px; margin-top: 2px; }
-
-  /* ============== STATUS PILL ============== */
-  .status-pill {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 4px 14px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-  }
-  .status-pill.enabled { background: rgba(76, 175, 80, 0.12); border-color: var(--success); color: var(--success); }
-
-  /* ============== APPEARANCE ============== */
-  .theme-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .theme-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 22px 16px;
-    border: 2px solid var(--border);
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text);
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .theme-card i { font-size: 24px; color: var(--accent); }
-  .theme-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .theme-card.active {
-    border-color: var(--accent);
-    background: var(--soft-pink);
-    box-shadow: 0 4px 14px rgba(183, 110, 121, 0.15);
-  }
-
-  .accent-row { display: flex; gap: 16px; flex-wrap: wrap; }
-  .accent-swatch {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  .accent-swatch:hover { transform: scale(1.1); }
-  .accent-swatch.active {
-    border-color: var(--text);
-    box-shadow: 0 0 0 3px var(--white), 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  /* ============== SYSTEM INFO ============== */
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-  }
-  .info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 16px;
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-  .info-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-  .info-value { font-size: 15px; font-weight: 600; color: var(--text); }
-
-  .tag {
-    display: inline-block;
-    padding: 2px 10px;
-    background: rgba(242, 169, 59, 0.15);
-    color: var(--warning);
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  /* ============== ACTION CARDS ============== */
-  .action-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-  .action-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .action-card h4 { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; }
-  .action-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: var(--soft-pink);
-    color: var(--rose-gold);
-    display: grid; place-items: center;
-    font-size: 18px;
-  }
-  .action-icon.danger { background: rgba(217, 83, 79, 0.12); color: var(--danger); }
-  .action-card .btn { margin-top: auto; width: 100%; justify-content: center; }
-
-  /* ============== MODAL ============== */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(47, 37, 40, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-  .modal-overlay.show { display: flex; opacity: 1; }
-
-  .modal {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 36px 32px;
-    max-width: 440px;
-    width: 100%;
-    text-align: center;
-    box-shadow: var(--shadow-lg);
-    animation: modalIn 0.3s ease;
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.92) translateY(20px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  .modal-icon {
-    width: 64px; height: 64px;
-    margin: 0 auto 18px;
-    border-radius: 50%;
-    background: rgba(217, 83, 79, 0.12);
-    color: var(--danger);
-    display: grid; place-items: center;
-    font-size: 26px;
-  }
-  .modal h3 { font-size: 22px; color: var(--text); margin-bottom: 10px; }
-  .modal p { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
-  .modal-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-  }
-  .modal-actions .btn { flex: 1; justify-content: center; }
-
-  /* ============== TOAST ============== */
-  .toast-container {
     position: fixed;
-    top: 24px; right: 24px;
-    z-index: 2000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .toast {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    border-left: 4px solid var(--success);
-    min-width: 280px;
-    max-width: 380px;
-    animation: toastIn 0.3s ease;
-  }
-  .toast.error { border-left-color: var(--danger); }
-  .toast.warning { border-left-color: var(--warning); }
-  .toast i { font-size: 18px; color: var(--success); }
-  .toast.error i { color: var(--danger); }
-  .toast.warning i { color: var(--warning); }
-  .toast span { font-size: 14px; font-weight: 500; color: var(--text); }
-  .toast.removing { animation: toastOut 0.3s ease forwards; }
 
-  @keyframes toastIn {
-    from { opacity: 0; transform: translateX(100%); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes toastOut {
-    to { opacity: 0; transform: translateX(100%); }
+    inset: 0;
+
+    background: rgba(43, 32, 36, 0.28);
+
+    z-index: 900;
   }
 
-  /* ============== RESPONSIVE ============== */
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+
   @media (max-width: 1100px) {
-    .settings-layout { grid-template-columns: 200px 1fr; }
+
+    .sidebar {
+      width: 235px;
+    }
+
+    .main-content {
+      margin-left: 235px;
+    }
+
+    .page-content {
+      padding: 25px;
+    }
+
   }
+
 
   @media (max-width: 900px) {
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); }
-    .main-wrapper { margin-left: 0; }
-    .hamburger { display: block; }
-    .settings-layout { grid-template-columns: 1fr; }
-    .settings-nav {
-      position: relative;
-      top: 0;
-      flex-direction: row;
-      overflow-x: auto;
-      padding: 8px;
-      gap: 6px;
-      scrollbar-width: thin;
+
+    .sidebar {
+      transform: translateX(-100%);
+
+      transition: transform 0.25s ease;
+
+      box-shadow: 10px 0 35px rgba(40, 20, 25, 0.1);
     }
-    .settings-tab { flex-shrink: 0; }
-    .settings-tab span { display: none; }
-    .settings-tab { padding: 12px 14px; }
-    .form-grid { grid-template-columns: 1fr; }
-    .theme-cards { grid-template-columns: 1fr; }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar.open + .main-content {
+      margin-left: 0;
+    }
+
+    .main-content {
+      margin-left: 0;
+    }
+
+    .mobile-menu-btn {
+      display: block;
+    }
+
+    .topbar {
+      padding: 0 20px;
+
+      gap: 15px;
+    }
+
+    .topbar-title {
+      flex: 1;
+    }
+
+    .sidebar-overlay.show {
+      display: block;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+      grid-column: auto;
+    }
+
+    .save-section {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .save-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
   }
 
-  @media (max-width: 560px) {
-    .main-content { padding: 20px 16px; }
-    .top-header { padding: 0 16px; }
-    .header-admin .admin-meta { display: none; }
-    .page-header h1 { font-size: 24px; }
-    .card { padding: 20px; }
-    .form-actions { flex-direction: column; }
-    .form-actions .btn { width: 100%; justify-content: center; }
-    .modal-actions { flex-direction: column; }
-    .toast-container { left: 16px; right: 16px; top: 16px; }
-    .toast { min-width: 0; max-width: none; }
+
+  @media (max-width: 650px) {
+
+    .page-content {
+      padding: 20px 15px;
+    }
+
+    .topbar {
+      height: 68px;
+    }
+
+    .topbar-actions {
+      gap: 8px;
+    }
+
+    .admin-profile {
+      display: none;
+    }
+
+    .topbar-divider {
+      display: none;
+    }
+
+    .page-heading {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .page-heading h2 {
+      font-size: 25px;
+    }
+
+    .settings-card {
+      padding: 20px 16px;
+    }
+
+    .hours-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .time-separator {
+      display: none;
+    }
+
+    .notification-item {
+      align-items: flex-start;
+    }
+
+    .notification-info p {
+      max-width: 100%;
+    }
+
   }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-  </style>
+
+  @media (max-width: 480px) {
+
+    .page-heading h2 {
+      font-size: 23px;
+    }
+
+    .card-title-wrapper {
+      gap: 10px;
+    }
+
+    .card-icon {
+      width: 38px;
+      height: 38px;
+    }
+
+    .save-actions {
+      flex-direction: column-reverse;
+    }
+
+    .save-actions .btn {
+      width: 100%;
+    }
+
+    .toast-container {
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+    }
+
+    .toast {
+      min-width: 0;
+      width: 100%;
+    }
+
+  }</style>
 </head>
+
 <body>
 
-<!-- ============== SIDEBAR ============== -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-brand">
-    <div class="brand-mark">P</div>
-    <div class="brand-text">
-      <h1>PINK BEAUTY</h1>
-      <span>Luxury Beauty Meets Smart Technology</span>
-    </div>
-  </div>
+<div class="app-container">
 
-  <nav class="sidebar-nav">
-    <a href="#" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-users"></i><span>User Management</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i><span>Customer Management</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-user-tie"></i><span>Staff Management</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-calendar-check"></i><span>Appointment Management</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-credit-card"></i><span>Payment Management</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-spa"></i><span>Service Management</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-star"></i><span>Feedback &amp; Ratings</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports &amp; Analytics</span></a>
-    <a href="#" class="nav-item active"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-  </nav>
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
 
-  <div class="sidebar-footer">
-    <div class="admin-card">
-      <div class="admin-avatar">A</div>
-      <div class="admin-meta">
-        <strong>Admin Name</strong>
-        <span>Administrator</span>
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+
+      <div class="brand-icon">
+        <i class="fa-solid fa-spa"></i>
       </div>
-      <button class="logout-btn" id="logoutBtn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
-    </div>
-  </div>
-</aside>
 
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-<!-- ============== MAIN WRAPPER ============== -->
-<div class="main-wrapper">
-
-  <!-- ============== TOP HEADER ============== -->
-  <header class="top-header">
-    <div class="header-left">
-      <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
-      <h2 class="page-title">Settings</h2>
-    </div>
-    <div class="header-right">
-      <button class="icon-btn" title="Notifications">
-        <i class="fa-solid fa-bell"></i>
-        <span class="badge">3</span>
-      </button>
-      <div class="header-admin">
-        <div class="admin-avatar sm">A</div>
-        <div class="admin-meta">
-          <strong>Admin Name</strong>
-          <span>Administrator</span>
-        </div>
-        <i class="fa-solid fa-chevron-down"></i>
+      <div>
+        <h2>PINK BEAUTY</h2>
+        <span>SALON</span>
       </div>
-    </div>
-  </header>
 
-  <!-- ============== MAIN CONTENT ============== -->
+    </div>
+
+    <p class="brand-tagline">
+      Luxury Beauty Meets Smart Technology
+    </p>
+
+
+    <nav class="sidebar-nav">
+
+      <a href="Dashboard.html" class="nav-item">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="CustomerManagement.html" class="nav-item">
+        <i class="fa-solid fa-users"></i>
+        <span>Customer Management</span>
+      </a>
+
+      <a href="StaffManagement.html" class="nav-item">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Staff Management</span>
+      </a>
+
+      <a href="ServiceManagement.html" class="nav-item">
+        <i class="fa-solid fa-scissors"></i>
+        <span>Service Management</span>
+      </a>
+
+      <a href="AppointmentManagement.html" class="nav-item">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Appointment Management</span>
+      </a>
+
+      <a href="ProductManagement.html" class="nav-item">
+        <i class="fa-solid fa-box-open"></i>
+        <span>Product Management</span>
+      </a>
+
+      <a href="InvoiceManagement.html" class="nav-item">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+        <span>Invoice Management</span>
+      </a>
+
+      <a href="FeedbackRatings.html" class="nav-item">
+        <i class="fa-solid fa-star"></i>
+        <span>Feedback & Ratings</span>
+      </a>
+
+      <a href="ReportsAnalytics.html" class="nav-item">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Reports & Analytics</span>
+      </a>
+
+      <a href="Settings.html"
+         class="nav-item active">
+
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+
+      </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+      <div class="footer-decoration">
+        <i class="fa-solid fa-heart"></i>
+      </div>
+
+      <span>Made with love for your salon</span>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+
   <main class="main-content">
 
-    <section class="page-header">
-      <div>
-        <h1>Settings</h1>
-        <p>Manage your salon system preferences and account settings</p>
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+      <button class="mobile-menu-btn"
+              id="mobileMenuBtn">
+
+        <i class="fa-solid fa-bars"></i>
+
+      </button>
+
+
+      <div class="topbar-title">
+
+                <span class="breadcrumb">
+                    Settings
+                </span>
+
+        <h1>Salon Settings</h1>
+
       </div>
-    </section>
 
-    <section class="settings-layout">
 
-      <!-- ===== SETTINGS NAV ===== -->
-      <aside class="settings-nav" id="settingsNav">
-        <button class="settings-tab active" data-tab="general"><i class="fa-solid fa-sliders"></i><span>General</span></button>
-        <button class="settings-tab" data-tab="salon"><i class="fa-solid fa-store"></i><span>Salon Profile</span></button>
-        <button class="settings-tab" data-tab="account"><i class="fa-solid fa-user"></i><span>Account</span></button>
-        <button class="settings-tab" data-tab="security"><i class="fa-solid fa-shield-halved"></i><span>Security</span></button>
-        <button class="settings-tab" data-tab="notifications"><i class="fa-solid fa-bell"></i><span>Notifications</span></button>
-        <button class="settings-tab" data-tab="appearance"><i class="fa-solid fa-palette"></i><span>Appearance</span></button>
-        <button class="settings-tab" data-tab="appointments"><i class="fa-solid fa-calendar-check"></i><span>Appointments</span></button>
-        <button class="settings-tab" data-tab="payments"><i class="fa-solid fa-credit-card"></i><span>Payments</span></button>
-        <button class="settings-tab" data-tab="system"><i class="fa-solid fa-server"></i><span>System</span></button>
-      </aside>
+      <div class="topbar-actions">
 
-      <!-- ===== SETTINGS CONTENT ===== -->
-      <section class="settings-content">
+        <button class="icon-btn"
+                id="refreshBtn"
+                title="Refresh">
 
-        <!-- ===== GENERAL ===== -->
-        <div class="settings-section active" id="general">
-          <div class="section-head">
-            <h3>General Settings</h3>
-            <p>Basic system configuration for your salon.</p>
+          <i class="fa-solid fa-rotate"></i>
+
+        </button>
+
+
+        <div class="topbar-divider"></div>
+
+
+        <div class="admin-profile">
+
+          <div class="profile-avatar">
+            <i class="fa-solid fa-user"></i>
           </div>
-          <div class="card">
-            <div class="form-grid">
-              <div class="field">
-                <label>System Name</label>
-                <input type="text" id="systemName" value="PINK BEAUTY SALON" />
-              </div>
-              <div class="field">
-                <label>Tagline</label>
-                <input type="text" id="tagline" value="Luxury Beauty Meets Smart Technology" />
-              </div>
-              <div class="field">
-                <label>Default Language</label>
-                <select id="defaultLanguage">
-                  <option value="English">English</option>
-                  <option value="Sinhala">Sinhala</option>
-                  <option value="Tamil">Tamil</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Currency</label>
-                <select id="currency">
-                  <option value="LKR">LKR - Sri Lankan Rupee</option>
-                  <option value="USD">USD - US Dollar</option>
-                  <option value="EUR">EUR - Euro</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Time Zone</label>
-                <input type="text" id="timeZone" value="Asia/Colombo" />
-              </div>
-              <div class="field">
-                <label>Date Format</label>
-                <select id="dateFormat">
-                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Time Format</label>
-                <div class="radio-group">
-                  <label class="radio"><input type="radio" name="timeFormat" value="12" checked /><span>12 Hour</span></label>
-                  <label class="radio"><input type="radio" name="timeFormat" value="24" /><span>24 Hour</span></label>
-                </div>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="saveGeneralSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
-              <button class="btn btn-ghost" onclick="resetSection('general')"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-            </div>
+
+          <div class="profile-info">
+
+            <strong>Administrator</strong>
+
+            <span>Salon Manager</span>
+
           </div>
+
         </div>
 
-        <!-- ===== SALON PROFILE ===== -->
-        <div class="settings-section" id="salon">
-          <div class="section-head">
-            <h3>Salon Information</h3>
-            <p>Public profile details for your salon.</p>
-          </div>
-          <div class="card salon-card">
-            <div class="logo-block">
-              <div class="logo-preview" id="logoPreview">
-                <span id="logoPlaceholder">P</span>
-                <img id="logoImage" src="" alt="Salon Logo" style="display:none;" />
-              </div>
-              <div class="logo-actions">
-                <input type="file" id="logoInput" accept="image/*" hidden />
-                <button class="btn btn-primary" onclick="uploadSalonLogo()"><i class="fa-solid fa-upload"></i> Upload Logo</button>
-                <button class="btn btn-ghost" onclick="removeSalonLogo()"><i class="fa-solid fa-trash"></i> Remove Logo</button>
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="field">
-                <label>Salon Name</label>
-                <input type="text" id="salonName" value="PINK BEAUTY SALON" />
-              </div>
-              <div class="field">
-                <label>Email</label>
-                <input type="email" id="salonEmail" value="info@pinkbeautysalon.com" />
-              </div>
-              <div class="field">
-                <label>Phone</label>
-                <input type="text" id="salonPhone" value="+94 71 234 5678" />
-              </div>
-              <div class="field">
-                <label>Address</label>
-                <input type="text" id="salonAddress" value="Colombo, Sri Lanka" />
-              </div>
-              <div class="field">
-                <label>Website</label>
-                <input type="text" id="salonWebsite" value="www.pinkbeautysalon.com" />
-              </div>
-              <div class="field">
-                <label>Opening Time</label>
-                <input type="time" id="openingTime" value="09:00" />
-              </div>
-              <div class="field">
-                <label>Closing Time</label>
-                <input type="time" id="closingTime" value="18:00" />
-              </div>
-              <div class="field">
-                <label>Working Days</label>
-                <div class="checkbox-group">
-                  <label class="check"><input type="checkbox" class="working-day" value="Monday" checked /><span>Monday</span></label>
-                  <label class="check"><input type="checkbox" class="working-day" value="Tuesday" checked /><span>Tuesday</span></label>
-                  <label class="check"><input type="checkbox" class="working-day" value="Wednesday" checked /><span>Wednesday</span></label>
-                  <label class="check"><input type="checkbox" class="working-day" value="Thursday" checked /><span>Thursday</span></label>
-                  <label class="check"><input type="checkbox" class="working-day" value="Friday" checked /><span>Friday</span></label>
-                  <label class="check"><input type="checkbox" class="working-day" value="Saturday" checked /><span>Saturday</span></label>
-                  <label class="check"><input type="checkbox" class="working-day" value="Sunday" /><span>Sunday</span></label>
-                </div>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="saveSalonProfile()"><i class="fa-solid fa-floppy-disk"></i> Save Salon Profile</button>
-            </div>
-          </div>
+      </div>
+
+    </header>
+
+
+    <!-- =================================================
+         PAGE CONTENT
+    ================================================== -->
+
+    <section class="page-content">
+
+
+      <!-- PAGE HEADER -->
+
+      <div class="page-heading">
+
+        <div>
+
+                    <span class="section-eyebrow">
+                        CONFIGURATION
+                    </span>
+
+          <h2>
+            Manage Your Salon
+          </h2>
+
+          <p>
+            Configure your salon information, business hours,
+            appointments and notification preferences.
+          </p>
+
         </div>
 
-        <!-- ===== ACCOUNT ===== -->
-        <div class="settings-section" id="account">
-          <div class="section-head">
-            <h3>My Account</h3>
-            <p>Update your personal admin account details.</p>
-          </div>
-          <div class="card account-card">
-            <div class="profile-avatar">
-              <span id="profileAvatarText">A</span>
-            </div>
-            <div class="form-grid">
-              <div class="field">
-                <label>Full Name</label>
-                <input type="text" id="accountFullName" value="Admin Name" />
-              </div>
-              <div class="field">
-                <label>Username</label>
-                <input type="text" id="accountUsername" value="admin" />
-              </div>
-              <div class="field">
-                <label>Email</label>
-                <input type="email" id="accountEmail" value="admin@pinkbeautysalon.com" />
-              </div>
-              <div class="field">
-                <label>Phone</label>
-                <input type="text" id="accountPhone" value="+94 71 234 5678" />
-              </div>
-              <div class="field">
-                <label>Role</label>
-                <input type="text" id="accountRole" value="Administrator" readonly />
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="updateProfile()"><i class="fa-solid fa-floppy-disk"></i> Update Profile</button>
-            </div>
-          </div>
+
+        <div class="page-heading-actions">
+
+                    <span class="settings-status"
+                          id="settingsStatus">
+
+                        <i class="fa-solid fa-circle-check"></i>
+                        Settings ready
+
+                    </span>
+
         </div>
 
-        <!-- ===== SECURITY ===== -->
-        <div class="settings-section" id="security">
-          <div class="section-head">
-            <h3>Security &amp; Password</h3>
-            <p>Protect your account with a strong password and 2FA.</p>
+      </div>
+
+
+      <!-- =================================================
+           SALON INFORMATION
+      ================================================== -->
+
+      <section class="settings-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrapper">
+
+            <div class="card-icon rose">
+              <i class="fa-solid fa-store"></i>
+            </div>
+
+            <div>
+
+              <h3>Salon Information</h3>
+
+              <p>
+                Basic information displayed throughout
+                your salon management system.
+              </p>
+
+            </div>
+
           </div>
 
-          <div class="card">
-            <h4 class="card-title">Change Password</h4>
-            <div class="form-grid">
-              <div class="field">
-                <label>Current Password</label>
-                <div class="input-wrap">
-                  <input type="password" id="currentPassword" placeholder="Enter current password" />
-                  <button class="toggle-eye" data-target="currentPassword"><i class="fa-solid fa-eye"></i></button>
-                </div>
-              </div>
-              <div class="field">
-                <label>New Password</label>
-                <div class="input-wrap">
-                  <input type="password" id="newPassword" placeholder="Enter new password" oninput="checkPasswordStrength();checkPasswordRequirements();" />
-                  <button class="toggle-eye" data-target="newPassword"><i class="fa-solid fa-eye"></i></button>
-                </div>
-              </div>
-              <div class="field">
-                <label>Confirm New Password</label>
-                <div class="input-wrap">
-                  <input type="password" id="confirmPassword" placeholder="Re-enter new password" oninput="checkPasswordMatch();" />
-                  <button class="toggle-eye" data-target="confirmPassword"><i class="fa-solid fa-eye"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <div class="strength-block">
-              <div class="strength-meter">
-                <div class="strength-bar" id="strengthBar"></div>
-              </div>
-              <span class="strength-label" id="strengthLabel">Weak</span>
-            </div>
-
-            <div class="password-reqs" id="passwordReqs">
-              <div class="req" data-req="length"><i class="fa-solid fa-circle"></i> At least 8 characters</div>
-              <div class="req" data-req="upper"><i class="fa-solid fa-circle"></i> One uppercase letter</div>
-              <div class="req" data-req="lower"><i class="fa-solid fa-circle"></i> One lowercase letter</div>
-              <div class="req" data-req="number"><i class="fa-solid fa-circle"></i> One number</div>
-              <div class="req" data-req="special"><i class="fa-solid fa-circle"></i> One special character</div>
-            </div>
-
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="changePassword()"><i class="fa-solid fa-key"></i> Change Password</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="toggle-row">
-              <div>
-                <h4 class="card-title">Two-Factor Authentication</h4>
-                <p class="muted">Add an extra layer of security to your admin account.</p>
-                <span class="status-pill" id="twoFactorStatus">Currently Disabled</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="twoFactorToggle" onchange="toggle2FA(this)" />
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
         </div>
 
-        <!-- ===== NOTIFICATIONS ===== -->
-        <div class="settings-section" id="notifications">
-          <div class="section-head">
-            <h3>Notification Preferences</h3>
-            <p>Choose what you want to be notified about.</p>
-          </div>
 
-          <div class="card">
-            <h4 class="card-title">Notification Types</h4>
-            <div class="toggle-list">
-              <div class="toggle-row">
-                <div>
-                  <strong>Appointment Notifications</strong>
-                  <p class="muted">Receive notifications for new appointments</p>
-                </div>
-                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="appointment" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div>
-                  <strong>Appointment Cancellation</strong>
-                  <p class="muted">Receive notifications when appointments are cancelled</p>
-                </div>
-                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="cancellation" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div>
-                  <strong>New Customer</strong>
-                  <p class="muted">Receive notifications when a new customer registers</p>
-                </div>
-                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="newCustomer" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div>
-                  <strong>Payment Notifications</strong>
-                  <p class="muted">Receive notifications for successful payments</p>
-                </div>
-                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="payment" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div>
-                  <strong>Feedback Notifications</strong>
-                  <p class="muted">Receive notifications when customers submit feedback</p>
-                </div>
-                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="feedback" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div>
-                  <strong>Staff Notifications</strong>
-                  <p class="muted">Receive staff leave and availability notifications</p>
-                </div>
-                <label class="switch"><input type="checkbox" class="notif-toggle" data-key="staff" /><span class="slider"></span></label>
-              </div>
-            </div>
-          </div>
+        <div class="form-grid">
 
-          <div class="card">
-            <h4 class="card-title">Notification Channels</h4>
-            <div class="toggle-list">
-              <div class="toggle-row">
-                <div><strong>Email Notifications</strong><p class="muted">Receive alerts via email</p></div>
-                <label class="switch"><input type="checkbox" class="channel-toggle" data-key="email" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div><strong>System Notifications</strong><p class="muted">In-app system alerts</p></div>
-                <label class="switch"><input type="checkbox" class="channel-toggle" data-key="system" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div><strong>SMS Notifications</strong><p class="muted">Receive alerts via SMS</p></div>
-                <label class="switch"><input type="checkbox" class="channel-toggle" data-key="sms" /><span class="slider"></span></label>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="updateNotificationSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Notification Settings</button>
-            </div>
-          </div>
-        </div>
+          <div class="form-group full">
 
-        <!-- ===== APPEARANCE ===== -->
-        <div class="settings-section" id="appearance">
-          <div class="section-head">
-            <h3>Appearance</h3>
-            <p>Customize how the dashboard looks for you.</p>
-          </div>
+            <label for="salonName">
+              Salon Name
+              <span>*</span>
+            </label>
 
-          <div class="card">
-            <h4 class="card-title">Theme</h4>
-            <div class="theme-cards">
-              <button class="theme-card active" data-theme="light"><i class="fa-solid fa-sun"></i><span>Light</span></button>
-              <button class="theme-card" data-theme="dark"><i class="fa-solid fa-moon"></i><span>Dark</span></button>
-              <button class="theme-card" data-theme="system"><i class="fa-solid fa-laptop"></i><span>System</span></button>
-            </div>
-          </div>
+            <div class="input-wrapper">
 
-          <div class="card">
-            <h4 class="card-title">Accent Color</h4>
-            <div class="accent-row">
-              <button class="accent-swatch active" data-color="#B76E79" style="background:#B76E79" title="Rose Gold"></button>
-              <button class="accent-swatch" data-color="#E8C07D" style="background:#E8C07D" title="Champagne Gold"></button>
-              <button class="accent-swatch" data-color="#F8D7DA" style="background:#F8D7DA" title="Soft Pink"></button>
-              <button class="accent-swatch" data-color="#8F4F5A" style="background:#8F4F5A" title="Dark Rose"></button>
-            </div>
-          </div>
+              <i class="fa-solid fa-building"></i>
 
-          <div class="card">
-            <div class="toggle-row">
-              <div><strong>Compact Sidebar</strong><p class="muted">Collapse sidebar to save space</p></div>
-              <label class="switch"><input type="checkbox" id="compactSidebar" onchange="toggleCompactSidebar(this)" /><span class="slider"></span></label>
-            </div>
-            <div class="toggle-row">
-              <div><strong>Enable Animations</strong><p class="muted">Smooth transitions and effects</p></div>
-              <label class="switch"><input type="checkbox" id="enableAnimations" checked onchange="toggleAnimations(this)" /><span class="slider"></span></label>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="updateAppearanceSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Appearance</button>
-            </div>
-          </div>
-        </div>
+              <input type="text"
+                     id="salonName"
+                     placeholder="Enter salon name"
+                     value="PINK BEAUTY SALON">
 
-        <!-- ===== APPOINTMENTS ===== -->
-        <div class="settings-section" id="appointments">
-          <div class="section-head">
-            <h3>Appointment Configuration</h3>
-            <p>Configure how appointments are booked and managed.</p>
-          </div>
-          <div class="card">
-            <div class="form-grid">
-              <div class="field">
-                <label>Appointment Duration</label>
-                <select id="appointmentDuration">
-                  <option value="15">15 minutes</option>
-                  <option value="30" selected>30 minutes</option>
-                  <option value="45">45 minutes</option>
-                  <option value="60">60 minutes</option>
-                  <option value="90">90 minutes</option>
-                  <option value="120">120 minutes</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Booking Advance Period</label>
-                <select id="bookingAdvance">
-                  <option value="0">Same Day</option>
-                  <option value="1">1 Day</option>
-                  <option value="3">3 Days</option>
-                  <option value="7" selected>7 Days</option>
-                  <option value="14">14 Days</option>
-                  <option value="30">30 Days</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Maximum Daily Appointments</label>
-                <input type="number" id="maxDaily" value="50" min="1" />
-              </div>
-              <div class="field full">
-                <label>Cancellation Policy</label>
-                <textarea id="cancellationPolicy" rows="3">Appointments can be cancelled up to 24 hours before the scheduled time.</textarea>
-              </div>
             </div>
 
-            <div class="toggle-list">
-              <div class="toggle-row">
-                <div><strong>Allow Same-Day Booking</strong><p class="muted">Let customers book on the same day</p></div>
-                <label class="switch"><input type="checkbox" id="sameDayBooking" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div><strong>Allow Online Booking</strong><p class="muted">Accept bookings from online portal</p></div>
-                <label class="switch"><input type="checkbox" id="onlineBooking" checked /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div><strong>Auto Confirm Appointments</strong><p class="muted">Skip manual confirmation step</p></div>
-                <label class="switch"><input type="checkbox" id="autoConfirm" /><span class="slider"></span></label>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="saveAppointmentSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Appointment Settings</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== PAYMENTS ===== -->
-        <div class="settings-section" id="payments">
-          <div class="section-head">
-            <h3>Payment Configuration</h3>
-            <p>Configure accepted payment methods and tax settings.</p>
-          </div>
-          <div class="card">
-            <div class="field full">
-              <label>Accepted Payment Methods</label>
-              <div class="checkbox-group">
-                <label class="check"><input type="checkbox" class="payment-method" value="Cash" checked /><span>Cash</span></label>
-                <label class="check"><input type="checkbox" class="payment-method" value="Card" checked /><span>Credit / Debit Card</span></label>
-                <label class="check"><input type="checkbox" class="payment-method" value="Bank Transfer" /><span>Bank Transfer</span></label>
-                <label class="check"><input type="checkbox" class="payment-method" value="Online" /><span>Online Payment</span></label>
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="field">
-                <label>Default Payment Method</label>
-                <select id="defaultPaymentMethod">
-                  <option value="Cash" selected>Cash</option>
-                  <option value="Card">Credit / Debit Card</option>
-                  <option value="Bank Transfer">Bank Transfer</option>
-                  <option value="Online">Online Payment</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Tax (%)</label>
-                <input type="number" id="taxRate" value="0" min="0" max="100" step="0.1" />
-              </div>
-              <div class="field">
-                <label>Currency</label>
-                <input type="text" id="paymentCurrency" value="LKR" readonly />
-              </div>
-            </div>
-            <div class="toggle-list">
-              <div class="toggle-row">
-                <div><strong>Enable Online Payments</strong><p class="muted">Allow online payment gateway</p></div>
-                <label class="switch"><input type="checkbox" id="onlinePayments" /><span class="slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div><strong>Require Payment Confirmation</strong><p class="muted">Manually confirm each payment</p></div>
-                <label class="switch"><input type="checkbox" id="paymentConfirmation" checked /><span class="slider"></span></label>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="savePaymentSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Payment Settings</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== SYSTEM ===== -->
-        <div class="settings-section" id="system">
-          <div class="section-head">
-            <h3>System Preferences</h3>
-            <p>System information and maintenance actions.</p>
           </div>
 
-          <div class="card">
-            <h4 class="card-title">System Information</h4>
-            <div class="info-grid">
-              <div class="info-item"><span class="info-label">Application</span><span class="info-value">PINK BEAUTY SALON</span></div>
-              <div class="info-item"><span class="info-label">Version</span><span class="info-value">1.0.0</span></div>
-              <div class="info-item"><span class="info-label">Environment</span><span class="info-value"><span class="tag">Development</span></span></div>
-              <div class="info-item"><span class="info-label">Backend</span><span class="info-value">Spring Boot</span></div>
-              <div class="info-item"><span class="info-label">Database</span><span class="info-value">MySQL</span></div>
-              <div class="info-item"><span class="info-label">API</span><span class="info-value">REST API</span></div>
+
+          <div class="form-group full">
+
+            <label for="tagline">
+              Tagline
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-quote-left"></i>
+
+              <input type="text"
+                     id="tagline"
+                     placeholder="Enter salon tagline"
+                     value="Luxury Beauty Meets Smart Technology">
+
             </div>
+
           </div>
 
-          <div class="action-cards">
-            <div class="card action-card">
-              <div class="action-icon"><i class="fa-solid fa-broom"></i></div>
-              <div>
-                <h4>Clear Cache</h4>
-                <p class="muted">Clear temporary system data.</p>
-              </div>
-              <button class="btn btn-ghost" onclick="clearCache()"><i class="fa-solid fa-broom"></i> Clear Cache</button>
+
+          <div class="form-group">
+
+            <label for="phone">
+              Phone Number
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-phone"></i>
+
+              <input type="tel"
+                     id="phone"
+                     placeholder="Enter phone number"
+                     value="0112345678">
+
             </div>
-            <div class="card action-card">
-              <div class="action-icon"><i class="fa-solid fa-database"></i></div>
-              <div>
-                <h4>Backup Data</h4>
-                <p class="muted">Create a backup of salon data.</p>
-              </div>
-              <button class="btn btn-primary" onclick="createBackup()"><i class="fa-solid fa-download"></i> Create Backup</button>
-            </div>
-            <div class="card action-card">
-              <div class="action-icon"><i class="fa-solid fa-upload"></i></div>
-              <div>
-                <h4>Restore Data</h4>
-                <p class="muted">Restore previously backed up data.</p>
-              </div>
-              <button class="btn btn-ghost" onclick="restoreBackup()"><i class="fa-solid fa-rotate"></i> Restore Backup</button>
-            </div>
-            <div class="card action-card danger">
-              <div class="action-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
-              <div>
-                <h4>Reset Settings</h4>
-                <p class="muted">Restore all settings to default values.</p>
-              </div>
-              <button class="btn btn-danger" onclick="resetSettings()"><i class="fa-solid fa-rotate-left"></i> Reset Settings</button>
-            </div>
+
           </div>
+
+
+          <div class="form-group">
+
+            <label for="email">
+              Email Address
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-envelope"></i>
+
+              <input type="email"
+                     id="email"
+                     placeholder="Enter email address"
+                     value="info@pinkbeautysalon.com">
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group full">
+
+            <label for="address">
+              Salon Address
+            </label>
+
+            <div class="input-wrapper textarea-wrapper">
+
+              <i class="fa-solid fa-location-dot"></i>
+
+              <textarea id="address"
+                        rows="3"
+                        placeholder="Enter salon address">Colombo, Sri Lanka</textarea>
+
+            </div>
+
+          </div>
+
         </div>
 
       </section>
+
+
+      <!-- =================================================
+           BUSINESS HOURS
+      ================================================== -->
+
+      <section class="settings-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrapper">
+
+            <div class="card-icon champagne">
+              <i class="fa-regular fa-clock"></i>
+            </div>
+
+            <div>
+
+              <h3>Business Hours</h3>
+
+              <p>
+                Set your regular salon operating hours.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="hours-layout">
+
+          <div class="time-box">
+
+            <div class="time-box-icon">
+              <i class="fa-solid fa-sun"></i>
+            </div>
+
+            <div class="time-box-content">
+
+              <span>Opening Time</span>
+
+              <input type="time"
+                     id="openingTime"
+                     value="09:00">
+
+            </div>
+
+          </div>
+
+
+          <div class="time-separator">
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+
+
+          <div class="time-box">
+
+            <div class="time-box-icon">
+              <i class="fa-solid fa-moon"></i>
+            </div>
+
+            <div class="time-box-content">
+
+              <span>Closing Time</span>
+
+              <input type="time"
+                     id="closingTime"
+                     value="18:00">
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="business-note">
+
+          <i class="fa-solid fa-circle-info"></i>
+
+          <span>
+                        These hours will be used when managing
+                        appointment availability.
+                    </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           APPOINTMENT SETTINGS
+      ================================================== -->
+
+      <section class="settings-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrapper">
+
+            <div class="card-icon purple">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <div>
+
+              <h3>Appointment Settings</h3>
+
+              <p>
+                Configure appointment duration and
+                cancellation policies.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+          <div class="form-group">
+
+            <label for="appointmentDuration">
+              Default Appointment Duration
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-regular fa-hourglass-half"></i>
+
+              <select id="appointmentDuration">
+
+                <option value="15">15 Minutes</option>
+                <option value="30">30 Minutes</option>
+                <option value="45">45 Minutes</option>
+                <option value="60" selected>60 Minutes</option>
+                <option value="90">90 Minutes</option>
+                <option value="120">120 Minutes</option>
+
+              </select>
+
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="currency">
+              Currency
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-coins"></i>
+
+              <select id="currency">
+
+                <option value="LKR" selected>
+                  LKR — Sri Lankan Rupee
+                </option>
+
+                <option value="USD">
+                  USD — US Dollar
+                </option>
+
+                <option value="EUR">
+                  EUR — Euro
+                </option>
+
+                <option value="GBP">
+                  GBP — British Pound
+                </option>
+
+              </select>
+
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group full">
+
+            <label for="cancellationPolicy">
+              Cancellation Policy
+            </label>
+
+            <div class="input-wrapper textarea-wrapper">
+
+              <i class="fa-solid fa-file-contract"></i>
+
+              <textarea id="cancellationPolicy"
+                        rows="4"
+                        placeholder="Enter cancellation policy">Please cancel appointments at least 24 hours in advance.</textarea>
+
+            </div>
+
+            <small class="field-help">
+              This policy can be displayed when customers
+              make or manage appointments.
+            </small>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           NOTIFICATION SETTINGS
+      ================================================== -->
+
+      <section class="settings-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrapper">
+
+            <div class="card-icon green">
+              <i class="fa-regular fa-bell"></i>
+            </div>
+
+            <div>
+
+              <h3>Notification Preferences</h3>
+
+              <p>
+                Control how salon notifications and
+                appointment reminders are handled.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-list">
+
+
+          <!-- EMAIL -->
+
+          <div class="notification-item">
+
+            <div class="notification-info">
+
+              <div class="notification-icon email">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+
+              <div>
+
+                <h4>Email Notifications</h4>
+
+                <p>
+                  Receive important salon updates
+                  and appointment notifications by email.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <label class="toggle">
+
+              <input type="checkbox"
+                     id="emailNotifications"
+                     checked>
+
+              <span class="toggle-slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <!-- SMS -->
+
+          <div class="notification-item">
+
+            <div class="notification-info">
+
+              <div class="notification-icon sms">
+                <i class="fa-solid fa-comment-sms"></i>
+              </div>
+
+              <div>
+
+                <h4>SMS Notifications</h4>
+
+                <p>
+                  Send important appointment updates
+                  through SMS.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <label class="toggle">
+
+              <input type="checkbox"
+                     id="smsNotifications"
+                     checked>
+
+              <span class="toggle-slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <!-- REMINDER -->
+
+          <div class="notification-item">
+
+            <div class="notification-info">
+
+              <div class="notification-icon reminder">
+                <i class="fa-regular fa-calendar-days"></i>
+              </div>
+
+              <div>
+
+                <h4>Appointment Reminders</h4>
+
+                <p>
+                  Automatically enable appointment
+                  reminder notifications.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <label class="toggle">
+
+              <input type="checkbox"
+                     id="reminderEnabled"
+                     checked>
+
+              <span class="toggle-slider"></span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           SAVE AREA
+      ================================================== -->
+
+      <section class="save-section">
+
+        <div class="save-message">
+
+          <div class="save-message-icon">
+            <i class="fa-solid fa-shield-heart"></i>
+          </div>
+
+          <div>
+
+            <strong>
+              Your salon settings are protected
+            </strong>
+
+            <span>
+                            Changes will be applied across the
+                            management system.
+                        </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="save-actions">
+
+          <button class="btn btn-secondary"
+                  id="resetBtn">
+
+            <i class="fa-solid fa-rotate-left"></i>
+
+            Reset
+
+          </button>
+
+
+          <button class="btn btn-primary"
+                  id="saveBtn">
+
+            <i class="fa-solid fa-check"></i>
+
+            Save Settings
+
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           FOOTER
+      ================================================== -->
+
+      <footer class="page-footer">
+
+                <span>
+                    PINK BEAUTY SALON
+                </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+                    Luxury Beauty Meets Smart Technology
+                </span>
+
+      </footer>
+
     </section>
+
   </main>
+
 </div>
 
-<!-- ============== CONFIRMATION MODAL ============== -->
-<div class="modal-overlay" id="confirmationModal">
-  <div class="modal">
-    <div class="modal-icon" id="modalIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-    <h3 id="modalTitle">Reset Settings?</h3>
-    <p id="modalMessage">Are you sure you want to restore all settings to their default values?</p>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-danger" id="modalConfirmBtn">Reset Settings</button>
-    </div>
-  </div>
-</div>
 
-<!-- ============== TOAST ============== -->
-<div class="toast-container" id="toastContainer"></div>
-<script>
-  const API_URL = "/api/settings";
+<!-- MOBILE OVERLAY -->
 
-  document.addEventListener("DOMContentLoaded", () => {
-
-    initializeSettingsTabs();
-    initializePasswordToggles();
-    initializeAppearance();
-    initializeNotifications();
-
-    loadSettings();
-  });
-
-  async function loadSettings() {
-
-    try {
-
-      const response = await fetch(API_URL);
-
-      if (!response.ok) {
-        throw new Error("Failed to load settings");
-      }
-
-      const data = await response.json();
-
-      populateSettings(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-      showToast(
-              "Unable to load settings",
-              "error"
-      );
-    }
-  }
-
-  function populateSettings(data) {
-
-    // General
-    setValue("systemName", data.systemName);
-    setValue("tagline", data.tagline);
-    setValue("defaultLanguage", data.defaultLanguage);
-    setValue("currency", data.currency);
-    setValue("timeZone", data.timeZone);
-    setValue("dateFormat", data.dateFormat);
-
-    document
-            .querySelectorAll('input[name="timeFormat"]')
-            .forEach(input => {
-              input.checked = input.value === data.timeFormat;
-            });
+<div class="sidebar-overlay"
+     id="sidebarOverlay"></div>
 
 
-    // Salon
-    setValue("salonName", data.salonName);
-    setValue("salonEmail", data.salonEmail);
-    setValue("salonPhone", data.salonPhone);
-    setValue("salonAddress", data.salonAddress);
-    setValue("salonWebsite", data.salonWebsite);
-    setValue("openingTime", data.openingTime);
-    setValue("closingTime", data.closingTime);
+<!-- TOAST -->
+
+<div class="toast-container"
+     id="toastContainer"></div>
 
 
-    // Appointment
-    setValue(
-            "appointmentDuration",
-            data.appointmentDuration
-    );
-
-    setValue(
-            "bookingAdvance",
-            data.bookingAdvance
-    );
-
-    setValue(
-            "maxDaily",
-            data.maxDailyAppointments
-    );
-
-    setValue(
-            "cancellationPolicy",
-            data.cancellationPolicy
-    );
-
-    setChecked(
-            "sameDayBooking",
-            data.sameDayBooking
-    );
-
-    setChecked(
-            "onlineBooking",
-            data.onlineBooking
-    );
-
-    setChecked(
-            "autoConfirm",
-            data.autoConfirm
-    );
+<script >/* ============================================================
+   PINK BEAUTY SALON
+   SETTINGS MANAGEMENT
+   FRONTEND ↔ SPRING BOOT API
+   ============================================================ */
 
 
-    // Payment
-    setValue(
-            "defaultPaymentMethod",
-            data.defaultPaymentMethod
-    );
+/* ============================================================
+   API CONFIGURATION
+   ============================================================ */
 
-    setValue(
-            "taxRate",
-            data.taxRate
-    );
-
-    setValue(
-            "paymentCurrency",
-            data.currency
-    );
-
-    setChecked(
-            "onlinePayments",
-            data.onlinePayments
-    );
-
-    setChecked(
-            "paymentConfirmation",
-            data.paymentConfirmation
-    );
+const API_BASE_URL =
+        "http://localhost:8080/api/v1/settings";
 
 
-    // Appearance
-    setChecked(
-            "compactSidebar",
-            data.compactSidebar
-    );
+/* ============================================================
+   DOM ELEMENTS
+   ============================================================ */
 
-    setChecked(
-            "enableAnimations",
-            data.enableAnimations
-    );
+const sidebar =
+        document.getElementById("sidebar");
 
-    applyTheme(data.theme);
-    applyAccentColor(data.accentColor);
+const mobileMenuBtn =
+        document.getElementById("mobileMenuBtn");
+
+const sidebarOverlay =
+        document.getElementById("sidebarOverlay");
+
+const saveBtn =
+        document.getElementById("saveBtn");
+
+const resetBtn =
+        document.getElementById("resetBtn");
+
+const refreshBtn =
+        document.getElementById("refreshBtn");
+
+const toastContainer =
+        document.getElementById("toastContainer");
+
+const settingsStatus =
+        document.getElementById("settingsStatus");
 
 
-    // Security
-    setChecked(
-            "twoFactorToggle",
-            data.twoFactorEnabled
-    );
+/* ============================================================
+   GLOBAL VARIABLES
+   ============================================================ */
 
-    update2FAStatus(data.twoFactorEnabled);
+let currentSettingsId = null;
 
 
-    // Notifications
-    setCheckedByKey(
-            ".notif-toggle",
-            "appointment",
-            data.appointmentNotification
-    );
+/* ============================================================
+   DEFAULT SETTINGS
+   ============================================================ */
 
-    setCheckedByKey(
-            ".notif-toggle",
-            "cancellation",
-            data.cancellationNotification
-    );
+const defaultSettings = {
 
-    setCheckedByKey(
-            ".notif-toggle",
-            "newCustomer",
-            data.newCustomerNotification
-    );
+  salonName:
+          "PINK BEAUTY SALON",
 
-    setCheckedByKey(
-            ".notif-toggle",
-            "payment",
-            data.paymentNotification
-    );
+  tagline:
+          "Luxury Beauty Meets Smart Technology",
 
-    setCheckedByKey(
-            ".notif-toggle",
-            "feedback",
-            data.feedbackNotification
-    );
+  phone:
+          "0112345678",
 
-    setCheckedByKey(
-            ".notif-toggle",
-            "staff",
-            data.staffNotification
-    );
+  email:
+          "info@pinkbeautysalon.com",
 
-    setCheckedByKey(
-            ".channel-toggle",
-            "email",
-            data.emailNotification
-    );
+  address:
+          "Colombo, Sri Lanka",
 
-    setCheckedByKey(
-            ".channel-toggle",
-            "system",
-            data.systemNotification
-    );
+  openingTime:
+          "09:00",
 
-    setCheckedByKey(
-            ".channel-toggle",
-            "sms",
-            data.smsNotification
-    );
-  }
+  closingTime:
+          "18:00",
 
-  function setValue(id, value) {
+  appointmentDuration:
+          60,
 
-    const element = document.getElementById(id);
+  currency:
+          "LKR",
 
-    if (element && value !== null && value !== undefined) {
-      element.value = value;
-    }
+  cancellationPolicy:
+          "Please cancel appointments at least 24 hours in advance.",
+
+  emailNotifications:
+          true,
+
+  smsNotifications:
+          true,
+
+  reminderEnabled:
+          true
+};
+
+
+/* ============================================================
+   PAGE INITIALIZATION
+   ============================================================ */
+
+document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+
+          initializePage();
+
+        }
+);
+
+
+async function initializePage() {
+
+  setupSidebar();
+
+  setupButtons();
+
+  setupInputListeners();
+
+  await loadSettingsFromAPI();
+
+}
+
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+
+function setupSidebar() {
+
+  if (!mobileMenuBtn) {
+    return;
   }
 
 
-  function setChecked(id, value) {
+  mobileMenuBtn.addEventListener(
+          "click",
+          () => {
 
-    const element = document.getElementById(id);
+            sidebar.classList.toggle(
+                    "open"
+            );
 
-    if (element) {
-      element.checked = Boolean(value);
-    }
-  }
+            sidebarOverlay.classList.toggle(
+                    "show"
+            );
 
-
-  function setCheckedByKey(
-          selector,
-          key,
-          value
-  ) {
-
-    const element = document.querySelector(
-            `${selector}[data-key="${key}"]`
-    );
-
-    if (element) {
-      element.checked = Boolean(value);
-    }
-  }
-  async function saveGeneralSettings() {
-
-    await saveSettings("General settings saved successfully");
-  }
-
-  async function saveSalonProfile() {
-
-    await saveSettings("Salon profile saved successfully");
-  }
-  async function saveAppointmentSettings() {
-
-    await saveSettings(
-            "Appointment settings saved successfully"
-    );
-  }
-  async function savePaymentSettings() {
-
-    await saveSettings(
-            "Payment settings saved successfully"
-    );
-  }
-  async function updateAppearanceSettings() {
-
-    await saveSettings(
-            "Appearance settings saved successfully"
-    );
-  }
-  async function updateNotificationSettings() {
-
-    await saveSettings(
-            "Notification settings saved successfully"
-    );
-  }
-  async function saveSettings(successMessage) {
-
-    try {
-
-      const payload = collectSettings();
-
-      const response = await fetch(API_URL, {
-
-        method: "PUT",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save settings");
-      }
-
-      const data = await response.json();
-
-      populateSettings(data);
-
-      showToast(successMessage);
-
-    } catch (error) {
-
-      console.error(error);
-
-      showToast(
-              "Failed to save settings",
-              "error"
-      );
-    }
-  }
-  function collectSettings() {
-
-    const timeFormat =
-            document.querySelector(
-                    'input[name="timeFormat"]:checked'
-            )?.value || "12";
-
-
-    const workingDays =
-            Array.from(
-                    document.querySelectorAll(".working-day:checked")
-            )
-                    .map(input => input.value)
-                    .join(",");
-
-
-    const paymentMethods =
-            Array.from(
-                    document.querySelectorAll(".payment-method:checked")
-            )
-                    .map(input => input.value)
-                    .join(",");
-
-
-    return {
-
-      // General
-      systemName: getValue("systemName"),
-      tagline: getValue("tagline"),
-      defaultLanguage: getValue("defaultLanguage"),
-      currency: getValue("currency"),
-      timeZone: getValue("timeZone"),
-      dateFormat: getValue("dateFormat"),
-      timeFormat: timeFormat,
-
-
-      // Salon
-      salonName: getValue("salonName"),
-      salonEmail: getValue("salonEmail"),
-      salonPhone: getValue("salonPhone"),
-      salonAddress: getValue("salonAddress"),
-      salonWebsite: getValue("salonWebsite"),
-      openingTime: getValue("openingTime"),
-      closingTime: getValue("closingTime"),
-      workingDays: workingDays,
-
-
-      // Appointment
-      appointmentDuration:
-              Number(getValue("appointmentDuration")),
-
-      bookingAdvance:
-              Number(getValue("bookingAdvance")),
-
-      maxDailyAppointments:
-              Number(getValue("maxDaily")),
-
-      cancellationPolicy:
-              getValue("cancellationPolicy"),
-
-      sameDayBooking:
-              getChecked("sameDayBooking"),
-
-      onlineBooking:
-              getChecked("onlineBooking"),
-
-      autoConfirm:
-              getChecked("autoConfirm"),
-
-
-      // Payment
-      paymentMethods:
-      paymentMethods,
-
-      defaultPaymentMethod:
-              getValue("defaultPaymentMethod"),
-
-      taxRate:
-              Number(getValue("taxRate")),
-
-      onlinePayments:
-              getChecked("onlinePayments"),
-
-      paymentConfirmation:
-              getChecked("paymentConfirmation"),
-
-
-      // Appearance
-      theme:
-              getCurrentTheme(),
-
-      accentColor:
-              getComputedStyle(document.documentElement)
-                      .getPropertyValue("--accent")
-                      .trim(),
-
-      compactSidebar:
-              getChecked("compactSidebar"),
-
-      enableAnimations:
-              getChecked("enableAnimations"),
-
-
-      // Security
-      twoFactorEnabled:
-              getChecked("twoFactorToggle"),
-
-
-      // Notifications
-      appointmentNotification:
-              getNotifValue("appointment"),
-
-      cancellationNotification:
-              getNotifValue("cancellation"),
-
-      newCustomerNotification:
-              getNotifValue("newCustomer"),
-
-      paymentNotification:
-              getNotifValue("payment"),
-
-      feedbackNotification:
-              getNotifValue("feedback"),
-
-      staffNotification:
-              getNotifValue("staff"),
-
-      emailNotification:
-              getChannelValue("email"),
-
-      systemNotification:
-              getChannelValue("system"),
-
-      smsNotification:
-              getChannelValue("sms")
-    };
-    function getValue(id) {
-
-      const element = document.getElementById(id);
-
-      return element ? element.value : "";
-    }
-
-
-    function getChecked(id) {
-
-      const element = document.getElementById(id);
-
-      return element ? element.checked : false;
-    }
-
-
-    function getNotifValue(key) {
-
-      const element = document.querySelector(
-              `.notif-toggle[data-key="${key}"]`
-      );
-
-      return element ? element.checked : false;
-    }
-
-
-    function getChannelValue(key) {
-
-      const element = document.querySelector(
-              `.channel-toggle[data-key="${key}"]`
-      );
-
-      return element ? element.checked : false;
-    }
-    function initializeSettingsTabs() {
-
-      const tabs =
-              document.querySelectorAll(".settings-tab");
-
-      const sections =
-              document.querySelectorAll(".settings-section");
-
-
-      tabs.forEach(tab => {
-
-        tab.addEventListener("click", () => {
-
-          const target =
-                  tab.dataset.tab;
-
-
-          tabs.forEach(item =>
-                  item.classList.remove("active")
-          );
-
-          sections.forEach(section =>
-                  section.classList.remove("active")
-          );
-
-
-          tab.classList.add("active");
-
-
-          const section =
-                  document.getElementById(target);
-
-          if (section) {
-            section.classList.add("active");
           }
-        });
-      });
-    }
-    function initializeAppearance() {
+  );
 
-      document
-              .querySelectorAll(".theme-card")
-              .forEach(card => {
 
-                card.addEventListener("click", () => {
+  if (sidebarOverlay) {
 
-                  const theme =
-                          card.dataset.theme;
+    sidebarOverlay.addEventListener(
+            "click",
+            () => {
 
-                  applyTheme(theme);
+              closeSidebar();
 
-                  document
-                          .querySelectorAll(".theme-card")
-                          .forEach(c =>
-                                  c.classList.remove("active")
-                          );
-
-                  card.classList.add("active");
-                });
-              });
-
-
-      document
-              .querySelectorAll(".accent-swatch")
-              .forEach(swatch => {
-
-                swatch.addEventListener("click", () => {
-
-                  const color =
-                          swatch.dataset.color;
-
-                  applyAccentColor(color);
-
-                  document
-                          .querySelectorAll(".accent-swatch")
-                          .forEach(s =>
-                                  s.classList.remove("active")
-                          );
-
-                  swatch.classList.add("active");
-                });
-              });
-    }
-    function applyTheme(theme) {
-
-      document.body.classList.remove("theme-dark");
-
-      if (theme === "dark") {
-
-        document.body.classList.add("theme-dark");
-
-      } else if (theme === "system") {
-
-        if (
-                window.matchMedia(
-                        "(prefers-color-scheme: dark)"
-                ).matches
-        ) {
-          document.body.classList.add("theme-dark");
-        }
-      }
-
-      document
-              .querySelectorAll(".theme-card")
-              .forEach(card => {
-
-                card.classList.toggle(
-                        "active",
-                        card.dataset.theme === theme
-                );
-              });
-    }
-
-
-    function getCurrentTheme() {
-
-      const active =
-              document.querySelector(
-                      ".theme-card.active"
-              );
-
-      return active
-              ? active.dataset.theme
-              : "light";
-    }
-    function applyAccentColor(color) {
-
-      if (!color) {
-        return;
-      }
-
-      document.documentElement.style
-              .setProperty("--accent", color);
-
-      document.documentElement.style
-              .setProperty("--rose-gold", color);
-
-      document
-              .querySelectorAll(".accent-swatch")
-              .forEach(swatch => {
-
-                swatch.classList.toggle(
-                        "active",
-                        swatch.dataset.color.toLowerCase() ===
-                        color.toLowerCase()
-                );
-              });
-    }
-    function toggleCompactSidebar(element) {
-
-      document.body.classList.toggle(
-              "compact-sidebar",
-              element.checked
-      );
-    }
-
-    function toggleAnimations(element) {
-
-      document.body.classList.toggle(
-              "no-animations",
-              !element.checked
-      );
-    }
-    function initializePasswordToggles() {
-
-      document
-              .querySelectorAll(".toggle-eye")
-              .forEach(button => {
-
-                button.addEventListener("click", () => {
-
-                  const targetId =
-                          button.dataset.target;
-
-                  const input =
-                          document.getElementById(targetId);
-
-                  if (!input) {
-                    return;
-                  }
-
-                  if (input.type === "password") {
-
-                    input.type = "text";
-
-                    button.innerHTML =
-                            '<i class="fa-solid fa-eye-slash"></i>';
-
-                  } else {
-
-                    input.type = "password";
-
-                    button.innerHTML =
-                            '<i class="fa-solid fa-eye"></i>';
-                  }
-                });
-              });
-    }
-    function checkPasswordStrength() {
-
-      const password =
-              document.getElementById("newPassword").value;
-
-      let score = 0;
-
-      if (password.length >= 8) score++;
-
-      if (/[A-Z]/.test(password)) score++;
-
-      if (/[a-z]/.test(password)) score++;
-
-      if (/[0-9]/.test(password)) score++;
-
-      if (/[^A-Za-z0-9]/.test(password)) score++;
-
-
-      const bar =
-              document.getElementById("strengthBar");
-
-      const label =
-              document.getElementById("strengthLabel");
-
-
-      const widths = [
-        "10%",
-        "25%",
-        "45%",
-        "70%",
-        "100%"
-      ];
-
-      const labels = [
-        "Weak",
-        "Weak",
-        "Fair",
-        "Good",
-        "Strong"
-      ];
-
-
-      bar.style.width =
-              widths[score];
-
-      label.textContent =
-              labels[score];
-    }
-    function checkPasswordRequirements() {
-
-      const password =
-              document.getElementById("newPassword").value;
-
-
-      updateRequirement(
-              "length",
-              password.length >= 8
-      );
-
-      updateRequirement(
-              "upper",
-              /[A-Z]/.test(password)
-      );
-
-      updateRequirement(
-              "lower",
-              /[a-z]/.test(password)
-      );
-
-      updateRequirement(
-              "number",
-              /[0-9]/.test(password)
-      );
-
-      updateRequirement(
-              "special",
-              /[^A-Za-z0-9]/.test(password)
-      );
-    }
-
-
-    function updateRequirement(
-            name,
-            valid
-    ) {
-
-      const req =
-              document.querySelector(
-                      `.req[data-req="${name}"]`
-              );
-
-      if (!req) {
-        return;
-      }
-
-      req.classList.toggle(
-              "valid",
-              valid
-      );
-
-      const icon =
-              req.querySelector("i");
-
-      if (icon) {
-
-        icon.className = valid
-                ? "fa-solid fa-circle-check"
-                : "fa-solid fa-circle";
-      }
-    }
-
-    function checkPasswordMatch() {
-
-      const password =
-              document.getElementById("newPassword").value;
-
-      const confirm =
-              document.getElementById("confirmPassword").value;
-
-      const input =
-              document.getElementById("confirmPassword");
-
-      if (!confirm) {
-        input.style.borderColor = "";
-        return;
-      }
-
-      if (password === confirm) {
-
-        input.style.borderColor =
-                "var(--success)";
-
-      } else {
-
-        input.style.borderColor =
-                "var(--danger)";
-      }
-    }
-    async function changePassword() {
-
-      const currentPassword =
-              getValue("currentPassword");
-
-      const newPassword =
-              getValue("newPassword");
-
-      const confirmPassword =
-              getValue("confirmPassword");
-
-
-      if (!currentPassword ||
-              !newPassword ||
-              !confirmPassword) {
-
-        showToast(
-                "Please fill all password fields",
-                "error"
-        );
-
-        return;
-      }
-
-
-      if (newPassword !== confirmPassword) {
-
-        showToast(
-                "Passwords do not match",
-                "error"
-        );
-
-        return;
-      }
-
-
-      try {
-
-        const response = await fetch(
-                "/api/auth/change-password",
-                {
-                  method: "PUT",
-
-                  headers: {
-                    "Content-Type":
-                            "application/json"
-                  },
-
-                  body: JSON.stringify({
-                    currentPassword,
-                    newPassword
-                  })
-                }
-        );
-
-
-        if (!response.ok) {
-          throw new Error();
-        }
-
-
-        showToast(
-                "Password changed successfully"
-        );
-
-
-        document.getElementById(
-                "currentPassword"
-        ).value = "";
-
-        document.getElementById(
-                "newPassword"
-        ).value = "";
-
-        document.getElementById(
-                "confirmPassword"
-        ).value = "";
-
-
-      } catch (error) {
-
-        showToast(
-                "Failed to change password",
-                "error"
-        );
-      }
-    }
-    async function toggle2FA(element) {
-
-      const enabled = element.checked;
-
-      try {
-
-        const response = await fetch(
-                `/api/settings/2fa?enabled=${enabled}`,
-                {
-                  method: "PUT"
-                }
-        );
-
-        if (!response.ok) {
-          throw new Error();
-        }
-
-        update2FAStatus(enabled);
-
-        showToast(
-                enabled
-                        ? "Two-factor authentication enabled"
-                        : "Two-factor authentication disabled"
-        );
-
-      } catch (error) {
-
-        element.checked = !enabled;
-
-        showToast(
-                "Unable to update 2FA",
-                "error"
-        );
-      }
-    }
-
-
-    function update2FAStatus(enabled) {
-
-      const status =
-              document.getElementById(
-                      "twoFactorStatus"
-              );
-
-      if (!status) {
-        return;
-      }
-
-      status.textContent =
-              enabled
-                      ? "Currently Enabled"
-                      : "Currently Disabled";
-
-      status.classList.toggle(
-              "enabled",
-              enabled
-      );
-    }
-    function initializeNotifications() {
-
-      document
-              .querySelectorAll(
-                      ".notif-toggle, .channel-toggle"
-              )
-              .forEach(toggle => {
-
-                toggle.addEventListener(
-                        "change",
-                        () => {
-
-                          console.log(
-                                  toggle.dataset.key,
-                                  toggle.checked
-                          );
-                        }
-                );
-              });
-    }
-  }
-  function resetSettings() {
-
-    openModal(
-            "Reset Settings?",
-            "Are you sure you want to restore all settings to their default values?",
-            async () => {
-
-              try {
-
-                const response =
-                        await fetch(
-                                `${API_URL}/reset`,
-                                {
-                                  method: "POST"
-                                }
-                        );
-
-                if (!response.ok) {
-                  throw new Error();
-                }
-
-                await loadSettings();
-
-                closeModal();
-
-                showToast(
-                        "Settings restored to default"
-                );
-
-              } catch (error) {
-
-                showToast(
-                        "Failed to reset settings",
-                        "error"
-                );
-              }
             }
     );
+
   }
-  function openModal(
-          title,
-          message,
-          confirmAction
-  ) {
-
-    document.getElementById(
-            "modalTitle"
-    ).textContent = title;
-
-    document.getElementById(
-            "modalMessage"
-    ).textContent = message;
 
 
-    const confirmButton =
-            document.getElementById(
-                    "modalConfirmBtn"
+  document.querySelectorAll(
+          ".sidebar-nav .nav-item"
+  ).forEach(item => {
+
+    item.addEventListener(
+            "click",
+            () => {
+
+              if (
+                      window.innerWidth <= 900
+              ) {
+
+                closeSidebar();
+
+              }
+
+            }
+    );
+
+  });
+
+}
+
+
+function closeSidebar() {
+
+  if (sidebar) {
+
+    sidebar.classList.remove(
+            "open"
+    );
+
+  }
+
+
+  if (sidebarOverlay) {
+
+    sidebarOverlay.classList.remove(
+            "show"
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+function setupButtons() {
+
+  if (saveBtn) {
+
+    saveBtn.addEventListener(
+            "click",
+            saveSettings
+    );
+
+  }
+
+
+  if (resetBtn) {
+
+    resetBtn.addEventListener(
+            "click",
+            resetSettings
+    );
+
+  }
+
+
+  if (refreshBtn) {
+
+    refreshBtn.addEventListener(
+            "click",
+            refreshSettings
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   INPUT LISTENERS
+   ============================================================ */
+
+function setupInputListeners() {
+
+  const inputs =
+          document.querySelectorAll(
+                  "input, textarea, select"
+          );
+
+
+  inputs.forEach(input => {
+
+    input.addEventListener(
+            "change",
+            markAsUnsaved
+    );
+
+
+    input.addEventListener(
+            "input",
+            markAsUnsaved
+    );
+
+  });
+
+}
+
+
+/* ============================================================
+   GET SETTINGS FROM BACKEND
+   ============================================================ */
+
+async function loadSettingsFromAPI() {
+
+  setSettingsStatus(
+          "Loading settings...",
+          "warning"
+  );
+
+
+  try {
+
+    const response =
+            await fetch(
+                    API_BASE_URL,
+                    {
+                      method: "GET"
+                    }
             );
 
 
-    confirmButton.onclick =
-            confirmAction;
+    /*
+     * No settings record exists.
+     */
+
+    if (
+            response.status === 204
+    ) {
+
+      currentSettingsId = null;
 
 
-    document
-            .getElementById(
-                    "confirmationModal"
-            )
-            .classList.add("show");
-  }
+      applySettings(
+              defaultSettings
+      );
 
 
-  function closeModal() {
+      setSettingsStatus(
+              "No settings saved",
+              "warning"
+      );
 
-    document
-            .getElementById(
-                    "confirmationModal"
-            )
-            .classList.remove("show");
-  }
-  function clearCache() {
 
-    localStorage.clear();
+      showToast(
+              "success",
+              "Ready",
+              "No settings record was found. You can create one now."
+      );
 
-    sessionStorage.clear();
+
+      return;
+
+    }
+
+
+    /*
+     * Other HTTP errors.
+     */
+
+    if (!response.ok) {
+
+      throw new Error(
+              `HTTP ${response.status}`
+      );
+
+    }
+
+
+    const settings =
+            await response.json();
+
+
+    /*
+     * Store database ID.
+     */
+
+    currentSettingsId =
+            settings.settingsId;
+
+
+    /*
+     * Put backend data into form.
+     */
+
+    applyBackendSettings(
+            settings
+    );
+
+
+    setSettingsStatus(
+            "Settings loaded",
+            "success"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+            "Settings GET error:",
+            error
+    );
+
+
+    /*
+     * If API fails, keep the UI usable.
+     */
+
+    applySettings(
+            defaultSettings
+    );
+
+
+    setSettingsStatus(
+            "Connection error",
+            "warning"
+    );
+
 
     showToast(
-            "Cache cleared successfully"
+            "error",
+            "Unable to Load Settings",
+            "Please make sure the Spring Boot server is running."
     );
+
   }
-  async function createBackup() {
 
-    try {
-
-      const response =
-              await fetch(API_URL);
-
-      const data =
-              await response.json();
+}
 
 
-      const blob =
-              new Blob(
-                      [JSON.stringify(data, null, 2)],
+/* ============================================================
+   APPLY BACKEND SETTINGS
+   ============================================================ */
+
+function applyBackendSettings(
+        settings
+) {
+
+  document.getElementById(
+          "salonName"
+  ).value =
+          settings.salonName || "";
+
+
+  document.getElementById(
+          "tagline"
+  ).value =
+          settings.tagline || "";
+
+
+  document.getElementById(
+          "phone"
+  ).value =
+          settings.phone || "";
+
+
+  document.getElementById(
+          "email"
+  ).value =
+          settings.email || "";
+
+
+  document.getElementById(
+          "address"
+  ).value =
+          settings.address || "";
+
+
+  document.getElementById(
+          "openingTime"
+  ).value =
+          convertTimeForInput(
+                  settings.openingTime
+          );
+
+
+  document.getElementById(
+          "closingTime"
+  ).value =
+          convertTimeForInput(
+                  settings.closingTime
+          );
+
+
+  document.getElementById(
+          "appointmentDuration"
+  ).value =
+          settings.appointmentDuration ||
+          60;
+
+
+  document.getElementById(
+          "currency"
+  ).value =
+          settings.currency || "LKR";
+
+
+  document.getElementById(
+          "cancellationPolicy"
+  ).value =
+          settings.cancellationPolicy || "";
+
+
+  document.getElementById(
+          "emailNotifications"
+  ).checked =
+          settings.emailNotifications !== false;
+
+
+  document.getElementById(
+          "smsNotifications"
+  ).checked =
+          settings.smsNotifications !== false;
+
+
+  document.getElementById(
+          "reminderEnabled"
+  ).checked =
+          settings.reminderEnabled !== false;
+
+}
+
+
+/* ============================================================
+   TIME FORMAT
+   ============================================================ */
+
+function convertTimeForInput(
+        time
+) {
+
+  if (!time) {
+
+    return "";
+
+  }
+
+
+  /*
+   * Backend:
+   * 09:00:00
+   *
+   * HTML:
+   * 09:00
+   */
+
+  return String(time).substring(
+          0,
+          5
+  );
+
+}
+
+
+/* ============================================================
+   APPLY DEFAULT / LOCAL FORM SETTINGS
+   ============================================================ */
+
+function applySettings(
+        settings
+) {
+
+  document.getElementById(
+          "salonName"
+  ).value =
+          settings.salonName || "";
+
+
+  document.getElementById(
+          "tagline"
+  ).value =
+          settings.tagline || "";
+
+
+  document.getElementById(
+          "phone"
+  ).value =
+          settings.phone || "";
+
+
+  document.getElementById(
+          "email"
+  ).value =
+          settings.email || "";
+
+
+  document.getElementById(
+          "address"
+  ).value =
+          settings.address || "";
+
+
+  document.getElementById(
+          "openingTime"
+  ).value =
+          convertTimeForInput(
+                  settings.openingTime ||
+                  "09:00"
+          );
+
+
+  document.getElementById(
+          "closingTime"
+  ).value =
+          convertTimeForInput(
+                  settings.closingTime ||
+                  "18:00"
+          );
+
+
+  document.getElementById(
+          "appointmentDuration"
+  ).value =
+          settings.appointmentDuration ||
+          60;
+
+
+  document.getElementById(
+          "currency"
+  ).value =
+          settings.currency ||
+          "LKR";
+
+
+  document.getElementById(
+          "cancellationPolicy"
+  ).value =
+          settings.cancellationPolicy ||
+          "";
+
+
+  document.getElementById(
+          "emailNotifications"
+  ).checked =
+          settings.emailNotifications !== false;
+
+
+  document.getElementById(
+          "smsNotifications"
+  ).checked =
+          settings.smsNotifications !== false;
+
+
+  document.getElementById(
+          "reminderEnabled"
+  ).checked =
+          settings.reminderEnabled !== false;
+
+}
+
+
+/* ============================================================
+   COLLECT FORM DATA
+   ============================================================ */
+
+function collectSettings() {
+
+  return {
+
+    salonName:
+            document.getElementById(
+                    "salonName"
+            ).value.trim(),
+
+    tagline:
+            document.getElementById(
+                    "tagline"
+            ).value.trim(),
+
+    phone:
+            document.getElementById(
+                    "phone"
+            ).value.trim(),
+
+    email:
+            document.getElementById(
+                    "email"
+            ).value.trim(),
+
+    address:
+            document.getElementById(
+                    "address"
+            ).value.trim(),
+
+    openingTime:
+    document.getElementById(
+            "openingTime"
+    ).value,
+
+    closingTime:
+    document.getElementById(
+            "closingTime"
+    ).value,
+
+    appointmentDuration:
+            Number(
+                    document.getElementById(
+                            "appointmentDuration"
+                    ).value
+            ),
+
+    currency:
+    document.getElementById(
+            "currency"
+    ).value,
+
+    cancellationPolicy:
+            document.getElementById(
+                    "cancellationPolicy"
+            ).value.trim(),
+
+    emailNotifications:
+    document.getElementById(
+            "emailNotifications"
+    ).checked,
+
+    smsNotifications:
+    document.getElementById(
+            "smsNotifications"
+    ).checked,
+
+    reminderEnabled:
+    document.getElementById(
+            "reminderEnabled"
+    ).checked
+
+  };
+
+}
+
+
+/* ============================================================
+   SAVE / UPDATE SETTINGS
+   ============================================================ */
+
+async function saveSettings() {
+
+  if (!validateSettings()) {
+
+    return;
+
+  }
+
+
+  const settings =
+          collectSettings();
+
+
+  setSaveButtonLoading(
+          true
+  );
+
+
+  try {
+
+    let response;
+
+
+    /*
+     * CREATE
+     *
+     * If settingsId is null,
+     * create a new record.
+     */
+
+    if (
+            currentSettingsId === null
+    ) {
+
+      response =
+              await fetch(
+                      `${API_BASE_URL}/save`,
                       {
-                        type: "application/json"
+                        method: "POST",
+
+                        headers: {
+                          "Content-Type":
+                                  "application/json"
+                        },
+
+                        body:
+                                JSON.stringify(
+                                        settings
+                                )
                       }
               );
 
-
-      const url =
-              URL.createObjectURL(blob);
-
-
-      const link =
-              document.createElement("a");
-
-      link.href = url;
-
-      link.download =
-              "pink-beauty-settings-backup.json";
-
-      link.click();
-
-
-      URL.revokeObjectURL(url);
-
-
-      showToast(
-              "Backup created successfully"
-      );
-
-    } catch (error) {
-
-      showToast(
-              "Backup failed",
-              "error"
-      );
     }
-  }
-  function restoreBackup() {
-
-    const input =
-            document.createElement("input");
-
-    input.type = "file";
-
-    input.accept =
-            "application/json";
 
 
-    input.onchange = async () => {
+    /*
+     * UPDATE
+     *
+     * If settingsId exists,
+     * update the existing record.
+     */
 
-      const file =
-              input.files[0];
+    else {
 
-      if (!file) {
-        return;
-      }
+      const updateData = {
 
+        settingsId:
+        currentSettingsId,
 
-      try {
+        ...settings
 
-        const text =
-                await file.text();
-
-        const data =
-                JSON.parse(text);
-
-
-        const response =
-                await fetch(API_URL, {
-
-                  method: "PUT",
-
-                  headers: {
-                    "Content-Type":
-                            "application/json"
-                  },
-
-                  body:
-                          JSON.stringify(data)
-                });
+      };
 
 
-        if (!response.ok) {
-          throw new Error();
-        }
-
-
-        await loadSettings();
-
-
-        showToast(
-                "Backup restored successfully"
-        );
-
-      } catch (error) {
-
-        showToast(
-                "Invalid backup file",
-                "error"
-        );
-      }
-    };
-
-
-    input.click();
-  }
-  async function updateProfile() {
-
-    const profile = {
-
-      fullName:
-              getValue("accountFullName"),
-
-      username:
-              getValue("accountUsername"),
-
-      email:
-              getValue("accountEmail"),
-
-      phone:
-              getValue("accountPhone")
-    };
-
-
-    try {
-
-      const response =
+      response =
               await fetch(
-                      "/api/users/profile",
+                      `${API_BASE_URL}/update`,
                       {
                         method: "PUT",
 
@@ -2702,42 +3062,519 @@
                         },
 
                         body:
-                                JSON.stringify(profile)
+                                JSON.stringify(
+                                        updateData
+                                )
                       }
               );
 
-
-      if (!response.ok) {
-        throw new Error();
-      }
-
-
-      showToast(
-              "Profile updated successfully"
-      );
-
-
-    } catch (error) {
-
-      showToast(
-              "Failed to update profile",
-              "error"
-      );
     }
-  }
-  function getCurrentTheme() {
 
-    const active =
-            document.querySelector(
-                    ".theme-card.active"
+
+    /*
+     * Check HTTP response.
+     */
+
+    if (!response.ok) {
+
+      const errorText =
+              await response.text();
+
+
+      throw new Error(
+              `HTTP ${response.status}: ${errorText}`
+      );
+
+    }
+
+
+    /*
+     * Backend response.
+     */
+
+    const savedSettings =
+            await response.json();
+
+
+    /*
+     * Save returned ID.
+     */
+
+    currentSettingsId =
+            savedSettings.settingsId;
+
+
+    /*
+     * Refresh form using backend response.
+     */
+
+    applyBackendSettings(
+            savedSettings
+    );
+
+
+    setSettingsStatus(
+            "Settings saved",
+            "success"
+    );
+
+
+    showToast(
+            "success",
+            "Settings Saved",
+            "Your salon settings have been saved successfully."
+    );
+
+
+  } catch (error) {
+
+    console.error(
+            "Settings save/update error:",
+            error
+    );
+
+
+    setSettingsStatus(
+            "Save failed",
+            "warning"
+    );
+
+
+    showToast(
+            "error",
+            "Save Failed",
+            "Unable to save settings. Please check the backend connection."
+    );
+
+  } finally {
+
+    setSaveButtonLoading(
+            false
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   RESET SETTINGS
+   ============================================================ */
+
+async function resetSettings() {
+
+  const confirmed =
+          window.confirm(
+                  "Reset the form to the current saved settings?"
+          );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  /*
+   * IMPORTANT:
+   *
+   * Reset does NOT delete database data.
+   *
+   * It simply reloads the saved
+   * settings from the backend.
+   */
+
+  await loadSettingsFromAPI();
+
+
+  showToast(
+          "success",
+          "Settings Reset",
+          "The form has been restored to the saved settings."
+  );
+
+}
+
+
+/* ============================================================
+   REFRESH SETTINGS
+   ============================================================ */
+
+async function refreshSettings() {
+
+  if (refreshBtn) {
+
+    refreshBtn.classList.add(
+            "rotating"
+    );
+
+  }
+
+
+  try {
+
+    await loadSettingsFromAPI();
+
+
+    showToast(
+            "success",
+            "Settings Refreshed",
+            "The latest settings have been loaded from the server."
+    );
+
+  } finally {
+
+    setTimeout(
+            () => {
+
+              if (refreshBtn) {
+
+                refreshBtn.classList.remove(
+                        "rotating"
+                );
+
+              }
+
+            },
+            450
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+
+function validateSettings() {
+
+  const salonName =
+          document.getElementById(
+                  "salonName"
+          ).value.trim();
+
+
+  const email =
+          document.getElementById(
+                  "email"
+          ).value.trim();
+
+
+  const openingTime =
+          document.getElementById(
+                  "openingTime"
+          ).value;
+
+
+  const closingTime =
+          document.getElementById(
+                  "closingTime"
+          ).value;
+
+
+  if (!salonName) {
+
+    showToast(
+            "error",
+            "Missing Information",
+            "Please enter the salon name."
+    );
+
+    return false;
+
+  }
+
+
+  if (
+          email &&
+          !isValidEmail(email)
+  ) {
+
+    showToast(
+            "error",
+            "Invalid Email",
+            "Please enter a valid email address."
+    );
+
+    return false;
+
+  }
+
+
+  if (
+          openingTime &&
+          closingTime &&
+          openingTime >= closingTime
+  ) {
+
+    showToast(
+            "error",
+            "Invalid Business Hours",
+            "Closing time must be later than opening time."
+    );
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* ============================================================
+   EMAIL VALIDATION
+   ============================================================ */
+
+function isValidEmail(
+        email
+) {
+
+  const pattern =
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+  return pattern.test(
+          email
+  );
+
+}
+
+
+/* ============================================================
+   SAVE BUTTON LOADING
+   ============================================================ */
+
+function setSaveButtonLoading(
+        isLoading
+) {
+
+  if (!saveBtn) {
+
+    return;
+
+  }
+
+
+  if (isLoading) {
+
+    saveBtn.disabled = true;
+
+
+    saveBtn.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Saving...
+        `;
+
+  } else {
+
+    saveBtn.disabled = false;
+
+
+    saveBtn.innerHTML = `
+            <i class="fa-solid fa-check"></i>
+            Save Settings
+        `;
+
+  }
+
+}
+
+
+/* ============================================================
+   UNSAVED STATUS
+   ============================================================ */
+
+function markAsUnsaved() {
+
+  setSettingsStatus(
+          "Unsaved changes",
+          "warning"
+  );
+
+}
+
+
+/* ============================================================
+   SETTINGS STATUS
+   ============================================================ */
+
+function setSettingsStatus(
+        message,
+        type
+) {
+
+  if (!settingsStatus) {
+
+    return;
+
+  }
+
+
+  if (
+          type === "success"
+  ) {
+
+    settingsStatus.innerHTML = `
+            <i class="fa-solid fa-circle-check"></i>
+            ${message}
+        `;
+
+
+    settingsStatus.style.background =
+            "#EAF6F0";
+
+
+    settingsStatus.style.color =
+            "#3D8B68";
+
+  } else {
+
+    settingsStatus.innerHTML = `
+            <i class="fa-solid fa-circle-exclamation"></i>
+            ${message}
+        `;
+
+
+    settingsStatus.style.background =
+            "#FFF4E5";
+
+
+    settingsStatus.style.color =
+            "#A97931";
+
+  }
+
+}
+
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+function showToast(
+        type,
+        title,
+        message
+) {
+
+  if (!toastContainer) {
+
+    return;
+
+  }
+
+
+  const toast =
+          document.createElement(
+                  "div"
+          );
+
+
+  toast.className =
+          `toast ${type}`;
+
+
+  const icon =
+          type === "success"
+                  ? "fa-check"
+                  : "fa-exclamation";
+
+
+  toast.innerHTML = `
+
+        <div class="toast-icon">
+
+            <i class="fa-solid ${icon}"></i>
+
+        </div>
+
+        <div class="toast-content">
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(message)}
+            </span>
+
+        </div>
+
+    `;
+
+
+  toastContainer.appendChild(
+          toast
+  );
+
+
+  setTimeout(
+          () => {
+
+            toast.style.opacity =
+                    "0";
+
+
+            toast.style.transform =
+                    "translateY(10px)";
+
+
+            toast.style.transition =
+                    "0.25s ease";
+
+
+            setTimeout(
+                    () => {
+
+                      toast.remove();
+
+                    },
+                    250
             );
 
-    return active
-            ? active.dataset.theme
-            : "light";
-  }
+          },
+          3200
+  );
 
-</script>
+}
+
+
+/* ============================================================
+   HTML ESCAPE
+   ============================================================ */
+
+function escapeHtml(
+        value
+) {
+
+  return String(value)
+          .replaceAll(
+                  "&",
+                  "&amp;"
+          )
+          .replaceAll(
+                  "<",
+                  "&lt;"
+          )
+          .replaceAll(
+                  ">",
+                  "&gt;"
+          )
+          .replaceAll(
+                  '"',
+                  "&quot;"
+          )
+          .replaceAll(
+                  "'",
+                  "&#039;"
+          );
+
+}</script>
 
 </body>
 </html>
