@@ -18,23 +18,22 @@ public class InvoiceDTO {
 
     private String invoiceNumber;
 
-    // Appointment
     private Long appointmentId;
 
-    // Customer
+
     private Long customerId;
     private String customerName;
     private String customerEmail;
     private String customerPhone;
     private String billingAddress;
 
-    // Invoice details
+
     private LocalDate invoiceDate;
     private LocalDate dueDate;
 
     private InvoiceStatus status;
 
-    // Amount details
+
     private Double subtotal;
     private Double discountPercent;
     private Double discountAmount;
@@ -47,14 +46,14 @@ public class InvoiceDTO {
     private Double amountPaid;
     private Double balanceDue;
 
-    // Payment summary
+
     private PaymentMethod paymentMethod;
 
     private String notes;
 
-    // Invoice items
+
     private List<InvoiceItemDTO> items;
 
-    // Payments
+
     private List<PaymentDTO> payments;
 }

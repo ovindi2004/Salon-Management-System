@@ -13,12 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(
-        name = "invoice",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "invoice_number")
-        }
-)
+@Table(name = "invoice", uniqueConstraints = {@UniqueConstraint(columnNames = "invoice_number")})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -81,11 +76,6 @@ public class Invoice {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
-
-    /*
-     * ONE INVOICE -> MANY INVOICE ITEMS
-     */
-
 
     @PrePersist
     protected void onCreate() {

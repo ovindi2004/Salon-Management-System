@@ -18,16 +18,9 @@ public interface ProductService {
 
     List<ProductDTO> searchProducts(String keyword);
 
-    ProductDTO updateStock(
-            Long productId,
-            String adjustment,
-            Integer quantity
-    );
+    ProductDTO updateStock(Long productId, String adjustment, Integer quantity);
 
-    ProductDTO updateStatus(
-            Long productId,
-            String status
-    );
+    ProductDTO updateStatus(Long productId, String status);
 
     long getTotalProducts();
 

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "rating")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,10 +17,6 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ratingId;
 
-
-    // ============================================================
-    // RATING DETAILS
-    // ============================================================
 
     @Column(
             nullable = false

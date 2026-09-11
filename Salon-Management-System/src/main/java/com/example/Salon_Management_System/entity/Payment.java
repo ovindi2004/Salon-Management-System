@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "payment")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,23 +20,10 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
-
-    // ============================================================
-    // INVOICE → PAYMENT
-    // Many Payments can belong to One Invoice
-    // ============================================================
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "invoice_id",
-            nullable = false
-    )
+    @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 
-
-    // ============================================================
-    // PAYMENT AMOUNT
-    // ============================================================
 
     @Column(
             nullable = false,

@@ -10,8 +10,12 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class StaffWorkingHourDTO {
     private Long workingHourId;
+
     private String day;
+
     private LocalTime startTime;
+
     private LocalTime endTime;
+
     private boolean dayOff;
 }

@@ -1,4 +1,4 @@
-package com.example.Salon_Management_System.service;
+package com.example.Salon_Management_System.service.impl;
 
 import com.example.Salon_Management_System.dto.DashboardAppointmentDTO;
 import com.example.Salon_Management_System.dto.DashboardDTO;
@@ -17,6 +17,7 @@ import com.example.Salon_Management_System.repository.CustomerRepository;
 import com.example.Salon_Management_System.repository.PaymentRepository;
 import com.example.Salon_Management_System.repository.ServiceRepository;
 import com.example.Salon_Management_System.repository.StaffRepository;
+import com.example.Salon_Management_System.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,297 +44,78 @@ public class DashboardServiceImpl implements DashboardService {
     private final PaymentRepository paymentRepository;
 
 
-    // =========================================================
-    // MAIN DASHBOARD
-    // =========================================================
-
     @Override
-    public DashboardDTO getDashboard(
-            LocalDate fromDate,
-            LocalDate toDate
-    ) {
+    public DashboardDTO getDashboard(LocalDate fromDate, LocalDate toDate) {
 
-        // -----------------------------------------------------
-        // DEFAULT DATE RANGE
-        // -----------------------------------------------------
+            if (fromDate == null) {fromDate = LocalDate.now().withDayOfMonth(1);
+            }
 
-        if (fromDate == null) {
-            fromDate = LocalDate.now().withDayOfMonth(1);
-        }
+            if (toDate == null) {toDate = LocalDate.now();
+            }
 
-        if (toDate == null) {
-            toDate = LocalDate.now();
-        }
-
-        if (fromDate.isAfter(toDate)) {
-            throw new IllegalArgumentException(
-                    "From date cannot be after to date"
-            );
-        }
-
-
-        // -----------------------------------------------------
-        // GET DATA FROM DATABASE
-        // -----------------------------------------------------
-
-        List<Appointment> appointments =
-                appointmentRepository.findByAppointmentDateBetween(
-                        fromDate,
-                        toDate
+            if (fromDate.isAfter(toDate)) {
+                throw new IllegalArgumentException(
+                        "From date cannot be after to date"
                 );
+            }
 
-        List<Payment> payments =
-                paymentRepository.findByPaymentDateBetween(
-                        fromDate,
-                        toDate
-                );
+            List<Appointment> appointments = appointmentRepository.findByAppointmentDateBetween(fromDate, toDate);
+            List<Payment> payments = paymentRepository.findByPaymentDateBetween(fromDate, toDate);
+            List<Customer> customers = customerRepository.findAll();
+            List<Staff> staffList = staffRepository.findAll();
+            List<SalonService> services = serviceRepository.findAll();
 
-        List<Customer> customers =
-                customerRepository.findAll();
+            DashboardDTO dashboard = new DashboardDTO();
+            dashboard.setFromDate(fromDate);
+            dashboard.setToDate(toDate);
 
-        List<Staff> staffList =
-                staffRepository.findAll();
+            BigDecimal totalRevenue = calculateTotalRevenue(payments);
+            BigDecimal paidRevenue = calculateRevenueByStatus(payments, PaymentStatus.PAID);
+            BigDecimal pendingAmount = calculateRevenueByStatus(payments, PaymentStatus.PENDING);
+            BigDecimal refundedAmount = calculateRevenueByStatus(payments, PaymentStatus.REFUNDED);
 
-        List<SalonService> services =
-                serviceRepository.findAll();
+            dashboard.setTotalRevenue(totalRevenue);
+            dashboard.setPaidRevenue(paidRevenue);
+            dashboard.setPendingAmount(pendingAmount);
+            dashboard.setRefundedAmount(refundedAmount);
 
+            dashboard.setTotalAppointments(appointments.size());
 
-        // =====================================================
-        // CREATE DASHBOARD DTO
-        // =====================================================
+            dashboard.setScheduledAppointments(countAppointmentsByStatus(appointments, AppointmentStatus.SCHEDULED));
+            dashboard.setConfirmedAppointments(countAppointmentsByStatus(appointments, AppointmentStatus.CONFIRMED));
+            dashboard.setCompletedAppointments(countAppointmentsByStatus(appointments, AppointmentStatus.COMPLETED));
+            dashboard.setCancelledAppointments(countAppointmentsByStatus(appointments, AppointmentStatus.CANCELLED));
+            dashboard.setNoShowAppointments(countAppointmentsByStatus(appointments, AppointmentStatus.NO_SHOW));
 
-        DashboardDTO dashboard = new DashboardDTO();
-
-        dashboard.setFromDate(fromDate);
-        dashboard.setToDate(toDate);
-
-
-        // =====================================================
-        // REVENUE CALCULATIONS
-        // =====================================================
-
-        BigDecimal totalRevenue =
-                calculateTotalRevenue(payments);
-
-        BigDecimal paidRevenue =
-                calculateRevenueByStatus(
-                        payments,
-                        PaymentStatus.PAID
-                );
-
-        BigDecimal pendingAmount =
-                calculateRevenueByStatus(
-                        payments,
-                        PaymentStatus.PENDING
-                );
-
-        BigDecimal refundedAmount =
-                calculateRevenueByStatus(
-                        payments,
-                        PaymentStatus.REFUNDED
-                );
-
-        dashboard.setTotalRevenue(totalRevenue);
-        dashboard.setPaidRevenue(paidRevenue);
-        dashboard.setPendingAmount(pendingAmount);
-        dashboard.setRefundedAmount(refundedAmount);
+            dashboard.setTotalCustomers(customers.size());
+            dashboard.setActiveCustomers(countActiveCustomers(customers));
+            dashboard.setNewCustomers(countNewCustomers(customers, fromDate, toDate));
 
 
-        // =====================================================
-        // APPOINTMENT CALCULATIONS
-        // =====================================================
-
-        dashboard.setTotalAppointments(
-                appointments.size()
-        );
-
-        dashboard.setScheduledAppointments(
-                countAppointmentsByStatus(
-                        appointments,
-                        AppointmentStatus.SCHEDULED
-                )
-        );
-
-        dashboard.setConfirmedAppointments(
-                countAppointmentsByStatus(
-                        appointments,
-                        AppointmentStatus.CONFIRMED
-                )
-        );
-
-        dashboard.setCompletedAppointments(
-                countAppointmentsByStatus(
-                        appointments,
-                        AppointmentStatus.COMPLETED
-                )
-        );
-
-        dashboard.setCancelledAppointments(
-                countAppointmentsByStatus(
-                        appointments,
-                        AppointmentStatus.CANCELLED
-                )
-        );
-
-        dashboard.setNoShowAppointments(
-                countAppointmentsByStatus(
-                        appointments,
-                        AppointmentStatus.NO_SHOW
-                )
-        );
+            dashboard.setTotalStaff(staffList.size());
+            dashboard.setTotalServices(services.size());
 
 
-        // =====================================================
-        // CUSTOMER CALCULATIONS
-        // =====================================================
+            LocalDate today = LocalDate.now();
 
-        dashboard.setTotalCustomers(
-                customers.size()
-        );
+            List<Appointment> todayAppointmentsList = appointmentRepository.findByAppointmentDate(today);
 
-        dashboard.setActiveCustomers(
-                countActiveCustomers(customers)
-        );
+            dashboard.setTodayAppointments(todayAppointmentsList.size());
+            dashboard.setTodayScheduled(countAppointmentsByStatus(todayAppointmentsList, AppointmentStatus.SCHEDULED));
+            dashboard.setTodayConfirmed(countAppointmentsByStatus(todayAppointmentsList, AppointmentStatus.CONFIRMED));
+            dashboard.setTodayCompleted(countAppointmentsByStatus(todayAppointmentsList, AppointmentStatus.COMPLETED));
+            dashboard.setTodayCancelled(countAppointmentsByStatus(todayAppointmentsList, AppointmentStatus.CANCELLED));
+            dashboard.setTodayNoShow(countAppointmentsByStatus(todayAppointmentsList, AppointmentStatus.NO_SHOW));
 
-        dashboard.setNewCustomers(
-                countNewCustomers(
-                        customers,
-                        fromDate,
-                        toDate
-                )
-        );
-
-
-        // =====================================================
-        // STAFF & SERVICE COUNTS
-        // =====================================================
-
-        dashboard.setTotalStaff(
-                staffList.size()
-        );
-
-        dashboard.setTotalServices(
-                services.size()
-        );
-
-
-        // =====================================================
-        // TODAY'S DATA
-        // =====================================================
-
-        LocalDate today = LocalDate.now();
-
-        List<Appointment> todayAppointmentsList =
-                appointmentRepository.findByAppointmentDate(today);
-
-        dashboard.setTodayAppointments(
-                todayAppointmentsList.size()
-        );
-
-        dashboard.setTodayScheduled(
-                countAppointmentsByStatus(
-                        todayAppointmentsList,
-                        AppointmentStatus.SCHEDULED
-                )
-        );
-
-        dashboard.setTodayConfirmed(
-                countAppointmentsByStatus(
-                        todayAppointmentsList,
-                        AppointmentStatus.CONFIRMED
-                )
-        );
-
-        dashboard.setTodayCompleted(
-                countAppointmentsByStatus(
-                        todayAppointmentsList,
-                        AppointmentStatus.COMPLETED
-                )
-        );
-
-        dashboard.setTodayCancelled(
-                countAppointmentsByStatus(
-                        todayAppointmentsList,
-                        AppointmentStatus.CANCELLED
-                )
-        );
-
-        dashboard.setTodayNoShow(
-                countAppointmentsByStatus(
-                        todayAppointmentsList,
-                        AppointmentStatus.NO_SHOW
-                )
-        );
-
-
-        // -----------------------------------------------------
-        // TODAY'S REVENUE
-        // -----------------------------------------------------
-
-        List<Payment> todayPayments =
-                paymentRepository.findByPaymentDateBetween(
-                        today,
-                        today
-                );
-
-        dashboard.setTodayRevenue(
-                calculateTotalRevenue(todayPayments)
-        );
-
-
-        // =====================================================
-        // REVENUE ANALYTICS
-        // =====================================================
-
-        dashboard.setRevenueAnalytics(
-                buildRevenueAnalytics(
-                        payments,
-                        fromDate,
-                        toDate
-                )
-        );
-
-
-        // =====================================================
-        // TOP STAFF
-        // =====================================================
-
-        dashboard.setTopStaff(
-                buildStaffPerformance(
-                        appointments
-                )
-        );
-
-
-        // =====================================================
-        // TOP SERVICES
-        // =====================================================
-
-        dashboard.setTopServices(
-                buildServicePerformance(
-                        appointments
-                )
-        );
-
-
-        // =====================================================
-        // RECENT APPOINTMENTS
-        // =====================================================
-
-        dashboard.setRecentAppointments(
-                buildRecentAppointments(
-                        appointments
-                )
-        );
-
-
-        return dashboard;
+            List<Payment> todayPayments = paymentRepository.findByPaymentDateBetween(today, today);
+            dashboard.setTodayRevenue(calculateTotalRevenue(todayPayments));
+            dashboard.setRevenueAnalytics(buildRevenueAnalytics(payments, fromDate, toDate));
+            dashboard.setTopStaff(buildStaffPerformance(appointments));
+            dashboard.setTopServices(buildServicePerformance(appointments));
+            dashboard.setRecentAppointments(buildRecentAppointments(appointments));
+            return dashboard;
     }
 
-
-    // =========================================================
-    // REVENUE
-    // =========================================================
 
     private BigDecimal calculateTotalRevenue(
             List<Payment> payments

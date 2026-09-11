@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "settings")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,10 +18,6 @@ public class Settings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long settingsId;
 
-
-    // =========================================================
-    // SALON INFORMATION
-    // =========================================================
 
     @Column(nullable = false, length = 100)
     private String salonName;
@@ -40,9 +35,6 @@ public class Settings {
     private String address;
 
 
-    // =========================================================
-    // BUSINESS HOURS
-    // =========================================================
 
     @Column(nullable = false)
     private LocalTime openingTime;
@@ -50,30 +42,15 @@ public class Settings {
     @Column(nullable = false)
     private LocalTime closingTime;
 
-
-    // =========================================================
-    // APPOINTMENT SETTINGS
-    // =========================================================
-
     @Column(nullable = false)
     private Integer appointmentDuration;
-
 
     @Column(length = 1000)
     private String cancellationPolicy;
 
-
-    // =========================================================
-    // CURRENCY
-    // =========================================================
-
     @Column(nullable = false, length = 10)
     private String currency;
 
-
-    // =========================================================
-    // NOTIFICATION SETTINGS
-    // =========================================================
 
     @Column(nullable = false)
     private Boolean emailNotifications = true;
@@ -84,21 +61,12 @@ public class Settings {
     @Column(nullable = false)
     private Boolean reminderEnabled = true;
 
-
-    // =========================================================
-    // SYSTEM INFORMATION
-    // =========================================================
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-
-    // =========================================================
-    // PRE-PERSIST
-    // =========================================================
 
     @PrePersist
     protected void onCreate() {
@@ -134,10 +102,6 @@ public class Settings {
         }
     }
 
-
-    // =========================================================
-    // PRE-UPDATE
-    // =========================================================
 
     @PreUpdate
     protected void onUpdate() {

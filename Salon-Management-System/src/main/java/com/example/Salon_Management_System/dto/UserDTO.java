@@ -14,14 +14,24 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Long userId;
+
     private String userName;
+
     private String userEmail;
+
     private String userPassword;
+
     private Boolean passwordChanged;
+
     private String userPhone;
+
     private LocalDate userDob;
+
     private String userAddress;
+
     private String userGender;
+
     private UserStatus status;
+
     private UserRole role;
 }

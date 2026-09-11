@@ -33,9 +33,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final StaffRepository staffRepository;
 
 
-    // =========================================================
-    // CREATE APPOINTMENT
-    // =========================================================
     @Override
     public AppointmentDTO createAppointment(AppointmentDTO dto) {
 
@@ -72,9 +69,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                                     )
                             );
 
-            // -------------------------------------------------
-            // USE SERVICE DURATION
-            // -------------------------------------------------
             Integer duration = service.getDuration();
 
             if (duration == null || duration <= 0) {
@@ -83,9 +77,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 );
             }
 
-            // -------------------------------------------------
-            // CHECK STAFF DOUBLE BOOKING
-            // -------------------------------------------------
+
             checkStaffAvailability(
                     staff.getStaffId(),
                     dto.getAppointmentDate(),
@@ -150,55 +142,61 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
-
-    // =========================================================
-    // GET APPOINTMENT BY ID
-    // =========================================================
     @Override
     @Transactional(readOnly = true)
     public AppointmentDTO getAppointmentById(Long appointmentId) {
 
-        if (appointmentId == null) {
-            throw new RuntimeException(
-                    "Appointment ID is required"
-            );
+        log.info("Fetching appointment by ID: {}", appointmentId);
+
+        try {
+
+            if (appointmentId == null) {
+                throw new RuntimeException(
+                        "Appointment ID is required"
+                );
+            }
+
+            Appointment appointment =
+                    appointmentRepository.findById(appointmentId)
+                            .orElseThrow(() ->
+                                    new EntityNotFoundException(
+                                            "Appointment not found with id: "
+                                                    + appointmentId
+                                    )
+                            );
+
+            return toDTO(appointment);
+
+        } catch (Exception e) {
+           log.error("Error fetching appointment by ID: {}", appointmentId, e);
+           throw new RuntimeException("Failed to fetch appointment by ID: " + e.getMessage());
         }
-
-        Appointment appointment =
-                appointmentRepository.findById(appointmentId)
-                        .orElseThrow(() ->
-                                new EntityNotFoundException(
-                                        "Appointment not found with id: "
-                                                + appointmentId
-                                )
-                        );
-
-        return toDTO(appointment);
     }
 
 
-    // =========================================================
-    // GET ALL APPOINTMENTS
-    // =========================================================
     @Override
     @Transactional(readOnly = true)
     public List<AppointmentDTO> getAllAppointments() {
+        log.info("Fetching all appointments");
+
+        try{
 
         return appointmentRepository.findAll()
                 .stream()
                 .map(this::toDTO)
                 .toList();
+        } catch (Exception e) {
+            log.error("Error fetching all appointments", e);
+            throw new RuntimeException("Failed to fetch all appointments: " + e.getMessage());
+        }
     }
 
-
-    // =========================================================
-    // UPDATE APPOINTMENT
-    // =========================================================
     @Override
-    public AppointmentDTO updateAppointment(
-            Long appointmentId,
-            AppointmentDTO dto
-    ) {
+    public AppointmentDTO updateAppointment(Long appointmentId, AppointmentDTO dto) {
+
+        log.info("Updating appointment with ID: {}", appointmentId);
+
+        try{
 
         if (appointmentId == null) {
             throw new RuntimeException(
@@ -212,8 +210,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             );
         }
 
-        Appointment existing =
-                appointmentRepository.findById(appointmentId)
+        Appointment existing = appointmentRepository.findById(appointmentId)
                         .orElseThrow(() ->
                                 new EntityNotFoundException(
                                         "Appointment not found with id: "
@@ -221,10 +218,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 )
                         );
 
-
-        // =====================================================
-        // CUSTOMER
-        // =====================================================
         Customer customer = existing.getCustomer();
 
         if (dto.getCustomerId() != null) {
@@ -243,10 +236,6 @@ public class AppointmentServiceImpl implements AppointmentService {
             existing.setCustomer(customer);
         }
 
-
-        // =====================================================
-        // SERVICE
-        // =====================================================
         SalonService service = existing.getService();
 
         if (dto.getServiceId() != null) {
@@ -265,10 +254,6 @@ public class AppointmentServiceImpl implements AppointmentService {
             existing.setService(service);
         }
 
-
-        // =====================================================
-        // STAFF
-        // =====================================================
         Staff staff = existing.getStaff();
 
         if (dto.getStaffId() != null) {
@@ -288,34 +273,19 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
 
 
-        // =====================================================
-        // DATE
-        // =====================================================
         LocalDate appointmentDate =
                 dto.getAppointmentDate() != null
                         ? dto.getAppointmentDate()
                         : existing.getAppointmentDate();
 
 
-        // =====================================================
-        // START TIME
-        // =====================================================
         LocalTime startTime =
                 dto.getStartTime() != null
                         ? dto.getStartTime()
                         : existing.getStartTime();
 
-
-        // =====================================================
-        // DURATION
-        // =====================================================
         Integer duration;
 
-        /*
-         * Service duration is the source of truth.
-         *
-         * If service is changed, duration changes automatically.
-         */
         if (dto.getServiceId() != null) {
 
             duration = service.getDuration();
@@ -332,16 +302,8 @@ public class AppointmentServiceImpl implements AppointmentService {
             );
         }
 
-
-        // =====================================================
-        // DATE VALIDATION
-        // =====================================================
         validateAppointmentDate(appointmentDate);
 
-
-        // =====================================================
-        // DOUBLE BOOKING CHECK
-        // =====================================================
         checkStaffAvailability(
                 staff.getStaffId(),
                 appointmentDate,
@@ -350,37 +312,23 @@ public class AppointmentServiceImpl implements AppointmentService {
                 appointmentId
         );
 
-
-        // =====================================================
-        // SET VALUES
-        // =====================================================
         existing.setAppointmentDate(appointmentDate);
 
         existing.setStartTime(startTime);
 
         existing.setDuration(duration);
 
-
-        // =====================================================
-        // STATUS
-        // =====================================================
         if (dto.getStatus() != null) {
 
             existing.setStatus(dto.getStatus());
         }
 
-
-        // =====================================================
-        // NOTES
-        // =====================================================
         if (dto.getNotes() != null) {
 
             existing.setNotes(dto.getNotes());
         }
 
-
-        Appointment updatedAppointment =
-                appointmentRepository.save(existing);
+        Appointment updatedAppointment = appointmentRepository.save(existing);
 
         log.info(
                 "Appointment updated successfully. ID: {}",
@@ -388,14 +336,17 @@ public class AppointmentServiceImpl implements AppointmentService {
         );
 
         return toDTO(updatedAppointment);
+    }catch (Exception e) {
+        log.error("Error updating appointment with ID: {}", appointmentId, e);
+        throw new RuntimeException("Failed to update appointment with ID: " + e.getMessage());
+    }
     }
 
-
-    // =========================================================
-    // DELETE APPOINTMENT
-    // =========================================================
     @Override
     public void deleteAppointment(Long appointmentId) {
+        log.info("Deleting appointment with ID: {}", appointmentId);
+
+        try{
 
         if (appointmentId == null) {
             throw new RuntimeException(
@@ -412,12 +363,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 )
                         );
 
-        /*
-         * Invoice has a OneToOne relationship with Appointment.
-         *
-         * If an invoice exists, deleting the appointment can
-         * break the invoice relationship.
-         */
         if (appointment.getInvoice() != null) {
 
             throw new RuntimeException(
@@ -431,17 +376,19 @@ public class AppointmentServiceImpl implements AppointmentService {
                 "Appointment deleted successfully. ID: {}",
                 appointmentId
         );
+        }catch (Exception e) {
+            log.error("Error deleting appointment with ID: {}", appointmentId, e);
+            throw new RuntimeException("Failed to delete appointment with ID: " + e.getMessage());
+        }
     }
 
-
-    // =========================================================
-    // GET BY CUSTOMER
-    // =========================================================
     @Override
     @Transactional(readOnly = true)
-    public List<AppointmentDTO> getAppointmentsByCustomer(
-            Long customerId
-    ) {
+    public List<AppointmentDTO> getAppointmentsByCustomer(Long customerId) {
+
+        log.info("Fetching appointments by customer ID: {}", customerId);
+
+        try{
 
         if (customerId == null) {
             throw new RuntimeException(
@@ -454,17 +401,19 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .stream()
                 .map(this::toDTO)
                 .toList();
+        }catch (Exception e) {
+            log.error("Error fetching appointments by customer ID: {}", customerId, e);
+            throw new RuntimeException("Failed to fetch appointments by customer ID: " + e.getMessage());
+        }
     }
 
-
-    // =========================================================
-    // GET BY STAFF
-    // =========================================================
     @Override
     @Transactional(readOnly = true)
-    public List<AppointmentDTO> getAppointmentsByStaff(
-            Long staffId
-    ) {
+    public List<AppointmentDTO> getAppointmentsByStaff(Long staffId) {
+
+        log.info("Fetching appointments by staff ID: {}", staffId);
+
+        try{
 
         if (staffId == null) {
             throw new RuntimeException(
@@ -477,17 +426,19 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .stream()
                 .map(this::toDTO)
                 .toList();
+        }catch (Exception e) {
+            log.error("Error fetching appointments by staff ID: {}", staffId, e);
+            throw new RuntimeException("Failed to fetch appointments by staff ID: " + e.getMessage());
+        }
     }
 
-
-    // =========================================================
-    // GET BY DATE
-    // =========================================================
     @Override
     @Transactional(readOnly = true)
-    public List<AppointmentDTO> getAppointmentsByDate(
-            LocalDate date
-    ) {
+    public List<AppointmentDTO> getAppointmentsByDate(LocalDate date) {
+
+        log.info("Fetching appointments by date: {}", date);
+
+        try{
 
         if (date == null) {
             throw new RuntimeException(
@@ -500,15 +451,15 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .stream()
                 .map(this::toDTO)
                 .toList();
+        }catch (Exception e) {
+            log.error("Error fetching appointments by date: {}", date, e);
+            throw new RuntimeException("Failed to fetch appointments by date: " + e.getMessage());
+        }
     }
 
 
-    // =========================================================
-    // BASIC VALIDATION
-    // =========================================================
-    private void validateBasicAppointmentData(
-            AppointmentDTO dto
-    ) {
+    private void validateBasicAppointmentData(AppointmentDTO dto) {
+
 
         if (dto == null) {
             throw new RuntimeException(
@@ -551,13 +502,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         );
     }
 
+    private void validateAppointmentDate(LocalDate appointmentDate) {
 
-    // =========================================================
-    // DATE VALIDATION
-    // =========================================================
-    private void validateAppointmentDate(
-            LocalDate appointmentDate
-    ) {
+        log.info("Validating appointment date");
+
+        try{
 
         if (appointmentDate == null) {
 
@@ -572,12 +521,12 @@ public class AppointmentServiceImpl implements AppointmentService {
                     "Appointment date cannot be in the past"
             );
         }
+        }catch (Exception e) {
+            log.error("Error validating appointment date", e);
+            throw new RuntimeException("Failed to validate appointment date: " + e.getMessage());
+        }
     }
 
-
-    // =========================================================
-    // DOUBLE BOOKING CHECK
-    // =========================================================
     private void checkStaffAvailability(
             Long staffId,
             LocalDate appointmentDate,
@@ -586,8 +535,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             Long currentAppointmentId
     ) {
 
-        List<Appointment> appointments =
-                appointmentRepository
+        log.info("Checking staff availability");
+
+        try{
+
+        List<Appointment> appointments = appointmentRepository
                         .findByStaff_StaffIdAndAppointmentDate(
                                 staffId,
                                 appointmentDate
@@ -599,7 +551,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         for (Appointment existing : appointments) {
 
-            // Ignore current appointment during update
+
             if (currentAppointmentId != null &&
                     existing.getAppointmentId()
                             .equals(currentAppointmentId)) {
@@ -607,16 +559,12 @@ public class AppointmentServiceImpl implements AppointmentService {
                 continue;
             }
 
-
-            // Cancelled appointments do not block the time
             if (existing.getStatus() ==
                     AppointmentStatus.CANCELLED) {
 
                 continue;
             }
 
-
-            // No-show appointments do not block the time
             if (existing.getStatus() ==
                     AppointmentStatus.NO_SHOW) {
 
@@ -639,15 +587,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                             );
 
 
-            /*
-             * Overlap formula:
-             *
-             * Existing Start < New End
-             * AND
-             * Existing End > New Start
-             */
-            boolean overlaps =
-                    existing.getStartTime()
+            boolean overlaps = existing.getStartTime()
                             .isBefore(newEndTime)
                             &&
                             existingEndTime
@@ -664,43 +604,32 @@ public class AppointmentServiceImpl implements AppointmentService {
                 );
             }
         }
+        }catch (Exception e) {
+            log.error("Error checking staff availability", e);
+            throw new RuntimeException("Failed to check staff availability: " + e.getMessage());
+        }
+
     }
 
+    private AppointmentDTO toDTO(Appointment appointment) {
 
-    // =========================================================
-    // ENTITY → DTO
-    // =========================================================
-    private AppointmentDTO toDTO(
-            Appointment appointment
-    ) {
+        log.info("Converting appointment to DTO");
 
-        return new AppointmentDTO(
+        try{
 
-                appointment.getAppointmentId(),
 
-                appointment.getCustomer() != null
-                        ? appointment.getCustomer().getCustomerId()
-                        : null,
+        return new AppointmentDTO(appointment.getAppointmentId(),
+                appointment.getCustomer() != null ? appointment.getCustomer().getCustomerId() : null,
 
-                appointment.getCustomer() != null
-                        ? appointment.getCustomer().getCustomerName()
-                        : null,
+                appointment.getCustomer() != null ? appointment.getCustomer().getCustomerName() : null,
 
-                appointment.getService() != null
-                        ? appointment.getService().getServiceId()
-                        : null,
+                appointment.getService() != null ? appointment.getService().getServiceId() : null,
 
-                appointment.getService() != null
-                        ? appointment.getService().getServiceName()
-                        : null,
+                appointment.getService() != null ? appointment.getService().getServiceName() : null,
 
-                appointment.getStaff() != null
-                        ? appointment.getStaff().getStaffId()
-                        : null,
+                appointment.getStaff() != null ? appointment.getStaff().getStaffId() : null,
 
-                appointment.getStaff() != null
-                        ? appointment.getStaff().getStaffName()
-                        : null,
+                appointment.getStaff() != null ? appointment.getStaff().getStaffName() : null,
 
                 appointment.getAppointmentDate(),
 
@@ -712,5 +641,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
                 appointment.getNotes()
         );
+        }catch (Exception e) {
+            log.error("Error converting appointment to DTO", e);
+            throw new RuntimeException("Failed to convert appointment to DTO: " + e.getMessage());
+        }
     }
+
 }

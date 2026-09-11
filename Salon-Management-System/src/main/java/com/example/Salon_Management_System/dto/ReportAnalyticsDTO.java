@@ -11,10 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ReportAnalyticsDTO {
 
-    // ============================================================
-    // APPOINTMENT ANALYTICS
-    // ============================================================
-
     private long totalAppointments;
 
     private long completedAppointments;
@@ -25,21 +21,11 @@ public class ReportAnalyticsDTO {
 
     private long noShowAppointments;
 
-
-    // ============================================================
-    // CUSTOMER ANALYTICS
-    // ============================================================
-
     private long totalCustomers;
 
     private long activeCustomers;
 
     private long newCustomers;
-
-
-    // ============================================================
-    // PAYMENT / REVENUE ANALYTICS
-    // ============================================================
 
     private BigDecimal totalRevenue;
 
@@ -48,11 +34,6 @@ public class ReportAnalyticsDTO {
     private BigDecimal pendingAmount;
 
     private BigDecimal refundedAmount;
-
-
-    // ============================================================
-    // STAFF / SERVICE ANALYTICS
-    // ============================================================
 
     private long totalStaff;
 

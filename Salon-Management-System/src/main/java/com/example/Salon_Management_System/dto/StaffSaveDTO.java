@@ -13,16 +13,28 @@ import java.util.List;
 @NoArgsConstructor
 public class StaffSaveDTO {
     private String staffName;
+
     private String staffEmail;
+
     private String staffPhone;
+
     private LocalDate dateOfBirth;
+
     private String gender;
+
     private String address;
+
     private String position;
+
     private LocalDate hireDate;
+
     private Double salary;
+
     private StaffStatus status;
+
     private String username;
+
     private String password;
+
     private List<Long> serviceIds;
 }

@@ -12,10 +12,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class StaffLeaveDTO {
     private Long leaveId;
+
     private  Long staffId;
+
     private LeaveType leaveType;
+
     private LocalDate startDate;
+
     private LocalDate endDate;
+
     private String reason;
+
     private LeaveStatus status;
 }

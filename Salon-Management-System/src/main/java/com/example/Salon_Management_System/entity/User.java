@@ -40,23 +40,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    // =========================
-    // CUSTOMER RELATIONSHIP
-    // =========================
-    @OneToOne(
-            mappedBy = "user",
-            cascade = CascadeType.ALL
-    )
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Customer customer;
 
-    // =========================
-    // STAFF RELATIONSHIP
-    // =========================
-    @OneToOne(
-            mappedBy = "user",
-            cascade = CascadeType.ALL
-    )
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Staff staff;
 }

@@ -7,34 +7,19 @@ import java.util.List;
 
 public interface AppointmentService {
 
-    AppointmentDTO createAppointment(
-            AppointmentDTO appointmentDTO
-    );
+    AppointmentDTO createAppointment(AppointmentDTO appointmentDTO);
 
-    AppointmentDTO getAppointmentById(
-            Long appointmentId
-    );
+    AppointmentDTO getAppointmentById(Long appointmentId);
 
     List<AppointmentDTO> getAllAppointments();
 
-    AppointmentDTO updateAppointment(
-            Long appointmentId,
-            AppointmentDTO appointmentDTO
-    );
+    AppointmentDTO updateAppointment(Long appointmentId, AppointmentDTO appointmentDTO);
 
-    void deleteAppointment(
-            Long appointmentId
-    );
+    void deleteAppointment(Long appointmentId);
 
-    List<AppointmentDTO> getAppointmentsByCustomer(
-            Long customerId
-    );
+    List<AppointmentDTO> getAppointmentsByCustomer(Long customerId);
 
-    List<AppointmentDTO> getAppointmentsByStaff(
-            Long staffId
-    );
+    List<AppointmentDTO> getAppointmentsByStaff(Long staffId);
 
-    List<AppointmentDTO> getAppointmentsByDate(
-            LocalDate date
-    );
+    List<AppointmentDTO> getAppointmentsByDate(LocalDate date);
 }

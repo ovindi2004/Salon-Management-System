@@ -11,17 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customer")
+
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
-
-    // ============================================================
-    // CUSTOMER DETAILS
-    // ============================================================
 
     private String customerName;
 
@@ -40,9 +36,6 @@ public class Customer {
     private String customerNotes;
 
 
-    // ============================================================
-    // CUSTOMER VISIT INFORMATION
-    // ============================================================
 
     private Integer totalVisits = 0;
 
@@ -53,9 +46,6 @@ public class Customer {
     private LocalDate createdAt;
 
 
-    // ============================================================
-    // AUTO CREATED DATE
-    // ============================================================
 
     @PrePersist
     public void onCreate() {
@@ -74,10 +64,6 @@ public class Customer {
     }
 
 
-    // ============================================================
-    // USER RELATIONSHIP
-    // One Customer → One User
-    // ============================================================
 
     @OneToOne
     @JoinColumn(
@@ -89,31 +75,13 @@ public class Customer {
     private User user;
 
 
-    // ============================================================
-    // CUSTOMER → APPOINTMENTS
-    // One Customer → Many Appointments
-    // ============================================================
 
-    @OneToMany(
-            mappedBy = "customer",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
-    private List<Appointment> appointments =
-            new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
 
-    // ============================================================
-    // CUSTOMER → FEEDBACKS
-    // One Customer → Many Feedbacks
-    // ============================================================
-
-    @OneToMany(
-            mappedBy = "customer",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     private List<Feedback> feedbacks =
             new ArrayList<>();

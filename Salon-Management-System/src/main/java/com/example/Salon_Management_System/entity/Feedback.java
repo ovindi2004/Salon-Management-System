@@ -10,15 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-        name = "feedback",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uk_feedback_appointment",
-                        columnNames = "appointment_id"
-                )
-        }
-)
+@Table(name = "feedback", uniqueConstraints = {@UniqueConstraint(name = "uk_feedback_appointment", columnNames = "appointment_id")})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,60 +20,20 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackId;
 
-    // ============================================================
-    // APPOINTMENT RELATIONSHIP
-    // One Appointment can have only one Feedback
-    // ============================================================
-
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "appointment_id",
-            nullable = false,
-            unique = true
-    )
+    @JoinColumn(name = "appointment_id", nullable = false, unique = true)
     private Appointment appointment;
 
-
-    // ============================================================
-    // CUSTOMER RELATIONSHIP
-    // One Customer can have many Feedbacks
-    // ============================================================
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "customer_id",
-            nullable = false
-    )
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
 
-    // ============================================================
-    // RATING RELATIONSHIP
-    // One Feedback has one Rating
-    // Feedback is the owning side
-    // ============================================================
-
-    @OneToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JoinColumn(
-            name = "rating_id",
-            nullable = false,
-            unique = true
-    )
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "rating_id", nullable = false, unique = true)
     private Rating rating;
 
-
-    // ============================================================
-    // FEEDBACK DETAILS
-    // ============================================================
-
-    @Column(
-            length = 500,
-            nullable = false
-    )
+    @Column(length = 500, nullable = false)
     private String comment;
 
 
@@ -97,10 +49,6 @@ public class Feedback {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-
-    // ============================================================
-    // PRE PERSIST
-    // ============================================================
 
     @PrePersist
     public void onCreate() {

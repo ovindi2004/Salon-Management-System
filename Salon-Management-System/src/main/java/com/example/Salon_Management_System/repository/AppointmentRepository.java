@@ -10,43 +10,13 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-    // =========================================================
-    // CUSTOMER APPOINTMENTS
-    // =========================================================
-
     List<Appointment> findByCustomer_CustomerId(Long customerId);
-
-
-    // =========================================================
-    // STAFF APPOINTMENTS
-    // =========================================================
 
     List<Appointment> findByStaff_StaffId(Long staffId);
 
-
-    // =========================================================
-    // APPOINTMENTS BY DATE
-    // =========================================================
-
     List<Appointment> findByAppointmentDate(LocalDate date);
 
+    List<Appointment> findByStaff_StaffIdAndAppointmentDate(Long staffId, LocalDate appointmentDate);
 
-    // =========================================================
-    // APPOINTMENTS BY STAFF + DATE
-    // =========================================================
-
-    List<Appointment> findByStaff_StaffIdAndAppointmentDate(
-            Long staffId,
-            LocalDate appointmentDate
-    );
-
-
-    // =========================================================
-    // DASHBOARD / REPORT DATE RANGE
-    // =========================================================
-
-    List<Appointment> findByAppointmentDateBetween(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
+    List<Appointment> findByAppointmentDateBetween(LocalDate fromDate, LocalDate toDate);
 }

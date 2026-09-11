@@ -10,37 +10,11 @@ import java.util.List;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
-    // ============================================================
-    // FIND REPORTS BY REPORT TYPE
-    // ============================================================
-
     List<Report> findByReportTypeIgnoreCase(String reportType);
 
+    List<Report> findByFromDateGreaterThanEqualAndToDateLessThanEqual(LocalDate fromDate, LocalDate toDate);
 
-    // ============================================================
-    // FIND REPORTS BY DATE RANGE
-    // ============================================================
-
-    List<Report> findByFromDateGreaterThanEqualAndToDateLessThanEqual(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
-
-
-    // ============================================================
-    // FIND REPORTS BY TYPE AND DATE RANGE
-    // ============================================================
-
-    List<Report> findByReportTypeIgnoreCaseAndFromDateGreaterThanEqualAndToDateLessThanEqual(
-            String reportType,
-            LocalDate fromDate,
-            LocalDate toDate
-    );
-
-
-    // ============================================================
-    // FIND LATEST REPORTS
-    // ============================================================
+    List<Report> findByReportTypeIgnoreCaseAndFromDateGreaterThanEqualAndToDateLessThanEqual(String reportType, LocalDate fromDate, LocalDate toDate);
 
     List<Report> findAllByOrderByGeneratedAtDesc();
 }

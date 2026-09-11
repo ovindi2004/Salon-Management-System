@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class FeedbackAnalyticsDTO {
 
     private int rating;
+
     private long count;
+
     private double percentage;
 }

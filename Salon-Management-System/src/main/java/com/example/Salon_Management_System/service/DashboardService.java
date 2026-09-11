@@ -6,8 +6,5 @@ import java.time.LocalDate;
 
 public interface DashboardService {
 
-    DashboardDTO getDashboard(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
+    DashboardDTO getDashboard(LocalDate fromDate, LocalDate toDate);
 }

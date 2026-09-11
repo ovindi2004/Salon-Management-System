@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 public class PaymentAnalyticsDTO {
 
     private String method;
+
     private long count;
+
     private BigDecimal amount;
 }

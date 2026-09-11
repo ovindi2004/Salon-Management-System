@@ -11,34 +11,12 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // ==========================================
-    // FIND PRODUCT BY SKU
-    // ==========================================
     Optional<Product> findBySku(String sku);
 
-
-    // ==========================================
-    // CHECK SKU EXISTS
-    // ==========================================
     boolean existsBySku(String sku);
 
-
-    // ==========================================
-    // FIND PRODUCTS BY STATUS
-    // ==========================================
     List<Product> findByStatus(ProductStatus status);
 
-
-    // ==========================================
-    // SEARCH PRODUCTS
-    //
-    // Searches by:
-    // Product Name
-    // Category
-    // SKU
-    // Brand
-    // Supplier
-    // ==========================================
     @Query("""
             SELECT p
             FROM Product p
@@ -53,16 +31,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                OR LOWER(COALESCE(p.supplier, ''))
                   LIKE LOWER(CONCAT('%', :keyword, '%'))
             """)
-    List<Product> searchProducts(
-            @Param("keyword") String keyword
-    );
+    List<Product> searchProducts(@Param("keyword") String keyword);
 
-
-    // ==========================================
-    // GET OUT OF STOCK PRODUCTS
-    //
-    // stockQuantity = 0
-    // ==========================================
     @Query(value = """
     SELECT *
     FROM product

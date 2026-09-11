@@ -12,10 +12,6 @@ import java.util.List;
 
 public interface ReportService {
 
-    // ============================================================
-    // REPORT MANAGEMENT
-    // ============================================================
-
     ReportDTO saveReport(ReportDTO dto);
 
     ReportDTO getReportById(Long reportId);
@@ -24,60 +20,17 @@ public interface ReportService {
 
     List<ReportDTO> getReportsByType(String reportType);
 
-    List<ReportDTO> getReportsByDateRange(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
+    List<ReportDTO> getReportsByDateRange(LocalDate fromDate, LocalDate toDate);
 
     void deleteReport(Long reportId);
 
+    ReportAnalyticsDTO getOverallAnalytics(LocalDate fromDate, LocalDate toDate);
 
-    // ============================================================
-    // OVERALL ANALYTICS
-    // ============================================================
+    List<RevenueAnalyticsDTO> getRevenueAnalytics(LocalDate fromDate, LocalDate toDate);
 
-    ReportAnalyticsDTO getOverallAnalytics(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
+    AppointmentAnalyticsDTO getAppointmentAnalytics(LocalDate fromDate, LocalDate toDate);
 
+    List<StaffPerformanceDTO> getStaffPerformance(LocalDate fromDate, LocalDate toDate);
 
-    // ============================================================
-    // REVENUE ANALYTICS
-    // ============================================================
-
-    List<RevenueAnalyticsDTO> getRevenueAnalytics(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
-
-
-    // ============================================================
-    // APPOINTMENT ANALYTICS
-    // ============================================================
-
-    AppointmentAnalyticsDTO getAppointmentAnalytics(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
-
-
-    // ============================================================
-    // STAFF PERFORMANCE
-    // ============================================================
-
-    List<StaffPerformanceDTO> getStaffPerformance(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
-
-
-    // ============================================================
-    // SERVICE PERFORMANCE
-    // ============================================================
-
-    List<ServicePerformanceDTO> getServicePerformance(
-            LocalDate fromDate,
-            LocalDate toDate
-    );
+    List<ServicePerformanceDTO> getServicePerformance(LocalDate fromDate, LocalDate toDate);
 }

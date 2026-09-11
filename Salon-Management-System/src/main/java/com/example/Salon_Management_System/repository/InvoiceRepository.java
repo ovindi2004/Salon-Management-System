@@ -22,10 +22,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
     List<Invoice> findByCustomerCustomerId(Long customerId);
 
-    List<Invoice> findByInvoiceDateBetween(
-            LocalDate startDate,
-            LocalDate endDate
-    );
+    List<Invoice> findByInvoiceDateBetween(LocalDate startDate, LocalDate endDate);
 
     @Query("""
             SELECT i FROM Invoice i
@@ -44,8 +41,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     Long countByInvoiceStatus(@Param("status") InvoiceStatus status);
 
     @Query("""
-            SELECT COALESCE(SUM(i.totalAmount), 0)
-            FROM Invoice i
+       SELECT COALESCE(SUM(i.totalAmount), 0)
+       FROM Invoice i
             """)
     Double getTotalInvoiced();
 
@@ -70,5 +67,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     Long countOverdueInvoices();
 
 
-    
+
 }

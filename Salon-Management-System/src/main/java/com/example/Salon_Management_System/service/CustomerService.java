@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface CustomerService {
     CustomerSaveResponseDTO saveCustomer(CustomerDTO customerDTO);
+
     List<CustomerDTO> getAllCustomers();
+
     List<CustomerDTO>searchCustomers(String name);
+
     void updateCustomer(CustomerDTO customerDTO);
+
     void deleteCustomer(Long customerId);
 }
