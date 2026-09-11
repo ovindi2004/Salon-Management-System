@@ -186,6 +186,8 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/v1/reports/**").permitAll()
 
+                                .requestMatchers("/api/v1/dashboard/**").permitAll()
+
                         // PRODUCT APIs
                         .requestMatchers("/api/v1/product/**").permitAll()
                         //Invoice

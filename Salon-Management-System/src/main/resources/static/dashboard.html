@@ -1,2908 +1,5594 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pink Beauty Salon — Dashboard</title>
+
+  <title>Pink Beauty Salon | Dashboard</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
-  <style>
-    /* =========================================
-       GLOBAL STYLES
-    ========================================= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <style>/* =========================================================
+   PINK BEAUTY SALON
+   DASHBOARD CSS
+========================================================= */
 
-    :root {
-      --pink-50: #fef5f7;
-      --pink-100: #fce7ec;
-      --pink-200: #f9d0db;
-      --pink-300: #f4a8bd;
-      --pink-400: #ee7a9c;
-      --pink-500: #e84d7d;
-      --pink-600: #d62e64;
-      --pink-700: #b51e4f;
-      --pink-800: #941a42;
-      --pink-900: #7a1738;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-      --rose-50: #fff1f3;
-      --rose-100: #ffe0e6;
-      --rose-200: #ffc7d4;
-      --rose-300: #ffa3b8;
-      --rose-400: #ff7593;
-      --rose-500: #f9426e;
+  :root {
 
-      --gold-100: #faf0e6;
-      --gold-200: #f0d9b5;
-      --gold-300: #e6c285;
-      --gold-400: #d4a84d;
-      --gold-500: #c09132;
+    --rose-gold: #B76E79;
+    --dark-rose: #9A5862;
+    --soft-pink: #F8D7DA;
 
-      --success: #2ecc8f;
-      --success-bg: #e6f9f1;
-      --warning: #f5a623;
-      --warning-bg: #fef5e7;
-      --error: #e74c3c;
-      --error-bg: #fdedec;
-      --info: #3498db;
-      --info-bg: #ebf5fb;
+    --champagne: #E8C07D;
 
-      --neutral-50: #fafafa;
-      --neutral-100: #f5f5f5;
-      --neutral-200: #e8e8e8;
-      --neutral-300: #d4d4d4;
-      --neutral-400: #a3a3a3;
-      --neutral-500: #737373;
-      --neutral-600: #525252;
-      --neutral-700: #404040;
-      --neutral-800: #262626;
-      --neutral-900: #171717;
+    --background: #FFF9FB;
+    --white: #FFFFFF;
 
-      --bg: #faf8f9;
-      --card-bg: #ffffff;
-      --text: #2d1f26;
-      --text-muted: #8a7a82;
-      --border: #f0e8ec;
-      --shadow-sm: 0 1px 3px rgba(45, 31, 38, 0.06);
-      --shadow-md: 0 4px 16px rgba(45, 31, 38, 0.08);
-      --shadow-lg: 0 12px 40px rgba(45, 31, 38, 0.12);
+    --text: #2B2024;
+    --muted: #6B5D62;
 
-      --sidebar-w: 260px;
-      --sidebar-collapsed-w: 78px;
-      --topbar-h: 70px;
+    --border: #F0DDE1;
 
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-xl: 28px;
+    --success: #3A9975;
+    --warning: #C58A2B;
+    --danger: #C65D68;
+    --info: #5E85AA;
+    --purple: #8768A6;
+    --teal: #388F89;
 
-      --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    --sidebar-width: 260px;
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+    --shadow-sm:
+            0 3px 12px rgba(43, 32, 36, .045);
 
-    h1, h2, h3, h4, h5 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 600;
-    }
+    --shadow-md:
+            0 10px 28px rgba(43, 32, 36, .075);
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    --shadow-lg:
+            0 18px 45px rgba(43, 32, 36, .13);
 
-    button {
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      border: none;
-      background: none;
-    }
+    --radius: 16px;
 
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--pink-200);
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--pink-300);
-    }
+    --transition: .25s ease;
+  }
 
-    /* =========================================
-       SIDEBAR
-    ========================================= */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: var(--sidebar-w);
-      height: 100vh;
-      background: linear-gradient(180deg, #7a1738 0%, #5a1028 100%);
-      display: flex;
-      flex-direction: column;
-      z-index: 1000;
-      transition: width var(--transition), transform var(--transition);
-      box-shadow: 4px 0 24px rgba(122, 23, 56, 0.15);
-    }
+  body {
 
-    .sidebar.collapsed {
-      width: var(--sidebar-collapsed-w);
-    }
+    font-family: "Inter", sans-serif;
 
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 22px 24px;
-      min-height: var(--topbar-h);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
+    background: var(--background);
 
-    .sidebar-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--pink-400), var(--rose-400));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: #fff;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(232, 77, 125, 0.4);
-    }
+    color: var(--text);
 
-    .sidebar-brand {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+    min-height: 100vh;
 
-    .sidebar-brand .brand-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.2;
-    }
+    -webkit-font-smoothing: antialiased;
+  }
 
-    .sidebar-brand .brand-sub {
-      font-size: 10px;
-      color: var(--pink-200);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
-    .sidebar.collapsed .sidebar-brand {
+  button,
+  input,
+  select {
+    font-family: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
+
+
+  /* =========================================================
+     SCROLLBAR
+  ========================================================= */
+
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #E2B7BF;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+
+  /* =========================================================
+     SIDEBAR
+  ========================================================= */
+
+  .sidebar {
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: var(--sidebar-width);
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #712E3D 0%,
+                    #54212C 100%
+            );
+
+    color: white;
+
+    z-index: 1000;
+
+    box-shadow:
+            5px 0 25px rgba(84, 33, 44, .14);
+
+    transition: .25s ease;
+  }
+
+  .sidebar-header {
+
+    height: 72px;
+
+    padding: 14px 19px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    border-bottom:
+            1px solid rgba(255,255,255,.08);
+  }
+
+  .brand-logo {
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #D9919D,
+                    #B76E79
+            );
+
+    box-shadow:
+            0 7px 18px rgba(0,0,0,.16);
+
+    font-size: 18px;
+  }
+
+  .brand-info {
+
+    display: flex;
+    flex-direction: column;
+
+    white-space: nowrap;
+  }
+
+  .brand-info h2 {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 18px;
+
+    line-height: 1;
+  }
+
+  .brand-info span {
+
+    margin-top: 5px;
+
+    color: #F1C9D0;
+
+    font-size: 8px;
+
+    letter-spacing: 1.2px;
+
+    text-transform: uppercase;
+  }
+
+
+  /* NAV */
+
+  .sidebar-nav {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 14px 12px;
+  }
+
+  .nav-section-title {
+
+    padding:
+            13px 11px
+            6px;
+
+    color:
+            rgba(255,255,255,.36);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+  }
+
+  .nav-item {
+
+    min-height: 43px;
+
+    margin: 3px 0;
+
+    padding: 9px 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    border-radius: 10px;
+
+    color:
+            rgba(255,255,255,.68);
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    transition: .2s ease;
+  }
+
+  .nav-item i {
+
+    width: 19px;
+
+    text-align: center;
+
+    font-size: 14px;
+  }
+
+  .nav-item:hover {
+
+    color: white;
+
+    background:
+            rgba(255,255,255,.07);
+  }
+
+  .nav-item.active {
+
+    color: white;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #C57B88,
+                    #A95D6A
+            );
+
+    box-shadow:
+            0 7px 18px rgba(0,0,0,.15);
+  }
+
+
+  /* FOOTER */
+
+  .sidebar-footer {
+
+    padding: 13px;
+
+    border-top:
+            1px solid rgba(255,255,255,.08);
+  }
+
+  .sidebar-user {
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px;
+
+    border-radius: 11px;
+
+    background:
+            rgba(255,255,255,.055);
+  }
+
+  .user-avatar {
+
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #E8C07D,
+                    #B76E79
+            );
+
+    font-size: 10px;
+
+    font-weight: 700;
+  }
+
+  .user-details {
+
+    display: flex;
+    flex-direction: column;
+
+    white-space: nowrap;
+  }
+
+  .user-details strong {
+    font-size: 10px;
+  }
+
+  .user-details span {
+
+    margin-top: 3px;
+
+    color: #EAC8CE;
+
+    font-size: 8px;
+  }
+
+
+  /* =========================================================
+     MAIN
+  ========================================================= */
+
+  .main-wrapper {
+
+    min-height: 100vh;
+
+    margin-left:
+            var(--sidebar-width);
+  }
+
+
+  /* =========================================================
+     TOPBAR
+  ========================================================= */
+
+  .topbar {
+
+    height: 72px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 900;
+
+    padding:
+            0 27px;
+
+    display: flex;
+    align-items: center;
+
+    background:
+            rgba(255,255,255,.92);
+
+    border-bottom:
+            1px solid var(--border);
+
+    backdrop-filter:
+            blur(14px);
+  }
+
+  .sidebar-toggle {
+
+    width: 39px;
+    height: 39px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    color: var(--muted);
+
+    background: transparent;
+
+    transition: .2s ease;
+  }
+
+  .sidebar-toggle:hover {
+
+    color: var(--rose-gold);
+
+    background:
+            #FFF1F4;
+  }
+
+  .topbar-title {
+
+    margin-left: 12px;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topbar-title span {
+
+    color: var(--rose-gold);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+  }
+
+  .topbar-title strong {
+
+    margin-top: 2px;
+
+    font-size: 15px;
+  }
+
+  .topbar-actions {
+
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+  }
+
+  .icon-button {
+
+    width: 39px;
+    height: 39px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    color: var(--muted);
+
+    background: transparent;
+
+    transition: .2s ease;
+  }
+
+  .icon-button:hover {
+
+    color: var(--rose-gold);
+
+    background:
+            #FFF1F4;
+  }
+
+  .topbar-date {
+
+    height: 37px;
+
+    padding:
+            0 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: 10px;
+
+    color: var(--dark-rose);
+
+    background: #FFF9FA;
+
+    font-size: 9px;
+
+    font-weight: 600;
+  }
+
+  .profile {
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+            4px 10px 4px 4px;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: 30px;
+
+    background: white;
+  }
+
+  .profile-avatar {
+
+    width: 33px;
+    height: 33px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #D58A97,
+                    #B76E79
+            );
+
+    font-size: 9px;
+
+    font-weight: 700;
+  }
+
+  .profile-details {
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-details strong {
+    font-size: 9px;
+  }
+
+  .profile-details span {
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+
+  /* =========================================================
+     CONTENT
+  ========================================================= */
+
+  .content {
+
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+
+  /* =========================================================
+     WELCOME
+  ========================================================= */
+
+  .welcome-banner {
+
+    min-height: 190px;
+
+    padding:
+            30px 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    color: white;
+
+    border-radius: 20px;
+
+    background:
+            linear-gradient(
+                    120deg,
+                    #6D2A39,
+                    #9A5862 55%,
+                    #C17A86
+            );
+
+    box-shadow:
+            0 14px 35px rgba(154,88,98,.18);
+  }
+
+  .welcome-banner::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 310px;
+    height: 310px;
+
+    right: -80px;
+    top: -160px;
+
+    border:
+            1px solid
+            rgba(255,255,255,.13);
+
+    border-radius: 50%;
+  }
+
+  .welcome-content {
+
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 700px;
+  }
+
+  .welcome-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #F8DCE1;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: .5px;
+  }
+
+  .welcome-content h1 {
+
+    margin-top: 7px;
+
+    font-family:
+            "Playfair Display",
+            serif;
+
+    font-size: 30px;
+  }
+
+  .welcome-content p {
+
+    max-width: 620px;
+
+    margin-top: 7px;
+
+    color:
+            rgba(255,255,255,.82);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+  }
+
+  .welcome-date {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 13px;
+
+    padding:
+            7px 11px;
+
+    border:
+            1px solid
+            rgba(255,255,255,.16);
+
+    border-radius: 20px;
+
+    background:
+            rgba(255,255,255,.08);
+
+    font-size: 9px;
+  }
+
+  .welcome-actions {
+
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    gap: 8px;
+  }
+
+
+  /* =========================================================
+     BUTTONS
+  ========================================================= */
+
+  .btn {
+
+    min-height: 39px;
+
+    padding:
+            0 14px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    transition: .2s ease;
+  }
+
+  .btn-white {
+
+    color: var(--dark-rose);
+
+    background: white;
+  }
+
+  .btn-white:hover {
+
+    transform:
+            translateY(-1px);
+
+    box-shadow:
+            0 8px 18px rgba(0,0,0,.13);
+  }
+
+  .btn-outline-light {
+
+    color: white;
+
+    background:
+            rgba(255,255,255,.08);
+
+    border:
+            1px solid
+            rgba(255,255,255,.24);
+  }
+
+  .btn-outline-light:hover {
+
+    background:
+            rgba(255,255,255,.17);
+  }
+
+  .btn-primary {
+
+    color: white;
+
+    background:
+            var(--rose-gold);
+
+    box-shadow:
+            0 5px 14px
+            rgba(183,110,121,.17);
+  }
+
+  .btn-primary:hover {
+
+    background:
+            var(--dark-rose);
+
+    transform:
+            translateY(-1px);
+  }
+
+
+  /* =========================================================
+     FILTER
+  ========================================================= */
+
+  .filter-card {
+
+    padding:
+            14px 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    background: white;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: 15px;
+
+    box-shadow:
+            var(--shadow-sm);
+  }
+
+  .filter-heading {
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .filter-icon {
+
+    width: 37px;
+    height: 37px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    color: var(--rose-gold);
+
+    background:
+            #FFF0F3;
+  }
+
+  .filter-heading strong {
+
+    display: block;
+
+    font-size: 10px;
+  }
+
+  .filter-heading span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+  .filter-controls {
+
+    display: flex;
+    align-items: end;
+
+    gap: 8px;
+  }
+
+  .date-input {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+  }
+
+  .date-input label {
+
+    color: var(--muted);
+
+    font-size: 8px;
+
+    font-weight: 600;
+  }
+
+  .date-input input,
+  .filter-controls select {
+
+    height: 36px;
+
+    padding:
+            0 9px;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    color: var(--text);
+
+    background:
+            #FFFCFD;
+
+    font-size: 9px;
+  }
+
+  .date-input input:focus,
+  .filter-controls select:focus {
+
+    border-color:
+            #D5A0A8;
+
+    box-shadow:
+            0 0 0 3px #FFF1F4;
+  }
+
+  .filter-controls select {
+
+    min-width: 120px;
+  }
+
+
+  /* =========================================================
+     STAT CARDS
+  ========================================================= */
+
+  .stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 13px;
+  }
+
+  .stat-card {
+
+    min-height: 143px;
+
+    padding: 17px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: white;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow:
+            var(--shadow-sm);
+
+    transition: .2s ease;
+  }
+
+  .stat-card:hover {
+
+    transform:
+            translateY(-2px);
+
+    box-shadow:
+            var(--shadow-md);
+  }
+
+  .stat-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    height: 3px;
+
+    background:
+            var(--rose-gold);
+  }
+
+  .stat-card:nth-child(2)::before {
+    background: var(--champagne);
+  }
+
+  .stat-card:nth-child(3)::before {
+    background: #D59B42;
+  }
+
+  .stat-card:nth-child(4)::before {
+    background: #6E9BC2;
+  }
+
+  .stat-card:nth-child(5)::before {
+    background: #5BAA89;
+  }
+
+  .stat-card:nth-child(6)::before {
+    background: #9A7BB8;
+  }
+
+  .stat-card:nth-child(7)::before {
+    background: #D7798A;
+  }
+
+  .stat-card:nth-child(8)::before {
+    background: #57A9A1;
+  }
+
+  .stat-top {
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+  }
+
+  .stat-icon {
+
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+  }
+
+  .stat-icon.pink {
+    color: var(--rose-gold);
+    background: #FFF0F3;
+  }
+
+  .stat-icon.gold {
+    color: #B9872E;
+    background: #FFF7E6;
+  }
+
+  .stat-icon.orange {
+    color: #C88929;
+    background: #FFF3E2;
+  }
+
+  .stat-icon.blue {
+    color: #5A84AA;
+    background: #EDF5FC;
+  }
+
+  .stat-icon.green {
+    color: var(--success);
+    background: #EAF7F1;
+  }
+
+  .stat-icon.purple {
+    color: var(--purple);
+    background: #F4EFFA;
+  }
+
+  .stat-icon.rose {
+    color: #C66778;
+    background: #FDECEF;
+  }
+
+  .stat-icon.teal {
+    color: var(--teal);
+    background: #EAF8F7;
+  }
+
+  .stat-tag {
+
+    padding:
+            4px 8px;
+
+    border-radius: 20px;
+
+    color: var(--muted);
+
+    background:
+            #FAF6F7;
+
+    font-size: 7px;
+
+    font-weight: 600;
+  }
+
+  .stat-value {
+
+    margin-top: 17px;
+
+    font-size: 21px;
+
+    font-weight: 700;
+
+    letter-spacing: -.4px;
+  }
+
+  .stat-label {
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+  }
+
+
+  /* =========================================================
+     TODAY
+  ========================================================= */
+
+  .today-card {
+
+    min-height: 76px;
+
+    padding:
+            13px 17px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 0;
+
+    background:
+            linear-gradient(
+                    100deg,
+                    #FFFDF8,
+                    #FFF8FA
+            );
+
+    border:
+            1px solid #F0E2D5;
+
+    border-radius: 15px;
+  }
+
+  .today-heading {
+
+    min-width: 220px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .today-icon {
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    color: #C18D35;
+
+    background: #FFF2D8;
+  }
+
+  .today-heading h3 {
+
+    font-family:
+            "Playfair Display",
+            serif;
+
+    font-size: 14px;
+  }
+
+  .today-heading p {
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+  .today-stat {
+
+    min-width: 105px;
+
+    padding:
+            0 15px;
+
+    text-align: center;
+
+    border-left:
+            1px solid var(--border);
+  }
+
+  .today-stat strong {
+
+    display: block;
+
+    font-size: 15px;
+  }
+
+  .today-stat span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+  .today-stat.revenue strong {
+
+    color: var(--rose-gold);
+
+    font-size: 12px;
+  }
+
+
+  /* =========================================================
+     CARDS
+  ========================================================= */
+
+  .card {
+
+    overflow: hidden;
+
+    background: white;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow:
+            var(--shadow-sm);
+  }
+
+  .card-header {
+
+    padding:
+            20px 20px 0;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 15px;
+  }
+
+  .section-label {
+
+    color: var(--rose-gold);
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+  }
+
+  .card-header h2 {
+
+    margin-top: 4px;
+
+    font-family:
+            "Playfair Display",
+            serif;
+
+    font-size: 17px;
+  }
+
+  .card-header p {
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+  .section-header {
+
+    padding-bottom: 16px;
+  }
+
+  .view-link {
+
+    padding:
+            7px 9px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    border-radius: 8px;
+
+    color: var(--rose-gold);
+
+    font-size: 8px;
+
+    font-weight: 700;
+  }
+
+  .view-link:hover {
+
+    background:
+            #FFF1F4;
+  }
+
+
+  /* =========================================================
+     CHARTS
+  ========================================================= */
+
+  .charts-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1.55fr 1fr;
+
+    gap: 15px;
+  }
+
+  .chart-card {
+
+    min-height: 390px;
+  }
+
+  .chart-total {
+
+    text-align: right;
+  }
+
+  .chart-total span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+  .chart-total strong {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--rose-gold);
+
+    font-size: 12px;
+  }
+
+  .chart-container {
+
+    height: 290px;
+
+    padding:
+            15px 20px 20px;
+
+    position: relative;
+  }
+
+  .donut-container {
+
+    height: 275px;
+
+    padding:
+            25px 55px 10px;
+
+    position: relative;
+  }
+
+  .donut-center {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+            translate(-50%, -45%);
+
+    text-align: center;
+
+    pointer-events: none;
+  }
+
+  .donut-center strong {
+
+    display: block;
+
+    font-size: 24px;
+  }
+
+  .donut-center span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+  .chart-legend {
+
+    padding:
+            0 20px 18px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px 14px;
+  }
+
+  .legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+  .legend-dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+  }
+
+
+  /* =========================================================
+     TABLE
+  ========================================================= */
+
+  .table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+  }
+
+  table {
+
+    width: 100%;
+
+    min-width: 760px;
+
+    border-collapse: collapse;
+  }
+
+  thead {
+
+    background:
+            #FFFAFB;
+  }
+
+  th {
+
+    padding:
+            10px 20px;
+
+    border-top:
+            1px solid var(--border);
+
+    border-bottom:
+            1px solid var(--border);
+
+    color: #89777D;
+
+    text-align: left;
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: .7px;
+
+    text-transform: uppercase;
+  }
+
+  td {
+
+    padding:
+            12px 20px;
+
+    border-bottom:
+            1px solid #F6EDEF;
+
+    font-size: 9px;
+  }
+
+  tbody tr:hover {
+
+    background:
+            #FFFAFB;
+  }
+
+  .customer-cell {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+  }
+
+  .avatar-small {
+
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #D28A97,
+                    #B76E79
+            );
+
+    font-size: 8px;
+
+    font-weight: 700;
+  }
+
+  .primary-text {
+
+    font-weight: 600;
+  }
+
+  .secondary-text {
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+
+  /* STATUS */
+
+  .status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding:
+            5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 7px;
+
+    font-weight: 700;
+  }
+
+  .status::before {
+
+    content: "";
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+  }
+
+  .status-scheduled {
+
+    color: #B67D1F;
+
+    background: #FFF5E1;
+  }
+
+  .status-scheduled::before {
+    background: #D59B42;
+  }
+
+  .status-confirmed {
+
+    color: #557FA4;
+
+    background: #EDF5FC;
+  }
+
+  .status-confirmed::before {
+    background: #6E9BC2;
+  }
+
+  .status-completed {
+
+    color: #2E8C67;
+
+    background: #EAF7F1;
+  }
+
+  .status-completed::before {
+    background: #5BAA89;
+  }
+
+  .status-cancelled {
+
+    color: #B85863;
+
+    background: #FDEDEF;
+  }
+
+  .status-cancelled::before {
+    background: #C85D68;
+  }
+
+  .status-no_show {
+
+    color: #7B6770;
+
+    background: #F4F0F2;
+  }
+
+  .status-no_show::before {
+    background: #8A7A82;
+  }
+
+
+  /* =========================================================
+     TWO COLUMN
+  ========================================================= */
+
+  .two-column {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 15px;
+  }
+
+
+  /* =========================================================
+     SERVICES
+  ========================================================= */
+
+  .service-list {
+
+    padding:
+            0 20px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .service-row {
+
+    padding: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border:
+            1px solid #F5E9EC;
+
+    border-radius: 11px;
+
+    transition: .2s ease;
+  }
+
+  .service-row:hover {
+
+    background:
+            #FFFAFB;
+
+    border-color:
+            #EBC9D0;
+  }
+
+  .service-icon {
+
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    color: var(--rose-gold);
+
+    background:
+            #FFF0F3;
+  }
+
+  .service-main {
+
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  .service-main strong {
+
+    display: block;
+
+    font-size: 9px;
+  }
+
+  .service-main span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+  .progress {
+
+    width: 70px;
+
+    height: 4px;
+
+    margin-top: 5px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #F4ECEE;
+  }
+
+  .progress-bar {
+
+    height: 100%;
+
+    border-radius: 10px;
+
+    background:
+            linear-gradient(
+                    90deg,
+                    #B76E79,
+                    #D89AA5
+            );
+  }
+
+  .service-count {
+
+    text-align: right;
+  }
+
+  .service-count strong {
+
+    display: block;
+
+    font-size: 12px;
+  }
+
+  .service-count span {
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+
+  /* =========================================================
+     STAFF
+  ========================================================= */
+
+  .staff-list {
+
+    padding:
+            0 20px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .staff-row {
+
+    padding: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border:
+            1px solid #F5E9EC;
+
+    border-radius: 11px;
+  }
+
+  .staff-avatar {
+
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #D28A97,
+                    #A85F6C
+            );
+
+    font-size: 8px;
+
+    font-weight: 700;
+  }
+
+  .staff-main {
+
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  .staff-main strong {
+
+    display: block;
+
+    font-size: 9px;
+  }
+
+  .staff-main span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+  .staff-stats {
+
+    display: flex;
+
+    gap: 7px;
+  }
+
+  .staff-stat {
+
+    min-width: 37px;
+
+    text-align: center;
+  }
+
+  .staff-stat strong {
+
+    display: block;
+
+    font-size: 10px;
+  }
+
+  .staff-stat span {
+
+    display: block;
+
+    margin-top: 1px;
+
+    color: var(--muted);
+
+    font-size: 6px;
+  }
+
+
+  /* =========================================================
+     QUICK ACTIONS
+  ========================================================= */
+
+  .quick-card {
+
+    padding-bottom: 20px;
+  }
+
+  .quick-actions {
+
+    padding:
+            0 20px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 9px;
+  }
+
+  .quick-action {
+
+    min-height: 100px;
+
+    padding: 12px 8px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: 12px;
+
+    transition: .2s ease;
+  }
+
+  .quick-action:hover {
+
+    transform:
+            translateY(-2px);
+
+    border-color:
+            #E4B9C1;
+
+    background:
+            #FFF8FA;
+
+    box-shadow:
+            var(--shadow-sm);
+  }
+
+  .quick-icon {
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 7px;
+
+    border-radius: 10px;
+  }
+
+  .quick-icon.pink {
+    color: var(--rose-gold);
+    background: #FFF0F3;
+  }
+
+  .quick-icon.gold {
+    color: #B9872E;
+    background: #FFF7E6;
+  }
+
+  .quick-icon.purple {
+    color: var(--purple);
+    background: #F4EFFA;
+  }
+
+  .quick-icon.green {
+    color: var(--success);
+    background: #EAF7F1;
+  }
+
+  .quick-icon.blue {
+    color: var(--info);
+    background: #EDF5FC;
+  }
+
+  .quick-icon.rose {
+    color: #C66778;
+    background: #FDECEF;
+  }
+
+  .quick-action strong {
+
+    display: block;
+
+    font-size: 8px;
+  }
+
+  .quick-action span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+
+  /* =========================================================
+     EMPTY / ERROR
+  ========================================================= */
+
+  .empty-state,
+  .error-state {
+
+    padding:
+            35px 20px;
+
+    text-align: center;
+  }
+
+  .empty-state i,
+  .error-state i {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #D8A5AE;
+
+    font-size: 25px;
+  }
+
+  .empty-state strong,
+  .error-state strong {
+
+    display: block;
+
+    font-size: 10px;
+  }
+
+  .empty-state span,
+  .error-state span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+  }
+
+  .retry-button {
+
+    margin-top: 11px;
+
+    padding:
+            7px 11px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    background:
+            var(--rose-gold);
+
+    font-size: 8px;
+
+    font-weight: 600;
+  }
+
+
+  /* =========================================================
+     MOBILE APPOINTMENTS
+  ========================================================= */
+
+  .mobile-appointments {
+    display: none;
+  }
+
+
+  /* =========================================================
+     TOAST
+  ========================================================= */
+
+  .toast-container {
+
+    position: fixed;
+
+    right: 22px;
+    top: 85px;
+
+    z-index: 3000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .toast {
+
+    min-width: 270px;
+
+    padding: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    background: white;
+
+    border:
+            1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow:
+            var(--shadow-lg);
+
+    animation:
+            toastIn .25s ease;
+  }
+
+  .toast-icon {
+
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+  }
+
+  .toast.success .toast-icon {
+
+    color: var(--success);
+
+    background: #EAF7F1;
+  }
+
+  .toast.error .toast-icon {
+
+    color: var(--danger);
+
+    background: #FDEDEF;
+  }
+
+  .toast strong {
+
+    display: block;
+
+    font-size: 9px;
+  }
+
+  .toast span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 7px;
+  }
+
+  @keyframes toastIn {
+
+    from {
       opacity: 0;
-      width: 0;
+      transform: translateX(25px);
     }
 
-    .sidebar-nav {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .sidebar-nav::-webkit-scrollbar {
-      width: 4px;
-    }
-    .sidebar-nav::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .nav-section-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255, 255, 255, 0.35);
-      padding: 14px 14px 6px;
-      white-space: nowrap;
-    }
-
-    .sidebar.collapsed .nav-section-label {
-      text-align: center;
-      padding: 14px 0 6px;
-      font-size: 8px;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 14px;
-      border-radius: var(--radius-sm);
-      color: rgba(255, 255, 255, 0.65);
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .nav-item i {
-      font-size: 18px;
-      width: 24px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-
-    .nav-item .nav-text {
-      overflow: hidden;
-    }
-
-    .sidebar.collapsed .nav-text,
-    .sidebar.collapsed .nav-badge {
-      opacity: 0;
-      width: 0;
-      display: none;
-    }
-
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-    }
-
-    .nav-item.active {
-      background: linear-gradient(135deg, var(--pink-500), var(--rose-500));
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(232, 77, 125, 0.35);
-    }
-
-    .nav-item.active::before {
-      content: '';
-      position: absolute;
-      left: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 4px;
-      height: 60%;
-      background: var(--pink-300);
-      border-radius: 0 4px 4px 0;
-    }
-
-    .nav-badge {
-      margin-left: auto;
-      background: var(--pink-400);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
-      min-width: 22px;
-      text-align: center;
-    }
-
-    .nav-badge.green {
-      background: var(--success);
-    }
-
-    .sidebar-footer {
-      padding: 16px 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .sidebar-user {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .sidebar-user:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .sidebar-user .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold-300), var(--gold-500));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .sidebar-user .user-info {
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .sidebar-user .user-name {
-      font-size: 13px;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .sidebar-user .user-role {
-      font-size: 11px;
-      color: var(--pink-200);
-    }
-
-    .sidebar.collapsed .user-info {
-      opacity: 0;
-      width: 0;
-    }
-
-    /* =========================================
-       MAIN LAYOUT
-    ========================================= */
-    .main-wrapper {
-      margin-left: var(--sidebar-w);
-      min-height: 100vh;
-      transition: margin-left var(--transition);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .main-wrapper.sidebar-collapsed {
-      margin-left: var(--sidebar-collapsed-w);
-    }
-
-    /* =========================================
-       TOPBAR
-    ========================================= */
-    .topbar {
-      height: var(--topbar-h);
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      padding: 0 28px;
-      gap: 18px;
-      position: sticky;
-      top: 0;
-      z-index: 900;
-    }
-
-    .sidebar-toggle {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--pink-600);
-      font-size: 18px;
-      transition: all 0.2s;
-    }
-
-    .sidebar-toggle:hover {
-      background: var(--pink-50);
-    }
-
-    .topbar-search {
-      flex: 1;
-      max-width: 420px;
-      position: relative;
-    }
-
-    .topbar-search input {
-      width: 100%;
-      height: 42px;
-      padding: 0 16px 0 42px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-      background: var(--neutral-50);
-      color: var(--text);
-      transition: all 0.2s;
-      outline: none;
-    }
-
-    .topbar-search input::placeholder {
-      color: var(--neutral-400);
-    }
-
-    .topbar-search input:focus {
-      border-color: var(--pink-300);
-      background: #fff;
-      box-shadow: 0 0 0 4px var(--pink-50);
-    }
-
-    .topbar-search i {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--neutral-400);
-      font-size: 15px;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: auto;
-    }
-
-    .topbar-icon-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--neutral-600);
-      font-size: 17px;
-      transition: all 0.2s;
-      position: relative;
-    }
-
-    .topbar-icon-btn:hover {
-      background: var(--pink-50);
-      color: var(--pink-600);
-    }
-
-    .topbar-icon-btn .dot {
-      position: absolute;
-      top: 9px;
-      right: 9px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--pink-500);
-      border: 2px solid #fff;
-    }
-
-    .topbar-date {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 16px;
-      border-radius: 12px;
-      background: var(--pink-50);
-      color: var(--pink-700);
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .topbar-date i {
-      color: var(--pink-500);
-    }
-
-    .topbar-profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 12px 6px 6px;
-      border-radius: 30px;
-      border: 1.5px solid var(--border);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .topbar-profile:hover {
-      border-color: var(--pink-200);
-      background: var(--pink-50);
-    }
-
-    .topbar-profile .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink-400), var(--rose-400));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .topbar-profile .profile-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .topbar-profile .profile-role {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* =========================================
-       NOTIFICATIONS DROPDOWN
-    ========================================= */
-    .dropdown {
-      position: absolute;
-      top: calc(100% + 12px);
-      right: 0;
-      width: 380px;
-      background: var(--card-bg);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px);
-      transition: all 0.22s ease;
-      z-index: 950;
-    }
-
-    .dropdown.open {
+    to {
       opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+      transform: translateX(0);
     }
 
-    .dropdown-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
-    }
+  }
 
-    .dropdown-header h3 {
-      font-size: 16px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-    }
 
-    .dropdown-header .count-badge {
-      background: var(--pink-100);
-      color: var(--pink-700);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 10px;
-    }
+  /* =========================================================
+     RESPONSIVE
+  ========================================================= */
 
-    .dropdown-body {
-      max-height: 380px;
-      overflow-y: auto;
-    }
+  @media (max-width: 1250px) {
 
-    .notif-item {
-      display: flex;
-      gap: 14px;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .notif-item:hover {
-      background: var(--pink-50);
-    }
-
-    .notif-item:last-child {
-      border-bottom: none;
-    }
-
-    .notif-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .notif-icon.pink { background: var(--pink-100); color: var(--pink-600); }
-    .notif-icon.green { background: var(--success-bg); color: var(--success); }
-    .notif-icon.orange { background: var(--warning-bg); color: var(--warning); }
-    .notif-icon.blue { background: var(--info-bg); color: var(--info); }
-
-    .notif-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .notif-content .notif-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .notif-content .notif-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .notif-content .notif-time {
-      font-size: 11px;
-      color: var(--neutral-400);
-      margin-top: 4px;
-    }
-
-    .dropdown-footer {
-      padding: 14px 20px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-    }
-
-    .dropdown-footer a {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--pink-600);
-      transition: color 0.2s;
-    }
-
-    .dropdown-footer a:hover {
-      color: var(--pink-700);
-    }
-
-    /* Profile dropdown */
-    .profile-dropdown {
-      width: 240px;
-    }
-
-    .profile-dropdown .dropdown-body {
-      padding: 8px;
-    }
-
-    .profile-menu-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      color: var(--neutral-700);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .profile-menu-item:hover {
-      background: var(--pink-50);
-      color: var(--pink-600);
-    }
-
-    .profile-menu-item i {
-      width: 18px;
-      text-align: center;
-      color: var(--neutral-500);
-    }
-
-    .profile-menu-item:hover i {
-      color: var(--pink-500);
-    }
-
-    .profile-menu-item.danger {
-      color: var(--error);
-    }
-    .profile-menu-item.danger i {
-      color: var(--error);
-    }
-    .profile-menu-item.danger:hover {
-      background: var(--error-bg);
-    }
-
-    /* =========================================
-       CONTENT AREA
-    ========================================= */
-    .content-area {
-      flex: 1;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    /* =========================================
-       WELCOME BANNER
-    ========================================= */
-    .welcome-banner {
-      background: linear-gradient(135deg, #7a1738 0%, #b51e4f 50%, #e84d7d 100%);
-      border-radius: var(--radius-lg);
-      padding: 36px 40px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 36px rgba(122, 23, 56, 0.2);
-    }
-
-    .welcome-banner::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      right: -8%;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .welcome-banner::after {
-      content: '';
-      position: absolute;
-      bottom: -50%;
-      right: 15%;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .welcome-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .welcome-content h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .welcome-content p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.6;
-      max-width: 520px;
-    }
-
-    .welcome-content .welcome-date {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 14px;
-      padding: 6px 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(6px);
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .welcome-actions {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-
-    .welcome-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .welcome-btn.primary {
-      background: #fff;
-      color: var(--pink-700);
-    }
-
-    .welcome-btn.primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .welcome-btn.secondary {
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      border: 1.5px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(6px);
-    }
-
-    .welcome-btn.secondary:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* =========================================
-       STATISTIC CARDS
-    ========================================= */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns:
+            repeat(3, 1fr);
     }
 
-    .stat-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.25s;
-      position: relative;
-      overflow: hidden;
+    .charts-grid {
+      grid-template-columns: 1fr;
     }
 
-    .stat-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-3px);
+    .quick-actions {
+      grid-template-columns:
+            repeat(3, 1fr);
+    }
+  }
+
+
+  @media (max-width: 1000px) {
+
+    .today-card {
+      overflow-x: auto;
     }
 
-    .stat-card::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
+    .today-heading {
+      min-width: 190px;
+    }
+
+    .filter-card {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .filter-controls {
       width: 100%;
-      height: 3px;
-      background: var(--pink-400);
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-
-    .stat-card:hover::after {
-      opacity: 1;
-    }
-
-    .stat-card.pink::after { background: var(--pink-400); }
-    .stat-card.green::after { background: var(--success); }
-    .stat-card.gold::after { background: var(--gold-400); }
-    .stat-card.blue::after { background: var(--info); }
-
-    .stat-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
-
-    .stat-icon.pink { background: var(--pink-100); color: var(--pink-600); }
-    .stat-icon.green { background: var(--success-bg); color: var(--success); }
-    .stat-icon.gold { background: var(--gold-100); color: var(--gold-500); }
-    .stat-icon.blue { background: var(--info-bg); color: var(--info); }
-
-    .stat-trend {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
-
-    .stat-trend.up {
-      color: var(--success);
-      background: var(--success-bg);
-    }
-
-    .stat-trend.down {
-      color: var(--error);
-      background: var(--error-bg);
-    }
-
-    .stat-value {
-      font-size: 30px;
-      font-weight: 700;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      margin-bottom: 4px;
-      line-height: 1.1;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* =========================================
-       CHARTS ROW
-    ========================================= */
-    .charts-row {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 20px;
-    }
-
-    .chart-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .chart-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .chart-header h3 {
-      font-size: 18px;
-      color: var(--text);
-    }
-
-    .chart-header p {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .period-tabs {
-      display: flex;
-      gap: 4px;
-      background: var(--neutral-100);
-      border-radius: 10px;
-      padding: 4px;
-    }
-
-    .period-tab {
-      padding: 6px 16px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      transition: all 0.2s;
-    }
-
-    .period-tab.active {
-      background: #fff;
-      color: var(--pink-600);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .period-tab:hover:not(.active) {
-      color: var(--text);
-    }
-
-    .chart-container {
-      position: relative;
-      height: 280px;
-    }
-
-    .chart-legend {
-      display: flex;
-      gap: 20px;
-      margin-top: 16px;
       flex-wrap: wrap;
     }
 
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--text-muted);
+    .two-column {
+      grid-template-columns: 1fr;
     }
+  }
 
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-    }
-
-    /* =========================================
-       SECTION HEADER
-    ========================================= */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .section-header h3 {
-      font-size: 18px;
-      color: var(--text);
-    }
-
-    .section-header p {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .view-all-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--pink-600);
-      padding: 6px 14px;
-      border-radius: 8px;
-      transition: all 0.2s;
-    }
-
-    .view-all-btn:hover {
-      background: var(--pink-50);
-      color: var(--pink-700);
-    }
-
-    /* =========================================
-       TODAY'S APPOINTMENTS
-    ========================================= */
-    .appts-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .appt-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .appt-item:hover {
-      border-color: var(--pink-200);
-      background: var(--pink-50);
-      transform: translateX(4px);
-    }
-
-    .appt-time {
-      text-align: center;
-      flex-shrink: 0;
-      min-width: 64px;
-    }
-
-    .appt-time .time {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .appt-time .duration {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .appt-divider {
-      width: 2px;
-      height: 36px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-
-    .appt-customer {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1;
-      min-width: 0;
-    }
-
-    .appt-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .appt-info {
-      min-width: 0;
-    }
-
-    .appt-info .customer-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .appt-info .service-name {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .appt-staff {
-      font-size: 12px;
-      color: var(--neutral-500);
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .appt-staff .staff-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--neutral-400);
-    }
-
-    .appt-status {
-      flex-shrink: 0;
-    }
-
-    /* =========================================
-       STATUS BADGES
-    ========================================= */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
-
-    .badge.confirmed { background: var(--info-bg); color: var(--info); }
-    .badge.confirmed::before { background: var(--info); }
-    .badge.pending { background: var(--warning-bg); color: var(--warning); }
-    .badge.pending::before { background: var(--warning); }
-    .badge.completed { background: var(--success-bg); color: var(--success); }
-    .badge.completed::before { background: var(--success); }
-    .badge.cancelled { background: var(--error-bg); color: var(--error); }
-    .badge.cancelled::before { background: var(--error); }
-
-    /* =========================================
-       POPULAR SERVICES
-    ========================================= */
-    .services-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .service-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .service-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .service-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .service-info .service-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .service-info .service-meta {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .service-bar {
-      flex: 1;
-      max-width: 120px;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--neutral-100);
-      overflow: hidden;
-    }
-
-    .service-bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width 0.8s ease;
-    }
-
-    .service-stats {
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .service-stats .count {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .service-stats .revenue {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* =========================================
-       STAFF PERFORMANCE
-    ========================================= */
-    .staff-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .staff-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-
-    .staff-card:hover {
-      border-color: var(--pink-200);
-      background: var(--pink-50);
-    }
-
-    .staff-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .staff-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .staff-info .staff-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .staff-info .staff-role {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .staff-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--gold-500);
-    }
-
-    .staff-rating i {
-      font-size: 12px;
-    }
-
-    /* =========================================
-       TWO-COLUMN ROW
-    ========================================= */
-    .two-col-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    /* =========================================
-       UPCOMING APPOINTMENTS
-    ========================================= */
-    .upcoming-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .upcoming-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      background: var(--neutral-50);
-      transition: all 0.2s;
-    }
-
-    .upcoming-item:hover {
-      background: var(--pink-50);
-    }
-
-    .upcoming-date {
-      text-align: center;
-      flex-shrink: 0;
-      min-width: 52px;
-    }
-
-    .upcoming-date .day {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--pink-600);
-      line-height: 1;
-    }
-
-    .upcoming-date .month {
-      font-size: 11px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
 
-    .upcoming-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .upcoming-info .title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .upcoming-info .meta {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* =========================================
-       INVENTORY ALERTS
-    ========================================= */
-    .inventory-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .inventory-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-
-    .inventory-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .inventory-icon.red { background: var(--error-bg); color: var(--error); }
-    .inventory-icon.orange { background: var(--warning-bg); color: var(--warning); }
-
-    .inventory-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .inventory-info .name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .inventory-info .stock {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .stock-bar {
-      width: 80px;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--neutral-100);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .stock-bar-fill {
-      height: 100%;
-      border-radius: 3px;
-    }
-
-    .stock-bar-fill.red { background: var(--error); }
-    .stock-bar-fill.orange { background: var(--warning); }
-
-    /* =========================================
-       QUICK ACTIONS
-    ========================================= */
-    .quick-actions-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .quick-action {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding: 20px 12px;
-      border-radius: 14px;
-      border: 1.5px solid var(--border);
-      background: var(--card-bg);
-      transition: all 0.25s;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .quick-action:hover {
-      border-color: var(--pink-300);
-      background: var(--pink-50);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .quick-action .qa-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      transition: transform 0.25s;
-    }
-
-    .quick-action:hover .qa-icon {
-      transform: scale(1.1);
-    }
-
-    .qa-icon.pink { background: var(--pink-100); color: var(--pink-600); }
-    .qa-icon.green { background: var(--success-bg); color: var(--success); }
-    .qa-icon.gold { background: var(--gold-100); color: var(--gold-500); }
-    .qa-icon.blue { background: var(--info-bg); color: var(--info); }
-    .qa-icon.purple { background: #f3e8ff; color: #9333ea; }
-    .qa-icon.teal { background: #ccfbf1; color: #0d9488; }
-    .qa-icon.orange { background: var(--warning-bg); color: var(--warning); }
-    .qa-icon.rose { background: var(--rose-100); color: var(--rose-500); }
-
-    .quick-action .qa-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    /* =========================================
-       BUSINESS INSIGHTS
-    ========================================= */
-    .insights-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .insight-item {
-      display: flex;
-      gap: 14px;
-      padding: 16px;
-      border-radius: 12px;
-      background: var(--neutral-50);
-    }
-
-    .insight-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .insight-content {
-      flex: 1;
-    }
-
-    .insight-content .insight-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .insight-content .insight-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* =========================================
-       TOASTS
-    ========================================= */
-    .toast-container {
-      position: fixed;
-      top: 80px;
-      right: 28px;
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      pointer-events: none;
-    }
+  @media (max-width: 760px) {
 
-    .toast {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 20px;
-      border-radius: 12px;
-      background: var(--card-bg);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
-      min-width: 280px;
-      max-width: 380px;
-      animation: slideInRight 0.3s ease;
-      pointer-events: auto;
-    }
-
-    @keyframes slideInRight {
-      from { transform: translateX(120%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    .toast.removing {
-      animation: slideOutRight 0.3s ease forwards;
-    }
-
-    @keyframes slideOutRight {
-      to { transform: translateX(120%); opacity: 0; }
-    }
-
-    .toast-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .toast.success .toast-icon { background: var(--success-bg); color: var(--success); }
-    .toast.error .toast-icon { background: var(--error-bg); color: var(--error); }
-    .toast.info .toast-icon { background: var(--info-bg); color: var(--info); }
-    .toast.warning .toast-icon { background: var(--warning-bg); color: var(--warning); }
-
-    .toast-content {
-      flex: 1;
-    }
-
-    .toast-content .toast-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .toast-content .toast-msg {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .toast-close {
-      color: var(--neutral-400);
-      font-size: 14px;
-      padding: 4px;
-      transition: color 0.2s;
-    }
-
-    .toast-close:hover {
-      color: var(--text);
-    }
-
-    /* =========================================
-       LOADING SKELETONS
-    ========================================= */
-    .skeleton {
-      background: linear-gradient(90deg, var(--neutral-100) 25%, var(--neutral-200) 50%, var(--neutral-100) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 8px;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    .skeleton-line {
-      height: 14px;
-      margin-bottom: 8px;
-    }
-
-    .skeleton-line.short { width: 60%; }
-    .skeleton-line.medium { width: 80%; }
-
-    .skeleton-card {
-      padding: 24px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: var(--card-bg);
-    }
-
-    .skeleton-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .skeleton-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-    }
-
-    .skeleton-block {
-      height: 280px;
-      border-radius: 12px;
-    }
-
-    /* =========================================
-       EMPTY STATE
-    ========================================= */
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      text-align: center;
-    }
+    .sidebar {
 
-    .empty-state .empty-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--pink-50);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: var(--pink-300);
-      margin-bottom: 16px;
+      transform:
+              translateX(-100%);
     }
 
-    .empty-state .empty-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-
-    .empty-state .empty-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      max-width: 280px;
-      line-height: 1.5;
-    }
-
-    /* =========================================
-       ERROR STATE
-    ========================================= */
-    .error-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .error-state .error-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--error-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: var(--error);
-      margin-bottom: 16px;
-    }
-
-    .error-state .error-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-
-    .error-state .error-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-      max-width: 280px;
-      line-height: 1.5;
-    }
-
-    .retry-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 24px;
-      border-radius: 10px;
-      background: var(--pink-600);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
+    .sidebar.mobile-open {
 
-    .retry-btn:hover {
-      background: var(--pink-700);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(214, 46, 100, 0.3);
+      transform:
+              translateX(0);
     }
 
-    /* =========================================
-       MOBILE OVERLAY
-    ========================================= */
     .sidebar-overlay {
+
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+
+      inset: 0;
+
       z-index: 999;
+
+      background:
+              rgba(43,32,36,.4);
+
       opacity: 0;
+
       visibility: hidden;
-      transition: all 0.3s;
+
+      transition: .2s ease;
     }
 
     .sidebar-overlay.open {
+
       opacity: 1;
+
       visibility: visible;
     }
 
-    /* =========================================
-       RESPONSIVE DESIGN
-    ========================================= */
-    @media (max-width: 1280px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .charts-row {
-        grid-template-columns: 1fr;
-      }
-      .two-col-row {
-        grid-template-columns: 1fr;
-      }
+    .main-wrapper {
+
+      margin-left: 0;
     }
 
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-        width: var(--sidebar-w);
-      }
-      .sidebar.mobile-open {
-        transform: translateX(0);
-      }
-      .sidebar.collapsed {
-        width: var(--sidebar-w);
-      }
-      .main-wrapper,
-      .main-wrapper.sidebar-collapsed {
-        margin-left: 0;
-      }
-      .content-area {
-        padding: 16px;
-        gap: 16px;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .topbar {
-        padding: 0 16px;
-      }
-      .topbar-search {
-        display: none;
-      }
-      .topbar-date {
-        display: none;
-      }
-      .topbar-profile .profile-info {
-        display: none;
-      }
-      .welcome-banner {
-        flex-direction: column;
-        text-align: center;
-        padding: 28px 24px;
-      }
-      .welcome-content p {
-        max-width: 100%;
-      }
-      .welcome-actions {
-        width: 100%;
-        justify-content: center;
-      }
-      .staff-grid {
-        grid-template-columns: 1fr;
-      }
-      .quick-actions-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .dropdown {
-        width: calc(100vw - 32px);
-        max-width: 380px;
-      }
+    .content {
+
+      padding: 15px;
     }
 
-    @media (max-width: 480px) {
-      .welcome-content h1 {
-        font-size: 22px;
-      }
-      .stat-value {
-        font-size: 24px;
-      }
-      .quick-actions-grid {
-        grid-template-columns: 1fr;
-      }
+    .topbar {
+
+      padding:
+              0 15px;
     }
-  </style>
+
+    .topbar-title,
+    .profile-details,
+    .topbar-date {
+
+      display: none;
+    }
+
+    .welcome-banner {
+
+      align-items: flex-start;
+
+      flex-direction: column;
+
+      padding: 25px;
+    }
+
+    .welcome-actions {
+
+      width: 100%;
+    }
+
+    .welcome-actions .btn {
+
+      flex: 1;
+    }
+
+    .stats-grid {
+
+      grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .filter-controls {
+
+      display: grid;
+
+      grid-template-columns:
+            1fr 1fr;
+
+      width: 100%;
+    }
+
+    .filter-controls select,
+    .filter-controls .btn {
+
+      width: 100%;
+    }
+
+    .filter-controls select {
+
+      grid-column:
+              1 / -1;
+    }
+
+    .filter-controls .btn {
+
+      grid-column:
+              1 / -1;
+    }
+
+    .table-container {
+
+      display: none;
+    }
+
+    .mobile-appointments {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 8px;
+
+      padding:
+              0 14px 15px;
+    }
+
+    .mobile-appointment {
+
+      padding: 11px;
+
+      border:
+              1px solid var(--border);
+
+      border-radius: 10px;
+    }
+
+    .mobile-top,
+    .mobile-bottom {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 8px;
+    }
+
+    .mobile-top strong {
+
+      font-size: 9px;
+    }
+
+    .mobile-bottom {
+
+      margin-top: 6px;
+
+      color: var(--muted);
+
+      font-size: 7px;
+    }
+
+    .quick-actions {
+
+      grid-template-columns:
+            repeat(2, 1fr);
+    }
+  }
+
+
+  @media (max-width: 480px) {
+
+    .stats-grid {
+
+      grid-template-columns: 1fr;
+    }
+
+    .filter-controls {
+
+      display: flex;
+
+      flex-direction: column;
+    }
+
+    .date-input,
+    .date-input input,
+    .filter-controls select,
+    .filter-controls .btn {
+
+      width: 100%;
+    }
+
+    .welcome-content h1 {
+
+      font-size: 25px;
+    }
+
+    .welcome-actions {
+
+      flex-direction: column;
+    }
+
+    .quick-actions {
+
+      grid-template-columns: 1fr;
+    }
+
+    .today-stat {
+
+      min-width: 90px;
+    }
+  }</style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
 <aside class="sidebar" id="sidebar">
+
   <div class="sidebar-header">
-    <div class="sidebar-logo">
+
+    <div class="brand-logo">
       <i class="fas fa-spa"></i>
     </div>
-    <div class="sidebar-brand">
-      <span class="brand-name">Pink Beauty</span>
-      <span class="brand-sub">Salon & Spa</span>
+
+    <div class="brand-info">
+      <h2>Pink Beauty</h2>
+      <span>Salon Management</span>
     </div>
+
   </div>
+
+
   <nav class="sidebar-nav">
-    <div class="nav-section-label">Main</div>
-    <a class="nav-item active" data-page="dashboard">
+
+    <div class="nav-section-title">MAIN</div>
+
+    <a href="Dashboard.html" class="nav-item active">
       <i class="fas fa-chart-line"></i>
-      <span class="nav-text">Dashboard</span>
+      <span>Dashboard</span>
     </a>
-    <a class="nav-item" data-page="appointments">
-      <i class="fas fa-calendar-check"></i>
-      <span class="nav-text">Appointments</span>
-      <span class="nav-badge">12</span>
-    </a>
-    <a class="nav-item" data-page="customers">
+
+    <a href="CustomerManagement.html" class="nav-item">
       <i class="fas fa-users"></i>
-      <span class="nav-text">Customers</span>
+      <span>Customer Management</span>
     </a>
-    <a class="nav-item" data-page="staff">
+
+    <a href="StaffManagement.html" class="nav-item">
       <i class="fas fa-user-tie"></i>
-      <span class="nav-text">Staff</span>
+      <span>Staff Management</span>
     </a>
 
-    <div class="nav-section-label">Operations</div>
-    <a class="nav-item" data-page="services">
+    <a href="ServiceManagement.html" class="nav-item">
       <i class="fas fa-hand-sparkles"></i>
-      <span class="nav-text">Services</span>
-    </a>
-    <a class="nav-item" data-page="products">
-      <i class="fas fa-box"></i>
-      <span class="nav-text">Products</span>
-      <span class="nav-badge green">3</span>
-    </a>
-    <a class="nav-item" data-page="invoices">
-      <i class="fas fa-file-invoice-dollar"></i>
-      <span class="nav-text">Invoices</span>
-      <span class="nav-badge">5</span>
-    </a>
-    <a class="nav-item" data-page="payments">
-      <i class="fas fa-credit-card"></i>
-      <span class="nav-text">Payments</span>
+      <span>Service Management</span>
     </a>
 
-    <div class="nav-section-label">System</div>
-    <a class="nav-item" data-page="settings">
-      <i class="fas fa-cog"></i>
-      <span class="nav-text">Settings</span>
+    <a href="AppointmentManagement.html" class="nav-item">
+      <i class="fas fa-calendar-check"></i>
+      <span>Appointment Management</span>
     </a>
-    <a class="nav-item" data-page="reports">
-      <i class="fas fa-file-alt"></i>
-      <span class="nav-text">Reports</span>
+
+
+    <div class="nav-section-title">BUSINESS</div>
+
+    <a href="ProductManagement.html" class="nav-item">
+      <i class="fas fa-box"></i>
+      <span>Product Management</span>
     </a>
+
+    <a href="InvoiceManagement.html" class="nav-item">
+      <i class="fas fa-file-invoice-dollar"></i>
+      <span>Invoice Management</span>
+    </a>
+
+    <a href="FeedbackManagement.html" class="nav-item">
+      <i class="fas fa-star"></i>
+      <span>Feedback & Ratings</span>
+    </a>
+
+    <a href="Reports.html" class="nav-item">
+      <i class="fas fa-chart-pie"></i>
+      <span>Reports & Analytics</span>
+    </a>
+
+
+    <div class="nav-section-title">SYSTEM</div>
+
+    <a href="Settings.html" class="nav-item">
+      <i class="fas fa-sliders"></i>
+      <span>Settings</span>
+    </a>
+
   </nav>
+
+
   <div class="sidebar-footer">
-    <div class="sidebar-user" id="sidebarUser">
-      <div class="avatar">SP</div>
-      <div class="user-info">
-        <div class="user-name">Sofia P.</div>
-        <div class="user-role">Salon Manager</div>
+
+    <div class="sidebar-user">
+
+      <div class="user-avatar">
+        PB
       </div>
+
+      <div class="user-details">
+        <strong>Salon Manager</strong>
+        <span>Pink Beauty Salon</span>
+      </div>
+
     </div>
+
   </div>
+
 </aside>
 
-<!-- MOBILE OVERLAY -->
+
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- MAIN WRAPPER -->
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
 <div class="main-wrapper" id="mainWrapper">
 
+
   <!-- TOPBAR -->
+
   <header class="topbar">
+
     <button class="sidebar-toggle" id="sidebarToggle">
       <i class="fas fa-bars"></i>
     </button>
-    <div class="topbar-search">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search appointments, customers, services..." id="globalSearch">
+
+
+    <div class="topbar-title">
+
+      <span>Salon Management</span>
+
+      <strong>Dashboard</strong>
+
     </div>
+
+
     <div class="topbar-actions">
-      <div class="topbar-date" id="topbarDate">
+
+      <button class="icon-button"
+              id="refreshButton"
+              title="Refresh Dashboard">
+
+        <i class="fas fa-rotate"></i>
+
+      </button>
+
+
+      <div class="topbar-date">
+
         <i class="far fa-calendar"></i>
-        <span id="dateText">—</span>
+
+        <span id="topbarDate">—</span>
+
       </div>
-      <div style="position: relative;">
-        <button class="topbar-icon-btn" id="notifBtn">
-          <i class="far fa-bell"></i>
-          <span class="dot"></span>
-        </button>
-        <div class="dropdown" id="notifDropdown">
-          <div class="dropdown-header">
-            <h3>Notifications</h3>
-            <span class="count-badge">5 New</span>
-          </div>
-          <div class="dropdown-body" id="notifBody">
-          </div>
-          <div class="dropdown-footer">
-            <a href="#" onclick="showToast('info','Notifications','Marked all as read');return false;">Mark all as read</a>
-          </div>
+
+
+      <div class="profile">
+
+        <div class="profile-avatar">
+          PB
         </div>
+
+        <div class="profile-details">
+          <strong>Salon Manager</strong>
+          <span>Administrator</span>
+        </div>
+
       </div>
-      <div style="position: relative;">
-        <div class="topbar-profile" id="profileBtn">
-          <div class="avatar">SP</div>
-          <div class="profile-info">
-            <div class="profile-name">Sofia P.</div>
-            <div class="profile-role">Manager</div>
-          </div>
-          <i class="fas fa-chevron-down" style="font-size:11px;color:var(--text-muted);"></i>
-        </div>
-        <div class="dropdown profile-dropdown" id="profileDropdown">
-          <div class="dropdown-body">
-            <div class="profile-menu-item" onclick="showToast('info','Profile','Opening profile settings...')">
-              <i class="fas fa-user"></i> My Profile
-            </div>
-            <div class="profile-menu-item" onclick="showToast('info','Settings','Opening settings...')">
-              <i class="fas fa-cog"></i> Settings
-            </div>
-            <div class="profile-menu-item" onclick="showToast('info','Help','Opening help center...')">
-              <i class="fas fa-question-circle"></i> Help Center
-            </div>
-            <div class="profile-menu-item danger" onclick="showToast('warning','Sign Out','You have been signed out.')">
-              <i class="fas fa-sign-out-alt"></i> Sign Out
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
+
   </header>
 
-  <!-- CONTENT AREA -->
-  <main class="content-area" id="contentArea">
 
-    <!-- WELCOME BANNER -->
+  <!-- CONTENT -->
+
+  <main class="content">
+
+
+    <!-- =====================================================
+         WELCOME BANNER
+    ====================================================== -->
+
     <section class="welcome-banner">
+
       <div class="welcome-content">
-        <h1 id="welcomeTitle">Good Morning, Sofia!</h1>
-        <p>Here's what's happening at your salon today. You have 8 appointments scheduled and $2,840 in projected revenue.</p>
+
+                <span class="welcome-label">
+                    <i class="fas fa-sparkles"></i>
+                    Luxury Beauty Meets Smart Technology
+                </span>
+
+        <h1 id="welcomeTitle">
+          Good Morning
+        </h1>
+
+        <p>
+          Welcome back to Pink Beauty Salon.
+          Monitor your appointments, revenue, customers
+          and team performance from one place.
+        </p>
+
         <div class="welcome-date">
+
           <i class="far fa-clock"></i>
-          <span id="welcomeDateText">—</span>
+
+          <span id="welcomeDate">—</span>
+
         </div>
+
       </div>
+
+
       <div class="welcome-actions">
-        <button class="welcome-btn primary" onclick="showToast('success','New Appointment','Appointment booking form opened.')">
-          <i class="fas fa-plus"></i> New Appointment
+
+        <button class="btn btn-white"
+                id="newAppointmentButton">
+
+          <i class="fas fa-calendar-plus"></i>
+
+          New Appointment
+
         </button>
-        <button class="welcome-btn secondary" onclick="showToast('info','Reports','Opening salon reports...')">
-          <i class="fas fa-chart-bar"></i> View Reports
+
+
+        <button class="btn btn-outline-light"
+                id="reportsButton">
+
+          <i class="fas fa-chart-pie"></i>
+
+          Reports
+
         </button>
+
       </div>
+
     </section>
 
-    <!-- STATISTIC CARDS -->
-    <section class="stats-grid" id="statsGrid">
-      <div class="stat-card pink">
-        <div class="stat-header">
-          <div class="stat-icon pink"><i class="fas fa-dollar-sign"></i></div>
-          <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 12.5%</div>
-        </div>
-        <div class="stat-value">$8,420</div>
-        <div class="stat-label">Today's Revenue</div>
-      </div>
-      <div class="stat-card green">
-        <div class="stat-header">
-          <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
-          <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 8.2%</div>
-        </div>
-        <div class="stat-value">28</div>
-        <div class="stat-label">Today's Appointments</div>
-      </div>
-      <div class="stat-card gold">
-        <div class="stat-header">
-          <div class="stat-icon gold"><i class="fas fa-users"></i></div>
-          <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 5.1%</div>
-        </div>
-        <div class="stat-value">142</div>
-        <div class="stat-label">Active Customers</div>
-      </div>
-      <div class="stat-card blue">
-        <div class="stat-header">
-          <div class="stat-icon blue"><i class="fas fa-concierge-bell"></i></div>
-          <div class="stat-trend down"><i class="fas fa-arrow-down"></i> 2.3%</div>
-        </div>
-        <div class="stat-value">18</div>
-        <div class="stat-label">Services Completed</div>
-      </div>
-    </section>
 
-    <!-- CHARTS ROW -->
-    <section class="charts-row">
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <h3>Revenue Analytics</h3>
-            <p>Revenue trends over time</p>
-          </div>
-          <div class="period-tabs" id="periodTabs">
-            <button class="period-tab" data-period="week">Week</button>
-            <button class="period-tab active" data-period="month">Month</button>
-            <button class="period-tab" data-period="quarter">Quarter</button>
-            <button class="period-tab" data-period="year">Year</button>
-          </div>
-        </div>
-        <div class="chart-container">
-          <canvas id="revenueChart"></canvas>
-        </div>
-        <div class="chart-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--pink-500);"></div> Service Revenue</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--gold-400);"></div> Product Revenue</div>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <h3>Appointment Overview</h3>
-            <p>Status distribution this week</p>
-          </div>
-        </div>
-        <div class="chart-container">
-          <canvas id="appointmentChart"></canvas>
-        </div>
-        <div class="chart-legend" id="apptLegend">
-        </div>
-      </div>
-    </section>
+    <!-- =====================================================
+         DATE FILTER
+    ====================================================== -->
 
-    <!-- TODAY'S APPOINTMENTS & POPULAR SERVICES -->
-    <section class="two-col-row">
-      <div class="chart-card">
-        <div class="section-header">
-          <div>
-            <h3>Today's Appointments</h3>
-            <p>8 scheduled for today</p>
-          </div>
-          <a class="view-all-btn" href="#" onclick="showToast('info','Appointments','Opening full appointment list...');return false;">
-            View All <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-        <div class="appts-list" id="apptsList"></div>
-      </div>
-      <div class="chart-card">
-        <div class="section-header">
-          <div>
-            <h3>Popular Services</h3>
-            <p>Top performing this month</p>
-          </div>
-          <a class="view-all-btn" href="#" onclick="showToast('info','Services','Opening all services...');return false;">
-            View All <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-        <div class="services-list" id="servicesList"></div>
-      </div>
-    </section>
+    <section class="filter-card">
 
-    <!-- STAFF PERFORMANCE & UPCOMING -->
-    <section class="two-col-row">
-      <div class="chart-card">
-        <div class="section-header">
-          <div>
-            <h3>Staff Performance</h3>
-            <p>Top rated team members</p>
-          </div>
-          <a class="view-all-btn" href="#" onclick="showToast('info','Staff','Opening staff directory...');return false;">
-            View All <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-        <div class="staff-grid" id="staffGrid"></div>
-      </div>
-      <div class="chart-card">
-        <div class="section-header">
-          <div>
-            <h3>Upcoming Appointments</h3>
-            <p>Next 5 days</p>
-          </div>
-          <a class="view-all-btn" href="#" onclick="showToast('info','Calendar','Opening calendar view...');return false;">
-            View All <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-        <div class="upcoming-list" id="upcomingList"></div>
-      </div>
-    </section>
+      <div class="filter-heading">
 
-    <!-- INVENTORY & INSIGHTS -->
-    <section class="two-col-row">
-      <div class="chart-card">
-        <div class="section-header">
-          <div>
-            <h3>Inventory Alerts</h3>
-            <p>Items needing restock</p>
-          </div>
-          <a class="view-all-btn" href="#" onclick="showToast('info','Inventory','Opening inventory management...');return false;">
-            View All <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-        <div class="inventory-list" id="inventoryList"></div>
-      </div>
-      <div class="chart-card">
-        <div class="section-header">
-          <div>
-            <h3>Business Insights</h3>
-            <p>AI-powered recommendations</p>
-          </div>
-        </div>
-        <div class="insights-list" id="insightsList"></div>
-      </div>
-    </section>
+        <div class="filter-icon">
 
-    <!-- QUICK ACTIONS -->
-    <section class="chart-card">
-      <div class="section-header">
+          <i class="fas fa-calendar-days"></i>
+
+        </div>
+
         <div>
-          <h3>Quick Actions</h3>
-          <p>Common tasks at your fingertips</p>
+
+          <strong>Dashboard Period</strong>
+
+          <span>
+                        Select the period you want to analyse
+                    </span>
+
         </div>
+
       </div>
-      <div class="quick-actions-grid" id="quickActionsGrid"></div>
+
+
+      <div class="filter-controls">
+
+        <div class="date-input">
+
+          <label for="fromDate">From</label>
+
+          <input type="date" id="fromDate">
+
+        </div>
+
+
+        <div class="date-input">
+
+          <label for="toDate">To</label>
+
+          <input type="date" id="toDate">
+
+        </div>
+
+
+        <select id="quickRange">
+
+          <option value="">Quick Range</option>
+          <option value="today">Today</option>
+          <option value="7">Last 7 Days</option>
+          <option value="30">Last 30 Days</option>
+          <option value="90">Last 90 Days</option>
+          <option value="month">This Month</option>
+
+        </select>
+
+
+        <button class="btn btn-primary"
+                id="applyFilterButton">
+
+          <i class="fas fa-filter"></i>
+
+          Apply
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         KPI CARDS
+    ====================================================== -->
+
+    <section class="stats-grid">
+
+
+      <!-- Revenue -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon pink">
+            <i class="fas fa-coins"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Paid
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="totalRevenue">
+          LKR 0.00
+        </div>
+
+        <div class="stat-label">
+          Total Revenue
+        </div>
+
+      </article>
+
+
+      <!-- Paid -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon gold">
+            <i class="fas fa-wallet"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Collected
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="paidRevenue">
+          LKR 0.00
+        </div>
+
+        <div class="stat-label">
+          Paid Revenue
+        </div>
+
+      </article>
+
+
+      <!-- Pending -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon orange">
+            <i class="fas fa-hourglass-half"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Pending
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="pendingAmount">
+          LKR 0.00
+        </div>
+
+        <div class="stat-label">
+          Pending Amount
+        </div>
+
+      </article>
+
+
+      <!-- Appointments -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon blue">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Period
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="totalAppointments">
+          0
+        </div>
+
+        <div class="stat-label">
+          Total Appointments
+        </div>
+
+      </article>
+
+
+      <!-- Customers -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon green">
+            <i class="fas fa-user-check"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Active
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="activeCustomers">
+          0
+        </div>
+
+        <div class="stat-label">
+          Active Customers
+        </div>
+
+      </article>
+
+
+      <!-- Staff -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon purple">
+            <i class="fas fa-user-tie"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Team
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="totalStaff">
+          0
+        </div>
+
+        <div class="stat-label">
+          Total Staff
+        </div>
+
+      </article>
+
+
+      <!-- Services -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon rose">
+            <i class="fas fa-hand-sparkles"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Active
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="totalServices">
+          0
+        </div>
+
+        <div class="stat-label">
+          Total Services
+        </div>
+
+      </article>
+
+
+      <!-- Today -->
+
+      <article class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon teal">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+
+          <span class="stat-tag">
+                        Today
+                    </span>
+
+        </div>
+
+        <div class="stat-value"
+             id="todayAppointments">
+          0
+        </div>
+
+        <div class="stat-label">
+          Today's Appointments
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <!-- =====================================================
+         TODAY OVERVIEW
+    ====================================================== -->
+
+    <section class="today-card">
+
+      <div class="today-heading">
+
+        <div class="today-icon">
+          <i class="fas fa-sun"></i>
+        </div>
+
+        <div>
+
+          <h3>Today's Overview</h3>
+
+          <p>
+            Live appointment activity
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="today-stat">
+
+        <strong id="todayScheduled">0</strong>
+        <span>Scheduled</span>
+
+      </div>
+
+
+      <div class="today-stat">
+
+        <strong id="todayConfirmed">0</strong>
+        <span>Confirmed</span>
+
+      </div>
+
+
+      <div class="today-stat">
+
+        <strong id="todayCompleted">0</strong>
+        <span>Completed</span>
+
+      </div>
+
+
+      <div class="today-stat">
+
+        <strong id="todayCancelled">0</strong>
+        <span>Cancelled</span>
+
+      </div>
+
+
+      <div class="today-stat">
+
+        <strong id="todayNoShow">0</strong>
+        <span>No Show</span>
+
+      </div>
+
+
+      <div class="today-stat revenue">
+
+        <strong id="todayRevenue">
+          LKR 0.00
+        </strong>
+
+        <span>Today's Revenue</span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHARTS
+    ====================================================== -->
+
+    <section class="charts-grid">
+
+
+      <!-- Revenue -->
+
+      <article class="card chart-card">
+
+        <div class="card-header">
+
+          <div>
+
+                        <span class="section-label">
+                            FINANCIAL PERFORMANCE
+                        </span>
+
+            <h2>Revenue Analytics</h2>
+
+            <p>
+              Paid revenue across the selected period
+            </p>
+
+          </div>
+
+
+          <div class="chart-total">
+
+            <span>Total</span>
+
+            <strong id="chartRevenueTotal">
+              LKR 0.00
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="chart-container">
+
+          <canvas id="revenueChart"></canvas>
+
+        </div>
+
+      </article>
+
+
+      <!-- Appointments -->
+
+      <article class="card chart-card appointment-chart">
+
+        <div class="card-header">
+
+          <div>
+
+                        <span class="section-label">
+                            APPOINTMENT PERFORMANCE
+                        </span>
+
+            <h2>Appointment Overview</h2>
+
+            <p>
+              Appointment status distribution
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="donut-container">
+
+          <canvas id="appointmentChart"></canvas>
+
+          <div class="donut-center">
+
+            <strong id="donutTotal">
+              0
+            </strong>
+
+            <span>
+                            Appointments
+                        </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="chart-legend"
+             id="appointmentLegend">
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECENT APPOINTMENTS
+    ====================================================== -->
+
+    <section class="card">
+
+      <div class="card-header section-header">
+
+        <div>
+
+                    <span class="section-label">
+                        LATEST ACTIVITY
+                    </span>
+
+          <h2>Recent Appointments</h2>
+
+          <p>
+            Latest appointments in the selected period
+          </p>
+
+        </div>
+
+
+        <a href="AppointmentManagement.html"
+           class="view-link">
+
+          View All
+
+          <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+      </div>
+
+
+      <div class="table-container">
+
+        <table>
+
+          <thead>
+
+          <tr>
+
+            <th>Customer</th>
+            <th>Service</th>
+            <th>Staff</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration</th>
+            <th>Status</th>
+
+          </tr>
+
+          </thead>
+
+
+          <tbody id="recentAppointmentsBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="mobile-appointments"
+           id="mobileAppointments">
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TOP SERVICES + STAFF
+    ====================================================== -->
+
+    <section class="two-column">
+
+
+      <!-- TOP SERVICES -->
+
+      <article class="card">
+
+        <div class="card-header section-header">
+
+          <div>
+
+                        <span class="section-label">
+                            SERVICE PERFORMANCE
+                        </span>
+
+            <h2>Top Services</h2>
+
+            <p>
+              Most booked services
+            </p>
+
+          </div>
+
+
+          <a href="ServiceManagement.html"
+             class="view-link">
+
+            View All
+
+            <i class="fas fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+
+        <div class="service-list"
+             id="topServicesList">
+        </div>
+
+      </article>
+
+
+      <!-- STAFF -->
+
+      <article class="card">
+
+        <div class="card-header section-header">
+
+          <div>
+
+                        <span class="section-label">
+                            TEAM PERFORMANCE
+                        </span>
+
+            <h2>Staff Performance</h2>
+
+            <p>
+              Appointment activity by staff
+            </p>
+
+          </div>
+
+
+          <a href="StaffManagement.html"
+             class="view-link">
+
+            View All
+
+            <i class="fas fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+
+        <div class="staff-list"
+             id="staffPerformanceList">
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUICK ACTIONS
+    ====================================================== -->
+
+    <section class="card quick-card">
+
+      <div class="card-header section-header">
+
+        <div>
+
+                    <span class="section-label">
+                        SHORTCUTS
+                    </span>
+
+          <h2>Quick Actions</h2>
+
+          <p>
+            Access common salon management tasks
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="quick-actions">
+
+
+        <a href="AppointmentManagement.html"
+           class="quick-action">
+
+          <div class="quick-icon pink">
+            <i class="fas fa-calendar-plus"></i>
+          </div>
+
+          <strong>New Appointment</strong>
+
+          <span>Book a client</span>
+
+        </a>
+
+
+        <a href="CustomerManagement.html"
+           class="quick-action">
+
+          <div class="quick-icon gold">
+            <i class="fas fa-user-plus"></i>
+          </div>
+
+          <strong>Add Customer</strong>
+
+          <span>Create customer</span>
+
+        </a>
+
+
+        <a href="ProductManagement.html"
+           class="quick-action">
+
+          <div class="quick-icon purple">
+            <i class="fas fa-box"></i>
+          </div>
+
+          <strong>Products</strong>
+
+          <span>Manage products</span>
+
+        </a>
+
+
+        <a href="InvoiceManagement.html"
+           class="quick-action">
+
+          <div class="quick-icon green">
+            <i class="fas fa-file-invoice"></i>
+          </div>
+
+          <strong>Invoices</strong>
+
+          <span>Manage billing</span>
+
+        </a>
+
+
+        <a href="Reports.html"
+           class="quick-action">
+
+          <div class="quick-icon blue">
+            <i class="fas fa-chart-pie"></i>
+          </div>
+
+          <strong>Reports</strong>
+
+          <span>View analytics</span>
+
+        </a>
+
+
+        <a href="FeedbackManagement.html"
+           class="quick-action">
+
+          <div class="quick-icon rose">
+            <i class="fas fa-star"></i>
+          </div>
+
+          <strong>Feedback</strong>
+
+          <span>Review ratings</span>
+
+        </a>
+
+      </div>
+
     </section>
 
   </main>
+
 </div>
 
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toastContainer"></div>
 
-<script>
-  // =========================================
-  // DUMMY DASHBOARD DATA
-  // =========================================
-  const dashboardData = {
-    notifications: [
-      { icon: 'pink', faIcon: 'fa-calendar-check', title: 'New Appointment', desc: 'Emma Watson booked a Hair Styling for Sep 10', time: '2 min ago' },
-      { icon: 'green', faIcon: 'fa-check-circle', title: 'Payment Received', desc: 'Invoice #INV-2043 has been paid ($180.00)', time: '15 min ago' },
-      { icon: 'orange', faIcon: 'fa-exclamation-triangle', title: 'Low Stock Alert', desc: 'Argan Oil Shampoo is running low (5 left)', time: '1 hour ago' },
-      { icon: 'blue', faIcon: 'fa-user-plus', title: 'New Customer', desc: 'Olivia Martinez registered as a new customer', time: '2 hours ago' },
-      { icon: 'pink', faIcon: 'fa-birthday-cake', title: 'Birthday Today', desc: 'Sophia Chen celebrates her birthday today!', time: '3 hours ago' },
-    ],
-    todaysAppointments: [
-      { time: '09:00', duration: '45 min', customer: 'Emma Watson', initials: 'EW', color: '#e84d7d', service: 'Hair Styling & Cut', staff: 'Lisa K.', status: 'confirmed' },
-      { time: '10:30', duration: '60 min', customer: 'Sophia Chen', initials: 'SC', color: '#d4a84d', service: 'Manicure & Gel', staff: 'Anna R.', status: 'completed' },
-      { time: '12:00', duration: '90 min', customer: 'Olivia Martinez', initials: 'OM', color: '#2ecc8f', service: 'Full Body Massage', staff: 'Marcus T.', status: 'confirmed' },
-      { time: '14:00', duration: '30 min', customer: 'Isabella Rose', initials: 'IR', color: '#3498db', service: 'Facial Treatment', staff: 'Lisa K.', status: 'pending' },
-      { time: '15:30', duration: '120 min', customer: 'Charlotte Davis', initials: 'CD', color: '#e84d7d', service: 'Bridal Package', staff: 'Anna R.', status: 'confirmed' },
-      { time: '17:00', duration: '45 min', customer: 'Amelia Brooks', initials: 'AB', color: '#d4a84d', service: 'Hair Coloring', staff: 'Marcus T.', status: 'pending' },
-    ],
-    popularServices: [
-      { icon: 'fa-scissors', color: 'pink', name: 'Hair Styling & Cut', meta: '45 min · $65', count: 48, revenue: '$3,120', pct: 92 },
-      { icon: 'fa-hand-sparkles', color: 'green', name: 'Manicure & Gel', meta: '30 min · $45', count: 36, revenue: '$1,620', pct: 78 },
-      { icon: 'fa-spa', color: 'gold', name: 'Facial Treatment', meta: '30 min · $80', count: 29, revenue: '$2,320', pct: 64 },
-      { icon: 'fa-massage', color: 'blue', name: 'Full Body Massage', meta: '90 min · $120', count: 22, revenue: '$2,640', pct: 52 },
-      { icon: 'fa-paint-brush', color: 'pink', name: 'Hair Coloring', meta: '120 min · $150', count: 18, revenue: '$2,700', pct: 42 },
-    ],
-    staff: [
-      { initials: 'LK', name: 'Lisa Kim', role: 'Senior Stylist', color: '#e84d7d', rating: 4.9 },
-      { initials: 'AR', name: 'Anna Reed', role: 'Nail Artist', color: '#d4a84d', rating: 4.8 },
-      { initials: 'MT', name: 'Marcus Tan', role: 'Massage Therapist', color: '#2ecc8f', rating: 4.7 },
-      { initials: 'SP', name: 'Sofia Park', role: 'Manager / Esthetician', color: '#3498db', rating: 4.9 },
-    ],
-    upcoming: [
-      { day: '10', month: 'Sep', title: 'Emma Watson — Hair Styling', meta: '09:00 AM · Lisa K.' },
-      { day: '11', month: 'Sep', title: 'Olivia Martinez — Massage', meta: '11:00 AM · Marcus T.' },
-      { day: '12', month: 'Sep', title: 'Isabella Rose — Facial', meta: '02:00 PM · Lisa K.' },
-      { day: '13', month: 'Sep', title: 'Charlotte Davis — Bridal', meta: '10:00 AM · Anna R.' },
-      { day: '14', month: 'Sep', title: 'Amelia Brooks — Coloring', meta: '03:30 PM · Marcus T.' },
-    ],
-    inventory: [
-      { name: 'Argan Oil Shampoo', stock: '5 bottles left', pct: 12, level: 'red' },
-      { name: 'Gel Nail Polish — Rose', stock: '8 bottles left', pct: 20, level: 'red' },
-      { name: 'Organic Face Cream', stock: '15 jars left', pct: 35, level: 'orange' },
-      { name: 'Aromatherapy Oil Set', stock: '12 sets left', pct: 30, level: 'orange' },
-    ],
-    insights: [
-      { icon: 'fa-arrow-trend-up', color: 'pink', title: 'Revenue Up 12.5%', desc: 'Your salon revenue increased this week, driven by Hair Styling bookings.' },
-      { icon: 'fa-clock', color: 'gold', title: 'Peak Hours: 2–4 PM', desc: 'Consider adding an extra stylist during afternoon peak hours.' },
-      { icon: 'fa-star', color: 'green', title: 'Top Rated: Lisa Kim', desc: 'Lisa has a 4.9 rating this month. Promote her specialty services.' },
-      { icon: 'fa-triangle-exclamation', color: 'blue', title: 'Restock Needed', desc: '3 products are below 20% stock. Order soon to avoid shortages.' },
-    ],
-    quickActions: [
-      { icon: 'fa-calendar-plus', color: 'pink', label: 'New Appointment' },
-      { icon: 'fa-user-plus', color: 'green', label: 'Add Customer' },
-      { icon: 'fa-file-invoice', color: 'gold', label: 'Create Invoice' },
-      { icon: 'fa-box', color: 'blue', label: 'Add Product' },
-      { icon: 'fa-hand-sparkles', color: 'purple', label: 'Add Service' },
-      { icon: 'fa-user-tie', color: 'teal', label: 'Add Staff' },
-      { icon: 'fa-chart-bar', color: 'orange', label: 'View Reports' },
-      { icon: 'fa-tags', color: 'rose', label: 'Promotions' },
-    ],
-    revenueData: {
-      week:   { labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], services: [620, 780, 540, 890, 1120, 1480, 920], products: [120, 180, 90, 220, 340, 420, 260] },
-      month:  { labels: ['W1','W2','W3','W4','W5'], services: [4200, 5100, 4800, 5600, 5900], products: [890, 1200, 980, 1400, 1600] },
-      quarter: { labels: ['Jul','Aug','Sep'], services: [18400, 21200, 23800], products: [4200, 5100, 6200] },
-      year:    { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'], services: [14800, 15200, 16900, 17500, 18200, 19000, 18400, 21200, 23800], products: [3200, 3600, 4100, 3900, 4400, 4800, 4200, 5100, 6200] },
-    },
-    appointmentStatus: {
-      labels: ['Confirmed', 'Completed', 'Pending', 'Cancelled'],
-      data: [42, 35, 15, 8],
-      colors: ['#3498db', '#2ecc8f', '#f5a623', '#e74c3c'],
-    },
+<!-- Toast -->
+
+<div class="toast-container"
+     id="toastContainer">
+</div>
+
+
+<script >/* =========================================================
+   PINK BEAUTY SALON
+   DASHBOARD JAVASCRIPT
+========================================================= */
+
+
+/* =========================================================
+   API CONFIGURATION
+========================================================= */
+
+const API_BASE_URL =
+        "http://localhost:8080/api/v1/dashboard";
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let dashboardData = null;
+
+let revenueChart = null;
+
+let appointmentChart = null;
+
+
+/* =========================================================
+   DOM READY
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  initializeDates();
+
+  initializeSidebar();
+
+  initializeEvents();
+
+  loadDashboard();
+
+});
+
+
+/* =========================================================
+   INITIAL DATES
+========================================================= */
+
+function initializeDates() {
+
+  const today = new Date();
+
+  const firstDay =
+          new Date(
+                  today.getFullYear(),
+                  today.getMonth(),
+                  1
+          );
+
+  document.getElementById("fromDate").value =
+          formatInputDate(firstDay);
+
+  document.getElementById("toDate").value =
+          formatInputDate(today);
+
+  updateDateDisplay(today);
+}
+
+
+/* =========================================================
+   DATE DISPLAY
+========================================================= */
+
+function updateDateDisplay(date) {
+
+  const formatted =
+          date.toLocaleDateString(
+                  "en-LK",
+                  {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                  }
+          );
+
+  document.getElementById("topbarDate")
+          .textContent = formatted;
+
+  document.getElementById("welcomeDate")
+          .textContent = formatted;
+
+
+  const hour = date.getHours();
+
+  let greeting = "Good Evening";
+
+  if (hour < 12) {
+
+    greeting = "Good Morning";
+
+  } else if (hour < 17) {
+
+    greeting = "Good Afternoon";
+
+  }
+
+  document.getElementById("welcomeTitle")
+          .textContent = greeting;
+}
+
+
+/* =========================================================
+   INPUT DATE FORMAT
+========================================================= */
+
+function formatInputDate(date) {
+
+  const year =
+          date.getFullYear();
+
+  const month =
+          String(
+                  date.getMonth() + 1
+          ).padStart(2, "0");
+
+  const day =
+          String(
+                  date.getDate()
+          ).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function initializeSidebar() {
+
+  const sidebar =
+          document.getElementById("sidebar");
+
+  const toggle =
+          document.getElementById("sidebarToggle");
+
+  const overlay =
+          document.getElementById("sidebarOverlay");
+
+
+  toggle.addEventListener(
+          "click",
+          () => {
+
+            if (window.innerWidth <= 760) {
+
+              sidebar.classList.toggle(
+                      "mobile-open"
+              );
+
+              overlay.classList.toggle(
+                      "open"
+              );
+
+            }
+
+          }
+  );
+
+
+  overlay.addEventListener(
+          "click",
+          () => {
+
+            sidebar.classList.remove(
+                    "mobile-open"
+            );
+
+            overlay.classList.remove(
+                    "open"
+            );
+
+          }
+  );
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+function initializeEvents() {
+
+
+  document.getElementById(
+          "refreshButton"
+  ).addEventListener(
+          "click",
+          () => {
+
+            loadDashboard(true);
+
+          }
+  );
+
+
+  document.getElementById(
+          "applyFilterButton"
+  ).addEventListener(
+          "click",
+          () => {
+
+            loadDashboard();
+
+          }
+  );
+
+
+  document.getElementById(
+          "quickRange"
+  ).addEventListener(
+          "change",
+          applyQuickRange
+  );
+
+
+  document.getElementById(
+          "newAppointmentButton"
+  ).addEventListener(
+          "click",
+          () => {
+
+            window.location.href =
+                    "AppointmentManagement.html";
+
+          }
+  );
+
+
+  document.getElementById(
+          "reportsButton"
+  ).addEventListener(
+          "click",
+          () => {
+
+            window.location.href =
+                    "Reports.html";
+
+          }
+  );
+
+}
+
+
+/* =========================================================
+   QUICK DATE RANGE
+========================================================= */
+
+function applyQuickRange() {
+
+  const value =
+          document.getElementById(
+                  "quickRange"
+          ).value;
+
+
+  if (!value) {
+    return;
+  }
+
+
+  const today =
+          new Date();
+
+  let fromDate =
+          new Date(today);
+
+
+  if (value === "today") {
+
+    fromDate =
+            new Date(today);
+
+  }
+
+
+  else if (value === "7") {
+
+    fromDate.setDate(
+            today.getDate() - 6
+    );
+
+  }
+
+
+  else if (value === "30") {
+
+    fromDate.setDate(
+            today.getDate() - 29
+    );
+
+  }
+
+
+  else if (value === "90") {
+
+    fromDate.setDate(
+            today.getDate() - 89
+    );
+
+  }
+
+
+  else if (value === "month") {
+
+    fromDate =
+            new Date(
+                    today.getFullYear(),
+                    today.getMonth(),
+                    1
+            );
+
+  }
+
+
+  document.getElementById(
+          "fromDate"
+  ).value =
+          formatInputDate(fromDate);
+
+
+  document.getElementById(
+          "toDate"
+  ).value =
+          formatInputDate(today);
+
+
+  loadDashboard();
+}
+
+
+/* =========================================================
+   LOAD DASHBOARD
+========================================================= */
+
+async function loadDashboard(
+        showRefreshMessage = false
+) {
+
+  const fromDate =
+          document.getElementById(
+                  "fromDate"
+          ).value;
+
+  const toDate =
+          document.getElementById(
+                  "toDate"
+          ).value;
+
+
+  if (!fromDate || !toDate) {
+
+    showToast(
+            "error",
+            "Invalid Date",
+            "Please select both dates."
+    );
+
+    return;
+  }
+
+
+  if (fromDate > toDate) {
+
+    showToast(
+            "error",
+            "Invalid Period",
+            "From date cannot be after To date."
+    );
+
+    return;
+  }
+
+
+  try {
+
+    document.body.style.cursor =
+            "wait";
+
+
+    const url =
+            `${API_BASE_URL}/date-range` +
+            `?fromDate=${encodeURIComponent(fromDate)}` +
+            `&toDate=${encodeURIComponent(toDate)}`;
+
+
+    const response =
+            await fetch(url);
+
+
+    if (!response.ok) {
+
+      throw new Error(
+              `HTTP ${response.status}`
+      );
+
+    }
+
+
+    dashboardData =
+            await response.json();
+
+
+    renderDashboard(
+            dashboardData
+    );
+
+
+    if (showRefreshMessage) {
+
+      showToast(
+              "success",
+              "Dashboard Refreshed",
+              "Latest salon data has been loaded."
+      );
+
+    }
+
+  }
+
+
+  catch (error) {
+
+    console.error(
+            "Dashboard API Error:",
+            error
+    );
+
+
+    showToast(
+            "error",
+            "Dashboard Error",
+            "Unable to load dashboard data."
+    );
+
+
+    renderErrorState();
+
+  }
+
+
+  finally {
+
+    document.body.style.cursor =
+            "default";
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER DASHBOARD
+========================================================= */
+
+function renderDashboard(data) {
+
+  renderStats(data);
+
+  renderTodayOverview(data);
+
+  renderRevenueChart(data);
+
+  renderAppointmentChart(data);
+
+  renderRecentAppointments(
+          data.recentAppointments || []
+  );
+
+  renderTopServices(
+          data.topServices || []
+  );
+
+  renderStaffPerformance(
+          data.topStaff || []
+  );
+
+}
+
+
+/* =========================================================
+   KPI STATS
+========================================================= */
+
+function renderStats(data) {
+
+  document.getElementById(
+          "totalRevenue"
+  ).textContent =
+          formatCurrency(
+                  data.totalRevenue
+          );
+
+
+  document.getElementById(
+          "paidRevenue"
+  ).textContent =
+          formatCurrency(
+                  data.paidRevenue
+          );
+
+
+  document.getElementById(
+          "pendingAmount"
+  ).textContent =
+          formatCurrency(
+                  data.pendingAmount
+          );
+
+
+  document.getElementById(
+          "totalAppointments"
+  ).textContent =
+          formatNumber(
+                  data.totalAppointments
+          );
+
+
+  document.getElementById(
+          "activeCustomers"
+  ).textContent =
+          formatNumber(
+                  data.activeCustomers
+          );
+
+
+  document.getElementById(
+          "totalStaff"
+  ).textContent =
+          formatNumber(
+                  data.totalStaff
+          );
+
+
+  document.getElementById(
+          "totalServices"
+  ).textContent =
+          formatNumber(
+                  data.totalServices
+          );
+
+
+  document.getElementById(
+          "todayAppointments"
+  ).textContent =
+          formatNumber(
+                  data.todayAppointments
+          );
+
+
+  document.getElementById(
+          "chartRevenueTotal"
+  ).textContent =
+          formatCurrency(
+                  data.totalRevenue
+          );
+
+}
+
+
+/* =========================================================
+   TODAY OVERVIEW
+========================================================= */
+
+function renderTodayOverview(data) {
+
+  document.getElementById(
+          "todayScheduled"
+  ).textContent =
+          formatNumber(
+                  data.todayScheduled
+          );
+
+
+  document.getElementById(
+          "todayConfirmed"
+  ).textContent =
+          formatNumber(
+                  data.todayConfirmed
+          );
+
+
+  document.getElementById(
+          "todayCompleted"
+  ).textContent =
+          formatNumber(
+                  data.todayCompleted
+          );
+
+
+  document.getElementById(
+          "todayCancelled"
+  ).textContent =
+          formatNumber(
+                  data.todayCancelled
+          );
+
+
+  document.getElementById(
+          "todayNoShow"
+  ).textContent =
+          formatNumber(
+                  data.todayNoShow
+          );
+
+
+  document.getElementById(
+          "todayRevenue"
+  ).textContent =
+          formatCurrency(
+                  data.todayRevenue
+          );
+
+}
+
+
+/* =========================================================
+   REVENUE CHART
+========================================================= */
+
+function renderRevenueChart(data) {
+
+  const analytics =
+          data.revenueAnalytics || [];
+
+
+  const labels =
+          analytics.map(
+                  item =>
+                          formatShortDate(
+                                  item.date
+                          )
+          );
+
+
+  const values =
+          analytics.map(
+                  item =>
+                          Number(
+                                  item.revenue || 0
+                          )
+          );
+
+
+  const canvas =
+          document.getElementById(
+                  "revenueChart"
+          );
+
+
+  const context =
+          canvas.getContext("2d");
+
+
+  if (revenueChart) {
+
+    revenueChart.destroy();
+
+  }
+
+
+  const gradient =
+          context.createLinearGradient(
+                  0,
+                  0,
+                  0,
+                  290
+          );
+
+
+  gradient.addColorStop(
+          0,
+          "rgba(183,110,121,.25)"
+  );
+
+  gradient.addColorStop(
+          1,
+          "rgba(183,110,121,.01)"
+  );
+
+
+  revenueChart =
+          new Chart(
+                  context,
+                  {
+                    type: "line",
+
+                    data: {
+
+                      labels: labels,
+
+                      datasets: [
+
+                        {
+
+                          label:
+                                  "Paid Revenue",
+
+                          data:
+                          values,
+
+                          borderColor:
+                                  "#B76E79",
+
+                          backgroundColor:
+                          gradient,
+
+                          fill: true,
+
+                          borderWidth: 2.5,
+
+                          pointRadius:
+                                  values.length > 20
+                                          ? 0
+                                          : 3,
+
+                          pointHoverRadius: 5,
+
+                          pointBackgroundColor:
+                                  "#B76E79",
+
+                          pointBorderColor:
+                                  "#FFFFFF",
+
+                          pointBorderWidth: 2,
+
+                          tension: .38
+
+                        }
+
+                      ]
+
+                    },
+
+
+                    options: {
+
+                      responsive: true,
+
+                      maintainAspectRatio: false,
+
+                      interaction: {
+
+                        intersect: false,
+
+                        mode: "index"
+
+                      },
+
+
+                      plugins: {
+
+                        legend: {
+                          display: false
+                        },
+
+                        tooltip: {
+
+                          backgroundColor:
+                                  "#2B2024",
+
+                          padding: 10,
+
+                          displayColors:
+                                  false,
+
+                          callbacks: {
+
+                            label:
+                                    context =>
+                                            formatCurrency(
+                                                    context.raw
+                                            )
+
+                          }
+
+                        }
+
+                      },
+
+
+                      scales: {
+
+                        x: {
+
+                          grid: {
+                            display: false
+                          },
+
+                          ticks: {
+
+                            color:
+                                    "#8A7A82",
+
+                            font: {
+                              size: 8
+                            },
+
+                            maxTicksLimit: 8
+
+                          },
+
+                          border: {
+                            display: false
+                          }
+
+                        },
+
+
+                        y: {
+
+                          beginAtZero: true,
+
+                          grid: {
+
+                            color:
+                                    "#F5E9EC"
+
+                          },
+
+                          ticks: {
+
+                            color:
+                                    "#8A7A82",
+
+                            font: {
+                              size: 8
+                            },
+
+                            callback:
+                                    value =>
+                                            formatCompactCurrency(
+                                                    value
+                                            )
+
+                          },
+
+                          border: {
+                            display: false
+                          }
+
+                        }
+
+                      }
+
+                    }
+
+                  }
+          );
+
+}
+
+
+/* =========================================================
+   APPOINTMENT CHART
+========================================================= */
+
+function renderAppointmentChart(data) {
+
+  const values = [
+
+    Number(
+            data.scheduledAppointments || 0
+    ),
+
+    Number(
+            data.confirmedAppointments || 0
+    ),
+
+    Number(
+            data.completedAppointments || 0
+    ),
+
+    Number(
+            data.cancelledAppointments || 0
+    ),
+
+    Number(
+            data.noShowAppointments || 0
+    )
+
+  ];
+
+
+  const labels = [
+
+    "Scheduled",
+    "Confirmed",
+    "Completed",
+    "Cancelled",
+    "No Show"
+
+  ];
+
+
+  const colors = [
+
+    "#D59B42",
+    "#6E9BC2",
+    "#5BAA89",
+    "#C85D68",
+    "#8A7A82"
+
+  ];
+
+
+  document.getElementById(
+          "donutTotal"
+  ).textContent =
+          formatNumber(
+                  data.totalAppointments
+          );
+
+
+  const canvas =
+          document.getElementById(
+                  "appointmentChart"
+          );
+
+
+  const context =
+          canvas.getContext("2d");
+
+
+  if (appointmentChart) {
+
+    appointmentChart.destroy();
+
+  }
+
+
+  appointmentChart =
+          new Chart(
+                  context,
+                  {
+
+                    type: "doughnut",
+
+                    data: {
+
+                      labels: labels,
+
+                      datasets: [
+
+                        {
+
+                          data: values,
+
+                          backgroundColor:
+                          colors,
+
+                          borderColor:
+                                  "#FFFFFF",
+
+                          borderWidth: 4,
+
+                          hoverOffset: 5
+
+                        }
+
+                      ]
+
+                    },
+
+
+                    options: {
+
+                      responsive: true,
+
+                      maintainAspectRatio: false,
+
+                      cutout: "72%",
+
+                      plugins: {
+
+                        legend: {
+                          display: false
+                        },
+
+                        tooltip: {
+
+                          backgroundColor:
+                                  "#2B2024",
+
+                          padding: 10,
+
+                          callbacks: {
+
+                            label:
+                                    context =>
+                                            ` ${context.label}: ${formatNumber(context.raw)}`
+
+                          }
+
+                        }
+
+                      }
+
+                    }
+
+                  }
+          );
+
+
+  document.getElementById(
+          "appointmentLegend"
+  ).innerHTML =
+
+          labels.map(
+                  (label, index) => `
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-dot"
+                        style="background:${colors[index]}"
+                    ></span>
+
+                    ${escapeHtml(label)}
+                    (${values[index]})
+
+                </div>
+
+            `
+          ).join("");
+
+}
+
+
+/* =========================================================
+   RECENT APPOINTMENTS
+========================================================= */
+
+function renderRecentAppointments(
+        appointments
+) {
+
+  const tableBody =
+          document.getElementById(
+                  "recentAppointmentsBody"
+          );
+
+
+  const mobileContainer =
+          document.getElementById(
+                  "mobileAppointments"
+          );
+
+
+  if (!appointments.length) {
+
+    tableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    ${emptyState(
+            "No Appointments Found",
+            "There are no appointments for this period."
+    )}
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+    mobileContainer.innerHTML =
+            emptyState(
+                    "No Appointments Found",
+                    "There are no appointments for this period."
+            );
+
+    return;
+  }
+
+
+  tableBody.innerHTML =
+
+          appointments.map(
+                  appointment => `
+
+                <tr>
+
+                    <td>
+
+                        <div class="customer-cell">
+
+                            <div class="avatar-small">
+
+                                ${escapeHtml(
+                          getInitials(
+                                  appointment.customerName
+                          )
+                  )}
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="primary-text">
+
+                                    ${escapeHtml(
+                          appointment.customerName ||
+                          "Unknown Customer"
+                  )}
+
+                                </div>
+
+                                <div class="secondary-text">
+
+                                    #${appointment.appointmentId ?? "—"}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                          appointment.serviceName || "—"
+                  )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                          appointment.staffName || "—"
+                  )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDate(
+                          appointment.appointmentDate
+                  )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatTime(
+                          appointment.startTime
+                  )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                          appointment.duration
+                                  ? appointment.duration + " min"
+                                  : "—"
+                  }
+
+                    </td>
+
+
+                    <td>
+
+                        ${getStatusBadge(
+                          appointment.status
+                  )}
+
+                    </td>
+
+                </tr>
+
+            `
+          ).join("");
+
+
+  mobileContainer.innerHTML =
+
+          appointments.map(
+                  appointment => `
+
+                <div class="mobile-appointment">
+
+                    <div class="mobile-top">
+
+                        <strong>
+
+                            ${escapeHtml(
+                          appointment.customerName ||
+                          "Unknown Customer"
+                  )}
+
+                        </strong>
+
+                        ${getStatusBadge(
+                          appointment.status
+                  )}
+
+                    </div>
+
+
+                    <div class="mobile-bottom">
+
+                        <span>
+
+                            ${escapeHtml(
+                          appointment.serviceName || "—"
+                  )}
+
+                        </span>
+
+                        <span>
+
+                            ${formatDate(
+                          appointment.appointmentDate
+                  )}
+
+                            ·
+
+                            ${formatTime(
+                          appointment.startTime
+                  )}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `
+          ).join("");
+
+}
+
+
+/* =========================================================
+   TOP SERVICES
+========================================================= */
+
+function renderTopServices(
+        services
+) {
+
+  const container =
+          document.getElementById(
+                  "topServicesList"
+          );
+
+
+  if (!services.length) {
+
+    container.innerHTML =
+            emptyState(
+                    "No Service Activity",
+                    "No service appointments were found."
+            );
+
+    return;
+  }
+
+
+  const maxAppointments =
+          Math.max(
+                  ...services.map(
+                          service =>
+                                  Number(
+                                          service.totalAppointments || 0
+                                  )
+                  ),
+                  1
+          );
+
+
+  container.innerHTML =
+
+          services.map(
+                  service => {
+
+                    const count =
+                            Number(
+                                    service.totalAppointments || 0
+                            );
+
+
+                    const progress =
+                            Math.max(
+                                    7,
+                                    (count /
+                                            maxAppointments) *
+                                    100
+                            );
+
+
+                    return `
+
+                    <div class="service-row">
+
+                        <div class="service-icon">
+
+                            <i class="${getServiceIcon(
+                            service.category
+                    )}"></i>
+
+                        </div>
+
+
+                        <div class="service-main">
+
+                            <strong>
+
+                                ${escapeHtml(
+                            service.serviceName ||
+                            "Unnamed Service"
+                    )}
+
+                            </strong>
+
+
+                            <span>
+
+                                ${escapeHtml(
+                            service.category ||
+                            "General"
+                    )}
+
+                                ·
+
+                                ${formatCurrency(
+                            service.price
+                    )}
+
+                            </span>
+
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar"
+                                    style="width:${progress}%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-count">
+
+                            <strong>
+                                ${count}
+                            </strong>
+
+                            <span>
+                                bookings
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                  }
+          ).join("");
+
+}
+
+
+/* =========================================================
+   STAFF PERFORMANCE
+========================================================= */
+
+function renderStaffPerformance(
+        staffList
+) {
+
+  const container =
+          document.getElementById(
+                  "staffPerformanceList"
+          );
+
+
+  if (!staffList.length) {
+
+    container.innerHTML =
+            emptyState(
+                    "No Staff Activity",
+                    "No staff appointment activity was found."
+            );
+
+    return;
+  }
+
+
+  container.innerHTML =
+
+          staffList.map(
+                  staff => `
+
+                <div class="staff-row">
+
+                    <div class="staff-avatar">
+
+                        ${escapeHtml(
+                          getInitials(
+                                  staff.staffName
+                          )
+                  )}
+
+                    </div>
+
+
+                    <div class="staff-main">
+
+                        <strong>
+
+                            ${escapeHtml(
+                          staff.staffName ||
+                          "Unknown Staff"
+                  )}
+
+                        </strong>
+
+                        <span>
+
+                            ${escapeHtml(
+                          staff.position ||
+                          "Staff Member"
+                  )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="staff-stats">
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                          staff.totalAppointments
+                  )}
+                            </strong>
+
+                            <span>
+                                Total
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                          staff.completedAppointments
+                  )}
+                            </strong>
+
+                            <span>
+                                Done
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                          staff.cancelledAppointments
+                  )}
+                            </strong>
+
+                            <span>
+                                Cancel
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-stat">
+
+                            <strong>
+                                ${formatNumber(
+                          staff.noShowAppointments
+                  )}
+                            </strong>
+
+                            <span>
+                                No Show
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `
+          ).join("");
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function getStatusBadge(status) {
+
+  const normalized =
+          String(
+                  status || ""
+          )
+                  .toLowerCase()
+                  .replace(
+                          /\s+/g,
+                          "_"
+                  );
+
+
+  const labels = {
+
+    scheduled: "Scheduled",
+
+    confirmed: "Confirmed",
+
+    completed: "Completed",
+
+    cancelled: "Cancelled",
+
+    no_show: "No Show"
+
   };
 
-  // =========================================
-  // DOM REFERENCES
-  // =========================================
-  const sidebar = document.getElementById('sidebar');
-  const sidebarToggle = document.getElementById('sidebarToggle');
-  const sidebarOverlay = document.getElementById('sidebarOverlay');
-  const mainWrapper = document.getElementById('mainWrapper');
-  const notifBtn = document.getElementById('notifBtn');
-  const notifDropdown = document.getElementById('notifDropdown');
-  const profileBtn = document.getElementById('topbarProfile') || document.getElementById('profileBtn');
-  const profileDropdown = document.getElementById('profileDropdown');
-  const notifBody = document.getElementById('notifBody');
-  const dateText = document.getElementById('dateText');
-  const welcomeDateText = document.getElementById('welcomeDateText');
-  const welcomeTitle = document.getElementById('welcomeTitle');
-  const apptsList = document.getElementById('apptsList');
-  const servicesList = document.getElementById('servicesList');
-  const staffGrid = document.getElementById('staffGrid');
-  const upcomingList = document.getElementById('upcomingList');
-  const inventoryList = document.getElementById('inventoryList');
-  const insightsList = document.getElementById('insightsList');
-  const quickActionsGrid = document.getElementById('quickActionsGrid');
-  const apptLegend = document.getElementById('apptLegend');
-  const periodTabs = document.getElementById('periodTabs');
 
-  let revenueChartInstance = null;
-  let appointmentChartInstance = null;
-  let isLoading = false;
-  let isError = false;
+  return `
 
-  // =========================================
-  // SIDEBAR
-  // =========================================
-  sidebarToggle.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
-      sidebar.classList.toggle('mobile-open');
-      sidebarOverlay.classList.toggle('open');
-    } else {
-      sidebar.classList.toggle('collapsed');
-      mainWrapper.classList.toggle('sidebar-collapsed');
-    }
-  });
+        <span class="status status-${escapeHtml(
+          normalized
+  )}">
 
-  sidebarOverlay.addEventListener('click', () => {
-    sidebar.classList.remove('mobile-open');
-    sidebarOverlay.classList.remove('open');
-  });
+            ${escapeHtml(
+          labels[normalized] ||
+          status ||
+          "Unknown"
+  )}
 
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      item.classList.add('active');
-      const page = item.dataset.page;
-      if (page !== 'dashboard') {
-        showToast('info', 'Navigation', `Opening ${page.charAt(0).toUpperCase() + page.slice(1)} page...`);
-      }
-      if (window.innerWidth <= 768) {
-        sidebar.classList.remove('mobile-open');
-        sidebarOverlay.classList.remove('open');
-      }
-    });
-  });
+        </span>
 
-  // =========================================
-  // TOPBAR — NOTIFICATIONS & PROFILE
-  // =========================================
-  function renderNotifications() {
-    notifBody.innerHTML = dashboardData.notifications.map(n => `
-                <div class="notif-item">
-                    <div class="notif-icon ${n.icon}"><i class="fas ${n.faIcon}"></i></div>
-                    <div class="notif-content">
-                        <div class="notif-title">${n.title}</div>
-                        <div class="notif-desc">${n.desc}</div>
-                        <div class="notif-time">${n.time}</div>
-                    </div>
-                </div>
-            `).join('');
+    `;
+}
+
+
+/* =========================================================
+   SERVICE ICON
+========================================================= */
+
+function getServiceIcon(category) {
+
+  const value =
+          String(
+                  category || ""
+          ).toLowerCase();
+
+
+  if (value.includes("hair")) {
+
+    return "fas fa-scissors";
+
   }
 
-  notifBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    notifDropdown.classList.toggle('open');
-    profileDropdown.classList.remove('open');
-  });
 
-  profileBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    profileDropdown.classList.toggle('open');
-    notifDropdown.classList.remove('open');
-  });
+  if (value.includes("nail")) {
 
-  document.addEventListener('click', (e) => {
-    if (!notifBtn.contains(e.target) && !notifDropdown.contains(e.target)) {
-      notifDropdown.classList.remove('open');
-    }
-    if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
-      profileDropdown.classList.remove('open');
-    }
-  });
+    return "fas fa-hand-sparkles";
 
-  // =========================================
-  // DATE DISPLAY
-  // =========================================
-  function setDate() {
-    const now = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const dateStr = now.toLocaleDateString('en-US', options);
-    dateText.textContent = dateStr;
-    welcomeDateText.textContent = dateStr + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
-    const hr = now.getHours();
-    let greeting = 'Good Evening';
-    if (hr < 12) greeting = 'Good Morning';
-    else if (hr < 17) greeting = 'Good Afternoon';
-    welcomeTitle.textContent = `${greeting}, Sofia!`;
   }
 
-  // =========================================
-  // REVENUE CHART
-  // =========================================
-  function renderRevenueChart(period) {
-    const data = dashboardData.revenueData[period];
-    const ctx = document.getElementById('revenueChart').getContext('2d');
-    if (revenueChartInstance) revenueChartInstance.destroy();
 
-    const gradientS = ctx.createLinearGradient(0, 0, 0, 280);
-    gradientS.addColorStop(0, 'rgba(232, 77, 125, 0.25)');
-    gradientS.addColorStop(1, 'rgba(232, 77, 125, 0.0)');
+  if (
+          value.includes("skin") ||
+          value.includes("facial")
+  ) {
 
-    const gradientP = ctx.createLinearGradient(0, 0, 0, 280);
-    gradientP.addColorStop(0, 'rgba(212, 168, 77, 0.2)');
-    gradientP.addColorStop(1, 'rgba(212, 168, 77, 0.0)');
+    return "fas fa-face-smile";
 
-    revenueChartInstance = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: data.labels,
-        datasets: [
+  }
+
+
+  if (value.includes("make")) {
+
+    return "fas fa-wand-magic-sparkles";
+
+  }
+
+
+  return "fas fa-spa";
+}
+
+
+/* =========================================================
+   INITIALS
+========================================================= */
+
+function getInitials(name) {
+
+  if (!name) {
+    return "NA";
+  }
+
+
+  const words =
+          String(name)
+                  .trim()
+                  .split(/\s+/);
+
+
+  if (words.length === 1) {
+
+    return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+  }
+
+
+  return (
+          words[0][0] +
+          words[words.length - 1][0]
+  ).toUpperCase();
+}
+
+
+/* =========================================================
+   CURRENCY
+========================================================= */
+
+function formatCurrency(value) {
+
+  const number =
+          Number(value || 0);
+
+
+  return new Intl.NumberFormat(
+          "en-LK",
           {
-            label: 'Service Revenue',
-            data: data.services,
-            borderColor: '#e84d7d',
-            backgroundColor: gradientS,
-            borderWidth: 2.5,
-            fill: true,
-            tension: 0.4,
-            pointRadius: 0,
-            pointHoverRadius: 6,
-            pointHoverBackgroundColor: '#e84d7d',
-            pointHoverBorderColor: '#fff',
-            pointHoverBorderWidth: 2,
-          },
+            style: "currency",
+            currency: "LKR",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }
+  ).format(number);
+}
+
+
+/* =========================================================
+   COMPACT CURRENCY
+========================================================= */
+
+function formatCompactCurrency(value) {
+
+  const number =
+          Number(value || 0);
+
+
+  if (number >= 1000000) {
+
+    return `LKR ${(number / 1000000).toFixed(1)}M`;
+
+  }
+
+
+  if (number >= 1000) {
+
+    return `LKR ${(number / 1000).toFixed(0)}K`;
+
+  }
+
+
+  return `LKR ${number}`;
+}
+
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
+function formatNumber(value) {
+
+  return new Intl.NumberFormat(
+          "en-LK"
+  ).format(
+          Number(value || 0)
+  );
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(value) {
+
+  if (!value) {
+    return "—";
+  }
+
+
+  const date =
+          new Date(
+                  `${value}T00:00:00`
+          );
+
+
+  return date.toLocaleDateString(
+          "en-LK",
           {
-            label: 'Product Revenue',
-            data: data.products,
-            borderColor: '#d4a84d',
-            backgroundColor: gradientP,
-            borderWidth: 2.5,
-            fill: true,
-            tension: 0.4,
-            pointRadius: 0,
-            pointHoverRadius: 6,
-            pointHoverBackgroundColor: '#d4a84d',
-            pointHoverBorderColor: '#fff',
-            pointHoverBorderWidth: 2,
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+          }
+  );
+}
+
+
+/* =========================================================
+   SHORT DATE
+========================================================= */
+
+function formatShortDate(value) {
+
+  if (!value) {
+    return "—";
+  }
+
+
+  const date =
+          new Date(
+                  `${value}T00:00:00`
+          );
+
+
+  return date.toLocaleDateString(
+          "en-LK",
+          {
+            day: "2-digit",
+            month: "short"
+          }
+  );
+}
+
+
+/* =========================================================
+   TIME
+========================================================= */
+
+function formatTime(value) {
+
+  if (!value) {
+    return "—";
+  }
+
+
+  const parts =
+          value.split(":");
+
+
+  const date =
+          new Date();
+
+
+  date.setHours(
+          Number(parts[0]),
+          Number(parts[1]),
+          0,
+          0
+  );
+
+
+  return date.toLocaleTimeString(
+          "en-LK",
+          {
+            hour: "numeric",
+            minute: "2-digit"
+          }
+  );
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+function emptyState(
+        title,
+        description
+) {
+
+  return `
+
+        <div class="empty-state">
+
+            <i class="far fa-calendar-xmark"></i>
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(description)}
+            </span>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ERROR STATE
+========================================================= */
+
+function renderErrorState() {
+
+  document.getElementById(
+          "recentAppointmentsBody"
+  ).innerHTML = `
+
+        <tr>
+
+            <td colspan="7">
+
+                ${errorState(
+          "Dashboard Data Unavailable",
+          "Check that Spring Boot is running and try again."
+  )}
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+  document.getElementById(
+          "mobileAppointments"
+  ).innerHTML =
+
+          errorState(
+                  "Dashboard Data Unavailable",
+                  "Check that Spring Boot is running and try again."
+          );
+
+
+  document.getElementById(
+          "topServicesList"
+  ).innerHTML =
+
+          errorState(
+                  "Unable to Load Services",
+                  "Dashboard API did not return service data."
+          );
+
+
+  document.getElementById(
+          "staffPerformanceList"
+  ).innerHTML =
+
+          errorState(
+                  "Unable to Load Staff",
+                  "Dashboard API did not return staff data."
+          );
+
+}
+
+
+function errorState(
+        title,
+        description
+) {
+
+  return `
+
+        <div class="error-state">
+
+            <i class="fas fa-triangle-exclamation"></i>
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(description)}
+            </span>
+
+            <button
+                class="retry-button"
+                onclick="loadDashboard(true)"
+            >
+
+                <i class="fas fa-rotate"></i>
+
+                Retry
+
+            </button>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+          .replace(
+                  /&/g,
+                  "&amp;"
+          )
+          .replace(
+                  /</g,
+                  "&lt;"
+          )
+          .replace(
+                  />/g,
+                  "&gt;"
+          )
+          .replace(
+                  /"/g,
+                  "&quot;"
+          )
+          .replace(
+                  /'/g,
+                  "&#039;"
+          );
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+        type,
+        title,
+        message
+) {
+
+  const container =
+          document.getElementById(
+                  "toastContainer"
+          );
+
+
+  const icon =
+          type === "success"
+                  ? "fa-check"
+                  : "fa-xmark";
+
+
+  const toast =
+          document.createElement("div");
+
+
+  toast.className =
+          `toast ${type}`;
+
+
+  toast.innerHTML = `
+
+        <div class="toast-icon">
+
+            <i class="fas ${icon}"></i>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            <span>
+                ${escapeHtml(message)}
+            </span>
+
+        </div>
+
+    `;
+
+
+  container.appendChild(toast);
+
+
+  setTimeout(
+          () => {
+
+            toast.style.opacity = "0";
+
+            toast.style.transform =
+                    "translateX(25px)";
+
+            toast.style.transition =
+                    "all .25s ease";
+
+
+            setTimeout(
+                    () => {
+                      toast.remove();
+                    },
+                    250
+            );
+
           },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#fff',
-            titleColor: '#2d1f26',
-            bodyColor: '#525252',
-            borderColor: '#f0e8ec',
-            borderWidth: 1,
-            padding: 12,
-            cornerRadius: 10,
-            displayColors: true,
-            boxPadding: 4,
-            callbacks: {
-              label: (ctx) => ` ${ctx.dataset.label}: $${ctx.parsed.y.toLocaleString()}`,
-            },
-          },
-        },
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: { color: '#8a7a82', font: { size: 12 } },
-            border: { display: false },
-          },
-          y: {
-            grid: { color: '#f0e8ec' },
-            ticks: {
-              color: '#8a7a82',
-              font: { size: 12 },
-              callback: (v) => '$' + (v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v),
-            },
-            border: { display: false },
-          },
-        },
-      },
-    });
-  }
+          3000
+  );
 
-  periodTabs.addEventListener('click', (e) => {
-    const tab = e.target.closest('.period-tab');
-    if (!tab) return;
-    periodTabs.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    renderRevenueChart(tab.dataset.period);
-  });
+}</script>
 
-  // =========================================
-  // APPOINTMENT CHART
-  // =========================================
-  function renderAppointmentChart() {
-    const ctx = document.getElementById('appointmentChart').getContext('2d');
-    const d = dashboardData.appointmentStatus;
-    if (appointmentChartInstance) appointmentChartInstance.destroy();
-    appointmentChartInstance = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: d.labels,
-        datasets: [{
-          data: d.data,
-          backgroundColor: d.colors,
-          borderWidth: 0,
-          hoverOffset: 8,
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '68%',
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#fff',
-            titleColor: '#2d1f26',
-            bodyColor: '#525252',
-            borderColor: '#f0e8ec',
-            borderWidth: 1,
-            padding: 12,
-            cornerRadius: 10,
-            callbacks: {
-              label: (ctx) => ` ${ctx.label}: ${ctx.parsed} appointments`,
-            },
-          },
-        },
-      },
-    });
-
-    apptLegend.innerHTML = d.labels.map((l, i) => `
-                <div class="legend-item">
-                    <div class="legend-dot" style="background:${d.colors[i]};"></div>
-                    ${l} (${d.data[i]})
-                </div>
-            `).join('');
-  }
-
-  // =========================================
-  // TODAY'S APPOINTMENTS
-  // =========================================
-  function renderAppointments() {
-    apptsList.innerHTML = dashboardData.todaysAppointments.map(a => `
-                <div class="appt-item" onclick="showToast('info','Appointment','Viewing ${a.customer}'s appointment details.')">
-                    <div class="appt-time">
-                        <div class="time">${a.time}</div>
-                        <div class="duration">${a.duration}</div>
-                    </div>
-                    <div class="appt-divider"></div>
-                    <div class="appt-customer">
-                        <div class="appt-avatar" style="background:${a.color};">${a.initials}</div>
-                        <div class="appt-info">
-                            <div class="customer-name">${a.customer}</div>
-                            <div class="service-name">${a.service}</div>
-                        </div>
-                    </div>
-                    <div class="appt-staff">
-                        <div class="staff-label">Stylist</div>
-                        <div>${a.staff}</div>
-                    </div>
-                    <div class="appt-status">
-                        <span class="badge ${a.status}">${a.status.charAt(0).toUpperCase() + a.status.slice(1)}</span>
-                    </div>
-                </div>
-            `).join('');
-  }
-
-  // =========================================
-  // POPULAR SERVICES
-  // =========================================
-  function renderServices() {
-    const colorMap = {
-      pink: { bg: 'var(--pink-100)', fg: 'var(--pink-600)', bar: 'var(--pink-500)' },
-      green: { bg: 'var(--success-bg)', fg: 'var(--success)', bar: 'var(--success)' },
-      gold: { bg: 'var(--gold-100)', fg: 'var(--gold-500)', bar: 'var(--gold-400)' },
-      blue: { bg: 'var(--info-bg)', fg: 'var(--info)', bar: 'var(--info)' },
-    };
-    servicesList.innerHTML = dashboardData.popularServices.map(s => {
-      const c = colorMap[s.color] || colorMap.pink;
-      return `
-                    <div class="service-item">
-                        <div class="service-icon" style="background:${c.bg};color:${c.fg};">
-                            <i class="fas ${s.icon}"></i>
-                        </div>
-                        <div class="service-info">
-                            <div class="service-title">${s.name}</div>
-                            <div class="service-meta">${s.meta}</div>
-                        </div>
-                        <div class="service-bar">
-                            <div class="service-bar-fill" style="width:0%;background:${c.bar};" data-pct="${s.pct}"></div>
-                        </div>
-                        <div class="service-stats">
-                            <div class="count">${s.count}</div>
-                            <div class="revenue">${s.revenue}</div>
-                        </div>
-                    </div>
-                `;
-    }).join('');
-
-    requestAnimationFrame(() => {
-      servicesList.querySelectorAll('.service-bar-fill').forEach(bar => {
-        bar.style.width = bar.dataset.pct + '%';
-      });
-    });
-  }
-
-  // =========================================
-  // STAFF PERFORMANCE
-  // =========================================
-  function renderStaff() {
-    staffGrid.innerHTML = dashboardData.staff.map(s => `
-                <div class="staff-card">
-                    <div class="staff-avatar" style="background:${s.color};">${s.initials}</div>
-                    <div class="staff-info">
-                        <div class="staff-name">${s.name}</div>
-                        <div class="staff-role">${s.role}</div>
-                    </div>
-                    <div class="staff-rating">
-                        <i class="fas fa-star"></i> ${s.rating}
-                    </div>
-                </div>
-            `).join('');
-  }
-
-  // =========================================
-  // UPCOMING APPOINTMENTS
-  // =========================================
-  function renderUpcoming() {
-    upcomingList.innerHTML = dashboardData.upcoming.map(u => `
-                <div class="upcoming-item">
-                    <div class="upcoming-date">
-                        <div class="day">${u.day}</div>
-                        <div class="month">${u.month}</div>
-                    </div>
-                    <div class="upcoming-info">
-                        <div class="title">${u.title}</div>
-                        <div class="meta">${u.meta}</div>
-                    </div>
-                </div>
-            `).join('');
-  }
-
-  // =========================================
-  // INVENTORY ALERTS
-  // =========================================
-  function renderInventory() {
-    inventoryList.innerHTML = dashboardData.inventory.map(item => `
-                <div class="inventory-item">
-                    <div class="inventory-icon ${item.level}">
-                        <i class="fas fa-box"></i>
-                    </div>
-                    <div class="inventory-info">
-                        <div class="name">${item.name}</div>
-                        <div class="stock">${item.stock}</div>
-                    </div>
-                    <div class="stock-bar">
-                        <div class="stock-bar-fill ${item.level}" style="width:${item.pct}%;"></div>
-                    </div>
-                </div>
-            `).join('');
-  }
-
-  // =========================================
-  // BUSINESS INSIGHTS
-  // =========================================
-  function renderInsights() {
-    const colorMap = {
-      pink: 'var(--pink-100)|var(--pink-600)',
-      gold: 'var(--gold-100)|var(--gold-500)',
-      green: 'var(--success-bg)|var(--success)',
-      blue: 'var(--info-bg)|var(--info)',
-    };
-    insightsList.innerHTML = dashboardData.insights.map(i => {
-      const [bg, fg] = (colorMap[i.color] || colorMap.pink).split('|');
-      return `
-                    <div class="insight-item">
-                        <div class="insight-icon" style="background:${bg};color:${fg};">
-                            <i class="fas ${i.icon}"></i>
-                        </div>
-                        <div class="insight-content">
-                            <div class="insight-title">${i.title}</div>
-                            <div class="insight-desc">${i.desc}</div>
-                        </div>
-                    </div>
-                `;
-    }).join('');
-  }
-
-  // =========================================
-  // QUICK ACTIONS
-  // =========================================
-  function renderQuickActions() {
-    quickActionsGrid.innerHTML = dashboardData.quickActions.map(qa => `
-                <div class="quick-action" onclick="showToast('success','${qa.label}','${qa.label} form opened.')">
-                    <div class="qa-icon ${qa.color}"><i class="fas ${qa.icon}"></i></div>
-                    <div class="qa-label">${qa.label}</div>
-                </div>
-            `).join('');
-  }
-
-  // =========================================
-  // TOAST NOTIFICATIONS
-  // =========================================
-  const toastIcons = { success: 'fa-check', error: 'fa-xmark', info: 'fa-info', warning: 'fa-exclamation' };
-
-  function showToast(type, title, msg) {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-                <div class="toast-icon"><i class="fas ${toastIcons[type]}"></i></div>
-                <div class="toast-content">
-                    <div class="toast-title">${title}</div>
-                    <div class="toast-msg">${msg}</div>
-                </div>
-                <button class="toast-close"><i class="fas fa-xmark"></i></button>
-            `;
-    container.appendChild(toast);
-    const remove = () => {
-      toast.classList.add('removing');
-      setTimeout(() => toast.remove(), 300);
-    };
-    toast.querySelector('.toast-close').addEventListener('click', remove);
-    setTimeout(remove, 4000);
-  }
-
-  // =========================================
-  // LOADING STATE
-  // =========================================
-  function showLoading() {
-    isLoading = true;
-    const stats = document.getElementById('statsGrid');
-    stats.innerHTML = Array(4).fill(`
-                <div class="skeleton-card">
-                    <div class="skeleton-header">
-                        <div class="skeleton skeleton-circle"></div>
-                        <div class="skeleton" style="width:50px;height:24px;border-radius:8px;"></div>
-                    </div>
-                    <div class="skeleton skeleton-line" style="width:60%;height:28px;"></div>
-                    <div class="skeleton skeleton-line short"></div>
-                </div>
-            `).join('');
-  }
-
-  function hideLoading() {
-    isLoading = false;
-    renderStats();
-  }
-
-  function renderStats() {
-    document.getElementById('statsGrid').innerHTML = `
-                <div class="stat-card pink">
-                    <div class="stat-header">
-                        <div class="stat-icon pink"><i class="fas fa-dollar-sign"></i></div>
-                        <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 12.5%</div>
-                    </div>
-                    <div class="stat-value">$8,420</div>
-                    <div class="stat-label">Today's Revenue</div>
-                </div>
-                <div class="stat-card green">
-                    <div class="stat-header">
-                        <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
-                        <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 8.2%</div>
-                    </div>
-                    <div class="stat-value">28</div>
-                    <div class="stat-label">Today's Appointments</div>
-                </div>
-                <div class="stat-card gold">
-                    <div class="stat-header">
-                        <div class="stat-icon gold"><i class="fas fa-users"></i></div>
-                        <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 5.1%</div>
-                    </div>
-                    <div class="stat-value">142</div>
-                    <div class="stat-label">Active Customers</div>
-                </div>
-                <div class="stat-card blue">
-                    <div class="stat-header">
-                        <div class="stat-icon blue"><i class="fas fa-concierge-bell"></i></div>
-                        <div class="stat-trend down"><i class="fas fa-arrow-down"></i> 2.3%</div>
-                    </div>
-                    <div class="stat-value">18</div>
-                    <div class="stat-label">Services Completed</div>
-                </div>
-            `;
-  }
-
-  // =========================================
-  // ERROR STATE
-  // =========================================
-  function showErrorState() {
-    isError = true;
-    const content = document.getElementById('contentArea');
-    content.innerHTML = `
-                <div class="chart-card" style="display:flex;align-items:center;justify-content:center;min-height:400px;">
-                    <div class="error-state">
-                        <div class="error-icon"><i class="fas fa-triangle-exclamation"></i></div>
-                        <div class="error-title">Failed to Load Dashboard</div>
-                        <div class="error-desc">We couldn't fetch your salon data. Please check your connection and try again.</div>
-                        <button class="retry-btn" id="retryBtn">
-                            <i class="fas fa-rotate-right"></i> Retry
-                        </button>
-                    </div>
-                </div>
-            `;
-    document.getElementById('retryBtn').addEventListener('click', retry);
-  }
-
-  function retry() {
-    isError = false;
-    showToast('info', 'Retrying', 'Reloading dashboard data...');
-    setTimeout(init, 800);
-  }
-
-  // =========================================
-  // RESPONSIVE BEHAVIOR
-  // =========================================
-  window.addEventListener('resize', () => {
-    if (window.innerWidth <= 768) {
-      sidebar.classList.remove('collapsed');
-      mainWrapper.classList.remove('sidebar-collapsed');
-    }
-  });
-
-  // =========================================
-  // INITIALIZATION
-  // =========================================
-  function init() {
-    renderNotifications();
-    setDate();
-    renderStats();
-    renderRevenueChart('month');
-    renderAppointmentChart();
-    renderAppointments();
-    renderServices();
-    renderStaff();
-    renderUpcoming();
-    renderInventory();
-    renderInsights();
-    renderQuickActions();
-  }
-
-  init();
-</script>
 </body>
-
 </html>

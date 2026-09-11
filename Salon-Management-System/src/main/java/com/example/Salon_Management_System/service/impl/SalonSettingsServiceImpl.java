@@ -1,7 +1,6 @@
 package com.example.Salon_Management_System.service.impl;
 
 import com.example.Salon_Management_System.dto.SalonSettingsDTO;
-import com.example.Salon_Management_System.entity.SalonSettings;
 import com.example.Salon_Management_System.repository.SalonSettingsRepository;
 import com.example.Salon_Management_System.service.SalonSettingsService;
 import lombok.RequiredArgsConstructor;
