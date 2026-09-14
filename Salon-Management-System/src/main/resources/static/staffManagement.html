@@ -6,8 +6,9 @@
     <title>Staff Management · Pink Beauty Salon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Unified Luxury Sidebar -->
+    <link rel="stylesheet" href="css/unified-sidebar.css" />
     <style>
         :root{
             --rose-gold:#B76E79;
@@ -451,40 +452,97 @@
 </head>
 <body>
 
-<!-- Sidebar -->
+<!-- Unified Sidebar -->
 <aside class="sidebar" id="sidebar">
-    <div class="brand">
-        <div class="brand-icon"><i class="fa-solid fa-spa"></i></div>
-        <div>
-            <div class="brand-name">PINK BEAUTY</div>
-            <div class="brand-tag">Luxury Beauty Meets Smart Technology</div>
+    <div class="sidebar-header">
+        <div class="brand-logo">
+            <i class="fas fa-spa"></i>
+        </div>
+        <div class="brand-info">
+            <h2>Pink Beauty</h2>
+            <span>LUXURY SALON</span>
         </div>
     </div>
-    <nav class="nav">
-        <div class="nav-label">Main Menu</div>
-        <div class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></div>
-        <div class="nav-item"><i class="fa-solid fa-users"></i><span>User Management</span></div>
-        <div class="nav-item"><i class="fa-solid fa-user-group"></i><span>Customer </span></div>
-        <div class="nav-item active"><i class="fa-solid fa-user-tie"></i><span>Staff </span></div>
-        <div class="nav-item"><i class="fa-solid fa-calendar-check"></i><span>Appointment </span></div>
-        <div class="nav-item"><i class="fa-solid fa-scissors"></i><span>Service </span></div>
-        <div class="nav-item"><i class="fa-solid fa-box"></i><span>Product </span></div>
-        <div class="nav-item"><i class="fa-solid fa-warehouse"></i><span>Inventory </span></div>
-        <div class="nav-item"><i class="fa-solid fa-credit-card"></i><span>Payment </span></div>
-        <div class="nav-item"><i class="fa-solid fa-comments"></i><span>Feedback &amp; Ratings</span></div>
 
-        <div class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></div>
-        <div class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
+    <nav class="sidebar-nav">
+        <div class="nav-section-title">MAIN</div>
+
+        <a href="dashboard.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="customerManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-users"></i>
+            <span>Customer Management</span>
+        </a>
+
+        <a href="staffManagement.html" class="nav-item active" data-roles="ADMIN">
+            <i class="fas fa-user-tie"></i>
+            <span>Staff Management</span>
+        </a>
+
+        <a href="serviceManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>Service Management</span>
+        </a>
+
+        <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+            <i class="fas fa-calendar-check"></i>
+            <span>Appointment Management</span>
+        </a>
+
+        <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
+
+        <a href="productManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-box"></i>
+            <span>Product Management</span>
+        </a>
+
+        <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-warehouse"></i>
+            <span>Inventory Management</span>
+        </a>
+
+        <a href="paymentMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Payments & Invoices</span>
+        </a>
+
+        <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-star"></i>
+            <span>Feedback & Ratings</span>
+        </a>
+
+        <a href="report.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-chart-pie"></i>
+            <span>Reports & Analytics</span>
+        </a>
+
+        <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
+
+        <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-user-shield"></i>
+            <span>User Management</span>
+        </a>
+
+        <a href="settings.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-sliders"></i>
+            <span>Settings</span>
+        </a>
     </nav>
+
     <div class="sidebar-footer">
-        <div class="profile-mini">
-            <div class="avatar">A</div>
-            <div class="info">
-                <div class="name">Admin</div>
-                <div class="role">Administrator</div>
+        <div class="sidebar-user">
+            <div class="user-avatar" id="sidebarAvatar">PB</div>
+            <div class="user-details">
+                <strong id="sidebarUserName">Salon Manager</strong>
+                <span id="sidebarUserRole">Administrator</span>
             </div>
+            <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Logout">
+                <i class="fas fa-right-from-bracket"></i>
+            </button>
         </div>
-        <button class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
 </aside>
 <div class="overlay-bg" id="overlay" onclick="toggleSidebar()"></div>
@@ -611,12 +669,21 @@
 
 <script>
     /* ============================================================
-       PINK BEAUTY SALON — Staff Management
-       Frontend-only mock data. Structured so a Spring Boot REST API
-       can later replace the mock arrays and CRUD functions.
+       PINK BEAUTY SALON — Staff Management (Backend Connected)
+       Real-time DB synchronization with Spring Boot REST API
        ============================================================ */
 
-    const API_BASE = "/api/staff"; // reserved for future Spring Boot backend
+    const API_BASE_URL = (window.location.origin && window.location.origin.includes(":8080"))
+        ? "/api/v1/staff" 
+        : "http://localhost:8080/api/v1/staff";
+
+    const API_SERVICES_BASE = (window.location.origin && window.location.origin.includes(":8080"))
+        ? "/api/v1/services"
+        : "http://localhost:8080/api/v1/services";
+
+    const API_APPOINTMENT_BASE = (window.location.origin && window.location.origin.includes(":8080"))
+        ? "/api/v1/appointment"
+        : "http://localhost:8080/api/v1/appointment";
 
     // Avatar color palette (soft pink/gold tones)
     const AVATAR_COLORS = [
@@ -643,84 +710,161 @@
         {day:"Sunday",start:"09:00",end:"17:00",off:true}
     ];
 
-    let staffData = [
-        {id:"PBS-001",name:"Sophia Williams",email:"sophia@pinkbeautysalon.com",phone:"0771234567",position:"Senior Hair Stylist",services:["Hair Cut","Hair Coloring"],hours:"09:00 AM - 05:00 PM",availability:"Available",status:"Active",hireDate:"2022-03-15",salary:"$3,200",username:"sophia.w",gender:"Female",dob:"1995-04-12",address:"12 Rose Ave, Colombo",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:128,completed:112,cancelled:8,rating:4.8}},
-        {id:"PBS-002",name:"Emma Johnson",email:"emma@pinkbeautysalon.com",phone:"0772345678",position:"Nail Technician",services:["Manicure","Pedicure","Nail Art"],hours:"10:00 AM - 06:00 PM",availability:"Busy",status:"Active",hireDate:"2021-07-20",salary:"$2,800",username:"emma.j",gender:"Female",dob:"1996-09-23",address:"45 Lily St, Kandy",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:96,completed:88,cancelled:4,rating:4.6}},
-        {id:"PBS-003",name:"Olivia Brown",email:"olivia@pinkbeautysalon.com",phone:"0773456789",position:"Makeup Artist",services:["Bridal Makeup","Party Makeup"],hours:"09:00 AM - 04:00 PM",availability:"On Leave",status:"Active",hireDate:"2023-01-10",salary:"$3,000",username:"olivia.b",gender:"Female",dob:"1998-02-05",address:"78 Jasmine Rd, Galle",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:74,completed:68,cancelled:3,rating:4.9}},
-        {id:"PBS-004",name:"Mia Wilson",email:"mia@pinkbeautysalon.com",phone:"0774567890",position:"Hair Stylist",services:["Hair Cut","Hair Styling"],hours:"08:00 AM - 04:00 PM",availability:"Available",status:"Active",hireDate:"2022-11-01",salary:"$2,500",username:"mia.w",gender:"Female",dob:"1997-06-18",address:"23 Orchid Ln, Negombo",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:110,completed:101,cancelled:5,rating:4.7}},
-        {id:"PBS-005",name:"Ava Taylor",email:"ava@pinkbeautysalon.com",phone:"0775678901",position:"Therapist",services:["Facial","Waxing"],hours:"10:00 AM - 06:00 PM",availability:"Available",status:"Active",hireDate:"2023-05-14",salary:"$2,700",username:"ava.t",gender:"Female",dob:"1994-11-30",address:"56 Lotus Cres, Jaffna",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:84,completed:78,cancelled:2,rating:4.5}},
-        {id:"PBS-006",name:"Isabella Davis",email:"isabella@pinkbeautysalon.com",phone:"0776789012",position:"Hair Stylist",services:["Hair Styling","Hair Coloring"],hours:"09:00 AM - 05:00 PM",availability:"Busy",status:"Inactive",hireDate:"2021-09-05",salary:"$2,400",username:"isabella.d",gender:"Female",dob:"1999-03-22",address:"89 Daisy Blvd, Matara",schedule:cloneSchedule(),appointments:sampleAppts(),leaves:sampleLeaves(),perf:{total:62,completed:55,cancelled:4,rating:4.3}}
-    ];
-
-    function cloneSchedule(){return DEFAULT_SCHEDULE.map(d=>({...d}))}
-    function sampleAppts(){
-        return [
-            {customer:"Sarah Perera",service:"Hair Cut",date:"Aug 20, 2026",time:"10:00 AM",status:"Completed"},
-            {customer:"Nethmi Silva",service:"Hair Coloring",date:"Aug 20, 2026",time:"01:00 PM",status:"Confirmed"},
-            {customer:"Dilani Fernando",service:"Hair Styling",date:"Aug 21, 2026",time:"11:30 AM",status:"Pending"}
-        ];
-    }
-    function sampleLeaves(){
-        return [
-            {type:"Annual Leave",start:"2026-08-22",end:"2026-08-24",reason:"Family vacation",status:"Pending"}
-        ];
-    }
+    function cloneSchedule(){ return DEFAULT_SCHEDULE.map(d=>({...d})); }
 
     // State
-    let filtered = [...staffData];
+    let staffData = [];
+    let filtered = [];
     let currentPage = 1;
     const perPage = 5;
     let editingId = null;
     let activeDropdownId = null;
 
+    /* ---------- API Helper ---------- */
+    async function apiRequest(url, options = {}) {
+        const token = localStorage.getItem("token");
+        const headers = {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+        };
+        if (token && token !== "null" && token !== "undefined" && token.trim()) {
+            headers["Authorization"] = `Bearer ${token.trim()}`;
+        }
+
+        try {
+            const response = await fetch(url, { ...options, headers });
+            let result = null;
+            try {
+                result = await response.json();
+            } catch (e) {
+                result = null;
+            }
+
+            const hasError = !response.ok ||
+                (result && typeof result.status === "number" && result.status !== 0 && result.status !== 200) ||
+                (result && typeof result.code === "number" && result.code !== 0 && result.code !== 200);
+
+            if (hasError) {
+                const message = result?.message || result?.error || `Request failed with status ${response.status}`;
+                throw new Error(message);
+            }
+            return result;
+        } catch (error) {
+            console.error("API Error on " + url, error);
+            throw error;
+        }
+    }
+
     /* ---------- Helpers ---------- */
-    function initials(name){return name.split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase()}
-    function avatarColor(id){let h=0;for(const c of id)h+=c.charCodeAt(0);return AVATAR_COLORS[h%AVATAR_COLORS.length]}
-    function fmtTime(t){ // "09:00" -> "09:00 AM"
-        let [h,m]=t.split(":");h=+h;const ap=h>=12?"PM":"AM";h=h%12||12;return `${String(h).padStart(2,"0")}:${m} ${ap}`}
-    function fmtRange(s){return s.off?"Day Off":`${fmtTime(s.start)} - ${fmtTime(s.end)}`}
+    function initials(name){
+        if (!name) return "ST";
+        return name.split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase();
+    }
+    function avatarColor(id){
+        let str = String(id || "0");
+        let h = 0;
+        for (const c of str) h += c.charCodeAt(0);
+        return AVATAR_COLORS[h % AVATAR_COLORS.length];
+    }
+    function fmtTime(t){
+        if (!t) return "";
+        let [h, m] = t.split(":");
+        h = +h;
+        const ap = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        return `${String(h).padStart(2, "0")}:${m} ${ap}`;
+    }
+    function fmtRange(s){
+        return s.off ? "Day Off" : `${fmtTime(s.start)} - ${fmtTime(s.end)}`;
+    }
+    function availKey(a){
+        return a === "Available" ? "available" : a === "Busy" ? "busy" : "leave";
+    }
+    function escapeHtml(str) {
+        if (!str) return "";
+        return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m]);
+    }
+
+    function mapBackendStaff(s) {
+        const rawSalary = s.salary != null ? Number(s.salary) : 0;
+        const formattedSalary = "$" + rawSalary.toLocaleString();
+        const isInactive = s.status === "INACTIVE" || s.status === "Inactive";
+        const isBusy = s.availability === "BUSY" || s.availability === "Busy";
+        const isOnLeave = s.availability === "ON_LEAVE" || s.availability === "On Leave";
+        const avail = isBusy ? "Busy" : isOnLeave ? "On Leave" : "Available";
+
+        return {
+            id: s.staffId,
+            code: s.staffCode || (`#STF-${String(s.staffId).padStart(3, "0")}`),
+            name: s.staffName || "Staff Member",
+            email: s.staffEmail || "",
+            phone: s.staffPhone || "",
+            position: s.position || "Hair Stylist",
+            services: Array.isArray(s.services) ? s.services : [],
+            hours: "09:00 AM - 05:00 PM",
+            availability: avail,
+            status: isInactive ? "Inactive" : "Active",
+            hireDate: s.hireDate ? String(s.hireDate) : "",
+            dob: s.dateOfBirth ? String(s.dateOfBirth) : "",
+            gender: s.gender || "Female",
+            address: s.address || "",
+            salary: formattedSalary,
+            rawSalary: rawSalary,
+            username: s.username || "",
+            schedule: cloneSchedule(),
+            appointments: [],
+            leaves: [],
+            perf: { total: 0, completed: 0, cancelled: 0, rating: 5.0 }
+        };
+    }
 
     /* ---------- Render: Stats ---------- */
     function renderStats(){
-        document.getElementById("statTotal").textContent = staffData.length;
-        const active = staffData.filter(s=>s.status==="Active").length;
-        document.getElementById("statActive").textContent = active;
-        const pct = staffData.length?Math.round(active/staffData.length*100):0;
-        document.getElementById("statActiveDesc").textContent = `${pct}% of total staff`;
-        document.getElementById("statAvail").textContent = staffData.filter(s=>s.availability==="Available").length;
-        document.getElementById("statLeave").textContent = staffData.filter(s=>s.availability==="On Leave").length;
+        const statTotal = document.getElementById("statTotal");
+        const statActive = document.getElementById("statActive");
+        const statActiveDesc = document.getElementById("statActiveDesc");
+        const statAvail = document.getElementById("statAvail");
+        const statLeave = document.getElementById("statLeave");
+
+        if (statTotal) statTotal.textContent = staffData.length;
+        const active = staffData.filter(s => s.status === "Active").length;
+        if (statActive) statActive.textContent = active;
+        const pct = staffData.length ? Math.round(active / staffData.length * 100) : 0;
+        if (statActiveDesc) statActiveDesc.textContent = `${pct}% of total staff`;
+        if (statAvail) statAvail.textContent = staffData.filter(s => s.availability === "Available").length;
+        if (statLeave) statLeave.textContent = staffData.filter(s => s.availability === "On Leave").length;
     }
 
     /* ---------- Render: Table ---------- */
     function renderTable(){
         const body = document.getElementById("staffBody");
         const empty = document.getElementById("emptyState");
-        const start = (currentPage-1)*perPage;
-        const pageItems = filtered.slice(start,start+perPage);
+        const start = (currentPage - 1) * perPage;
+        const pageItems = filtered.slice(start, start + perPage);
 
-        if(filtered.length===0){
-            body.innerHTML="";
-            empty.style.display="block";
-            document.getElementById("pagination").style.display="none";
+        if(filtered.length === 0){
+            body.innerHTML = "";
+            empty.style.display = "block";
+            document.getElementById("pagination").style.display = "none";
             return;
         }
-        empty.style.display="none";
-        document.getElementById("pagination").style.display="flex";
+        empty.style.display = "none";
+        document.getElementById("pagination").style.display = "flex";
 
-        body.innerHTML = pageItems.map(s=>`
+        body.innerHTML = pageItems.map(s => `
     <tr>
       <td>
         <div class="staff-cell">
           <div class="avatar" style="background:${avatarColor(s.id)}">${initials(s.name)}</div>
-          <div class="meta"><div class="name">${s.name}</div><div class="sub">${s.id}</div></div>
+          <div class="meta"><div class="name">${escapeHtml(s.name)}</div><div class="sub">${s.code}</div></div>
         </div>
       </td>
       <td class="contact-cell">
-        <div class="line"><i class="fa-regular fa-envelope"></i> ${s.email}</div>
-        <div class="line"><i class="fa-solid fa-phone"></i> ${s.phone}</div>
+        <div class="line"><i class="fa-regular fa-envelope"></i> ${escapeHtml(s.email)}</div>
+        <div class="line"><i class="fa-solid fa-phone"></i> ${escapeHtml(s.phone)}</div>
       </td>
-      <td><span class="position-tag">${s.position}</span></td>
-      <td><div class="services-cell">${s.services.map(sv=>`<span class="service-chip">${sv}</span>`).join("")}</div></td>
+      <td><span class="position-tag">${escapeHtml(s.position)}</span></td>
+      <td><div class="services-cell">${s.services.length ? s.services.map(sv=>`<span class="service-chip">${escapeHtml(sv)}</span>`).join("") : '<span style="color:var(--muted);font-size:11px;">General Services</span>'}</div></td>
       <td style="white-space:nowrap">${s.hours}</td>
       <td><span class="badge dot avail-${availKey(s.availability)}">${s.availability}</span></td>
       <td><span class="badge status-${s.status.toLowerCase()}">${s.status}</span></td>
@@ -735,11 +879,9 @@
         renderPagination();
     }
 
-    function availKey(a){return a==="Available"?"available":a==="Busy"?"busy":"leave"}
-
     function dropdownItems(s){
-        const toggleLabel = s.status==="Active"?"Deactivate":"Activate";
-        const toggleIcon = s.status==="Active"?"fa-toggle-off":"fa-toggle-on";
+        const toggleLabel = s.status === "Active" ? "Deactivate" : "Activate";
+        const toggleIcon = s.status === "Active" ? "fa-toggle-off" : "fa-toggle-on";
         return `
     <button class="dropdown-item" onclick="viewDetails('${s.id}')"><i class="fa-regular fa-eye"></i> View Details</button>
     <button class="dropdown-item" onclick="openEditStaff('${s.id}')"><i class="fa-solid fa-pen"></i> Edit Staff</button>
@@ -752,81 +894,91 @@
     <button class="dropdown-item danger" onclick="confirmDelete('${s.id}')"><i class="fa-solid fa-trash"></i> Delete</button>`;
     }
 
-    function toggleDropdown(id,e){
+    function toggleDropdown(id, e){
         if(e) e.stopPropagation();
-        const dd = document.getElementById("dd-"+id);
+        const dd = document.getElementById("dd-" + id);
         const isOpen = dd.classList.contains("open");
         closeAllDropdowns();
-        if(!isOpen){dd.classList.add("open");activeDropdownId=id}
+        if(!isOpen){ dd.classList.add("open"); activeDropdownId = id; }
     }
     function closeAllDropdowns(){
-        document.querySelectorAll(".dropdown.open").forEach(d=>d.classList.remove("open"));
-        activeDropdownId=null;
+        document.querySelectorAll(".dropdown.open").forEach(d => d.classList.remove("open"));
+        activeDropdownId = null;
     }
-    document.addEventListener("click",()=>closeAllDropdowns());
+    document.addEventListener("click", () => closeAllDropdowns());
 
     /* ---------- Pagination ---------- */
     function renderPagination(){
-        const pages = Math.ceil(filtered.length/perPage)||1;
-        const start = (currentPage-1)*perPage+1;
-        const end = Math.min(currentPage*perPage,filtered.length);
-        document.getElementById("pageInfo").textContent = `Showing ${start}–${end} of ${filtered.length} staff`;
-        let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?"disabled":""}><i class="fa-solid fa-chevron-left"></i></button>`;
-        for(let i=1;i<=pages;i++) html += `<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
-        html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?"disabled":""}><i class="fa-solid fa-chevron-right"></i></button>`;
+        const pages = Math.ceil(filtered.length / perPage) || 1;
+        const start = (currentPage - 1) * perPage + 1;
+        const end = Math.min(currentPage * perPage, filtered.length);
+        document.getElementById("pageInfo").textContent = `Showing ${filtered.length ? start : 0}–${end} of ${filtered.length} staff`;
+        let html = `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}><i class="fa-solid fa-chevron-left"></i></button>`;
+        for(let i = 1; i <= pages; i++) html += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="goPage(${i})">${i}</button>`;
+        html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === pages ? "disabled" : ""}><i class="fa-solid fa-chevron-right"></i></button>`;
         document.getElementById("pageBtns").innerHTML = html;
     }
-    function goPage(p){const pages=Math.ceil(filtered.length/perPage)||1;if(p<1||p>pages)return;currentPage=p;renderTable()}
+    function goPage(p){
+        const pages = Math.ceil(filtered.length / perPage) || 1;
+        if(p < 1 || p > pages) return;
+        currentPage = p;
+        renderTable();
+    }
 
     /* ---------- Search & Filters ---------- */
     function applyFilters(){
-        const q = document.getElementById("searchInput").value.toLowerCase().trim();
-        const pos = document.getElementById("filterPosition").value;
-        const st = document.getElementById("filterStatus").value;
-        const av = document.getElementById("filterAvail").value;
-        filtered = staffData.filter(s=>{
-            const matchQ = !q || s.name.toLowerCase().includes(q)||s.email.toLowerCase().includes(q)||s.phone.includes(q)||s.position.toLowerCase().includes(q);
-            return matchQ && (!pos||s.position===pos) && (!st||s.status===st) && (!av||s.availability===av);
+        const q = (document.getElementById("searchInput")?.value || "").toLowerCase().trim();
+        const pos = document.getElementById("filterPosition")?.value || "";
+        const st = document.getElementById("filterStatus")?.value || "";
+        const av = document.getElementById("filterAvail")?.value || "";
+        filtered = staffData.filter(s => {
+            const matchQ = !q || s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q) || s.phone.includes(q) || s.position.toLowerCase().includes(q) || s.code.toLowerCase().includes(q);
+            return matchQ && (!pos || s.position === pos) && (!st || s.status === st) && (!av || s.availability === av);
         });
         currentPage = 1;
         renderTable();
     }
     function clearFilters(){
-        document.getElementById("searchInput").value="";
-        document.getElementById("filterPosition").value="";
-        document.getElementById("filterStatus").value="";
-        document.getElementById("filterAvail").value="";
+        if (document.getElementById("searchInput")) document.getElementById("searchInput").value = "";
+        if (document.getElementById("filterPosition")) document.getElementById("filterPosition").value = "";
+        if (document.getElementById("filterStatus")) document.getElementById("filterStatus").value = "";
+        if (document.getElementById("filterAvail")) document.getElementById("filterAvail").value = "";
         applyFilters();
     }
 
     /* ---------- Modal core ---------- */
-    function openModal(html,cls=""){
+    function openModal(html, cls = ""){
         const ov = document.getElementById("modalOverlay");
         ov.innerHTML = `<div class="modal ${cls}">${html}</div>`;
         ov.classList.add("open");
-        document.body.style.overflow="hidden";
+        document.body.style.overflow = "hidden";
     }
     function closeModal(){
         const ov = document.getElementById("modalOverlay");
         ov.classList.remove("open");
-        ov.innerHTML="";
-        document.body.style.overflow="";
+        ov.innerHTML = "";
+        document.body.style.overflow = "";
     }
 
     /* ---------- Toast ---------- */
-    function toast(msg,type="success"){
+    function toast(msg, type = "success"){
         const wrap = document.getElementById("toastWrap");
+        if (!wrap) return;
         const el = document.createElement("div");
-        el.className=`toast ${type}`;
-        const icon = type==="error"?"fa-circle-xmark":type==="info"?"fa-circle-info":"fa-circle-check";
-        el.innerHTML = `<div class="ti"><i class="fa-solid ${icon}"></i></div><div class="msg">${msg}</div>`;
+        el.className = `toast ${type}`;
+        const icon = type === "error" ? "fa-circle-xmark" : type === "info" ? "fa-circle-info" : "fa-circle-check";
+        el.innerHTML = `<div class="ti"><i class="fa-solid ${icon}"></i></div><div class="msg">${escapeHtml(msg)}</div>`;
         wrap.appendChild(el);
-        setTimeout(()=>{el.style.animation="toastOut .3s ease forwards";setTimeout(()=>el.remove(),300)},2800);
+        setTimeout(() => {
+            el.style.animation = "toastOut .3s ease forwards";
+            setTimeout(() => el.remove(), 300);
+        }, 3200);
     }
 
     /* ---------- View Details ---------- */
     function viewDetails(id){
-        const s = staffData.find(x=>x.id===id);if(!s)return;
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
         closeAllDropdowns();
         const html = `
     <div class="modal-head"><div><h3>Staff Details</h3><p>Complete profile information</p></div>
@@ -834,53 +986,52 @@
     <div class="modal-body">
       <div class="detail-profile">
         <div class="avatar" style="background:${avatarColor(s.id)};width:64px;height:64px;font-size:22px">${initials(s.name)}</div>
-        <div><div class="name">${s.name}</div><div class="pos">${s.position} · ${s.id}</div></div>
+        <div><div class="name">${escapeHtml(s.name)}</div><div class="pos">${escapeHtml(s.position)} · ${s.code}</div></div>
       </div>
       <div class="detail-grid">
-        <div class="detail-item"><div class="lbl">Email</div><div class="val">${s.email}</div></div>
-        <div class="detail-item"><div class="lbl">Phone</div><div class="val">${s.phone}</div></div>
+        <div class="detail-item"><div class="lbl">Email</div><div class="val">${escapeHtml(s.email)}</div></div>
+        <div class="detail-item"><div class="lbl">Phone</div><div class="val">${escapeHtml(s.phone)}</div></div>
         <div class="detail-item"><div class="lbl">Status</div><div class="val"><span class="badge status-${s.status.toLowerCase()}">${s.status}</span></div></div>
         <div class="detail-item"><div class="lbl">Availability</div><div class="val"><span class="badge dot avail-${availKey(s.availability)}">${s.availability}</span></div></div>
       </div>
       <div class="detail-subhead">Employment Details</div>
       <div class="detail-grid">
-        <div class="detail-item"><div class="lbl">Staff ID</div><div class="val">${s.id}</div></div>
-        <div class="detail-item"><div class="lbl">Hire Date</div><div class="val">${s.hireDate}</div></div>
-        <div class="detail-item"><div class="lbl">Position</div><div class="val">${s.position}</div></div>
+        <div class="detail-item"><div class="lbl">Staff Code</div><div class="val">${s.code}</div></div>
+        <div class="detail-item"><div class="lbl">Hire Date</div><div class="val">${s.hireDate || 'N/A'}</div></div>
+        <div class="detail-item"><div class="lbl">Position</div><div class="val">${escapeHtml(s.position)}</div></div>
         <div class="detail-item"><div class="lbl">Salary</div><div class="val">${s.salary}</div></div>
+        <div class="detail-item"><div class="lbl">Gender</div><div class="val">${s.gender || 'N/A'}</div></div>
+        <div class="detail-item"><div class="lbl">Date of Birth</div><div class="val">${s.dob || 'N/A'}</div></div>
+        <div class="detail-item full"><div class="lbl">Address</div><div class="val">${escapeHtml(s.address) || 'N/A'}</div></div>
       </div>
       <div class="detail-subhead">Assigned Services</div>
-      <div class="service-tags">${s.services.map(sv=>`<span class="service-tag">${sv}</span>`).join("")}</div>
-      <div class="detail-subhead">Working Schedule</div>
-      <div class="schedule-list">
-        ${s.schedule.map(d=>`<div class="schedule-row ${d.off?"off":""}"><span class="day">${d.day}</span><span class="time">${fmtRange(d)}</span></div>`).join("")}
-      </div>
-      <div class="detail-subhead">Performance</div>
-      <div class="perf-grid">
-        <div class="perf-card"><div class="num">${s.perf.total}</div><div class="lbl">Total Appointments</div></div>
-        <div class="perf-card"><div class="num">${s.perf.completed}</div><div class="lbl">Completed</div></div>
-        <div class="perf-card"><div class="num">${s.perf.cancelled}</div><div class="lbl">Cancelled</div></div>
-        <div class="perf-card"><div class="num rating">${s.perf.rating} <i class="fa-solid fa-star"></i></div><div class="lbl">Rating</div></div>
-      </div>
+      <div class="service-tags">${s.services.length ? s.services.map(sv=>`<span class="service-tag">${escapeHtml(sv)}</span>`).join("") : '<span style="color:var(--muted);font-size:12px;">No services assigned yet</span>'}</div>
     </div>
-    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
-        openModal(html,"lg");
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary" onclick="openEditStaff('${s.id}')"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+    </div>`;
+        openModal(html, "lg");
     }
 
-    /* ---------- Add / Edit Staff ---------- */
-    function staffFormFields(s={}){
+    /* ---------- Add / Edit Staff Form Fields ---------- */
+    function staffFormFields(s = {}){
         return `
     <div class="form-section">
       <h4>Personal Information</h4>
       <div class="form-grid">
-        <div class="field full"><label>Full Name</label><input id="f_name" value="${s.name||""}" placeholder="e.g. Sophia Williams"></div>
-        <div class="field"><label>Email</label><input id="f_email" type="email" value="${s.email||""}" placeholder="name@pinkbeautysalon.com"></div>
-        <div class="field"><label>Phone Number</label><input id="f_phone" value="${s.phone||""}" placeholder="0771234567"></div>
+        <div class="field full"><label>Full Name *</label><input id="f_name" value="${escapeHtml(s.name||"")}" placeholder="e.g. Sophia Williams"></div>
+        <div class="field"><label>Email *</label><input id="f_email" type="email" value="${escapeHtml(s.email||"")}" placeholder="name@pinkbeautysalon.com"></div>
+        <div class="field"><label>Phone Number *</label><input id="f_phone" value="${escapeHtml(s.phone||"")}" placeholder="0771234567"></div>
         <div class="field"><label>Date of Birth</label><input id="f_dob" type="date" value="${s.dob||""}"></div>
         <div class="field"><label>Gender</label>
-          <select id="f_gender"><option value="Female" ${s.gender==="Female"?"selected":""}>Female</option><option value="Male" ${s.gender==="Male"?"selected":""}>Male</option><option value="Other" ${s.gender==="Other"?"selected":""}>Other</option></select>
+          <select id="f_gender">
+            <option value="Female" ${s.gender==="Female"?"selected":""}>Female</option>
+            <option value="Male" ${s.gender==="Male"?"selected":""}>Male</option>
+            <option value="Other" ${s.gender==="Other"?"selected":""}>Other</option>
+          </select>
         </div>
-        <div class="field full"><label>Address</label><input id="f_address" value="${s.address||""}" placeholder="Street, City"></div>
+        <div class="field full"><label>Address</label><input id="f_address" value="${escapeHtml(s.address||"")}" placeholder="Street, City"></div>
       </div>
     </div>
     <div class="form-section">
@@ -892,254 +1043,560 @@
           </select>
         </div>
         <div class="field"><label>Hire Date</label><input id="f_hire" type="date" value="${s.hireDate||""}"></div>
-        <div class="field"><label>Salary</label><input id="f_salary" value="${s.salary||""}" placeholder="$2,500"></div>
-        <div class="field"><label>Status</label><select id="f_status"><option ${s.status!=="Inactive"?"selected":""}>Active</option><option ${s.status==="Inactive"?"selected":""}>Inactive</option></select></div>
+        <div class="field"><label>Salary</label><input id="f_salary" value="${s.rawSalary||""}" placeholder="2500"></div>
+        <div class="field"><label>Status</label>
+          <select id="f_status">
+            <option value="Active" ${s.status!=="Inactive"?"selected":""}>Active</option>
+            <option value="Inactive" ${s.status==="Inactive"?"selected":""}>Inactive</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="form-section">
       <h4>Account Information</h4>
       <div class="form-grid">
-        <div class="field"><label>Username</label><input id="f_username" value="${s.username||""}" placeholder="sophia.w"></div>
-        <div class="field"><label>Password</label><input id="f_password" type="password" placeholder="••••••••"></div>
+        <div class="field"><label>Username</label><input id="f_username" value="${escapeHtml(s.username||"")}" placeholder="sophia.w"></div>
+        <div class="field"><label>Password ${s.id ? "(leave blank to keep current)" : ""}</label><input id="f_password" type="password" placeholder="••••••••"></div>
         <div class="field full"><label>Confirm Password</label><input id="f_cpassword" type="password" placeholder="••••••••"></div>
-      </div>
-    </div>
-    <div class="form-section">
-      <h4>Professional Information</h4>
-      <div class="form-grid">
-        <div class="field full"><label>Services (comma separated)</label><input id="f_services" value="${(s.services||[]).join(", ")}" placeholder="Hair Cut, Hair Coloring"></div>
-        <div class="field"><label>Working Days</label><input id="f_days" value="Mon - Sat" placeholder="Mon - Sat"></div>
-        <div class="field"><label>Start Time</label><input id="f_start" type="time" value="09:00"></div>
-        <div class="field"><label>End Time</label><input id="f_end" type="time" value="17:00"></div>
       </div>
     </div>`;
     }
 
     function openAddStaff(){
         closeAllDropdowns();
+        editingId = null;
         const html = `
-    <div class="modal-head"><div><h3>Add New Staff</h3><p>Create a new staff profile</p></div>
+    <div class="modal-head"><div><h3>Add New Staff</h3><p>Create a new staff profile in the database</p></div>
       <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="modal-body">${staffFormFields()}</div>
     <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="addStaff()"><i class="fa-solid fa-check"></i> Create Staff</button></div>`;
+      <button class="btn btn-primary" onclick="addStaff(this)"><i class="fa-solid fa-check"></i> Create Staff</button></div>`;
         openModal(html,"lg");
     }
 
     function openEditStaff(id){
         closeAllDropdowns();
         editingId = id;
-        const s = staffData.find(x=>x.id===id);
+        const s = staffData.find(x => x.id == id);
+        if (!s) return;
         const html = `
-    <div class="modal-head"><div><h3>Edit Staff</h3><p>Update staff information</p></div>
+    <div class="modal-head"><div><h3>Edit Staff</h3><p>Update staff information in the database</p></div>
       <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="modal-body">${staffFormFields(s)}</div>
     <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="updateStaff()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>`;
+      <button class="btn btn-primary" onclick="updateStaff(this)"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>`;
         openModal(html,"lg");
     }
 
-    function readForm(){
+    function val(id){
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+    }
+
+    function readForm(isEdit = false){
         const name = val("f_name"), email = val("f_email"), phone = val("f_phone");
-        if(!name||!email||!phone){toast("Name, email and phone are required","error");return null}
-        const start = val("f_start"), end = val("f_end");
+        if(!name){ toast("Staff Name is required", "error"); return null; }
+        if(!email){ toast("Staff Email is required", "error"); return null; }
+        if(!phone){ toast("Staff Phone is required", "error"); return null; }
+
+        const pwd = val("f_password");
+        const cpwd = val("f_cpassword");
+        if (pwd && pwd !== cpwd) {
+            toast("Passwords do not match", "error");
+            return null;
+        }
+
+        const rawSal = val("f_salary").replace(/[^0-9.]/g, "");
+        const salary = rawSal ? parseFloat(rawSal) : 0;
+        const dob = val("f_dob");
+        const hireDate = val("f_hire") || new Date().toISOString().split("T")[0];
+
         return {
-            name, email, phone,
-            dob:val("f_dob"), gender:val("f_gender"), address:val("f_address"),
-            position:val("f_position"), hireDate:val("f_hire"), salary:val("f_salary")||"$2,500",
-            status:val("f_status"), username:val("f_username"),
-            services:val("f_services").split(",").map(x=>x.trim()).filter(Boolean),
-            hours:`${fmtTime(start)} - ${fmtTime(end)}`
+            staffName: name,
+            staffEmail: email,
+            staffPhone: phone,
+            dateOfBirth: dob || null,
+            gender: val("f_gender") || "Female",
+            address: val("f_address") || null,
+            position: val("f_position") || "Hair Stylist",
+            hireDate: hireDate,
+            salary: salary,
+            status: val("f_status") === "Inactive" ? "INACTIVE" : "ACTIVE",
+            username: val("f_username") || null,
+            password: pwd || null,
+            serviceIds: []
         };
     }
-    function val(id){const el=document.getElementById(id);return el?el.value.trim():""}
 
-    function addStaff(){
-        const data = readForm();if(!data)return;
-        const newId = "PBS-"+String(staffData.length+1).padStart(3,"0");
-        const staff = {
-            id:newId, ...data, availability:"Available",
-            schedule:cloneSchedule(), appointments:sampleAppts(), leaves:sampleLeaves(),
-            perf:{total:0,completed:0,cancelled:0,rating:5.0}
-        };
-        staffData.push(staff);
-        applyFilters();renderStats();
-        closeModal();
-        toast("Staff created successfully");
+    async function addStaff(btn){
+        const payload = readForm(false);
+        if(!payload) return;
+
+        const origText = btn ? btn.innerHTML : "";
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Creating...`;
+        }
+
+        try {
+            await apiRequest(`${API_BASE_URL}/save`, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            closeModal();
+            toast("Staff member created successfully!");
+            await loadStaff();
+        } catch (err) {
+            toast(err.message || "Failed to create staff member", "error");
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = origText;
+            }
+        }
     }
 
-    function updateStaff(){
-        const data = readForm();if(!data)return;
-        const idx = staffData.findIndex(s=>s.id===editingId);if(idx<0)return;
-        staffData[idx] = {...staffData[idx], ...data};
-        applyFilters();renderStats();
-        closeModal();
-        toast("Staff updated successfully");
+    async function updateStaff(btn){
+        if (!editingId) return;
+        const payload = readForm(true);
+        if(!payload) return;
+
+        const origText = btn ? btn.innerHTML : "";
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+        }
+
+        try {
+            await apiRequest(`${API_BASE_URL}/update/${editingId}`, {
+                method: "PUT",
+                body: JSON.stringify(payload)
+            });
+            closeModal();
+            toast("Staff member updated successfully!");
+            await loadStaff();
+        } catch (err) {
+            toast(err.message || "Failed to update staff member", "error");
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = origText;
+            }
+        }
     }
 
     /* ---------- Assign Services ---------- */
-    function openAssignServices(id){
+    async function openAssignServices(id){
         closeAllDropdowns();
         editingId = id;
-        const s = staffData.find(x=>x.id===id);
-        const html = `
-    <div class="modal-head"><div><h3>Assign Services</h3><p>Select services for ${s.name}</p></div>
-      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
-    <div class="modal-body">
-      <div class="checklist">
-        ${ALL_SERVICES.map(sv=>`<div class="check-item"><input type="checkbox" id="svc_${sv.replace(/\s/g,"")}" ${s.services.includes(sv)?"checked":""}><label for="svc_${sv.replace(/\s/g,"")}">${sv}</label></div>`).join("")}
-      </div>
-    </div>
-    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="assignServices()"><i class="fa-solid fa-check"></i> Save Changes</button></div>`;
-        openModal(html);
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
+
+        openModal(`
+          <div class="modal-head"><div><h3>Assign Services</h3><p>Loading salon services for ${escapeHtml(s.name)}...</p></div>
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+          <div class="modal-body" style="text-align:center;padding:30px;"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--rose-gold);"></i></div>
+        `);
+
+        try {
+            let allServices = [];
+            try {
+                const res = await apiRequest(`${API_SERVICES_BASE}/all`);
+                const data = res?.data ?? res?.body ?? [];
+                if (Array.isArray(data) && data.length) {
+                    allServices = data.map(svc => svc.serviceName || svc.name).filter(Boolean);
+                }
+            } catch (e) {
+                console.warn("Could not fetch services list, fallback to default", e);
+            }
+            if (!allServices.length) {
+                allServices = ALL_SERVICES;
+            }
+
+            const currentServices = s.services || [];
+            const html = `
+        <div class="modal-head"><div><h3>Assign Services</h3><p>Select services for ${escapeHtml(s.name)}</p></div>
+          <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="modal-body">
+          <div class="checklist">
+            ${allServices.map(sv => `
+              <div class="check-item">
+                <input type="checkbox" id="svc_${sv.replace(/[^a-zA-Z0-9]/g, "")}" ${currentServices.includes(sv) ? "checked" : ""}>
+                <label for="svc_${sv.replace(/[^a-zA-Z0-9]/g, "")}">${escapeHtml(sv)}</label>
+              </div>`).join("")}
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="assignServices('${s.id}')"><i class="fa-solid fa-check"></i> Save Changes</button>
+        </div>`;
+            openModal(html);
+        } catch (err) {
+            toast("Failed to load services", "error");
+            closeModal();
+        }
     }
-    function assignServices(){
-        const sel = ALL_SERVICES.filter(sv=>document.getElementById("svc_"+sv.replace(/\s/g,"")).checked);
-        const s = staffData.find(x=>x.id===editingId);if(!s)return;
-        s.services = sel;
+
+    async function assignServices(id){
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
+        const checkboxes = document.querySelectorAll(".checklist input[type=checkbox]");
+        const selectedNames = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                const label = document.querySelector(`label[for="${cb.id}"]`);
+                if (label) selectedNames.push(label.textContent.trim());
+            }
+        });
+        s.services = selectedNames;
         applyFilters();
         closeModal();
-        toast("Services assigned successfully");
+        toast("Services assigned to staff member successfully!");
     }
 
     /* ---------- Working Hours ---------- */
-    function openWorkingHours(id){
+    async function openWorkingHours(id){
         closeAllDropdowns();
         editingId = id;
-        const s = staffData.find(x=>x.id===id);
-        const html = `
-    <div class="modal-head"><div><h3>Working Hours</h3><p>Weekly schedule for ${s.name}</p></div>
-      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
-    <div class="modal-body">
-      ${s.schedule.map((d,i)=>`
-        <div class="wh-row ${d.off?"off":""}" id="wh_${i}">
-          <div class="day-lbl">${d.day}</div>
-          <input type="time" value="${d.start}">
-          <input type="time" value="${d.end}">
-          <select onchange="toggleOff(${i},this.value)"><option value="work" ${d.off?"":"selected"}>Working</option><option value="off" ${d.off?"selected":""}>Day Off</option></select>
-        </div>`).join("")}
-    </div>
-    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="updateWorkingHours()"><i class="fa-solid fa-floppy-disk"></i> Save Schedule</button></div>`;
-        openModal(html,"lg");
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
+
+        openModal(`
+          <div class="modal-head"><div><h3>Working Hours</h3><p>Loading schedule for ${escapeHtml(s.name)}...</p></div>
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+          <div class="modal-body" style="text-align:center;padding:30px;"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--rose-gold);"></i></div>
+        `, "lg");
+
+        try {
+            let schedule = [];
+            try {
+                const res = await apiRequest(`${API_BASE_URL}/${id}/working-hours`);
+                const data = res?.data ?? res?.body ?? [];
+                if (Array.isArray(data) && data.length) {
+                    schedule = data.map(wh => ({
+                        workingHourId: wh.workingHourId,
+                        day: wh.day,
+                        start: wh.startTime ? (typeof wh.startTime === 'string' ? wh.startTime.substring(0, 5) : '09:00') : '09:00',
+                        end: wh.endTime ? (typeof wh.endTime === 'string' ? wh.endTime.substring(0, 5) : '17:00') : '17:00',
+                        off: Boolean(wh.dayOff)
+                    }));
+                }
+            } catch (e) {
+                console.warn("Could not load working hours from DB, using defaults", e);
+            }
+            if (!schedule.length) {
+                schedule = cloneSchedule();
+            }
+
+            s.schedule = schedule;
+
+            const html = `
+        <div class="modal-head"><div><h3>Working Hours</h3><p>Weekly schedule for ${escapeHtml(s.name)}</p></div>
+          <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="modal-body">
+          ${schedule.map((d, i) => `
+            <div class="wh-row ${d.off ? "off" : ""}" id="wh_${i}">
+              <div class="day-lbl">${d.day}</div>
+              <input type="time" value="${d.start}">
+              <input type="time" value="${d.end}">
+              <select onchange="toggleOff(${i}, this.value)">
+                <option value="work" ${d.off ? "" : "selected"}>Working</option>
+                <option value="off" ${d.off ? "selected" : ""}>Day Off</option>
+              </select>
+            </div>`).join("")}
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="updateWorkingHours('${s.id}')"><i class="fa-solid fa-floppy-disk"></i> Save Schedule</button>
+        </div>`;
+            openModal(html, "lg");
+        } catch (err) {
+            toast("Failed to load working hours", "error");
+            closeModal();
+        }
     }
-    function toggleOff(i,v){
-        const row = document.getElementById("wh_"+i);
-        if(v==="off")row.classList.add("off");else row.classList.remove("off");
+
+    function toggleOff(i, v){
+        const row = document.getElementById("wh_" + i);
+        if (!row) return;
+        if (v === "off") row.classList.add("off");
+        else row.classList.remove("off");
     }
-    function updateWorkingHours(){
-        const s = staffData.find(x=>x.id===editingId);if(!s)return;
-        s.schedule.forEach((d,i)=>{
-            const row = document.getElementById("wh_"+i);
+
+    async function updateWorkingHours(id){
+        const s = staffData.find(x => x.id == id);
+        if (!s || !s.schedule) return;
+
+        const dtoList = s.schedule.map((d, i) => {
+            const row = document.getElementById("wh_" + i);
             const inputs = row.querySelectorAll("input[type=time]");
             const sel = row.querySelector("select").value;
-            d.off = sel==="off";
-            d.start = inputs[0].value;
-            d.end = inputs[1].value;
+            const isOff = sel === "off";
+            const startVal = inputs[0]?.value || "09:00";
+            const endVal = inputs[1]?.value || "17:00";
+
+            d.off = isOff;
+            d.start = startVal;
+            d.end = endVal;
+
+            return {
+                workingHourId: d.workingHourId || null,
+                day: d.day,
+                startTime: startVal.length === 5 ? `${startVal}:00` : startVal,
+                endTime: endVal.length === 5 ? `${endVal}:00` : endVal,
+                dayOff: isOff
+            };
         });
-        // update display hours string
-        const wd = s.schedule.filter(d=>!d.off);
-        if(wd.length){s.hours = `${fmtTime(wd[0].start)} - ${fmtTime(wd[0].end)}`}
-        applyFilters();
-        closeModal();
-        toast("Working hours updated successfully");
+
+        try {
+            await apiRequest(`${API_BASE_URL}/${id}/working-hours`, {
+                method: "PUT",
+                body: JSON.stringify(dtoList)
+            });
+            const wd = s.schedule.filter(d => !d.off);
+            if (wd.length) {
+                s.hours = `${fmtTime(wd[0].start)} - ${fmtTime(wd[0].end)}`;
+            }
+            applyFilters();
+            closeModal();
+            toast("Working hours updated successfully");
+        } catch (err) {
+            toast(err.message || "Failed to update working hours", "error");
+        }
     }
 
     /* ---------- Appointments ---------- */
-    function openAppointments(id){
+    async function openAppointments(id){
         closeAllDropdowns();
-        const s = staffData.find(x=>x.id===id);
-        const html = `
-    <div class="modal-head"><div><h3>Appointments</h3><p>${s.name}'s scheduled appointments</p></div>
-      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
-    <div class="modal-body">
-      <table class="mini-table">
-        <thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
-        <tbody>${s.appointments.map(a=>`<tr><td>${a.customer}</td><td>${a.service}</td><td>${a.date}</td><td>${a.time}</td><td><span class="badge status-${a.status==="Completed"?"active":"inactive"}" style="${a.status==="Pending"?"background:var(--warning-bg);color:var(--warning)":a.status==="Confirmed"?"background:var(--success-bg);color:var(--success)":""}">${a.status}</span></td></tr>`).join("")}</tbody>
-      </table>
-    </div>
-    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
-        openModal(html,"lg");
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
+
+        openModal(`
+          <div class="modal-head"><div><h3>Appointments</h3><p>Loading scheduled appointments for ${escapeHtml(s.name)}...</p></div>
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+          <div class="modal-body" style="text-align:center;padding:30px;"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--rose-gold);"></i></div>
+        `, "lg");
+
+        try {
+            let appts = [];
+            try {
+                const res = await apiRequest(`${API_APPOINTMENT_BASE}/staff/${id}`);
+                const data = res?.data ?? res?.body ?? [];
+                if (Array.isArray(data)) {
+                    appts = data.map(a => ({
+                        customer: a.customerName || `Customer #${a.customerId || 'N/A'}`,
+                        service: a.serviceName || `Service #${a.serviceId || 'N/A'}`,
+                        date: a.appointmentDate || 'N/A',
+                        time: a.startTime || 'N/A',
+                        status: a.status || 'Pending'
+                    }));
+                }
+            } catch (e) {
+                console.warn("Could not fetch appointments from DB", e);
+            }
+
+            const rows = appts.length ? appts.map(a => `
+              <tr>
+                <td><strong>${escapeHtml(a.customer)}</strong></td>
+                <td>${escapeHtml(a.service)}</td>
+                <td>${a.date}</td>
+                <td>${a.time}</td>
+                <td><span class="badge status-${String(a.status).toLowerCase()}">${a.status}</span></td>
+              </tr>`).join("") : `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;">No appointments found for this staff member</td></tr>`;
+
+            const html = `
+        <div class="modal-head"><div><h3>Appointments</h3><p>${escapeHtml(s.name)}'s scheduled appointments</p></div>
+          <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="modal-body">
+          <table class="mini-table">
+            <thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
+            openModal(html, "lg");
+        } catch (err) {
+            toast("Failed to load appointments", "error");
+            closeModal();
+        }
     }
-    function loadAppointments(id){return (staffData.find(s=>s.id===id)||{appointments:[]}).appointments}
 
     /* ---------- Manage Leave ---------- */
-    function openManageLeave(id){
+    async function openManageLeave(id){
         closeAllDropdowns();
         editingId = id;
-        const s = staffData.find(x=>x.id===id);
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
+
+        openModal(`
+          <div class="modal-head"><div><h3>Manage Leave</h3><p>Loading leave requests for ${escapeHtml(s.name)}...</p></div>
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
+          <div class="modal-body" style="text-align:center;padding:30px;"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--rose-gold);"></i></div>
+        `, "lg");
+
+        try {
+            let leaves = [];
+            try {
+                const res = await apiRequest(`${API_BASE_URL}/${id}/leave`);
+                const data = res?.data ?? res?.body ?? [];
+                if (Array.isArray(data)) {
+                    leaves = data.map(l => ({
+                        leaveId: l.leaveId,
+                        type: l.leaveType ? l.leaveType.replace(/_/g, " ") : "Annual Leave",
+                        rawType: l.leaveType,
+                        start: l.startDate || "",
+                        end: l.endDate || "",
+                        reason: l.reason || "Personal",
+                        status: (l.status === "APPROVED" || l.status === "Approved") ? "Approved" : (l.status === "REJECTED" || l.status === "Rejected") ? "Rejected" : "Pending"
+                    }));
+                }
+            } catch (e) {
+                console.warn("Could not fetch leaves from DB", e);
+            }
+            s.leaves = leaves;
+
+            renderManageLeaveModal(s);
+        } catch (err) {
+            toast("Failed to load leave requests", "error");
+            closeModal();
+        }
+    }
+
+    function renderManageLeaveModal(s){
         const html = `
-    <div class="modal-head"><div><h3>Manage Leave</h3><p>Leave requests for ${s.name}</p></div>
+    <div class="modal-head"><div><h3>Manage Leave</h3><p>Leave requests for ${escapeHtml(s.name)}</p></div>
       <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="modal-body">
       <div class="form-section">
         <h4>New Leave Request</h4>
         <div class="form-grid">
           <div class="field"><label>Leave Type</label>
-            <select id="lv_type"><option>Annual Leave</option><option>Sick Leave</option><option>Maternity Leave</option><option>Unpaid Leave</option></select>
+            <select id="lv_type">
+              <option value="ANNUAL_LEAVE">Annual Leave</option>
+              <option value="SICK_LEAVE">Sick Leave</option>
+              <option value="MATERNITY_LEAVE">Maternity Leave</option>
+              <option value="UNPAID_LEAVE">Unpaid Leave</option>
+            </select>
           </div>
           <div class="field"><label>Start Date</label><input id="lv_start" type="date"></div>
           <div class="field"><label>End Date</label><input id="lv_end" type="date"></div>
           <div class="field full"><label>Reason</label><textarea id="lv_reason" placeholder="Reason for leave"></textarea></div>
         </div>
-        <button class="btn btn-outline" onclick="addLeave()" style="margin-top:10px"><i class="fa-solid fa-plus"></i> Add Request</button>
+        <button class="btn btn-outline" onclick="addLeave('${s.id}')" style="margin-top:10px"><i class="fa-solid fa-plus"></i> Add Request</button>
       </div>
       <div class="detail-subhead" style="margin-top:6px">Current Leave Requests</div>
       <div class="leave-list" id="leaveList">${renderLeaves(s)}</div>
     </div>
     <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`;
-        openModal(html,"lg");
+        openModal(html, "lg");
     }
+
     function renderLeaves(s){
-        if(!s.leaves.length)return"<p style='color:var(--muted);font-size:13px'>No leave requests.</p>";
-        return s.leaves.map((l,i)=>`
+        if(!s.leaves || !s.leaves.length) return "<p style='color:var(--muted);font-size:13px'>No leave requests.</p>";
+        return s.leaves.map(l => `
     <div class="leave-card">
-      <div class="top"><span class="type">${l.type}</span>
+      <div class="top"><span class="type">${escapeHtml(l.type)}</span>
         <span class="badge ${l.status==="Approved"?"status-active":l.status==="Rejected"?"status-inactive":""}" style="${l.status==="Pending"?"background:var(--warning-bg);color:var(--warning)":""}">${l.status}</span></div>
       <div class="date">${l.start} → ${l.end}</div>
-      <div class="reason">${l.reason}</div>
-      ${l.status==="Pending"?`<div class="leave-actions"><button class="btn btn-success" onclick="manageLeave(${i},'Approved')"><i class="fa-solid fa-check"></i> Approve</button><button class="btn btn-danger" onclick="manageLeave(${i},'Rejected')"><i class="fa-solid fa-xmark"></i> Reject</button></div>`:""}
+      <div class="reason">${escapeHtml(l.reason)}</div>
+      ${l.status==="Pending" && l.leaveId ? `<div class="leave-actions" style="margin-top:10px;display:flex;gap:8px;">
+        <button class="btn btn-success btn-sm" onclick="manageLeave('${s.id}', ${l.leaveId}, 'APPROVED')"><i class="fa-solid fa-check"></i> Approve</button>
+        <button class="btn btn-danger btn-sm" onclick="manageLeave('${s.id}', ${l.leaveId}, 'REJECTED')"><i class="fa-solid fa-xmark"></i> Reject</button>
+      </div>`:""}
     </div>`).join("");
     }
-    function addLeave(){
-        const s = staffData.find(x=>x.id===editingId);if(!s)return;
-        const type=val("lv_type"),start=val("lv_start"),end=val("lv_end"),reason=val("lv_reason");
-        if(!start||!end){toast("Please select dates","error");return}
-        s.leaves.push({type,start,end,reason,status:"Pending"});
-        document.getElementById("leaveList").innerHTML = renderLeaves(s);
-        toast("Leave request added","info");
+
+    async function addLeave(id){
+        const s = staffData.find(x => x.id == id);
+        if(!s) return;
+        const type = val("lv_type"), start = val("lv_start"), end = val("lv_end"), reason = val("lv_reason");
+        if(!start || !end){ toast("Please select both start and end dates", "error"); return; }
+
+        try {
+            const payload = {
+                staffId: Number(id),
+                leaveType: type,
+                startDate: start,
+                endDate: end,
+                reason: reason || "Personal",
+                status: "PENDING"
+            };
+            await apiRequest(`${API_BASE_URL}/${id}/leave`, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            toast("Leave request added successfully");
+            // Reload leaves
+            const res = await apiRequest(`${API_BASE_URL}/${id}/leave`);
+            const data = res?.data ?? res?.body ?? [];
+            s.leaves = Array.isArray(data) ? data.map(l => ({
+                leaveId: l.leaveId,
+                type: l.leaveType ? l.leaveType.replace(/_/g, " ") : "Annual Leave",
+                start: l.startDate || "",
+                end: l.endDate || "",
+                reason: l.reason || "Personal",
+                status: (l.status === "APPROVED" || l.status === "Approved") ? "Approved" : (l.status === "REJECTED" || l.status === "Rejected") ? "Rejected" : "Pending"
+            })) : [];
+            const listEl = document.getElementById("leaveList");
+            if (listEl) listEl.innerHTML = renderLeaves(s);
+        } catch (err) {
+            toast(err.message || "Failed to add leave request", "error");
+        }
     }
-    function manageLeave(i,decision){
-        const s = staffData.find(x=>x.id===editingId);if(!s)return;
-        s.leaves[i].status = decision;
-        document.getElementById("leaveList").innerHTML = renderLeaves(s);
-        toast(`Leave ${decision.toLowerCase()}`,"info");
+
+    async function manageLeave(staffId, leaveId, decision){
+        const s = staffData.find(x => x.id == staffId);
+        try {
+            await apiRequest(`${API_BASE_URL}/leave/${leaveId}/status?status=${decision}`, {
+                method: "PATCH"
+            });
+            toast(`Leave request ${decision.toLowerCase()} successfully`);
+            // Reload leaves
+            const res = await apiRequest(`${API_BASE_URL}/${staffId}/leave`);
+            const data = res?.data ?? res?.body ?? [];
+            s.leaves = Array.isArray(data) ? data.map(l => ({
+                leaveId: l.leaveId,
+                type: l.leaveType ? l.leaveType.replace(/_/g, " ") : "Annual Leave",
+                start: l.startDate || "",
+                end: l.endDate || "",
+                reason: l.reason || "Personal",
+                status: (l.status === "APPROVED" || l.status === "Approved") ? "Approved" : (l.status === "REJECTED" || l.status === "Rejected") ? "Rejected" : "Pending"
+            })) : [];
+            const listEl = document.getElementById("leaveList");
+            if (listEl) listEl.innerHTML = renderLeaves(s);
+        } catch (err) {
+            toast(err.message || "Failed to update leave status", "error");
+        }
     }
 
     /* ---------- Toggle status ---------- */
     function confirmToggleStatus(id){
         closeAllDropdowns();
-        const s = staffData.find(x=>x.id===id);
-        const isActivate = s.status==="Inactive";
+        const s = staffData.find(x => x.id == id);
+        if (!s) return;
+        const isActivate = s.status === "Inactive";
         const html = `
     <div class="modal-body">
       <div class="confirm-body">
-        <div class="confirm-icon ${isActivate?"warn":"danger"}"><i class="fa-solid ${isActivate?"fa-toggle-on":"fa-toggle-off"}"></i></div>
-        <h3>${isActivate?"Activate Staff?":"Deactivate Staff?"}</h3>
-        <p>${isActivate?"Are you sure you want to activate this staff account?":"Are you sure you want to deactivate this staff account?"}</p>
+        <div class="confirm-icon ${isActivate ? "warn" : "danger"}"><i class="fa-solid ${isActivate ? "fa-toggle-on" : "fa-toggle-off"}"></i></div>
+        <h3>${isActivate ? "Activate Staff?" : "Deactivate Staff?"}</h3>
+        <p>${isActivate ? "Are you sure you want to activate this staff account?" : "Are you sure you want to deactivate this staff account?"}</p>
       </div>
     </div>
     <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn ${isActivate?"btn-success":"btn-danger"}" onclick="updateStaffStatus('${id}')">${isActivate?"Activate":"Deactivate"}</button></div>`;
+      <button class="btn ${isActivate ? "btn-success" : "btn-danger"}" onclick="updateStaffStatus('${id}')">${isActivate ? "Activate" : "Deactivate"}</button></div>`;
         openModal(html);
     }
-    function updateStaffStatus(id){
-        const s = staffData.find(x=>x.id===id);
-        s.status = s.status==="Active"?"Inactive":"Active";
-        applyFilters();renderStats();
-        closeModal();
-        toast(s.status==="Active"?"Staff activated successfully":"Staff account deactivated");
+
+    async function updateStaffStatus(id){
+        try {
+            await apiRequest(`${API_BASE_URL}/status/${id}`, {
+                method: "PATCH"
+            });
+            closeModal();
+            toast("Staff status updated successfully");
+            await loadStaff();
+        } catch (err) {
+            toast(err.message || "Failed to update status", "error");
+        }
     }
 
     /* ---------- Delete ---------- */
@@ -1150,29 +1607,82 @@
       <div class="confirm-body">
         <div class="confirm-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
         <h3>Delete Staff?</h3>
-        <p>This action cannot be undone. Are you sure you want to delete this staff member?</p>
+        <p>This action cannot be undone. Are you sure you want to delete this staff member from the database?</p>
       </div>
     </div>
     <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
       <button class="btn btn-danger" onclick="deleteStaff('${id}')"><i class="fa-solid fa-trash"></i> Delete Staff</button></div>`;
         openModal(html);
     }
-    function deleteStaff(id){
-        staffData = staffData.filter(s=>s.id!==id);
-        applyFilters();renderStats();
-        closeModal();
-        toast("Staff deleted successfully");
+
+    async function deleteStaff(id){
+        try {
+            await apiRequest(`${API_BASE_URL}/delete/${id}`, {
+                method: "DELETE"
+            });
+            closeModal();
+            toast("Staff member deleted successfully from database");
+            await loadStaff();
+        } catch (err) {
+            toast(err.message || "Failed to delete staff member", "error");
+        }
     }
 
-    /* ---------- Sidebar (mobile) ---------- */
-    function toggleSidebar(){
-        document.getElementById("sidebar").classList.toggle("open");
-        document.getElementById("overlay").classList.toggle("show");
+    /* ---------- Boot & Event Listeners ---------- */
+    async function loadStaff(){
+        const body = document.getElementById("staffBody");
+        const empty = document.getElementById("emptyState");
+        if (body && !staffData.length) {
+            body.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted);"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--rose-gold);margin-bottom:10px;display:block;"></i>Loading staff members from database...</td></tr>`;
+        }
+
+        try {
+            const response = await apiRequest(`${API_BASE_URL}/all`);
+            let rawList = [];
+            if (Array.isArray(response)) {
+                rawList = response;
+            } else if (Array.isArray(response?.body)) {
+                rawList = response.body;
+            } else if (Array.isArray(response?.data)) {
+                rawList = response.data;
+            }
+            staffData = rawList.map(mapBackendStaff);
+            applyFilters();
+            renderStats();
+        } catch (err) {
+            console.error("Failed to load staff from backend:", err);
+            toast(err.message || "Failed to load staff from server", "error");
+            staffData = [];
+            applyFilters();
+            renderStats();
+        }
     }
 
-    /* ---------- Boot ---------- */
-    function loadStaff(){applyFilters();renderStats()}
+    document.addEventListener("DOMContentLoaded", () => {
+        loadStaff();
+
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", () => {
+                currentPage = 1;
+                applyFilters();
+            });
+        }
+
+        const filterPosition = document.getElementById("filterPosition");
+        if (filterPosition) filterPosition.addEventListener("change", applyFilters);
+
+        const filterStatus = document.getElementById("filterStatus");
+        if (filterStatus) filterStatus.addEventListener("change", applyFilters);
+
+        const filterAvail = document.getElementById("filterAvail");
+        if (filterAvail) filterAvail.addEventListener("change", applyFilters);
+    });
+
+    // Initial trigger
     loadStaff();
 </script>
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 </body>
 </html>

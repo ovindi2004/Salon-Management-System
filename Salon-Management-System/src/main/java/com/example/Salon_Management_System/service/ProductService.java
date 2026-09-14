@@ -30,13 +30,7 @@ public interface ProductService {
 
     Double getInventoryValue();
 
-    // ==========================================
-    // LOW STOCK PRODUCTS
-    // ==========================================
     List<ProductDTO> getLowStockProducts();
 
-    // ==========================================
-    // OUT OF STOCK PRODUCTS
-    // ==========================================
     List<ProductDTO> getOutOfStockProducts();
 }

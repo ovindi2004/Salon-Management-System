@@ -47,19 +47,23 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public DashboardDTO getDashboard(LocalDate fromDate, LocalDate toDate) {
 
-            if (fromDate == null) {fromDate = LocalDate.now().withDayOfMonth(1);
-            }
+        LocalDate today = LocalDate.now();
 
-            if (toDate == null) {toDate = LocalDate.now();
-            }
+        if (fromDate == null) {
+            fromDate = today.withDayOfMonth(1);
+        }
 
-            if (fromDate.isAfter(toDate)) {
-                throw new IllegalArgumentException(
-                        "From date cannot be after to date"
-                );
-            }
+        if (toDate == null) {
+            toDate = today.withDayOfMonth(today.lengthOfMonth());
+        }
 
-            List<Appointment> appointments = appointmentRepository.findByAppointmentDateBetween(fromDate, toDate);
+        if (fromDate.isAfter(toDate)) {
+            throw new IllegalArgumentException(
+                    "From date cannot be after to date"
+            );
+        }
+
+        List<Appointment> appointments = appointmentRepository.findByAppointmentDateBetween(fromDate, toDate);
             List<Payment> payments = paymentRepository.findByPaymentDateBetween(fromDate, toDate);
             List<Customer> customers = customerRepository.findAll();
             List<Staff> staffList = staffRepository.findAll();
@@ -95,9 +99,6 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setTotalStaff(staffList.size());
             dashboard.setTotalServices(services.size());
 
-
-            LocalDate today = LocalDate.now();
-
             List<Appointment> todayAppointmentsList = appointmentRepository.findByAppointmentDate(today);
 
             dashboard.setTodayAppointments(todayAppointmentsList.size());
@@ -112,9 +113,10 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setRevenueAnalytics(buildRevenueAnalytics(payments, fromDate, toDate));
             dashboard.setTopStaff(buildStaffPerformance(appointments));
             dashboard.setTopServices(buildServicePerformance(appointments));
-            dashboard.setRecentAppointments(buildRecentAppointments(appointments));
+            dashboard.setRecentAppointments(buildRecentAppointments());
             return dashboard;
     }
+
 
 
     private BigDecimal calculateTotalRevenue(
@@ -160,10 +162,6 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
 
-    // =========================================================
-    // APPOINTMENT STATUS
-    // =========================================================
-
     private long countAppointmentsByStatus(
             List<Appointment> appointments,
             AppointmentStatus status
@@ -180,10 +178,6 @@ public class DashboardServiceImpl implements DashboardService {
                 .count();
     }
 
-
-    // =========================================================
-    // CUSTOMER CALCULATIONS
-    // =========================================================
 
     private long countActiveCustomers(
             List<Customer> customers
@@ -231,10 +225,6 @@ public class DashboardServiceImpl implements DashboardService {
                 .count();
     }
 
-
-    // =========================================================
-    // REVENUE CHART
-    // =========================================================
 
     private List<DashboardRevenueDTO> buildRevenueAnalytics(
             List<Payment> payments,
@@ -296,10 +286,6 @@ public class DashboardServiceImpl implements DashboardService {
         return result;
     }
 
-
-    // =========================================================
-    // STAFF PERFORMANCE
-    // =========================================================
 
     private List<DashboardStaffDTO> buildStaffPerformance(
             List<Appointment> appointments
@@ -366,10 +352,6 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
 
-    // =========================================================
-    // SERVICE PERFORMANCE
-    // =========================================================
-
     private List<DashboardServiceDTO> buildServicePerformance(
             List<Appointment> appointments
     ) {
@@ -430,25 +412,13 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
 
-    // =========================================================
-    // RECENT APPOINTMENTS
-    // =========================================================
+    private List<DashboardAppointmentDTO> buildRecentAppointments() {
 
-    private List<DashboardAppointmentDTO> buildRecentAppointments(
-            List<Appointment> appointments
-    ) {
-
-        return appointments.stream()
+        return appointmentRepository.findAll().stream()
                 .sorted(
                         Comparator
                                 .comparing(
-                                        Appointment::getAppointmentDate,
-                                        Comparator.nullsLast(
-                                                Comparator.reverseOrder()
-                                        )
-                                )
-                                .thenComparing(
-                                        Appointment::getStartTime,
+                                        Appointment::getAppointmentId,
                                         Comparator.nullsLast(
                                                 Comparator.reverseOrder()
                                         )
@@ -459,10 +429,6 @@ public class DashboardServiceImpl implements DashboardService {
                 .collect(Collectors.toList());
     }
 
-
-    // =========================================================
-    // APPOINTMENT → DASHBOARD DTO
-    // =========================================================
 
     private DashboardAppointmentDTO
     convertToDashboardAppointmentDTO(

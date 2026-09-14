@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Unified Luxury Sidebar -->
+    <link rel="stylesheet" href="css/unified-sidebar.css" />
 
     <style>
         :root{
@@ -1186,6 +1188,33 @@
             font-weight:500;
         }
 
+        .staff-checklist{
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+            gap:10px;
+            max-height:180px;
+            overflow-y:auto;
+            padding:12px;
+            border:1px solid var(--border);
+            border-radius:9px;
+            background:var(--cream);
+        }
+
+        .staff-check-item{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-size:13px;
+            cursor:pointer;
+        }
+
+        .staff-check-item input[type="checkbox"]{
+            width:16px;
+            height:16px;
+            accent-color:var(--rose-gold);
+            cursor:pointer;
+        }
+
 
         /* =========================================================
            CONFIRM
@@ -1429,39 +1458,97 @@
 
 
 
-<!-- ============ SIDEBAR ============ -->
+<!-- ============ UNIFIED SIDEBAR ============ -->
 <aside class="sidebar" id="sidebar">
-    <div class="brand">
-        <div class="brand-icon"><i class="fa-solid fa-spa"></i></div>
-        <div>
-            <div class="brand-name">PINK BEAUTY</div>
-            <div class="brand-tag">Luxury Beauty Meets Smart Technology</div>
+    <div class="sidebar-header">
+        <div class="brand-logo">
+            <i class="fas fa-spa"></i>
+        </div>
+        <div class="brand-info">
+            <h2>Pink Beauty</h2>
+            <span>LUXURY SALON</span>
         </div>
     </div>
-    <nav class="nav">
-        <div class="nav-label">Main Menu</div>
-        <div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></div>
-        <div class="nav-item" onclick="window.location.href='userMangemnt.html'"><i class="fa-solid fa-users"></i><span>User Management</span></div>
-        <div class="nav-item " onclick="window.location.href='customerManagement.html'" ><i class="fa-solid fa-user-group"></i><span>Customer </span></div>
-        <div class="nav-item " onclick="window.location.href='staffManagement.html'"><i class="fa-solid fa-user-tie"></i><span>Staff </span></div>
-        <div class="nav-item" onclick="window.location.href='appointmentManagement.html'"><i class="fa-solid fa-calendar-check"></i><span>Appointment </span></div>
-        <div class="nav-item active" onclick="window.location.href='serviceManagement.html'"><i class="fa-solid fa-scissors"></i><span>Service </span></div>
-        <div class="nav-item" onclick="window.location.href='productManagement.html'"><i class="fa-solid fa-box"></i><span>Product </span></div>
-        <div class="nav-item" onclick="window.location.href='inventoryMangement.html'"><i class="fa-solid fa-warehouse"></i><span>Inventory </span></div>
-        <div class="nav-item" onclick="window.location.href='paymentManagement.html'"><i class="fa-solid fa-credit-card"></i><span>Payment </span></div>
-        <div class="nav-item" onclick="window.location.href='feedback.html'"><i class="fa-solid fa-comments"></i><span>Feedback &amp; Ratings</span></div>
-        <div class="nav-item" onclick="window.location.href='report.html'"><i class="fa-solid fa-chart-line"></i><span>Reports</span></div>
-        <div class="nav-item" onclick="window.location.href='settings.html'"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section-title">MAIN</div>
+
+        <a href="dashboard.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="customerManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-users"></i>
+            <span>Customer Management</span>
+        </a>
+
+        <a href="staffManagement.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-user-tie"></i>
+            <span>Staff Management</span>
+        </a>
+
+        <a href="serviceManagement.html" class="nav-item active" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>Service Management</span>
+        </a>
+
+        <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+            <i class="fas fa-calendar-check"></i>
+            <span>Appointment Management</span>
+        </a>
+
+        <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
+
+        <a href="productManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-box"></i>
+            <span>Product Management</span>
+        </a>
+
+        <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-warehouse"></i>
+            <span>Inventory Management</span>
+        </a>
+
+        <a href="paymentMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Payments & Invoices</span>
+        </a>
+
+        <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-star"></i>
+            <span>Feedback & Ratings</span>
+        </a>
+
+        <a href="report.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-chart-pie"></i>
+            <span>Reports & Analytics</span>
+        </a>
+
+        <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
+
+        <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-user-shield"></i>
+            <span>User Management</span>
+        </a>
+
+        <a href="settings.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-sliders"></i>
+            <span>Settings</span>
+        </a>
     </nav>
+
     <div class="sidebar-footer">
-        <div class="profile-mini">
-            <div class="avatar">A</div>
-            <div class="info">
-                <div class="name">Admin</div>
-                <div class="role">Administrator</div>
+        <div class="sidebar-user">
+            <div class="user-avatar" id="sidebarAvatar">PB</div>
+            <div class="user-details">
+                <strong id="sidebarUserName">Salon Manager</strong>
+                <span id="sidebarUserRole">Administrator</span>
             </div>
+            <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Logout">
+                <i class="fas fa-right-from-bracket"></i>
+            </button>
         </div>
-        <button class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
 </aside>
 
@@ -1744,1815 +1831,777 @@
 
 
 <script>
-
     /* =========================================================
-       CONFIG
-    ========================================================= */
+       PINK BEAUTY SALON — Service Management (Backend Connected)
+       Real-time DB synchronization with Spring Boot REST API
+       ========================================================= */
 
-    /*
-       Later Spring Boot API eka connect karanna:
+    const API_BASE_URL = window.location.port === "8080"
+        ? "/api/v1/services"
+        : "http://localhost:8080/api/v1/services";
 
-       const API_BASE = "/api/v1/service";
-
-    */
-
-    const API_BASE = "/api/v1/service";
-
-
-    /* =========================================================
-       DATA
-    ========================================================= */
+    const API_STAFF_BASE = window.location.port === "8080"
+        ? "/api/v1/staff"
+        : "http://localhost:8080/api/v1/staff";
 
     const SERVICE_ICONS = {
-
-        "Hair":"fa-solid fa-scissors",
-
-        "Nails":"fa-solid fa-hand-sparkles",
-
-        "Makeup":"fa-solid fa-wand-magic-sparkles",
-
-        "Facial":"fa-solid fa-face-smile-beam",
-
-        "Waxing":"fa-solid fa-feather",
-
-        "Spa":"fa-solid fa-spa",
-
-        "Bridal":"fa-solid fa-ring"
-
+        "Hair": "fa-solid fa-scissors",
+        "Nails": "fa-solid fa-hand-sparkles",
+        "Makeup": "fa-solid fa-wand-magic-sparkles",
+        "Facial": "fa-solid fa-face-smile-beam",
+        "Waxing": "fa-solid fa-feather",
+        "Spa": "fa-solid fa-spa",
+        "Bridal": "fa-solid fa-ring"
     };
 
-
-    let serviceData = [
-
-        {
-            id:"SVC-001",
-            name:"Hair Cut",
-            category:"Hair",
-            price:1500,
-            duration:45,
-            description:"Professional haircut and styling service for a fresh and elegant look.",
-            status:"Active",
-            staff:["Sophia Williams","Mia Wilson"]
-        },
-
-        {
-            id:"SVC-002",
-            name:"Hair Coloring",
-            category:"Hair",
-            price:8500,
-            duration:120,
-            description:"Professional hair coloring service using premium salon products.",
-            status:"Active",
-            staff:["Sophia Williams","Isabella Davis"]
-        },
-
-        {
-            id:"SVC-003",
-            name:"Hair Styling",
-            category:"Hair",
-            price:2500,
-            duration:60,
-            description:"Elegant styling for casual, professional and special occasions.",
-            status:"Active",
-            staff:["Mia Wilson","Sophia Williams"]
-        },
-
-        {
-            id:"SVC-004",
-            name:"Manicure",
-            category:"Nails",
-            price:2000,
-            duration:45,
-            description:"Complete manicure treatment including nail shaping and polish.",
-            status:"Active",
-            staff:["Emma Johnson"]
-        },
-
-        {
-            id:"SVC-005",
-            name:"Pedicure",
-            category:"Nails",
-            price:2500,
-            duration:60,
-            description:"Relaxing pedicure treatment with professional nail care.",
-            status:"Active",
-            staff:["Emma Johnson"]
-        },
-
-        {
-            id:"SVC-006",
-            name:"Bridal Makeup",
-            category:"Bridal",
-            price:15000,
-            duration:150,
-            description:"Premium bridal makeup package designed for your special day.",
-            status:"Active",
-            staff:["Olivia Brown"]
-        },
-
-        {
-            id:"SVC-007",
-            name:"Party Makeup",
-            category:"Makeup",
-            price:6500,
-            duration:90,
-            description:"Glamorous party makeup for events and special occasions.",
-            status:"Active",
-            staff:["Olivia Brown"]
-        },
-
-        {
-            id:"SVC-008",
-            name:"Facial",
-            category:"Facial",
-            price:3500,
-            duration:60,
-            description:"Refreshing facial treatment for healthy, glowing skin.",
-            status:"Active",
-            staff:["Ava Taylor"]
-        },
-
-        {
-            id:"SVC-009",
-            name:"Waxing",
-            category:"Waxing",
-            price:2500,
-            duration:45,
-            description:"Professional waxing service for smooth and clean skin.",
-            status:"Inactive",
-            staff:["Ava Taylor"]
-        },
-
-        {
-            id:"SVC-010",
-            name:"Spa Treatment",
-            category:"Spa",
-            price:6000,
-            duration:90,
-            description:"Relaxing spa treatment designed to refresh body and mind.",
-            status:"Active",
-            staff:["Ava Taylor"]
-        }
-
-    ];
+    let serviceData = [];
+    let staffList = [];
+    let staffMap = {};
 
 
     /* =========================================================
        STATE
-    ========================================================= */
-
-    let filtered = [...serviceData];
-
+       ========================================================= */
+    let filtered = [];
     let currentPage = 1;
-
     const perPage = 5;
-
     let editingId = null;
-
     let activeDropdownId = null;
 
+    /* =========================================================
+       API HELPER
+       ========================================================= */
+    async function apiRequest(url, options = {}) {
+        const token = localStorage.getItem("token");
+        const headers = {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": `Bearer ${token}` } : {}),
+            ...(options.headers || {})
+        };
+
+        try {
+            const response = await fetch(url, { ...options, headers });
+            let result = null;
+            try {
+                result = await response.json();
+            } catch (e) {
+                result = null;
+            }
+
+            if (!response.ok) {
+                const message = result?.message || `Request failed with status ${response.status}`;
+                throw new Error(message);
+            }
+            return result;
+        } catch (error) {
+            console.error("API Error on " + url, error);
+            throw error;
+        }
+    }
 
     /* =========================================================
        HELPERS
-    ========================================================= */
-
-    function money(value){
-
-        return "Rs. " + Number(value).toLocaleString("en-LK");
-
+       ========================================================= */
+    function money(value) {
+        return "Rs. " + Number(value || 0).toLocaleString("en-LK");
     }
 
-
-    function durationText(minutes){
-
-        if(minutes < 60){
-
-            return `${minutes} min`;
-
+    function durationText(minutes) {
+        if (!minutes || minutes < 60) {
+            return `${minutes || 0} min`;
         }
-
         const hours = Math.floor(minutes / 60);
-
         const mins = minutes % 60;
-
-        if(mins === 0){
-
+        if (mins === 0) {
             return `${hours} hr`;
-
         }
-
         return `${hours} hr ${mins} min`;
-
     }
 
-
-    function serviceIcon(category){
-
+    function serviceIcon(category) {
         return SERVICE_ICONS[category] || "fa-solid fa-scissors";
-
     }
 
-
-    function val(id){
-
+    function val(id) {
         const el = document.getElementById(id);
-
         return el ? el.value.trim() : "";
-
     }
 
-
-    /* =========================================================
-       STATS
-    ========================================================= */
-
-    function renderStats(){
-
-        const total = serviceData.length;
-
-        const active = serviceData.filter(
-            s => s.status === "Active"
-        ).length;
-
-        const categories = new Set(
-            serviceData.map(s => s.category)
-        ).size;
-
-        const assigned = new Set();
-
-        serviceData.forEach(service => {
-
-            service.staff.forEach(staff => {
-
-                assigned.add(staff);
-
-            });
-
-        });
-
-
-        document.getElementById("statTotal").textContent = total;
-
-        document.getElementById("statActive").textContent = active;
-
-        document.getElementById("statCategories").textContent = categories;
-
-        document.getElementById("statAssigned").textContent = assigned.size;
-
-
-        const pct = total
-            ? Math.round((active / total) * 100)
-            : 0;
-
-        document.getElementById("activeDesc").textContent =
-            `${pct}% of total services`;
-
+    function escapeHtml(str) {
+        if (!str) return "";
+        return String(str).replace(/[&<>"']/g, m => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+        })[m]);
     }
 
-
     /* =========================================================
-       TABLE
-    ========================================================= */
+       LOAD DATA (STAFF & SERVICES)
+       ========================================================= */
+    async function loadStaffList() {
+        try {
+            const response = await apiRequest(`${API_STAFF_BASE}/all`);
+            const rawList = response?.data ?? response?.body ?? [];
+            if (Array.isArray(rawList)) {
+                staffList = rawList.map(s => ({
+                    id: s.staffId,
+                    name: s.staffName || "Staff Member",
+                    position: s.position || ""
+                }));
+                staffMap = {};
+                staffList.forEach(s => {
+                    staffMap[s.id] = s.name;
+                });
+            }
+        } catch (err) {
+            console.warn("Could not load staff list for service assignment", err);
+            staffList = [];
+            staffMap = {};
+        }
+    }
 
-    function renderTable(){
-
-        const body =
-            document.getElementById("serviceBody");
-
-        const empty =
-            document.getElementById("emptyState");
-
-        const pagination =
-            document.getElementById("pagination");
-
-
-        const start =
-            (currentPage - 1) * perPage;
-
-        const pageItems =
-            filtered.slice(start, start + perPage);
-
-
-        if(filtered.length === 0){
-
-            body.innerHTML = "";
-
-            empty.style.display = "block";
-
-            pagination.style.display = "none";
-
-            return;
-
+    async function loadServices() {
+        const body = document.getElementById("serviceBody");
+        if (body && !serviceData.length) {
+            body.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted);"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--rose-gold);margin-bottom:10px;display:block;"></i>Loading salon services from database...</td></tr>`;
         }
 
+        try {
+            await loadStaffList();
+            const response = await apiRequest(`${API_BASE_URL}/all`);
+            const rawList = response?.data ?? response?.body ?? [];
 
-        empty.style.display = "none";
+            if (Array.isArray(rawList)) {
+                serviceData = rawList.map(s => {
+                    const sIds = Array.isArray(s.staffIds) ? s.staffIds : [];
+                    const staffNames = sIds.map(id => staffMap[id] || `Staff #${id}`);
+                    const isInactive = s.status === "INACTIVE" || s.status === "Inactive";
 
-        pagination.style.display = "flex";
+                    return {
+                        id: s.serviceId,
+                        displayId: `#SVC-${String(s.serviceId).padStart(3, "0")}`,
+                        name: s.serviceName || "Unnamed Service",
+                        category: s.category || "Hair",
+                        price: Number(s.price || 0),
+                        duration: Number(s.duration || 30),
+                        description: s.description || "",
+                        status: isInactive ? "Inactive" : "Active",
+                        staffIds: sIds,
+                        staff: staffNames
+                    };
+                });
+            } else {
+                serviceData = [];
+            }
 
+            renderStats();
+            applyFilters();
+        } catch (err) {
+            console.error("Failed to load services from backend:", err);
+            toast(err.message || "Failed to load services from server", "error");
+            serviceData = [];
+            renderStats();
+            applyFilters();
+        }
+    }
 
-        body.innerHTML = pageItems.map(service => {
+    /* =========================================================
+       RENDER: STATS
+       ========================================================= */
+    function renderStats() {
+        const total = serviceData.length;
+        const active = serviceData.filter(s => s.status === "Active").length;
+        const categories = new Set(serviceData.map(s => s.category)).size;
+        const assignedStaffSet = new Set(serviceData.flatMap(s => s.staffIds || []));
 
-            return `
+        const statTotal = document.getElementById("statTotal");
+        const statActive = document.getElementById("statActive");
+        const activeDesc = document.getElementById("activeDesc");
+        const statCategories = document.getElementById("statCategories");
+        const statAssigned = document.getElementById("statAssigned");
 
+        if (statTotal) statTotal.textContent = total;
+        if (statActive) statActive.textContent = active;
+        const pct = total ? Math.round((active / total) * 100) : 0;
+        if (activeDesc) activeDesc.textContent = `${pct}% of total services`;
+        if (statCategories) statCategories.textContent = categories;
+        if (statAssigned) statAssigned.textContent = assignedStaffSet.size;
+    }
+
+    /* =========================================================
+       RENDER: TABLE
+       ========================================================= */
+    function renderTable() {
+        const body = document.getElementById("serviceBody");
+        const empty = document.getElementById("emptyState");
+        const pagination = document.getElementById("pagination");
+        if (!body) return;
+
+        const start = (currentPage - 1) * perPage;
+        const pageItems = filtered.slice(start, start + perPage);
+
+        if (filtered.length === 0) {
+            body.innerHTML = "";
+            if (empty) empty.style.display = "block";
+            if (pagination) pagination.style.display = "none";
+            return;
+        }
+
+        if (empty) empty.style.display = "none";
+        if (pagination) pagination.style.display = "flex";
+
+        body.innerHTML = pageItems.map(service => `
         <tr>
-
             <td>
-
                 <div class="service-cell">
-
                     <div class="service-icon">
-
                         <i class="${serviceIcon(service.category)}"></i>
-
                     </div>
-
                     <div>
-
-                        <div class="service-name">
-                            ${service.name}
-                        </div>
-
-                        <div class="service-code">
-                            ${service.id}
-                        </div>
-
+                        <div class="service-name">${escapeHtml(service.name)}</div>
+                        <div class="service-code">${service.displayId}</div>
                     </div>
-
                 </div>
-
             </td>
-
-
+            <td><span class="category-tag">${escapeHtml(service.category)}</span></td>
+            <td><span class="price">${money(service.price)}</span></td>
             <td>
-
-                <span class="category-tag">
-                    ${service.category}
-                </span>
-
-            </td>
-
-
-            <td>
-
-                <span class="price">
-                    ${money(service.price)}
-                </span>
-
-            </td>
-
-
-            <td>
-
                 <span class="duration">
-
                     <i class="fa-regular fa-clock"></i>
-
                     ${durationText(service.duration)}
-
                 </span>
-
             </td>
-
-
             <td>
-
                 <span class="staff-count">
-
                     <i class="fa-solid fa-user-tie"></i>
-
                     ${service.staff.length} Staff
-
                 </span>
-
             </td>
-
-
             <td>
-
                 <span class="badge status-${service.status.toLowerCase()}">
-
                     ${service.status}
-
                 </span>
-
             </td>
-
-
             <td class="action-cell">
-
-                <button
-                    class="action-btn"
-                    onclick="toggleDropdown('${service.id}',event)"
-                >
-
+                <button class="action-btn" onclick="toggleDropdown('${service.id}', event)">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
-
                 </button>
-
-
-                <div
-                    class="dropdown"
-                    id="dd-${service.id}"
-                >
-
+                <div class="dropdown" id="dd-${service.id}">
                     ${dropdownItems(service)}
-
                 </div>
-
             </td>
-
-        </tr>
-
-        `;
-
-        }).join("");
-
+        </tr>`).join("");
 
         renderPagination();
-
     }
-
 
     /* =========================================================
        DROPDOWN
-    ========================================================= */
-
-    function dropdownItems(service){
-
-        const toggleLabel =
-            service.status === "Active"
-                ? "Deactivate"
-                : "Activate";
-
-        const toggleIcon =
-            service.status === "Active"
-                ? "fa-toggle-off"
-                : "fa-toggle-on";
-
+       ========================================================= */
+    function dropdownItems(service) {
+        const toggleLabel = service.status === "Active" ? "Deactivate" : "Activate";
+        const toggleIcon = service.status === "Active" ? "fa-toggle-off" : "fa-toggle-on";
 
         return `
-
-        <button
-            class="dropdown-item"
-            onclick="viewService('${service.id}')"
-        >
-
-            <i class="fa-regular fa-eye"></i>
-
-            View Details
-
+        <button class="dropdown-item" onclick="viewService('${service.id}')">
+            <i class="fa-regular fa-eye"></i> View Details
         </button>
-
-
-        <button
-            class="dropdown-item"
-            onclick="openEditService('${service.id}')"
-        >
-
-            <i class="fa-solid fa-pen"></i>
-
-            Edit Service
-
+        <button class="dropdown-item" onclick="openEditService('${service.id}')">
+            <i class="fa-solid fa-pen"></i> Edit Service
         </button>
-
-
-        <button
-            class="dropdown-item"
-            onclick="confirmToggleStatus('${service.id}')"
-        >
-
-            <i class="fa-solid ${toggleIcon}"></i>
-
-            ${toggleLabel}
-
+        <button class="dropdown-item" onclick="confirmToggleStatus('${service.id}')">
+            <i class="fa-solid ${toggleIcon}"></i> ${toggleLabel}
         </button>
-
-
         <div class="dropdown-divider"></div>
-
-
-        <button
-            class="dropdown-item danger"
-            onclick="confirmDelete('${service.id}')"
-        >
-
-            <i class="fa-solid fa-trash"></i>
-
-            Delete Service
-
-        </button>
-
-    `;
-
+        <button class="dropdown-item danger" onclick="confirmDelete('${service.id}')">
+            <i class="fa-solid fa-trash"></i> Delete Service
+        </button>`;
     }
 
-
-    function toggleDropdown(id,event){
-
-        event.stopPropagation();
-
-        const dd =
-            document.getElementById("dd-" + id);
-
-        const isOpen =
-            dd.classList.contains("open");
-
-
+    function toggleDropdown(id, event) {
+        if (event) event.stopPropagation();
+        const dd = document.getElementById("dd-" + id);
+        const isOpen = dd.classList.contains("open");
         closeAllDropdowns();
-
-
-        if(!isOpen){
-
+        if (!isOpen) {
             dd.classList.add("open");
-
             activeDropdownId = id;
-
         }
-
     }
 
-
-    function closeAllDropdowns(){
-
-        document
-            .querySelectorAll(".dropdown.open")
-            .forEach(el => {
-
-                el.classList.remove("open");
-
-            });
-
+    function closeAllDropdowns() {
+        document.querySelectorAll(".dropdown.open").forEach(el => el.classList.remove("open"));
         activeDropdownId = null;
-
     }
-
 
     document.addEventListener("click", () => {
-
         closeAllDropdowns();
-
     });
 
 
     /* =========================================================
        PAGINATION
-    ========================================================= */
+       ========================================================= */
+    function renderPagination() {
+        const pages = Math.ceil(filtered.length / perPage) || 1;
+        const start = (currentPage - 1) * perPage + 1;
+        const end = Math.min(currentPage * perPage, filtered.length);
 
-    function renderPagination(){
-
-        const pages =
-            Math.ceil(filtered.length / perPage) || 1;
-
-        const start =
-            (currentPage - 1) * perPage + 1;
-
-        const end =
-            Math.min(
-                currentPage * perPage,
-                filtered.length
-            );
-
-
-        document.getElementById("pageInfo").textContent =
-            `Showing ${start}–${end} of ${filtered.length} services`;
-
+        const pageInfo = document.getElementById("pageInfo");
+        if (pageInfo) {
+            pageInfo.textContent = `Showing ${filtered.length ? start : 0}–${end} of ${filtered.length} services`;
+        }
 
         let html = `
-
-        <button
-            class="page-btn"
-            onclick="goPage(${currentPage - 1})"
-            ${currentPage === 1 ? "disabled" : ""}
-        >
-
+        <button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>
             <i class="fa-solid fa-chevron-left"></i>
+        </button>`;
 
-        </button>
-
-    `;
-
-
-        for(let i = 1; i <= pages; i++){
-
+        for (let i = 1; i <= pages; i++) {
             html += `
-
-            <button
-                class="page-btn ${i === currentPage ? "active" : ""}"
-                onclick="goPage(${i})"
-            >
-
+            <button class="page-btn ${i === currentPage ? "active" : ""}" onclick="goPage(${i})">
                 ${i}
-
-            </button>
-
-        `;
-
+            </button>`;
         }
-
 
         html += `
-
-        <button
-            class="page-btn"
-            onclick="goPage(${currentPage + 1})"
-            ${currentPage === pages ? "disabled" : ""}
-        >
-
+        <button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === pages ? "disabled" : ""}>
             <i class="fa-solid fa-chevron-right"></i>
+        </button>`;
 
-        </button>
-
-    `;
-
-
-        document.getElementById("pageBtns").innerHTML = html;
-
+        const pageBtns = document.getElementById("pageBtns");
+        if (pageBtns) pageBtns.innerHTML = html;
     }
 
-
-    function goPage(page){
-
-        const pages =
-            Math.ceil(filtered.length / perPage) || 1;
-
-        if(page < 1 || page > pages){
-
-            return;
-
-        }
-
+    function goPage(page) {
+        const pages = Math.ceil(filtered.length / perPage) || 1;
+        if (page < 1 || page > pages) return;
         currentPage = page;
-
         renderTable();
-
     }
-
 
     /* =========================================================
        FILTERS
-    ========================================================= */
-
-    function applyFilters(){
-
-        const q =
-            document
-                .getElementById("searchInput")
-                .value
-                .toLowerCase()
-                .trim();
-
-
-        const category =
-            document.getElementById("filterCategory").value;
-
-
-        const status =
-            document.getElementById("filterStatus").value;
-
+       ========================================================= */
+    function applyFilters() {
+        const q = (document.getElementById("searchInput")?.value || "").toLowerCase().trim();
+        const category = document.getElementById("filterCategory")?.value || "";
+        const status = document.getElementById("filterStatus")?.value || "";
 
         filtered = serviceData.filter(service => {
-
-            const searchMatch =
-                !q ||
+            const searchMatch = !q ||
                 service.name.toLowerCase().includes(q) ||
-                service.id.toLowerCase().includes(q) ||
+                service.displayId.toLowerCase().includes(q) ||
                 service.category.toLowerCase().includes(q);
 
+            const categoryMatch = !category || service.category === category;
+            const statusMatch = !status || service.status === status;
 
-            const categoryMatch =
-                !category ||
-                service.category === category;
-
-
-            const statusMatch =
-                !status ||
-                service.status === status;
-
-
-            return (
-                searchMatch &&
-                categoryMatch &&
-                statusMatch
-            );
-
+            return searchMatch && categoryMatch && statusMatch;
         });
 
-
         currentPage = 1;
-
         renderTable();
-
     }
 
-
-    function clearFilters(){
-
-        document.getElementById("searchInput").value = "";
-
-        document.getElementById("filterCategory").value = "";
-
-        document.getElementById("filterStatus").value = "";
-
+    function clearFilters() {
+        if (document.getElementById("searchInput")) document.getElementById("searchInput").value = "";
+        if (document.getElementById("filterCategory")) document.getElementById("filterCategory").value = "";
+        if (document.getElementById("filterStatus")) document.getElementById("filterStatus").value = "";
         applyFilters();
-
     }
-
 
     /* =========================================================
        MODAL CORE
-    ========================================================= */
-
-    function openModal(html, cls = ""){
-
-        const overlay =
-            document.getElementById("modalOverlay");
-
-
-        overlay.innerHTML = `
-
-        <div class="modal ${cls}">
-
-            ${html}
-
-        </div>
-
-    `;
-
-
+       ========================================================= */
+    function openModal(html, cls = "") {
+        const overlay = document.getElementById("modalOverlay");
+        if (!overlay) return;
+        overlay.innerHTML = `<div class="modal ${cls}">${html}</div>`;
         overlay.classList.add("open");
-
         document.body.style.overflow = "hidden";
-
     }
 
-
-    function closeModal(){
-
-        const overlay =
-            document.getElementById("modalOverlay");
-
-
+    function closeModal() {
+        const overlay = document.getElementById("modalOverlay");
+        if (!overlay) return;
         overlay.classList.remove("open");
-
         overlay.innerHTML = "";
-
         document.body.style.overflow = "";
-
         editingId = null;
-
     }
-
 
     /* =========================================================
        TOAST
-    ========================================================= */
-
-    function toast(message,type="success"){
-
-        const wrap =
-            document.getElementById("toastWrap");
-
-
-        const el =
-            document.createElement("div");
-
-
-        el.className =
-            `toast ${type}`;
-
-
-        let icon =
-            "fa-circle-check";
-
-
-        if(type === "error"){
-
-            icon = "fa-circle-xmark";
-
-        }
-
-        if(type === "info"){
-
-            icon = "fa-circle-info";
-
-        }
-
-
+       ========================================================= */
+    function toast(message, type = "success") {
+        const wrap = document.getElementById("toastWrap");
+        if (!wrap) return;
+        const el = document.createElement("div");
+        el.className = `toast ${type}`;
+        const icon = type === "error" ? "fa-circle-xmark" : type === "info" ? "fa-circle-info" : "fa-circle-check";
         el.innerHTML = `
-
-        <div class="toast-icon">
-
-            <i class="fa-solid ${icon}"></i>
-
-        </div>
-
-        <div class="toast-msg">
-
-            ${message}
-
-        </div>
-
-    `;
-
-
+        <div class="toast-icon"><i class="fa-solid ${icon}"></i></div>
+        <div class="toast-msg">${escapeHtml(message)}</div>`;
         wrap.appendChild(el);
-
-
         setTimeout(() => {
-
             el.style.opacity = "0";
-
             el.style.transform = "translateX(40px)";
-
             el.style.transition = ".3s";
-
-
-            setTimeout(() => {
-
-                el.remove();
-
-            },300);
-
-        },2800);
-
+            setTimeout(() => el.remove(), 300);
+        }, 3000);
     }
 
 
     /* =========================================================
        SERVICE FORM
-    ========================================================= */
+       ========================================================= */
+    function serviceFormFields(service = {}) {
+        const categories = ["Hair", "Nails", "Makeup", "Facial", "Waxing", "Spa", "Bridal"];
+        const currentCategory = service.category || "Hair";
+        const currentStaffIds = service.staffIds || [];
 
-    function serviceFormFields(service = {}){
-
-        const categories = [
-            "Hair",
-            "Nails",
-            "Makeup",
-            "Facial",
-            "Waxing",
-            "Spa",
-            "Bridal"
-        ];
-
+        const staffCheckboxesHtml = staffList.length ? staffList.map(st => `
+            <label class="staff-check-item">
+                <input type="checkbox" name="serviceStaff" value="${st.id}" ${currentStaffIds.includes(st.id) ? "checked" : ""}>
+                <span>${escapeHtml(st.name)} <small style="color:var(--muted)">(${escapeHtml(st.position)})</small></span>
+            </label>
+        `).join("") : `<span style="color:var(--muted);font-size:12px;">No staff registered in the system yet.</span>`;
 
         return `
-
         <div class="form-section">
-
             <h4>Service Information</h4>
-
-
             <div class="form-grid">
-
                 <div class="field full">
-
                     <label>Service Name *</label>
-
-                    <input
-                        id="f_name"
-                        value="${service.name || ""}"
-                        placeholder="e.g. Hair Cut"
-                    >
-
+                    <input id="f_name" value="${escapeHtml(service.name || "")}" placeholder="e.g. Hair Cut">
                 </div>
-
-
                 <div class="field">
-
                     <label>Category *</label>
-
                     <select id="f_category">
-
-                        ${categories.map(category => `
-
-                            <option
-                                value="${category}"
-                                ${service.category === category ? "selected" : ""}
-                            >
-
-                                ${category}
-
-                            </option>
-
+                        ${categories.map(cat => `
+                            <option value="${cat}" ${currentCategory === cat ? "selected" : ""}>${cat}</option>
                         `).join("")}
-
                     </select>
-
                 </div>
-
-
                 <div class="field">
-
                     <label>Status</label>
-
                     <select id="f_status">
-
-                        <option
-                            ${service.status !== "Inactive" ? "selected" : ""}
-                        >
-
-                            Active
-
-                        </option>
-
-                        <option
-                            ${service.status === "Inactive" ? "selected" : ""}
-                        >
-
-                            Inactive
-
-                        </option>
-
+                        <option value="Active" ${service.status !== "Inactive" ? "selected" : ""}>Active</option>
+                        <option value="Inactive" ${service.status === "Inactive" ? "selected" : ""}>Inactive</option>
                     </select>
-
                 </div>
-
-
                 <div class="field">
-
                     <label>Price (LKR) *</label>
-
-                    <input
-                        id="f_price"
-                        type="number"
-                        min="0"
-                        value="${service.price || ""}"
-                        placeholder="1500"
-                    >
-
+                    <input id="f_price" type="number" min="0" step="50" value="${service.price || ""}" placeholder="1500">
                 </div>
-
-
                 <div class="field">
-
                     <label>Duration (Minutes) *</label>
-
-                    <input
-                        id="f_duration"
-                        type="number"
-                        min="15"
-                        step="15"
-                        value="${service.duration || ""}"
-                        placeholder="60"
-                    >
-
+                    <input id="f_duration" type="number" min="10" step="5" value="${service.duration || ""}" placeholder="45">
                 </div>
-
-
                 <div class="field full">
-
                     <label>Description</label>
-
-                    <textarea
-                        id="f_description"
-                        placeholder="Describe the salon service..."
-                    >${service.description || ""}</textarea>
-
+                    <textarea id="f_description" placeholder="Describe the salon service...">${escapeHtml(service.description || "")}</textarea>
                 </div>
-
             </div>
-
         </div>
-
-
         <div class="form-section">
-
-            <h4>Professional Information</h4>
-
-            <div class="field">
-
-                <label>Assigned Staff</label>
-
-                <input
-                    id="f_staff"
-                    value="${service.staff ? service.staff.join(", ") : ""}"
-                    placeholder="e.g. Sophia Williams, Mia Wilson"
-                >
-
-            </div>
-
-        </div>
-
-    `;
-
+            <h4>Assigned Staff Members</h4>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Select staff members who provide this service:</p>
+            <div class="staff-checklist">${staffCheckboxesHtml}</div>
+        </div>`;
     }
-
-
-    /* =========================================================
-       ADD SERVICE
-    ========================================================= */
-
-    function openAddService(){
-
-        closeAllDropdowns();
-
-
-        const html = `
-
-        <div class="modal-head">
-
-            <div>
-
-                <h3>Add New Service</h3>
-
-                <p>Create a new salon service</p>
-
-            </div>
-
-
-            <button
-                class="modal-close"
-                onclick="closeModal()"
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
-        </div>
-
-
-        <div class="modal-body">
-
-            ${serviceFormFields()}
-
-        </div>
-
-
-        <div class="modal-foot">
-
-            <button
-                class="btn btn-ghost"
-                onclick="closeModal()"
-            >
-
-                Cancel
-
-            </button>
-
-
-            <button
-                class="btn btn-primary"
-                onclick="addService()"
-            >
-
-                <i class="fa-solid fa-check"></i>
-
-                Create Service
-
-            </button>
-
-        </div>
-
-    `;
-
-
-        openModal(html,"lg");
-
-    }
-
 
     /* =========================================================
        READ FORM
-    ========================================================= */
+       ========================================================= */
+    function readForm() {
+        const name = val("f_name");
+        const category = val("f_category");
+        const price = parseFloat(val("f_price"));
+        const duration = parseInt(val("f_duration"), 10);
+        const status = val("f_status") || "Active";
+        const description = val("f_description");
 
-    function readForm(){
-
-        const name =
-            val("f_name");
-
-        const category =
-            val("f_category");
-
-        const price =
-            Number(val("f_price"));
-
-        const duration =
-            Number(val("f_duration"));
-
-
-        if(!name){
-
-            toast("Service name is required","error");
-
+        if (!name) {
+            toast("Service name is required", "error");
             return null;
-
+        }
+        if (isNaN(price) || price <= 0) {
+            toast("Please enter a valid price greater than 0", "error");
+            return null;
+        }
+        if (isNaN(duration) || duration <= 0) {
+            toast("Please enter a valid duration greater than 0", "error");
+            return null;
         }
 
-
-        if(!price || price < 0){
-
-            toast("Please enter a valid price","error");
-
-            return null;
-
-        }
-
-
-        if(!duration || duration < 15){
-
-            toast("Duration must be at least 15 minutes","error");
-
-            return null;
-
-        }
-
-
-        const staffText =
-            val("f_staff");
-
-
-        const staff =
-            staffText
-                .split(",")
-                .map(x => x.trim())
-                .filter(Boolean);
-
+        const selectedStaffIds = [];
+        document.querySelectorAll("input[name='serviceStaff']:checked").forEach(cb => {
+            selectedStaffIds.push(Number(cb.value));
+        });
 
         return {
-
-            name,
-
-            category,
-
-            price,
-
-            duration,
-
-            description:
-                val("f_description"),
-
-            status:
-                val("f_status"),
-
-            staff
-
+            serviceName: name,
+            category: category,
+            price: price,
+            duration: duration,
+            description: description,
+            status: status,
+            staffIds: selectedStaffIds
         };
-
     }
 
-
     /* =========================================================
-       ADD
-    ========================================================= */
-
-    function addService(){
-
-        const data =
-            readForm();
-
-
-        if(!data){
-
-            return;
-
-        }
-
-
-        const newNumber =
-            serviceData.length + 1;
-
-
-        const newService = {
-
-            id:
-                "SVC-" +
-                String(newNumber).padStart(3,"0"),
-
-            ...data
-
-        };
-
-
-        serviceData.push(newService);
-
-
-        renderStats();
-
-        applyFilters();
-
-        closeModal();
-
-
-        toast("Service created successfully");
-
-    }
-
-
-    /* =========================================================
-       EDIT
-    ========================================================= */
-
-    function openEditService(id){
-
+       ADD SERVICE
+       ========================================================= */
+    function openAddService() {
         closeAllDropdowns();
+        editingId = null;
+        const html = `
+        <div class="modal-head">
+            <div>
+                <h3>Add New Service</h3>
+                <p>Create a new salon service in the database</p>
+            </div>
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">${serviceFormFields()}</div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="addService()"><i class="fa-solid fa-check"></i> Create Service</button>
+        </div>`;
+        openModal(html, "lg");
+    }
 
+    async function addService() {
+        const payload = readForm();
+        if (!payload) return;
 
-        const service =
-            serviceData.find(s => s.id === id);
-
-
-        if(!service){
-
-            return;
-
+        try {
+            await apiRequest(`${API_BASE_URL}/save`, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            closeModal();
+            toast("Service created successfully!");
+            await loadServices();
+        } catch (err) {
+            toast(err.message || "Failed to create service", "error");
         }
+    }
 
 
+    /* =========================================================
+       EDIT SERVICE
+       ========================================================= */
+    function openEditService(id) {
+        closeAllDropdowns();
+        const service = serviceData.find(s => s.id == id);
+        if (!service) return;
         editingId = id;
 
-
         const html = `
-
         <div class="modal-head">
-
             <div>
-
                 <h3>Edit Service</h3>
-
-                <p>Update service information</p>
-
+                <p>Update service information in the database</p>
             </div>
-
-
-            <button
-                class="modal-close"
-                onclick="closeModal()"
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-
-
-        <div class="modal-body">
-
-            ${serviceFormFields(service)}
-
-        </div>
-
-
+        <div class="modal-body">${serviceFormFields(service)}</div>
         <div class="modal-foot">
-
-            <button
-                class="btn btn-ghost"
-                onclick="closeModal()"
-            >
-
-                Cancel
-
-            </button>
-
-
-            <button
-                class="btn btn-primary"
-                onclick="updateService()"
-            >
-
-                <i class="fa-solid fa-floppy-disk"></i>
-
-                Save Changes
-
-            </button>
-
-        </div>
-
-    `;
-
-
-        openModal(html,"lg");
-
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="updateService()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+        </div>`;
+        openModal(html, "lg");
     }
 
+    async function updateService() {
+        if (!editingId) return;
+        const formData = readForm();
+        if (!formData) return;
 
-    /* =========================================================
-       UPDATE
-    ========================================================= */
-
-    function updateService(){
-
-        const data =
-            readForm();
-
-
-        if(!data){
-
-            return;
-
-        }
-
-
-        const index =
-            serviceData.findIndex(
-                s => s.id === editingId
-            );
-
-
-        if(index === -1){
-
-            return;
-
-        }
-
-
-        serviceData[index] = {
-
-            ...serviceData[index],
-
-            ...data
-
+        const payload = {
+            serviceId: Number(editingId),
+            ...formData
         };
 
-
-        renderStats();
-
-        applyFilters();
-
-        closeModal();
-
-
-        toast("Service updated successfully");
-
+        try {
+            await apiRequest(`${API_BASE_URL}/update`, {
+                method: "PUT",
+                body: JSON.stringify(payload)
+            });
+            closeModal();
+            toast("Service updated successfully!");
+            await loadServices();
+        } catch (err) {
+            toast(err.message || "Failed to update service", "error");
+        }
     }
-
 
     /* =========================================================
        VIEW SERVICE
-    ========================================================= */
-
-    function viewService(id){
-
+       ========================================================= */
+    function viewService(id) {
         closeAllDropdowns();
+        const service = serviceData.find(s => s.id == id);
+        if (!service) return;
 
-
-        const service =
-            serviceData.find(s => s.id === id);
-
-
-        if(!service){
-
-            return;
-
-        }
-
+        const staffBadges = service.staff.length
+            ? service.staff.map(name => `<span class="staff-tag"><i class="fa-solid fa-user-tie"></i> ${escapeHtml(name)}</span>`).join("")
+            : `<span style="color:var(--muted);font-size:13px">No staff assigned</span>`;
 
         const html = `
-
         <div class="modal-head">
-
             <div>
-
                 <h3>Service Details</h3>
-
                 <p>Complete service information</p>
-
             </div>
-
-
-            <button
-                class="modal-close"
-                onclick="closeModal()"
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-
-
         <div class="modal-body">
-
             <div class="detail-hero">
-
-                <div class="detail-icon">
-
-                    <i class="${serviceIcon(service.category)}"></i>
-
-                </div>
-
-
+                <div class="detail-icon"><i class="${serviceIcon(service.category)}"></i></div>
                 <div>
-
-                    <div class="detail-title">
-                        ${service.name}
-                    </div>
-
-                    <div class="detail-code">
-                        ${service.id} · ${service.category}
-                    </div>
-
+                    <div class="detail-title">${escapeHtml(service.name)}</div>
+                    <div class="detail-code">${service.displayId} · ${escapeHtml(service.category)}</div>
                 </div>
-
             </div>
-
-
             <div class="detail-grid">
-
                 <div class="detail-item">
-
-                    <div class="label">
-                        Price
-                    </div>
-
-                    <div class="value">
-                        ${money(service.price)}
-                    </div>
-
+                    <div class="label">Price</div>
+                    <div class="value">${money(service.price)}</div>
                 </div>
-
-
                 <div class="detail-item">
-
-                    <div class="label">
-                        Duration
-                    </div>
-
-                    <div class="value">
-                        ${durationText(service.duration)}
-                    </div>
-
+                    <div class="label">Duration</div>
+                    <div class="value">${durationText(service.duration)}</div>
                 </div>
-
-
                 <div class="detail-item">
-
-                    <div class="label">
-                        Category
-                    </div>
-
-                    <div class="value">
-                        ${service.category}
-                    </div>
-
+                    <div class="label">Category</div>
+                    <div class="value">${escapeHtml(service.category)}</div>
                 </div>
-
-
                 <div class="detail-item">
-
-                    <div class="label">
-                        Status
-                    </div>
-
-                    <div class="value">
-
-                        <span class="badge status-${service.status.toLowerCase()}">
-
-                            ${service.status}
-
-                        </span>
-
-                    </div>
-
+                    <div class="label">Status</div>
+                    <div class="value"><span class="badge status-${service.status.toLowerCase()}">${service.status}</span></div>
                 </div>
-
             </div>
-
-
-            <div class="detail-heading">
-                Description
-            </div>
-
-            <div class="service-description">
-
-                ${service.description || "No description available."}
-
-            </div>
-
-
-            <div class="detail-heading">
-                Assigned Staff
-            </div>
-
-
-            <div class="staff-tags">
-
-                ${
-            service.staff.length
-                ?
-                service.staff.map(staff => `
-
-                        <span class="staff-tag">
-
-                            <i class="fa-solid fa-user-tie"></i>
-
-                            ${staff}
-
-                        </span>
-
-                    `).join("")
-                :
-                `<span style="color:var(--muted);font-size:13px">
-                        No staff assigned
-                    </span>`
-        }
-
-            </div>
-
+            <div class="detail-heading">Description</div>
+            <div class="service-description">${escapeHtml(service.description) || "No description provided."}</div>
+            <div class="detail-heading">Assigned Staff</div>
+            <div class="staff-tags">${staffBadges}</div>
         </div>
-
-
         <div class="modal-foot">
-
-            <button
-                class="btn btn-ghost"
-                onclick="closeModal()"
-            >
-
-                Close
-
-            </button>
-
-
-            <button
-                class="btn btn-primary"
-                onclick="closeModal();openEditService('${service.id}')"
-            >
-
-                <i class="fa-solid fa-pen"></i>
-
-                Edit Service
-
-            </button>
-
-        </div>
-
-    `;
-
-
-        openModal(html,"lg");
-
+            <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="closeModal();openEditService('${service.id}')"><i class="fa-solid fa-pen"></i> Edit Service</button>
+        </div>`;
+        openModal(html, "lg");
     }
-
 
     /* =========================================================
        TOGGLE STATUS
-    ========================================================= */
-
-    function confirmToggleStatus(id){
-
+       ========================================================= */
+    function confirmToggleStatus(id) {
         closeAllDropdowns();
+        const service = serviceData.find(s => s.id == id);
+        if (!service) return;
 
-
-        const service =
-            serviceData.find(s => s.id === id);
-
-
-        if(!service){
-
-            return;
-
-        }
-
-
-        const activating =
-            service.status === "Inactive";
-
-
+        const activating = service.status === "Inactive";
         const html = `
-
         <div class="modal-body">
-
             <div class="confirm-body">
-
                 <div class="confirm-icon ${activating ? "warning" : "danger"}">
-
-                    <i class="fa-solid ${
-            activating
-                ? "fa-toggle-on"
-                : "fa-toggle-off"
-        }"></i>
-
+                    <i class="fa-solid ${activating ? "fa-toggle-on" : "fa-toggle-off"}"></i>
                 </div>
-
-
-                <h3>
-                    ${activating ? "Activate Service?" : "Deactivate Service?"}
-                </h3>
-
-
-                <p>
-
-                    ${
-            activating
-                ? "Are you sure you want to activate this service?"
-                : "Are you sure you want to deactivate this service?"
-        }
-
-                </p>
-
+                <h3>${activating ? "Activate Service?" : "Deactivate Service?"}</h3>
+                <p>Are you sure you want to ${activating ? "activate" : "deactivate"} <strong>${escapeHtml(service.name)}</strong>?</p>
             </div>
-
         </div>
-
-
         <div class="modal-foot">
-
-            <button
-                class="btn btn-ghost"
-                onclick="closeModal()"
-            >
-
-                Cancel
-
-            </button>
-
-
-            <button
-                class="btn ${activating ? "btn-success" : "btn-danger"}"
-                onclick="toggleServiceStatus('${id}')"
-            >
-
-                ${activating ? "Activate" : "Deactivate"}
-
-            </button>
-
-        </div>
-
-    `;
-
-
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn ${activating ? "btn-success" : "btn-danger"}" onclick="toggleServiceStatus('${id}')">${activating ? "Activate" : "Deactivate"}</button>
+        </div>`;
         openModal(html);
-
     }
 
-
-    function toggleServiceStatus(id){
-
-        const service =
-            serviceData.find(s => s.id === id);
-
-
-        if(!service){
-
-            return;
-
+    async function toggleServiceStatus(id) {
+        try {
+            await apiRequest(`${API_BASE_URL}/status/${id}`, {
+                method: "PATCH"
+            });
+            closeModal();
+            toast("Service status updated successfully");
+            await loadServices();
+        } catch (err) {
+            toast(err.message || "Failed to update service status", "error");
         }
-
-
-        service.status =
-            service.status === "Active"
-                ? "Inactive"
-                : "Active";
-
-
-        renderStats();
-
-        applyFilters();
-
-        closeModal();
-
-
-        toast(
-            service.status === "Active"
-                ? "Service activated successfully"
-                : "Service deactivated successfully"
-        );
-
     }
-
 
     /* =========================================================
        DELETE
-    ========================================================= */
-
-    function confirmDelete(id){
-
+       ========================================================= */
+    function confirmDelete(id) {
         closeAllDropdowns();
-
-
-        const service =
-            serviceData.find(s => s.id === id);
-
-
-        if(!service){
-
-            return;
-
-        }
-
+        const service = serviceData.find(s => s.id == id);
+        if (!service) return;
 
         const html = `
-
         <div class="modal-body">
-
             <div class="confirm-body">
-
-                <div class="confirm-icon danger">
-
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-
-                </div>
-
-
-                <h3>
-                    Delete Service?
-                </h3>
-
-
-                <p>
-
-                    Are you sure you want to permanently delete
-                    <strong>${service.name}</strong>?
-                    This action cannot be undone.
-
-                </p>
-
+                <div class="confirm-icon danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h3>Delete Service?</h3>
+                <p>Are you sure you want to permanently delete <strong>${escapeHtml(service.name)}</strong>? This action cannot be undone.</p>
             </div>
-
         </div>
-
-
         <div class="modal-foot">
-
-            <button
-                class="btn btn-ghost"
-                onclick="closeModal()"
-            >
-
-                Cancel
-
-            </button>
-
-
-            <button
-                class="btn btn-danger"
-                onclick="deleteService('${id}')"
-            >
-
-                <i class="fa-solid fa-trash"></i>
-
-                Delete Service
-
-            </button>
-
-        </div>
-
-    `;
-
-
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-danger" onclick="deleteService('${id}')"><i class="fa-solid fa-trash"></i> Delete Service</button>
+        </div>`;
         openModal(html);
-
     }
 
-
-    function deleteService(id){
-
-        serviceData =
-            serviceData.filter(
-                s => s.id !== id
-            );
-
-
-        renderStats();
-
-        applyFilters();
-
-        closeModal();
-
-
-        toast("Service deleted successfully");
-
+    async function deleteService(id) {
+        try {
+            await apiRequest(`${API_BASE_URL}/delete/${id}`, {
+                method: "DELETE"
+            });
+            closeModal();
+            toast("Service deleted successfully from database");
+            await loadServices();
+        } catch (err) {
+            toast(err.message || "Failed to delete service", "error");
+        }
     }
-
 
     /* =========================================================
-       SIDEBAR
-    ========================================================= */
-
-    function toggleSidebar(){
-
-        document
-            .getElementById("sidebar")
-            .classList.toggle("open");
-
-
-        document
-            .getElementById("overlay")
-            .classList.toggle("show");
-
+       SIDEBAR & BOOT
+       ========================================================= */
+    function toggleSidebar() {
+        const sb = document.getElementById("sidebar");
+        const ov = document.getElementById("overlay");
+        if (sb) sb.classList.toggle("open");
+        if (ov) ov.classList.toggle("show");
     }
 
+    document.addEventListener("DOMContentLoaded", () => {
+        loadServices();
 
-    /* =========================================================
-       BOOT
-    ========================================================= */
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) searchInput.addEventListener("input", applyFilters);
 
-    function loadServices(){
+        const filterCategory = document.getElementById("filterCategory");
+        if (filterCategory) filterCategory.addEventListener("change", applyFilters);
 
-        renderStats();
+        const filterStatus = document.getElementById("filterStatus");
+        if (filterStatus) filterStatus.addEventListener("change", applyFilters);
+    });
 
-        applyFilters();
-
-    }
-
-
+    // Initial load
     loadServices();
 
 </script>
+
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 
 </body>
 </html>

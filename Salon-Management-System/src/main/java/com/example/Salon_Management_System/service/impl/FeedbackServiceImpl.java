@@ -31,10 +31,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final CustomerRepository customerRepository;
 
 
-    // ============================================================
-    // SAVE FEEDBACK
-    // ============================================================
-
     @Override
     public FeedbackDTO saveFeedback(FeedbackDTO dto) {
 
@@ -69,10 +65,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
 
-        // ========================================================
-        // FIND APPOINTMENT
-        // ========================================================
-
         Appointment appointment =
                 appointmentRepository.findById(dto.getAppointmentId())
                         .orElseThrow(() ->
@@ -80,10 +72,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                                         "Appointment not found"
                                 ));
 
-
-        // ========================================================
-        // FIND CUSTOMER
-        // ========================================================
 
         Customer customer;
 
@@ -108,18 +96,10 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
 
-        // ========================================================
-        // CREATE RATING
-        // ========================================================
-
         Rating rating = new Rating();
 
         rating.setRatingValue(dto.getRating());
 
-
-        // ========================================================
-        // CREATE FEEDBACK
-        // ========================================================
 
         Feedback feedback = new Feedback();
 
@@ -130,20 +110,12 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setStatus(FeedbackStatus.PENDING);
 
 
-        // ========================================================
-        // SAVE FEEDBACK
-        // ========================================================
-
         Feedback savedFeedback =
                 feedbackRepository.save(feedback);
 
         return convertToDTO(savedFeedback);
     }
 
-
-    // ============================================================
-    // GET FEEDBACK BY ID
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -160,10 +132,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
 
-    // ============================================================
-    // GET ALL FEEDBACK
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<FeedbackDTO> getAllFeedback() {
@@ -175,10 +143,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .toList();
     }
 
-
-    // ============================================================
-    // GET CUSTOMER FEEDBACK
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -194,10 +158,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .toList();
     }
 
-
-    // ============================================================
-    // SEARCH FEEDBACK
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -217,10 +177,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .toList();
     }
 
-
-    // ============================================================
-    // MARK AS REVIEWED
-    // ============================================================
 
     @Override
     public FeedbackDTO markAsReviewed(Long id) {
@@ -242,10 +198,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         return convertToDTO(savedFeedback);
     }
 
-
-    // ============================================================
-    // DELETE FEEDBACK
-    // ============================================================
 
     @Override
     public void deleteFeedback(Long id) {
@@ -272,10 +224,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackRepository.delete(feedback);
     }
 
-
-    // ============================================================
-    // STATISTICS
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -343,10 +291,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
 
-    // ============================================================
-    // RATING DISTRIBUTION
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public Map<Integer, Long> getRatingDistribution() {
@@ -367,10 +311,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         return result;
     }
 
-
-    // ============================================================
-    // SERVICE PERFORMANCE
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -473,20 +413,12 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
 
-    // ============================================================
-    // ENTITY → DTO
-    // ============================================================
-
     private FeedbackDTO convertToDTO(
             Feedback feedback) {
 
         FeedbackDTO dto =
                 new FeedbackDTO();
 
-
-        // ========================================================
-        // FEEDBACK
-        // ========================================================
 
         dto.setFeedbackId(
                 feedback.getFeedbackId()
@@ -505,10 +437,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         );
 
 
-        // ========================================================
-        // APPOINTMENT
-        // ========================================================
-
         if (feedback.getAppointment() != null) {
 
             Appointment appointment =
@@ -518,8 +446,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                     appointment.getAppointmentId()
             );
 
-
-            // SERVICE
 
             if (appointment.getService() != null) {
 
@@ -531,8 +457,6 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
 
 
-            // STAFF
-
             if (appointment.getStaff() != null) {
 
                 dto.setStaffName(
@@ -543,10 +467,6 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
         }
 
-
-        // ========================================================
-        // CUSTOMER
-        // ========================================================
 
         if (feedback.getCustomer() != null) {
 
@@ -566,10 +486,6 @@ public class FeedbackServiceImpl implements FeedbackService {
             );
         }
 
-
-        // ========================================================
-        // RATING
-        // ========================================================
 
         if (feedback.getRating() != null) {
 

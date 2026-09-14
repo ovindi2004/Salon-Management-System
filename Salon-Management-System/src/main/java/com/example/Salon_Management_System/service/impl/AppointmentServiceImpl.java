@@ -618,29 +618,33 @@ public class AppointmentServiceImpl implements AppointmentService {
         try{
 
 
-        return new AppointmentDTO(appointment.getAppointmentId(),
-                appointment.getCustomer() != null ? appointment.getCustomer().getCustomerId() : null,
+        AppointmentDTO dto = new AppointmentDTO();
+        dto.setAppointmentId(appointment.getAppointmentId());
 
-                appointment.getCustomer() != null ? appointment.getCustomer().getCustomerName() : null,
+        if (appointment.getCustomer() != null) {
+            dto.setCustomerId(appointment.getCustomer().getCustomerId());
+            dto.setCustomerName(appointment.getCustomer().getCustomerName());
+            dto.setCustomerPhone(appointment.getCustomer().getCustomerPhone());
+        }
 
-                appointment.getService() != null ? appointment.getService().getServiceId() : null,
+        if (appointment.getService() != null) {
+            dto.setServiceId(appointment.getService().getServiceId());
+            dto.setServiceName(appointment.getService().getServiceName());
+            dto.setServicePrice(appointment.getService().getPrice());
+        }
 
-                appointment.getService() != null ? appointment.getService().getServiceName() : null,
+        if (appointment.getStaff() != null) {
+            dto.setStaffId(appointment.getStaff().getStaffId());
+            dto.setStaffName(appointment.getStaff().getStaffName());
+        }
 
-                appointment.getStaff() != null ? appointment.getStaff().getStaffId() : null,
+        dto.setAppointmentDate(appointment.getAppointmentDate());
+        dto.setStartTime(appointment.getStartTime());
+        dto.setDuration(appointment.getDuration());
+        dto.setStatus(appointment.getStatus());
+        dto.setNotes(appointment.getNotes());
 
-                appointment.getStaff() != null ? appointment.getStaff().getStaffName() : null,
-
-                appointment.getAppointmentDate(),
-
-                appointment.getStartTime(),
-
-                appointment.getDuration(),
-
-                appointment.getStatus(),
-
-                appointment.getNotes()
-        );
+        return dto;
         }catch (Exception e) {
             log.error("Error converting appointment to DTO", e);
             throw new RuntimeException("Failed to convert appointment to DTO: " + e.getMessage());

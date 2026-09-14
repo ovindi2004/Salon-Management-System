@@ -41,12 +41,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findOutOfStockProducts();
 
 
-    // ==========================================
-    // GET LOW STOCK PRODUCTS
-    //
-    // stockQuantity > 0
-    // stockQuantity <= reorderLevel
-    // ==========================================
     @Query(value = """
         SELECT *
         FROM product
@@ -56,11 +50,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findLowStockProducts();
 
 
-    // ==========================================
-    // GET TOTAL INVENTORY VALUE
-    //
-    // costPrice × stockQuantity
-    // ==========================================
     @Query("""
             SELECT COALESCE(
                 SUM(p.costPrice * p.stockQuantity),

@@ -34,7 +34,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { //OncePerReq
         String path = request.getServletPath();
 
         return path.equals("/api/v1/user/login")
-                || path.equals("/api/v1/user/save");
+                || path.equals("/api/v1/user/save")
+                || path.startsWith("/api/v1/staff")
+                || path.startsWith("/api/v1/customers")
+                || path.startsWith("/api/v1/services")
+                || path.startsWith("/api/v1/admin-users")
+                || path.startsWith("/api/v1/appointment")
+                || path.startsWith("/api/v1/payments")
+                || path.startsWith("/api/v1/invoices")
+                || path.startsWith("/api/v1/product")
+                || path.startsWith("/api/v1/feedback")
+                || path.startsWith("/api/v1/reports")
+                || path.startsWith("/api/v1/dashboard")
+                || path.startsWith("/api/v1/settings")
+                || path.startsWith("/api/v1/chatbot")
+                || path.startsWith("/V1/test");
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -76,7 +90,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { //OncePerReq
         }
     }
     private void handleJwtException(HttpServletResponse response, int code, String message) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
+        response.setStatus(code);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         com.example.Salon_Management_System.dto.CommonResponse errorResponse = new com.example.Salon_Management_System.dto.CommonResponse(code, message);

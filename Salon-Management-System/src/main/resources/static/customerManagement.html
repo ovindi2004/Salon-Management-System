@@ -9,8 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Unified Luxury Sidebar -->
+    <link rel="stylesheet" href="css/unified-sidebar.css" />
 
     <style>
         /* ============================================================
@@ -445,39 +446,97 @@
 <body>
 <div class="app">
 
-    <!-- ============ SIDEBAR ============ -->
+    <!-- ============ UNIFIED SIDEBAR ============ -->
     <aside class="sidebar" id="sidebar">
-        <div class="brand">
-            <div class="brand-icon"><i class="fa-solid fa-spa"></i></div>
-            <div>
-                <div class="brand-name">PINK BEAUTY</div>
-                <div class="brand-tag">Luxury Beauty Meets Smart Technology</div>
+        <div class="sidebar-header">
+            <div class="brand-logo">
+                <i class="fas fa-spa"></i>
+            </div>
+            <div class="brand-info">
+                <h2>Pink Beauty</h2>
+                <span>LUXURY SALON</span>
             </div>
         </div>
-        <nav class="nav">
-            <div class="nav-label">Main Menu</div>
-            <div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></div>
-            <div class="nav-item" onclick="window.location.href='userMangemnt.html'"><i class="fa-solid fa-users"></i><span>User Management</span></div>
-            <div class="nav-item active" ><i class="fa-solid fa-user-group"></i><span>Customer </span></div>
-            <div class="nav-item " onclick="window.location.href='staffManagement.html'"><i class="fa-solid fa-user-tie"></i><span>Staff </span></div>
-            <div class="nav-item" onclick="window.location.href='appointmentManagement.html'"><i class="fa-solid fa-calendar-check"></i><span>Appointment </span></div>
-            <div class="nav-item" onclick="window.location.href='serviceManagement.html'"><i class="fa-solid fa-scissors"></i><span>Service </span></div>
-            <div class="nav-item" onclick="window.location.href='productManagement.html'"><i class="fa-solid fa-box"></i><span>Product </span></div>
-            <div class="nav-item" onclick="window.location.href='inventoryMangement.html'"><i class="fa-solid fa-warehouse"></i><span>Inventory </span></div>
-            <div class="nav-item" onclick="window.location.href='paymentManagement.html'"><i class="fa-solid fa-credit-card"></i><span>Payment </span></div>
-            <div class="nav-item" onclick="window.location.href='feedback.html'"><i class="fa-solid fa-comments"></i><span>Feedback &amp; Ratings</span></div>
-            <div class="nav-item" onclick="window.location.href='report.html'"><i class="fa-solid fa-chart-line"></i><span>Reports</span></div>
-            <div class="nav-item" onclick="window.location.href='settings.html'"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">MAIN</div>
+
+            <a href="dashboard.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="customerManagement.html" class="nav-item active" data-roles="ADMIN,RECEPTIONIST,STAFF">
+                <i class="fas fa-users"></i>
+                <span>Customer Management</span>
+            </a>
+
+            <a href="staffManagement.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-user-tie"></i>
+                <span>Staff Management</span>
+            </a>
+
+            <a href="serviceManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+                <i class="fas fa-hand-sparkles"></i>
+                <span>Service Management</span>
+            </a>
+
+            <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+                <i class="fas fa-calendar-check"></i>
+                <span>Appointment Management</span>
+            </a>
+
+            <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
+
+            <a href="productManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+                <i class="fas fa-box"></i>
+                <span>Product Management</span>
+            </a>
+
+            <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+                <i class="fas fa-warehouse"></i>
+                <span>Inventory Management</span>
+            </a>
+
+            <a href="paymentMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Payments & Invoices</span>
+            </a>
+
+            <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+                <i class="fas fa-star"></i>
+                <span>Feedback & Ratings</span>
+            </a>
+
+            <a href="report.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-chart-pie"></i>
+                <span>Reports & Analytics</span>
+            </a>
+
+            <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
+
+            <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-user-shield"></i>
+                <span>User Management</span>
+            </a>
+
+            <a href="settings.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-sliders"></i>
+                <span>Settings</span>
+            </a>
         </nav>
+
         <div class="sidebar-footer">
-            <div class="profile-mini">
-                <div class="avatar">A</div>
-                <div class="info">
-                    <div class="name">Admin</div>
-                    <div class="role">Administrator</div>
+            <div class="sidebar-user">
+                <div class="user-avatar" id="sidebarAvatar">PB</div>
+                <div class="user-details">
+                    <strong id="sidebarUserName">Salon Manager</strong>
+                    <span id="sidebarUserRole">Administrator</span>
                 </div>
+                <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Logout">
+                    <i class="fas fa-right-from-bracket"></i>
+                </button>
             </div>
-            <button class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         </div>
     </aside>
     <div class="overlay-bg" id="overlay" onclick="toggleSidebar()"></div>
@@ -3056,6 +3115,8 @@
     });
 </script>
 
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 
 </body>
 </html>

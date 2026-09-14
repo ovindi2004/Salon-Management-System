@@ -45,10 +45,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final PaymentRepository paymentRepository;
 
 
-    // =========================================================
-    // SAVE INVOICE
-    // =========================================================
-
     @Override
     public InvoiceDTO saveInvoice(InvoiceDTO dto) {
 
@@ -66,10 +62,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             );
         }
 
-        // -----------------------------------------------------
-        // CUSTOMER
-        // -----------------------------------------------------
-
         Customer customer = customerRepository
                 .findById(dto.getCustomerId())
                 .orElseThrow(() ->
@@ -84,10 +76,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         invoice.setCustomer(customer);
 
-
-        // -----------------------------------------------------
-        // APPOINTMENT
-        // -----------------------------------------------------
 
         if (dto.getAppointmentId() != null) {
 
@@ -126,16 +114,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
 
 
-        // -----------------------------------------------------
-        // BASIC FIELDS
-        // -----------------------------------------------------
-
         mapBasicFields(dto, invoice);
 
-
-        // -----------------------------------------------------
-        // ITEMS
-        // -----------------------------------------------------
 
         invoice.setItems(new ArrayList<>());
 
@@ -149,10 +129,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.getItems().add(item);
         }
 
-
-        // -----------------------------------------------------
-        // INITIAL PAYMENT
-        // -----------------------------------------------------
 
         /*
          * Payment is handled separately by PaymentService.
@@ -168,10 +144,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setAmountPaid(0.0);
 
 
-        // -----------------------------------------------------
-        // CALCULATE
-        // -----------------------------------------------------
-
         calculateInvoice(invoice);
 
 
@@ -182,10 +154,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // GET ALL
-    // =========================================================
-
     @Override
     public List<InvoiceDTO> getAllInvoices() {
 
@@ -195,10 +163,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .toList();
     }
 
-
-    // =========================================================
-    // GET BY ID
-    // =========================================================
 
     @Override
     public InvoiceDTO getInvoiceById(Long invoiceId) {
@@ -220,10 +184,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         return convertToDTO(invoice);
     }
 
-
-    // =========================================================
-    // UPDATE
-    // =========================================================
 
     @Override
     public InvoiceDTO updateInvoice(
@@ -252,10 +212,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                         );
 
 
-        // -----------------------------------------------------
-        // CUSTOMER
-        // -----------------------------------------------------
-
         if (dto.getCustomerId() != null) {
 
             Customer customer =
@@ -270,10 +226,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.setCustomer(customer);
         }
 
-
-        // -----------------------------------------------------
-        // APPOINTMENT
-        // -----------------------------------------------------
 
         if (dto.getAppointmentId() != null) {
 
@@ -324,16 +276,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
 
 
-        // -----------------------------------------------------
-        // BASIC FIELDS
-        // -----------------------------------------------------
-
         mapBasicFields(dto, invoice);
 
-
-        // -----------------------------------------------------
-        // ITEMS
-        // -----------------------------------------------------
 
         if (dto.getItems() != null &&
                 !dto.getItems().isEmpty()) {
@@ -352,10 +296,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
         }
 
-
-        // -----------------------------------------------------
-        // RECALCULATE
-        // -----------------------------------------------------
 
         /*
          * IMPORTANT:
@@ -380,10 +320,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         return convertToDTO(updatedInvoice);
     }
 
-
-    // =========================================================
-    // DELETE
-    // =========================================================
 
     @Override
     public void deleteInvoice(Long invoiceId) {
@@ -425,10 +361,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // SEARCH
-    // =========================================================
-
     @Override
     public List<InvoiceDTO> searchInvoices(
             String keyword
@@ -448,10 +380,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // GET BY STATUS
-    // =========================================================
-
     @Override
     public List<InvoiceDTO> getInvoicesByStatus(
             InvoiceStatus status
@@ -470,10 +398,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .toList();
     }
 
-
-    // =========================================================
-    // DATE RANGE
-    // =========================================================
 
     @Override
     public List<InvoiceDTO> getInvoicesByDateRange(
@@ -506,10 +430,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .toList();
     }
 
-
-    // =========================================================
-    // STATISTICS
-    // =========================================================
 
     @Override
     public Map<String, Object> getInvoiceStats() {
@@ -593,10 +513,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // MAP BASIC FIELDS
-    // =========================================================
-
     private void mapBasicFields(
             InvoiceDTO dto,
             Invoice invoice
@@ -666,10 +582,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // CREATE INVOICE ITEM
-    // =========================================================
-
     private InvoiceItem createInvoiceItem(
             InvoiceItemDTO dto
     ) {
@@ -695,10 +607,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
 
-        // -----------------------------------------------------
-        // QUANTITY
-        // -----------------------------------------------------
-
         int quantity =
                 dto.getQuantity() != null
                         ? dto.getQuantity()
@@ -713,10 +621,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         item.setQuantity(quantity);
 
-
-        // =====================================================
-        // SERVICE ITEM
-        // =====================================================
 
         if (dto.getItemType()
                 == InvoiceItemType.SERVICE) {
@@ -770,10 +674,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             );
         }
 
-
-        // =====================================================
-        // PRODUCT ITEM
-        // =====================================================
 
         else if (dto.getItemType()
                 == InvoiceItemType.PRODUCT) {
@@ -838,10 +738,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
 
 
-        // =====================================================
-        // INVALID TYPE
-        // =====================================================
-
         else {
 
             throw new RuntimeException(
@@ -849,10 +745,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             );
         }
 
-
-        // -----------------------------------------------------
-        // ITEM SUBTOTAL
-        // -----------------------------------------------------
 
         item.setSubtotal(
                 item.getQuantity()
@@ -863,20 +755,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // CALCULATE INVOICE
-    // =========================================================
-
     private void calculateInvoice(
             Invoice invoice
     ) {
 
         double subtotal = 0.0;
 
-
-        // -----------------------------------------------------
-        // SUBTOTAL
-        // -----------------------------------------------------
 
         if (invoice.getItems() != null) {
 
@@ -897,10 +781,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         invoice.setSubtotal(subtotal);
 
-
-        // -----------------------------------------------------
-        // DISCOUNT
-        // -----------------------------------------------------
 
         double discountPercent =
                 invoice.getDiscountPercent() != null
@@ -932,17 +812,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
 
-        // -----------------------------------------------------
-        // AFTER DISCOUNT
-        // -----------------------------------------------------
-
         double afterDiscount =
                 subtotal - discountAmount;
 
-
-        // -----------------------------------------------------
-        // TAX
-        // -----------------------------------------------------
 
         double taxRate =
                 invoice.getTaxRate() != null
@@ -972,20 +844,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
 
-        // -----------------------------------------------------
-        // TOTAL
-        // -----------------------------------------------------
-
         double total =
                 afterDiscount + taxAmount;
 
 
         invoice.setTotalAmount(total);
 
-
-        // -----------------------------------------------------
-        // PAID
-        // -----------------------------------------------------
 
         double paid =
                 invoice.getAmountPaid() != null
@@ -1004,10 +868,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setAmountPaid(paid);
 
 
-        // -----------------------------------------------------
-        // BALANCE
-        // -----------------------------------------------------
-
         double balance =
                 total - paid;
 
@@ -1018,10 +878,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         invoice.setBalanceDue(balance);
 
-
-        // -----------------------------------------------------
-        // STATUS
-        // -----------------------------------------------------
 
         if (total <= 0) {
 
@@ -1059,10 +915,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
     }
 
-
-    // =========================================================
-    // CALCULATE PAID AMOUNT FROM PAYMENTS
-    // =========================================================
 
     private double calculatePaidAmount(
             Invoice invoice
@@ -1102,10 +954,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // GENERATE INVOICE NUMBER
-    // =========================================================
-
     private String generateInvoiceNumber() {
 
         String invoiceNumber;
@@ -1137,10 +985,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    // =========================================================
-    // ENTITY → DTO
-    // =========================================================
-
     private InvoiceDTO convertToDTO(
             Invoice invoice
     ) {
@@ -1148,10 +992,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceDTO dto =
                 new InvoiceDTO();
 
-
-        // -----------------------------------------------------
-        // INVOICE
-        // -----------------------------------------------------
 
         dto.setInvoiceId(
                 invoice.getInvoiceId()
@@ -1162,10 +1002,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
 
-        // -----------------------------------------------------
-        // APPOINTMENT
-        // -----------------------------------------------------
-
         if (invoice.getAppointment() != null) {
 
             dto.setAppointmentId(
@@ -1174,10 +1010,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             );
         }
 
-
-        // -----------------------------------------------------
-        // CUSTOMER
-        // -----------------------------------------------------
 
         if (invoice.getCustomer() != null) {
 
@@ -1198,10 +1030,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
 
 
-        // -----------------------------------------------------
-        // BILLING
-        // -----------------------------------------------------
-
         dto.setCustomerPhone(
                 invoice.getCustomerPhone()
         );
@@ -1210,10 +1038,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 invoice.getBillingAddress()
         );
 
-
-        // -----------------------------------------------------
-        // DATES
-        // -----------------------------------------------------
 
         dto.setInvoiceDate(
                 invoice.getInvoiceDate()
@@ -1224,18 +1048,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
 
-        // -----------------------------------------------------
-        // STATUS
-        // -----------------------------------------------------
-
         dto.setStatus(
                 invoice.getStatus()
         );
 
-
-        // -----------------------------------------------------
-        // AMOUNTS
-        // -----------------------------------------------------
 
         dto.setSubtotal(
                 invoice.getSubtotal()
@@ -1270,27 +1086,15 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
 
-        // -----------------------------------------------------
-        // PAYMENT METHOD
-        // -----------------------------------------------------
-
         dto.setPaymentMethod(
                 invoice.getPaymentMethod()
         );
 
 
-        // -----------------------------------------------------
-        // NOTES
-        // -----------------------------------------------------
-
         dto.setNotes(
                 invoice.getNotes()
         );
 
-
-        // -----------------------------------------------------
-        // ITEMS
-        // -----------------------------------------------------
 
         List<InvoiceItemDTO> itemDTOs =
                 new ArrayList<>();
@@ -1356,10 +1160,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         dto.setItems(itemDTOs);
 
 
-        // -----------------------------------------------------
-        // PAYMENTS
-        // -----------------------------------------------------
-
         List<PaymentDTO> paymentDTOs =
                 new ArrayList<>();
 
@@ -1390,10 +1190,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         return dto;
     }
 
-
-    // =========================================================
-    // PAYMENT → DTO
-    // =========================================================
 
     private PaymentDTO convertPaymentToDTO(
             Payment payment
@@ -1426,10 +1222,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                     invoice.getAppointment();
 
 
-            // -------------------------------------------------
-            // APPOINTMENT
-            // -------------------------------------------------
-
             if (appointment != null) {
 
                 dto.setAppointmentId(
@@ -1448,10 +1240,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                                 : null
                 );
 
-
-                // ---------------------------------------------
-                // CUSTOMER
-                // ---------------------------------------------
 
                 if (appointment.getCustomer() != null) {
 
@@ -1472,10 +1260,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
 
 
-                // ---------------------------------------------
-                // SERVICE
-                // ---------------------------------------------
-
                 if (appointment.getService() != null) {
 
                     SalonService service =
@@ -1495,10 +1279,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 }
 
 
-                // ---------------------------------------------
-                // STAFF
-                // ---------------------------------------------
-
                 if (appointment.getStaff() != null) {
 
                     dto.setStaffId(
@@ -1514,10 +1294,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
         }
 
-
-        // -----------------------------------------------------
-        // PAYMENT
-        // -----------------------------------------------------
 
         dto.setAmount(
                 payment.getAmount()

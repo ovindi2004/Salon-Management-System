@@ -713,13 +713,24 @@
                  * ==========================================
                  */
 
+                const customerId = userData.customerId || null;
+                const userEmail = userData.userEmail || null;
+                if (customerId) {
+                    localStorage.setItem("customerId", customerId);
+                }
+                if (userEmail) {
+                    localStorage.setItem("userEmail", userEmail);
+                }
+
                 localStorage.setItem(
                     "loggedInUser",
                     JSON.stringify({
                         userId: userId,
                         userName: userName,
                         token: token,
-                        userRole: userRole
+                        userRole: userRole,
+                        customerId: customerId,
+                        userEmail: userEmail
                     })
                 );
 
@@ -734,6 +745,7 @@
                 console.log("User ID:", userId);
                 console.log("User Name:", userName);
                 console.log("User Role:", userRole);
+                console.log("Customer ID:", customerId);
 
 
                 /*
@@ -749,12 +761,18 @@
 
                 /*
                  * ==========================================
-                 * GO TO DASHBOARD
+                 * GO TO ROLE-SPECIFIC DASHBOARD / HOME
                  * ==========================================
                  */
 
-                window.location.href = "dashboard.html";
-
+                const roleNormalized = String(userRole || "").trim().toUpperCase();
+                if (roleNormalized === "RECEPTIONIST" || roleNormalized === "RECEPTION") {
+                    window.location.href = "receptionDashboard.html";
+                } else if (roleNormalized === "CUSTOMER") {
+                    window.location.href = "index.html";
+                } else {
+                    window.location.href = "dashboard.html";
+                }
             },
 
 

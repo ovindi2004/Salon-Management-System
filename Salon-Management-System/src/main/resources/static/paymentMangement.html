@@ -12,6 +12,8 @@
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Unified Luxury Sidebar -->
+    <link rel="stylesheet" href="css/unified-sidebar.css" />
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
@@ -1439,115 +1441,99 @@
 <div class="app">
 
     <!-- =========================================================
-     SIDEBAR
+     UNIFIED SIDEBAR
 ========================================================= -->
-
     <aside class="sidebar" id="sidebar">
-
-        <div class="brand">
-            <div class="brand-mark">
-
-                <div class="brand-logo">
-                    <i class="fa-solid fa-spa"></i>
-                </div>
-
-                <div class="brand-name">
-
-                    <div class="top">
-                        PINK <span>BEAUTY</span>
-                    </div>
-
-                    <div class="sub">
-                        Salon
-                    </div>
-
-                </div>
-
+        <div class="sidebar-header">
+            <div class="brand-logo">
+                <i class="fas fa-spa"></i>
+            </div>
+            <div class="brand-info">
+                <h2>Pink Beauty</h2>
+                <span>LUXURY SALON</span>
             </div>
         </div>
 
-        <nav class="nav">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">MAIN</div>
 
-            <div class="nav-label">
-                Menu
-            </div>
+            <a href="dashboard.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
 
-            <button class="nav-item" data-page="Dashboard">
-                <i class="fa-solid fa-table-columns"></i>
-                Dashboard
-            </button>
+            <a href="customerManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+                <i class="fas fa-users"></i>
+                <span>Customer Management</span>
+            </a>
 
-            <button class="nav-item" data-page="Appointments">
-                <i class="fa-regular fa-calendar-check"></i>
-                Appointments
-            </button>
+            <a href="staffManagement.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-user-tie"></i>
+                <span>Staff Management</span>
+            </a>
 
-            <button class="nav-item" data-page="Customers">
-                <i class="fa-solid fa-user-group"></i>
-                Customers
-            </button>
+            <a href="serviceManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+                <i class="fas fa-hand-sparkles"></i>
+                <span>Service Management</span>
+            </a>
 
-            <button class="nav-item" data-page="Staff">
-                <i class="fa-solid fa-scissors"></i>
-                Staff
-            </button>
+            <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+                <i class="fas fa-calendar-check"></i>
+                <span>Appointment Management</span>
+            </a>
 
-            <button class="nav-item" data-page="Services">
-                <i class="fa-solid fa-hand-sparkles"></i>
-                Services
-            </button>
+            <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
 
-            <button class="nav-item active" data-page="Payments">
-                <i class="fa-solid fa-credit-card"></i>
-                Payments
-            </button>
+            <a href="productManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+                <i class="fas fa-box"></i>
+                <span>Product Management</span>
+            </a>
 
-            <button class="nav-item" data-page="Reports">
-                <i class="fa-solid fa-chart-line"></i>
-                Reports
-            </button>
+            <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+                <i class="fas fa-warehouse"></i>
+                <span>Inventory Management</span>
+            </a>
 
-            <button class="nav-item" data-page="Users">
-                <i class="fa-solid fa-users"></i>
-                Users
-            </button>
+            <a href="paymentMangement.html" class="nav-item active" data-roles="ADMIN,RECEPTIONIST">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Payments & Invoices</span>
+            </a>
 
-            <button class="nav-item" data-page="Settings">
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </button>
+            <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+                <i class="fas fa-star"></i>
+                <span>Feedback & Ratings</span>
+            </a>
 
+            <a href="report.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-chart-pie"></i>
+                <span>Reports & Analytics</span>
+            </a>
+
+            <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
+
+            <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-user-shield"></i>
+                <span>User Management</span>
+            </a>
+
+            <a href="settings.html" class="nav-item" data-roles="ADMIN">
+                <i class="fas fa-sliders"></i>
+                <span>Settings</span>
+            </a>
         </nav>
 
-        <div class="side-foot">
-
-            <div class="side-profile">
-
-                <div class="side-avatar">
-                    AD
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar" id="sidebarAvatar">PB</div>
+                <div class="user-details">
+                    <strong id="sidebarUserName">Salon Manager</strong>
+                    <span id="sidebarUserRole">Administrator</span>
                 </div>
-
-                <div class="info">
-
-                    <div class="name">
-                        Admin
-                    </div>
-
-                    <div class="role">
-                        Administrator
-                    </div>
-
-                </div>
-
+                <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Logout">
+                    <i class="fas fa-right-from-bracket"></i>
+                </button>
             </div>
-
-            <button class="logout-btn" id="logoutBtn">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Logout
-            </button>
-
         </div>
-
     </aside>
 
 
@@ -2661,6 +2647,11 @@
             ...(options.headers || {})
         };
 
+        const token = localStorage.getItem("token") || localStorage.getItem("jwt");
+        if (token && token !== "null" && token !== "undefined") {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+
         const response = await fetch(url, {
             ...options,
             headers
@@ -2993,6 +2984,8 @@
                     appointment.appointmentId
                 );
 
+            const isPaid = invoice && (invoice.status === "PAID" || (invoice.balanceDue != null && Number(invoice.balanceDue) <= 0 && Number(invoice.amountPaid || 0) > 0));
+
             const option =
                 document.createElement("option");
 
@@ -3004,7 +2997,8 @@
                 `${appointment.customerName || "Customer"} — ` +
                 `${appointment.serviceName || "Service"} — ` +
                 `${formatDate(appointment.appointmentDate)} ` +
-                `${formatTime(appointment.startTime)}`;
+                `${formatTime(appointment.startTime)}` +
+                (isPaid ? " (PAID)" : "");
 
             option.dataset.invoiceId =
                 invoice?.invoiceId || "";
@@ -3086,10 +3080,9 @@
                         appointment.startTime
                     );
 
-                const price =
-                    invoice?.totalAmount ??
-                    appointment.servicePrice ??
-                    0;
+                const price = (invoice && invoice.totalAmount != null)
+                    ? Number(invoice.totalAmount)
+                    : Number(appointment.servicePrice || 0);
 
                 $("aiPrice").textContent =
                     money(price);
@@ -3102,24 +3095,27 @@
 
                 /*
                  * Payment belongs to Invoice.
-                 * Amount is based on invoice balance.
+                 * Amount is based on invoice balance, or service price if new invoice.
                  */
 
                 if (invoice) {
 
                     const balance =
                         Number(
-                            invoice.balanceDue || 0
+                            invoice.balanceDue !== undefined && invoice.balanceDue !== null
+                                ? invoice.balanceDue
+                                : (invoice.totalAmount || 0)
                         );
 
                     $("mAmount").value =
                         balance > 0
                             ? balance.toFixed(2)
-                            : "";
+                            : (price > 0 ? price.toFixed(2) : "");
 
                 } else {
 
-                    $("mAmount").value = "";
+                    const defaultPrice = Number(appointment.servicePrice || 0);
+                    $("mAmount").value = defaultPrice > 0 ? defaultPrice.toFixed(2) : "";
                 }
             }
         );
@@ -3199,42 +3195,72 @@
             );
         }
 
-        const invoice =
+        let invoice =
             getInvoiceForAppointment(
                 appointmentId
             );
 
         if (!invoice) {
-
-            throw new Error(
-                "No invoice found for this appointment"
+            const appointment = appointments.find(
+                a => Number(a.appointmentId) === appointmentId
             );
+
+            if (!appointment) {
+                throw new Error("Appointment not found");
+            }
+
+            if (!appointment.customerId) {
+                throw new Error("Appointment has no customer assigned");
+            }
+
+            if (!appointment.serviceId) {
+                throw new Error("Appointment has no service assigned");
+            }
+
+            const invoicePayload = {
+                customerId: appointment.customerId,
+                appointmentId: appointment.appointmentId,
+                invoiceDate: date,
+                dueDate: date,
+                status: "UNPAID",
+                paymentMethod: method,
+                notes: $("mNotes").value.trim() || `Invoice for appointment #${appointment.appointmentId}`,
+                items: [
+                    {
+                        itemType: "SERVICE",
+                        serviceId: appointment.serviceId,
+                        quantity: 1,
+                        unitPrice: Number(appointment.servicePrice || amount)
+                    }
+                ]
+            };
+
+            const invResponse = await apiFetch(
+                `${API.invoices}/save`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(invoicePayload)
+                }
+            );
+
+            invoice = unwrap(invResponse);
+
+            if (!invoice || !invoice.invoiceId) {
+                throw new Error("Failed to auto-create invoice for this appointment");
+            }
+
+            invoices.push(invoice);
         }
 
         const balance =
-            Number(invoice.balanceDue || 0);
+            Number(invoice.balanceDue !== undefined && invoice.balanceDue !== null ? invoice.balanceDue : (invoice.totalAmount || 0));
 
-        if (balance <= 0) {
-
-            throw new Error(
-                "This invoice is already fully paid"
-            );
-        }
-
-        if (amount > balance) {
+        if (balance > 0 && amount > balance) {
 
             throw new Error(
                 `Payment cannot exceed invoice balance of ${money(balance)}`
             );
         }
-
-        /*
-         * IMPORTANT:
-         *
-         * Payment entity has ONLY invoice relationship.
-         *
-         * appointmentId is NOT sent.
-         */
 
         const payload = {
 
@@ -6167,6 +6193,9 @@ Pink Beauty Salon.
     initialize();
 
 </script>
+
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 
 </body>
 </html>

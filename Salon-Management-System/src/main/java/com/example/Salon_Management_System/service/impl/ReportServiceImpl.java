@@ -46,10 +46,6 @@ public class ReportServiceImpl implements ReportService {
     private final ServiceRepository serviceRepository;
 
 
-    // ============================================================
-    // SAVE REPORT
-    // ============================================================
-
     @Override
     public ReportDTO saveReport(ReportDTO dto) {
 
@@ -116,10 +112,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // GET REPORT BY ID
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public ReportDTO getReportById(Long reportId) {
@@ -136,10 +128,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // GET ALL REPORTS
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<ReportDTO> getAllReports() {
@@ -151,10 +139,6 @@ public class ReportServiceImpl implements ReportService {
                 .toList();
     }
 
-
-    // ============================================================
-    // GET REPORTS BY TYPE
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -177,10 +161,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // GET REPORTS BY DATE RANGE
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<ReportDTO> getReportsByDateRange(
@@ -200,10 +180,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // DELETE REPORT
-    // ============================================================
-
     @Override
     public void deleteReport(Long reportId) {
 
@@ -218,10 +194,6 @@ public class ReportServiceImpl implements ReportService {
         reportRepository.delete(report);
     }
 
-
-    // ============================================================
-    // OVERALL ANALYTICS
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -260,10 +232,6 @@ public class ReportServiceImpl implements ReportService {
                 serviceRepository.findAll();
 
 
-        // --------------------------------------------------------
-        // APPOINTMENT COUNTS
-        // --------------------------------------------------------
-
         long totalAppointments =
                 appointments.size();
 
@@ -296,10 +264,6 @@ public class ReportServiceImpl implements ReportService {
                         .count();
 
 
-        // --------------------------------------------------------
-        // CUSTOMER COUNTS
-        // --------------------------------------------------------
-
         long totalCustomers =
                 customers.size();
 
@@ -325,10 +289,6 @@ public class ReportServiceImpl implements ReportService {
                         .count();
 
 
-        // --------------------------------------------------------
-        // PAYMENT / REVENUE
-        // --------------------------------------------------------
-
         BigDecimal totalRevenue =
                 calculateTotalPaymentAmount(payments);
 
@@ -350,10 +310,6 @@ public class ReportServiceImpl implements ReportService {
                         PaymentStatus.REFUNDED
                 );
 
-
-        // --------------------------------------------------------
-        // CREATE RESULT
-        // --------------------------------------------------------
 
         ReportAnalyticsDTO result =
                 new ReportAnalyticsDTO();
@@ -417,10 +373,6 @@ public class ReportServiceImpl implements ReportService {
         return result;
     }
 
-
-    // ============================================================
-    // REVENUE ANALYTICS
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -489,10 +441,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // APPOINTMENT ANALYTICS
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public AppointmentAnalyticsDTO getAppointmentAnalytics(
@@ -558,10 +506,6 @@ public class ReportServiceImpl implements ReportService {
         return result;
     }
 
-
-    // ============================================================
-    // STAFF PERFORMANCE
-    // ============================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -668,10 +612,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // SERVICE PERFORMANCE
-    // ============================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<ServicePerformanceDTO> getServicePerformance(
@@ -771,10 +711,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // HELPER — CONVERT REPORT TO DTO
-    // ============================================================
-
     private ReportDTO convertToDTO(
             Report report) {
 
@@ -809,10 +745,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // HELPER — DATE RANGE VALIDATION
-    // ============================================================
-
     private void validateDateRange(
             LocalDate fromDate,
             LocalDate toDate) {
@@ -834,10 +766,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    // ============================================================
-    // HELPER — CHECK DATE RANGE
-    // ============================================================
-
     private boolean isDateBetween(
             LocalDate date,
             LocalDate fromDate,
@@ -848,10 +776,6 @@ public class ReportServiceImpl implements ReportService {
                 !date.isAfter(toDate);
     }
 
-
-    // ============================================================
-    // HELPER — APPOINTMENT STATUS COUNT
-    // ============================================================
 
     private long countAppointmentsByStatus(
             List<Appointment> appointments,
@@ -864,10 +788,6 @@ public class ReportServiceImpl implements ReportService {
                 .count();
     }
 
-
-    // ============================================================
-    // HELPER — TOTAL PAYMENT AMOUNT
-    // ============================================================
 
     private BigDecimal calculateTotalPaymentAmount(
             List<Payment> payments) {
@@ -883,10 +803,6 @@ public class ReportServiceImpl implements ReportService {
                 );
     }
 
-
-    // ============================================================
-    // HELPER — PAYMENT AMOUNT BY STATUS
-    // ============================================================
 
     private BigDecimal calculateAmountByStatus(
             List<Payment> payments,

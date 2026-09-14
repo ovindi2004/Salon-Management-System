@@ -1,6 +1,7 @@
 package com.example.Salon_Management_System.controller;
 
 import com.example.Salon_Management_System.dto.*;
+import com.example.Salon_Management_System.repository.CustomerRepository;
 import com.example.Salon_Management_System.security.JwtUtil;
 import com.example.Salon_Management_System.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ public class UserController {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
+    private final CustomerRepository customerRepository;
 
     @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse saveUser(@RequestBody UserDTO userDTO) {
@@ -33,6 +35,11 @@ public class UserController {
         userDataDTO.setUserName(userDetails.getUserName());
         userDataDTO.setToken(token);
         userDataDTO.setUserRole(userDetails.getRole());
+        userDataDTO.setUserEmail(userDetails.getUserEmail());
+
+        customerRepository.findByUser_UserId(userDetails.getUserId())
+                .ifPresent(customer -> userDataDTO.setCustomerId(customer.getCustomerId()));
+
         return new CommonResponse(0, userDataDTO, "Login successful");
     }
 

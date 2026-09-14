@@ -54,4 +54,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     List<CustomerDTO> searchCustomers( @Param("name") String name);
 
     Optional<Customer> findById(Long customerId);
+
+    Optional<Customer> findByUser_UserId(Long userId);
+
+    Optional<Customer> findByCustomerEmail(String email);
 }

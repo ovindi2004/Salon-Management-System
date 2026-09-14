@@ -76,11 +76,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/staff/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/staff/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/staff/*").permitAll()
-
-                        .requestMatchers("/api/v1/staff/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/staff/save").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/staff/update/*").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/staff/delete/*").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/staff/status/*").permitAll()
+                        .requestMatchers("/api/v1/staff/**").permitAll()
 
                         // SERVICE APIs
-
                         .requestMatchers(HttpMethod.POST, "/api/v1/services/save").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/services/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/services/*").permitAll()
@@ -89,6 +91,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/services/delete/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/services/status/*").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/services/assign-staff/*").permitAll()
+                        .requestMatchers("/api/v1/services/**").permitAll()
 
 
                         // Appointment
@@ -102,9 +105,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/appointment/**").permitAll()
 
                         //Payment
-                                // =========================
-// PAYMENT APIs
-// =========================
+                                // PAYMENT APIs
 
                                 .requestMatchers(
                                         HttpMethod.POST,
@@ -155,11 +156,13 @@ public class SecurityConfig {
                                         HttpMethod.PATCH,
                                         "/api/v1/payments/refund/*"
                                 ).permitAll()
+                                .requestMatchers("/api/v1/payments/**").permitAll()
 
                         // Frontend static resources
                         .requestMatchers(
                                 "/",
                                 "/index.html",
+                                "/*.html",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
@@ -194,6 +197,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/invoices/**").permitAll()
 
                                 .requestMatchers("/api/v1/settings/**").permitAll()
+
+                        // Chatbot API (Public AI Assistant)
+                        .requestMatchers("/api/v1/chatbot/**").permitAll()
 
                         // Other APIs require JWT
                         .anyRequest()

@@ -1,0 +1,3041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pink Beauty Salon | Reception Desk</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Unified Luxury Sidebar -->
+  <link rel="stylesheet" href="css/unified-sidebar.css" />
+
+  <style>
+  /* =========================================================
+     PINK BEAUTY SALON - RECEPTION DASHBOARD CSS
+     Matching Admin Dashboard Aesthetic & Design System
+  ========================================================= */
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --rose-gold: #B76E79;
+    --dark-rose: #9A5862;
+    --soft-pink: #F8D7DA;
+    --champagne: #E8C07D;
+    --gold: #C58A2B;
+    --background: #FFF9FB;
+    --white: #FFFFFF;
+    --text: #2B2024;
+    --muted: #6B5D62;
+    --border: #F0DDE1;
+
+    --success: #3A9975;
+    --warning: #C58A2B;
+    --danger: #C65D68;
+    --info: #5E85AA;
+    --purple: #8768A6;
+    --teal: #388F89;
+
+    --sidebar-width: 260px;
+
+    --shadow-sm: 0 3px 12px rgba(43, 32, 36, .045);
+    --shadow-md: 0 10px 28px rgba(43, 32, 36, .075);
+    --shadow-lg: 0 18px 45px rgba(43, 32, 36, .13);
+
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --transition: .25s ease;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  button, input, select, textarea {
+    font-family: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #E2B7BF;
+    border-radius: 20px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Sidebar Placeholder for Unified Controller */
+  .sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+
+  /* Main Layout */
+  .main-wrapper {
+    min-height: 100vh;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+  }
+
+  /* Topbar */
+  .topbar {
+    height: 72px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, .92);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(14px);
+  }
+
+  .sidebar-toggle {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    color: var(--muted);
+    background: transparent;
+    transition: .2s ease;
+    display: none;
+  }
+  .sidebar-toggle:hover {
+    color: var(--rose-gold);
+    background: #FFF1F4;
+  }
+
+  .topbar-title {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .topbar-title span {
+    color: var(--rose-gold);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+  }
+  .topbar-title strong {
+    margin-top: 2px;
+    font-size: 16px;
+    font-family: "Playfair Display", serif;
+  }
+
+  .topbar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .live-clock-badge {
+    height: 38px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--dark-rose);
+    background: #FFF9FA;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .live-clock-badge i {
+    color: var(--rose-gold);
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 12px 4px 5px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: white;
+  }
+  .profile-avatar {
+    width: 33px;
+    height: 33px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    background: linear-gradient(135deg, #E8C07D, #B76E79);
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+  }
+  .profile-details strong {
+    font-size: 11px;
+  }
+  .profile-details span {
+    margin-top: 1px;
+  }
+
+  .role-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 12px;
+    font-size: 8.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    width: fit-content;
+  }
+  .role-badge.receptionist {
+    background: rgba(232, 192, 125, 0.22);
+    color: #9c6c18;
+    border: 1px solid rgba(232, 192, 125, 0.5);
+  }
+
+  .logout-btn-top {
+    height: 38px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 10px;
+    background: #FFF0F3;
+    color: var(--danger);
+    font-size: 11px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: 1px solid #F8D7DA;
+  }
+  .logout-btn-top:hover {
+    background: var(--danger);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(198, 93, 104, 0.25);
+  }
+
+  /* Content */
+  .content {
+    padding: 26px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  /* Welcome Banner */
+  .welcome-banner {
+    min-height: 185px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    border-radius: 20px;
+    background: linear-gradient(120deg, #6D2A39, #9A5862 55%, #C17A86);
+    box-shadow: 0 14px 35px rgba(154, 88, 98, .2);
+  }
+  .welcome-banner::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    right: -80px;
+    top: -150px;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 50%;
+  }
+  .welcome-banner::after {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    right: 60px;
+    bottom: -90px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 50%;
+  }
+  .welcome-content {
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+  }
+  .welcome-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #F8DCE1;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+  .shift-badge {
+    background: rgba(255, 255, 255, .2);
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 9px;
+  }
+  .welcome-content h1 {
+    margin-top: 8px;
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+  }
+  .welcome-content p {
+    margin-top: 6px;
+    color: rgba(255, 255, 255, .88);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .welcome-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  /* Buttons */
+  .btn {
+    min-height: 40px;
+    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    transition: var(--transition);
+  }
+  .btn-white {
+    color: var(--dark-rose);
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+  }
+  .btn-white:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0,0,0,.14);
+  }
+  .btn-gold {
+    color: #4A350B;
+    background: linear-gradient(135deg, #FDE6A8, #E8C07D);
+    box-shadow: 0 4px 12px rgba(232, 192, 125, .3);
+  }
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(232, 192, 125, .4);
+  }
+  .btn-primary {
+    color: white;
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    box-shadow: 0 5px 14px rgba(183, 110, 121, .25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(183, 110, 121, .35);
+  }
+  .btn-outline {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover {
+    border-color: var(--rose-gold);
+    color: var(--rose-gold);
+    background: #FFF9FA;
+  }
+
+  /* Stats KPI Grid (6 cards) */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+  }
+  .stat-card {
+    min-height: 135px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: var(--rose-gold);
+  }
+  .stat-card:nth-child(2)::before { background: var(--champagne); }
+  .stat-card:nth-child(3)::before { background: var(--teal); }
+  .stat-card:nth-child(4)::before { background: var(--success); }
+  .stat-card:nth-child(5)::before { background: var(--info); }
+  .stat-card:nth-child(6)::before { background: var(--purple); }
+
+  .stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  .stat-icon.pink { color: var(--rose-gold); background: #FFF0F3; }
+  .stat-icon.gold { color: #B9872E; background: #FFF7E6; }
+  .stat-icon.teal { color: var(--teal); background: #EAF8F7; }
+  .stat-icon.green { color: var(--success); background: #EAF7F1; }
+  .stat-icon.blue { color: var(--info); background: #EDF5FC; }
+  .stat-icon.purple { color: var(--purple); background: #F4EFFA; }
+
+  .stat-tag {
+    padding: 3px 8px;
+    border-radius: 20px;
+    color: var(--muted);
+    background: #FAF6F7;
+    font-size: 8px;
+    font-weight: 600;
+  }
+  .stat-value {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+  }
+  .stat-label {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  /* Segmented Tab Navigation */
+  .tab-nav-wrapper {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+  .tab-btn i {
+    font-size: 13px;
+  }
+  .tab-btn:hover {
+    color: var(--rose-gold);
+    background: #FFF1F4;
+  }
+  .tab-btn.active {
+    color: white;
+    background: linear-gradient(135deg, var(--rose-gold), var(--dark-rose));
+    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.25);
+  }
+
+  /* Section Containers */
+  .tab-pane {
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    animation: fadeIn .25s ease;
+  }
+  .tab-pane.active {
+    display: flex;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Card General */
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-bottom: 1px solid var(--border);
+    background: #FFFAFB;
+  }
+  .card-header-left {
+    display: flex;
+    flex-direction: column;
+  }
+  .section-label {
+    color: var(--rose-gold);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .card-header h2 {
+    margin-top: 3px;
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+  }
+  .card-header p {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Filter Toolbar */
+  .toolbar {
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: #FFFDFE;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .search-input-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 380px;
+  }
+  .search-input-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .search-input-wrapper input {
+    width: 100%;
+    height: 38px;
+    padding: 0 14px 0 34px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    font-size: 11px;
+    background: white;
+  }
+  .search-input-wrapper input:focus {
+    border-color: var(--rose-gold);
+    box-shadow: 0 0 0 3px #FFF1F4;
+  }
+  .filter-select {
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    font-size: 11px;
+    color: var(--text);
+    background: white;
+    cursor: pointer;
+  }
+  .filter-select:focus {
+    border-color: var(--rose-gold);
+  }
+
+  /* Tables */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+  }
+  thead {
+    background: #FFFAFB;
+  }
+  th {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    color: #89777D;
+    text-align: left;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #F6EDEF;
+    font-size: 11px;
+    vertical-align: middle;
+  }
+  tbody tr:hover {
+    background: #FFFAFB;
+  }
+
+  /* User/Customer Cell */
+  .customer-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .avatar-small {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    background: linear-gradient(135deg, #D28A97, #B76E79);
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cell-title {
+    font-weight: 600;
+    display: block;
+  }
+  .cell-subtitle {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 9.5px;
+    display: block;
+  }
+
+  /* Status Badges */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 8.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+  .status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .status-scheduled { color: #B67D1F; background: #FFF5E1; }
+  .status-scheduled::before { background: #D59B42; }
+  .status-confirmed { color: #35739E; background: #EDF5FC; }
+  .status-confirmed::before { background: #5E94C0; }
+  .status-completed { color: #207D5A; background: #EAF7F1; }
+  .status-completed::before { background: #38A67B; }
+  .status-cancelled { color: #B84755; background: #FDEDEF; }
+  .status-cancelled::before { background: #C85D68; }
+  .status-active { color: #207D5A; background: #EAF7F1; }
+  .status-active::before { background: #38A67B; }
+  .status-low-stock { color: #B67D1F; background: #FFF5E1; }
+  .status-low-stock::before { background: #D59B42; }
+  .status-out-of-stock { color: #B84755; background: #FDEDEF; }
+  .status-out-of-stock::before { background: #C85D68; }
+
+  /* Staff Cards Grid */
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    padding: 20px 24px;
+  }
+  .staff-card {
+    background: #FFFCFD;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: var(--transition);
+    position: relative;
+  }
+  .staff-card:hover {
+    transform: translateY(-2px);
+    border-color: #E6B2BC;
+    box-shadow: var(--shadow-sm);
+  }
+  .staff-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .staff-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #B76E79, #9A5862);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .staff-meta {
+    flex: 1;
+  }
+  .staff-meta strong {
+    font-size: 13px;
+    display: block;
+  }
+  .staff-position {
+    display: inline-block;
+    color: var(--dark-rose);
+    font-size: 9.5px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .staff-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--muted);
+    border-top: 1px dashed var(--border);
+    padding-top: 10px;
+  }
+  .staff-info-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .staff-info-item i {
+    width: 14px;
+    color: var(--rose-gold);
+  }
+  .staff-action-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  /* Services Grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 20px 24px;
+  }
+  .service-card {
+    background: #FFFCFD;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    transition: var(--transition);
+  }
+  .service-card:hover {
+    border-color: #E2ACB7;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .service-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .service-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #FFF0F3;
+    color: var(--rose-gold);
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+  }
+  .service-price-pill {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--rose-gold);
+  }
+  .service-body h4 {
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .service-body p {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .service-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F6EDEF;
+    padding-top: 10px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* Inventory Hub Card */
+  .inventory-hub-banner {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #FFFDF8, #FFF5F7);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .inventory-hub-info h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .inventory-hub-info p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 3px;
+  }
+
+  /* Feedback Reviews Feed */
+  .feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    padding: 20px 24px;
+  }
+  .feedback-card {
+    background: #FFFCFD;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: var(--transition);
+  }
+  .feedback-card:hover {
+    border-color: #E2ACB7;
+    box-shadow: var(--shadow-sm);
+  }
+  .feedback-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .stars {
+    color: #E8A838;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  .feedback-text {
+    font-size: 11px;
+    color: #4A3A40;
+    line-height: 1.5;
+    font-style: italic;
+    background: #FFF9FA;
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 3px solid var(--rose-gold);
+  }
+  .feedback-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 9.5px;
+    color: var(--muted);
+    margin-top: auto;
+  }
+
+  /* Modals */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(43, 32, 36, 0.48);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: none;
+    place-items: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .modal-overlay.show {
+    display: grid;
+    opacity: 1;
+  }
+  .modal-box {
+    width: 100%;
+    max-width: 540px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: modalPop .25s ease;
+  }
+  @keyframes modalPop {
+    from { transform: scale(0.96); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .modal-header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFAFB;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-header h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 17px;
+  }
+  .modal-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 14px;
+    display: grid;
+    place-items: center;
+  }
+  .modal-close-btn:hover {
+    background: #FFF0F3;
+    color: var(--rose-gold);
+  }
+  .modal-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 75vh;
+    overflow-y: auto;
+  }
+  .modal-footer {
+    padding: 16px 24px;
+    background: #FFFAFB;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .form-group label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .form-control {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    font-size: 11.5px;
+    color: var(--text);
+    background: #FFFDFE;
+  }
+  .form-control:focus {
+    border-color: var(--rose-gold);
+    box-shadow: 0 0 0 3px #FFF1F4;
+  }
+  textarea.form-control {
+    height: 70px;
+    padding: 10px 12px;
+    resize: vertical;
+  }
+
+  /* Invoice Print Area */
+  .invoice-receipt {
+    background: white;
+    padding: 20px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    font-size: 11px;
+  }
+  .invoice-receipt-header {
+    text-align: center;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+  .invoice-receipt-header h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    color: var(--rose-gold);
+  }
+
+  /* Toast Notification */
+  .toast-container {
+    position: fixed;
+    right: 24px;
+    top: 85px;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .toast {
+    min-width: 280px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    animation: toastIn .25s ease;
+  }
+  .toast.success { border-left: 4px solid var(--success); }
+  .toast.error { border-left: 4px solid var(--danger); }
+  .toast-icon {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .toast.success .toast-icon { background: #EAF7F1; color: var(--success); }
+  .toast.error .toast-icon { background: #FDEDEF; color: var(--danger); }
+  .toast-content strong { display: block; font-size: 11px; }
+  .toast-content span { display: block; color: var(--muted); font-size: 9.5px; margin-top: 2px; }
+
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(25px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Empty & Loading States */
+  .empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted);
+  }
+  .empty-state i {
+    font-size: 32px;
+    color: #D8A5AE;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .empty-state strong {
+    font-size: 12px;
+    display: block;
+    color: var(--text);
+  }
+  .empty-state span {
+    font-size: 10px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1280px) {
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .sidebar-toggle {
+      display: grid;
+    }
+    .main-wrapper {
+      margin-left: 0;
+    }
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .welcome-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .welcome-actions {
+      align-items: flex-start;
+    }
+  }
+  @media (max-width: 600px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+    .content {
+      padding: 16px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Unified Luxury Sidebar -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="topbar-title">
+        <span>Pink Beauty Salon</span>
+        <strong>Reception Concierge Desk</strong>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Live Clock -->
+        <div class="live-clock-badge" id="liveClockBadge">
+          <i class="far fa-clock"></i>
+          <span id="liveClockText">Loading time...</span>
+        </div>
+
+        <!-- Receptionist Profile -->
+        <div class="profile">
+          <div class="profile-avatar" id="profileAvatar">RC</div>
+          <div class="profile-details">
+            <strong id="profileUserName">Receptionist</strong>
+            <span class="role-badge receptionist" id="profileUserRole">Receptionist</span>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button class="logout-btn-top" id="topbarLogoutBtn" title="Logout">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="content">
+
+      <!-- Luxury Welcome Banner -->
+      <section class="welcome-banner">
+        <div class="welcome-content">
+          <div class="welcome-label">
+            <i class="fas fa-sparkles"></i>
+            <span>FRONT DESK OPERATIONS</span>
+            <span class="shift-badge"><i class="fas fa-circle" style="color: #6ee7b7; font-size: 7px; margin-right: 4px;"></i> Active Shift</span>
+          </div>
+          <h1 id="welcomeGreeting">Welcome to Reception Desk</h1>
+          <p>
+            Manage today's appointments, assign expert stylists, coordinate treatments, assist clients with retail products, and process payments and invoices smoothly.
+          </p>
+        </div>
+
+        <div class="welcome-actions">
+          <button class="btn btn-gold" onclick="openAppointmentModal()">
+            <i class="fas fa-plus"></i>
+            <span>Book Appointment</span>
+          </button>
+          <button class="btn btn-white" onclick="openCustomerModal()">
+            <i class="fas fa-user-plus" style="color: var(--rose-gold);"></i>
+            <span>New Customer</span>
+          </button>
+          <button class="btn btn-white" onclick="openPaymentModal()">
+            <i class="fas fa-credit-card" style="color: var(--success);"></i>
+            <span>Quick Checkout</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- KPI Summary Cards Grid (6 Cards) -->
+      <section class="stats-grid">
+        <!-- 1. Today's Appointments -->
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon pink">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <span class="stat-tag">TODAY</span>
+          </div>
+          <div>
+            <div class="stat-value" id="kpiTodayAppointments">0</div>
+            <div class="stat-label">Today's Appointments</div>
+          </div>
+        </div>
+
+        <!-- 2. Staff on Duty -->
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon gold">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <span class="stat-tag">ACTIVE</span>
+          </div>
+          <div>
+            <div class="stat-value" id="kpiStaffCount">0</div>
+            <div class="stat-label">Staff Members</div>
+          </div>
+        </div>
+
+        <!-- 3. Available Services -->
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon teal">
+              <i class="fas fa-hand-sparkles"></i>
+            </div>
+            <span class="stat-tag">SERVICES</span>
+          </div>
+          <div>
+            <div class="stat-value" id="kpiServicesCount">0</div>
+            <div class="stat-label">Active Treatments</div>
+          </div>
+        </div>
+
+        <!-- 4. Today's Revenue -->
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon green">
+              <i class="fas fa-coins"></i>
+            </div>
+            <span class="stat-tag">COLLECTED</span>
+          </div>
+          <div>
+            <div class="stat-value" id="kpiTodayRevenue">LKR 0</div>
+            <div class="stat-label">Today's Payments</div>
+          </div>
+        </div>
+        <!-- 5. Retail Products & Inventory -->
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue">
+              <i class="fas fa-boxes-stacked"></i>
+            </div>
+            <span class="stat-tag">RETAIL</span>
+          </div>
+          <div>
+            <div class="stat-value" id="kpiProductsCount">0</div>
+            <div class="stat-label">Products in Stock</div>
+          </div>
+        </div>
+
+        <!-- 6. Client Feedback Score -->
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon purple">
+              <i class="fas fa-star"></i>
+            </div>
+            <span class="stat-tag">RATING</span>
+          </div>
+          <div>
+            <div class="stat-value" id="kpiFeedbackScore">5.0 ★</div>
+            <div class="stat-label">Client Satisfaction</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Segmented Tab Navigation Switcher -->
+      <nav class="tab-nav-wrapper">
+        <button class="tab-btn active" data-tab="appointments" onclick="switchTab('appointments')">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Appointments</span>
+        </button>
+        <button class="tab-btn" data-tab="staff" onclick="switchTab('staff')">
+          <i class="fas fa-users"></i>
+          <span>Staff Members</span>
+        </button>
+        <button class="tab-btn" data-tab="services" onclick="switchTab('services')">
+          <i class="fas fa-hand-sparkles"></i>
+          <span>All Services</span>
+        </button>
+        <button class="tab-btn" data-tab="products" onclick="switchTab('products')">
+          <i class="fas fa-box-open"></i>
+          <span>Products & Inventory</span>
+        </button>
+        <button class="tab-btn" data-tab="payments" onclick="switchTab('payments')">
+          <i class="fas fa-file-invoice-dollar"></i>
+          <span>Payments & Invoices</span>
+        </button>
+        <button class="tab-btn" data-tab="feedback" onclick="switchTab('feedback')">
+          <i class="fas fa-comments"></i>
+          <span>Client Feedback</span>
+        </button>
+      </nav>
+
+      <!-- TAB 1: APPOINTMENTS -->
+      <div class="tab-pane active" id="pane-appointments">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="section-label">Reception Schedule</span>
+              <h2>Today's Appointments Roster</h2>
+              <p>Real-time booking schedule, client arrival status, and quick checkout</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-outline" onclick="openCustomerModal()">
+                <i class="fas fa-user-plus" style="color: var(--rose-gold);"></i>
+                <span>+ New Customer</span>
+              </button>
+              <button class="btn btn-primary" onclick="openAppointmentModal()">
+                <i class="fas fa-plus"></i>
+                <span>New Appointment</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Toolbar Filter -->
+          <div class="toolbar">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="appointmentSearch" placeholder="Search customer, staff, or service..." oninput="filterAppointments()">
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <select class="filter-select" id="appointmentStatusFilter" onchange="filterAppointments()">
+                <option value="ALL">All Statuses</option>
+                <option value="SCHEDULED">Scheduled</option>
+                <option value="CONFIRMED">Confirmed</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="CANCELLED">Cancelled</option>
+              </select>
+
+              <input type="date" class="filter-select" id="appointmentDateFilter" onchange="filterAppointments()">
+
+              <button class="btn btn-outline" onclick="resetAppointmentFilters()" title="Reset Filters">
+                <i class="fas fa-rotate"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer</th>
+                  <th>Service & Price</th>
+                  <th>Assigned Staff</th>
+                  <th>Date & Time</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentTableBody">
+                <tr>
+                  <td colspan="7">
+                    <div class="empty-state">
+                      <i class="fas fa-circle-notch fa-spin"></i>
+                      <strong>Loading appointments...</strong>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: STAFF MEMBERS -->
+      <div class="tab-pane" id="pane-staff">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="section-label">Stylists & Specialists</span>
+              <h2>All Salon Staff Members</h2>
+              <p>Browse staff specializations, contact details, and availability for appointments</p>
+            </div>
+            <div class="card-actions">
+              <span class="stat-tag" id="staffRosterCountBadge">0 Staff Active</span>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="staffSearch" placeholder="Search staff by name, code, or specialization..." oninput="filterStaff()">
+            </div>
+            <select class="filter-select" id="staffPositionFilter" onchange="filterStaff()">
+              <option value="ALL">All Positions</option>
+            </select>
+          </div>
+
+          <div class="staff-grid" id="staffGridContainer">
+            <div class="empty-state" style="grid-column: 1/-1;">
+              <i class="fas fa-circle-notch fa-spin"></i>
+              <strong>Loading staff members...</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: ALL SERVICES -->
+      <div class="tab-pane" id="pane-services">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="section-label">Treatments & Pricing</span>
+              <h2>Salon Service Catalog</h2>
+              <p>Explore all hair, nail, skin, and spa packages with price details</p>
+            </div>
+            <div class="card-actions">
+              <span class="stat-tag" id="servicesCountBadge">0 Services</span>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="serviceSearch" placeholder="Search service title or description..." oninput="filterServices()">
+            </div>
+            <select class="filter-select" id="serviceCategoryFilter" onchange="filterServices()">
+              <option value="ALL">All Categories</option>
+            </select>
+          </div>
+
+          <div class="services-grid" id="servicesGridContainer">
+            <div class="empty-state" style="grid-column: 1/-1;">
+              <i class="fas fa-circle-notch fa-spin"></i>
+              <strong>Loading services...</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: PRODUCTS & INVENTORY -->
+      <div class="tab-pane" id="pane-products">
+        <div class="card">
+          <!-- Hub Banner -->
+          <div class="inventory-hub-banner">
+            <div class="inventory-hub-info">
+              <h3><i class="fas fa-warehouse" style="color: var(--champagne);"></i> Inventory & Retail Operations</h3>
+              <p>Monitor retail stock on hand, review low-stock warnings, and access the dedicated inventory portal.</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <a href="inventoryMangement.html" class="btn btn-gold">
+                <i class="fas fa-boxes"></i>
+                <span>Open Full Inventory Hub</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="productSearch" placeholder="Search product name, SKU, or brand..." oninput="filterProducts()">
+            </div>
+
+            <select class="filter-select" id="productStockFilter" onchange="filterProducts()">
+              <option value="ALL">All Stock Levels</option>
+              <option value="IN_STOCK">In Stock (> 5)</option>
+              <option value="LOW_STOCK">Low Stock (1 - 5)</option>
+              <option value="OUT_OF_STOCK">Out of Stock (0)</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product Details</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Selling Price</th>
+                  <th>In Stock</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="productTableBody">
+                <tr>
+                  <td colspan="7">
+                    <div class="empty-state">
+                      <i class="fas fa-circle-notch fa-spin"></i>
+                      <strong>Loading products...</strong>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: PAYMENTS & INVOICES -->
+      <div class="tab-pane" id="pane-payments">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="section-label">Billing & Invoices</span>
+              <h2>Payments & Invoices</h2>
+              <p>Process client checkout, generate digital receipts, and review transactions</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="openPaymentModal()">
+                <i class="fas fa-receipt"></i>
+                <span>Take Payment</span>
+              </button>
+              <a href="paymentMangement.html" class="btn btn-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i>
+                <span>Full Billing Page</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="paymentSearch" placeholder="Search customer, invoice #, or ref..." oninput="filterPayments()">
+            </div>
+            <select class="filter-select" id="paymentMethodFilter" onchange="filterPayments()">
+              <option value="ALL">All Payment Methods</option>
+              <option value="CASH">Cash</option>
+              <option value="CREDIT_CARD">Credit Card</option>
+              <option value="DEBIT_CARD">Debit Card</option>
+              <option value="ONLINE_TRANSFER">Online Transfer</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Receipt / Invoice</th>
+                  <th>Customer</th>
+                  <th>Service Ref</th>
+                  <th>Method</th>
+                  <th>Amount (LKR)</th>
+                  <th>Payment Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="paymentTableBody">
+                <tr>
+                  <td colspan="8">
+                    <div class="empty-state">
+                      <i class="fas fa-circle-notch fa-spin"></i>
+                      <strong>Loading payments...</strong>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: CLIENT FEEDBACK -->
+      <div class="tab-pane" id="pane-feedback">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="section-label">Client Voice</span>
+              <h2>Customer Feedback & Reviews</h2>
+              <p>Ratings and reviews submitted by salon guests</p>
+            </div>
+            <div class="card-actions">
+              <a href="feedback.html" class="btn btn-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i>
+                <span>View All Feedback</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-input-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="feedbackSearch" placeholder="Search customer feedback or comments..." oninput="filterFeedback()">
+            </div>
+            <select class="filter-select" id="feedbackRatingFilter" onchange="filterFeedback()">
+              <option value="ALL">All Ratings</option>
+              <option value="5">5 Stars ★★★★★</option>
+              <option value="4">4 Stars ★★★★</option>
+              <option value="3">3 Stars ★★★</option>
+              <option value="2">2 Stars ★★</option>
+              <option value="1">1 Star ★</option>
+            </select>
+          </div>
+
+          <div class="feedback-grid" id="feedbackGridContainer">
+            <div class="empty-state" style="grid-column: 1/-1;">
+              <i class="fas fa-circle-notch fa-spin"></i>
+              <strong>Loading client feedback...</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- =========================================================
+  <!-- =========================================================
+       MODAL 0: REGISTER NEW CUSTOMER MODAL
+  ========================================================= -->
+  <div class="modal-overlay" id="customerModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-user-plus" style="color: var(--rose-gold); margin-right: 8px;"></i> Register New Customer</h3>
+        <button class="modal-close-btn" onclick="closeCustomerModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="customerForm" onsubmit="handleSaveCustomer(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="custNameInput">Customer Full Name *</label>
+            <input type="text" class="form-control" id="custNameInput" required placeholder="e.g. Kasuni Jayawardena">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label for="custPhoneInput">Mobile Phone *</label>
+              <input type="tel" class="form-control" id="custPhoneInput" required placeholder="e.g. 0771234567">
+            </div>
+            <div class="form-group">
+              <label for="custGenderSelect">Gender</label>
+              <select class="form-control" id="custGenderSelect">
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="custEmailInput">Email Address (Optional)</label>
+            <input type="email" class="form-control" id="custEmailInput" placeholder="e.g. client@email.com">
+          </div>
+
+          <div class="form-group">
+            <label for="custAddressInput">Address / City (Optional)</label>
+            <input type="text" class="form-control" id="custAddressInput" placeholder="e.g. Colombo 03">
+          </div>
+
+          <div class="form-group">
+            <label for="custNotesInput">Special Notes / Preferences (Optional)</label>
+            <textarea class="form-control" id="custNotesInput" placeholder="Skin type, hair texture, allergies, styling preferences..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeCustomerModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveCustomerBtn">
+            <i class="fas fa-check"></i>
+            <span>Register Customer</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 1: BOOK APPOINTMENT MODAL
+  ========================================================= -->
+  <div class="modal-overlay" id="appointmentModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-calendar-plus" style="color: var(--rose-gold); margin-right: 8px;"></i> Book New Appointment</h3>
+        <button class="modal-close-btn" onclick="closeAppointmentModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="appointmentForm" onsubmit="handleSaveAppointment(event)">
+        <div class="modal-body">
+          <!-- Select Customer -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label for="appCustomerSelect">Customer *</label>
+              <button type="button" class="btn btn-white" style="min-height: 22px; padding: 0 8px; font-size: 9px; color: var(--rose-gold); border: 1px solid var(--border);" onclick="openCustomerModal(true)">
+                <i class="fas fa-user-plus"></i> + Add Walk-in Client
+              </button>
+            </div>
+            <select class="form-control" id="appCustomerSelect" required>
+              <option value="">-- Choose Customer --</option>
+            </select>
+          </div>
+
+          <!-- Select Service -->
+          <div class="form-group">
+            <label for="appServiceSelect">Salon Service *</label>
+            <select class="form-control" id="appServiceSelect" required onchange="handleServiceSelectionChange()">
+              <option value="">-- Choose Service --</option>
+            </select>
+          </div>
+
+          <!-- Select Staff -->
+          <div class="form-group">
+            <label for="appStaffSelect">Preferred Stylist / Staff *</label>
+            <select class="form-control" id="appStaffSelect" required>
+              <option value="">-- Choose Staff Member --</option>
+            </select>
+          </div>
+
+          <!-- Appointment Date & Time -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label for="appDateInput">Date *</label>
+              <input type="date" class="form-control" id="appDateInput" required>
+            </div>
+            <div class="form-group">
+              <label for="appTimeInput">Start Time *</label>
+              <input type="time" class="form-control" id="appTimeInput" required value="10:00">
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label for="appNotesInput">Special Notes / Preferences</label>
+            <textarea class="form-control" id="appNotesInput" placeholder="Any client preference, skin type, or treatment request..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeAppointmentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveAppointmentBtn">
+            <i class="fas fa-check"></i>
+            <span>Confirm Booking</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: QUICK PAYMENT & CHECKOUT MODAL
+  ========================================================= -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-file-invoice-dollar" style="color: var(--success); margin-right: 8px;"></i> Quick Checkout & Billing</h3>
+        <button class="modal-close-btn" onclick="closePaymentModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="paymentForm" onsubmit="handleSavePayment(event)">
+        <div class="modal-body">
+          <!-- Select Appointment -->
+          <div class="form-group">
+            <label for="payAppointmentSelect">Select Completed / Confirmed Appointment *</label>
+            <select class="form-control" id="payAppointmentSelect" required onchange="handlePaymentAppointmentChange()">
+              <option value="">-- Choose Appointment --</option>
+            </select>
+          </div>
+
+          <!-- Client & Service Info Display -->
+          <div style="background: #FFF9FA; border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 11px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="color: var(--muted);">Client:</span>
+              <strong id="payCustomerName">-</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="color: var(--muted);">Treatment:</span>
+              <strong id="payServiceName">-</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--muted);">Stylist:</span>
+              <strong id="payStaffName">-</strong>
+            </div>
+          </div>
+
+          <!-- Amount to Pay -->
+          <div class="form-group">
+            <label for="payAmountInput">Total Amount (LKR) *</label>
+            <input type="number" step="0.01" class="form-control" id="payAmountInput" required min="1" placeholder="0.00">
+          </div>
+
+          <!-- Payment Method -->
+          <div class="form-group">
+            <label for="payMethodSelect">Payment Method *</label>
+            <select class="form-control" id="payMethodSelect" required>
+              <option value="CASH">Cash</option>
+              <option value="CREDIT_CARD">Credit Card</option>
+              <option value="DEBIT_CARD">Debit Card</option>
+              <option value="ONLINE_TRANSFER">Online Transfer</option>
+            </select>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label for="payNotesInput">Transaction Notes (Optional)</label>
+            <input type="text" class="form-control" id="payNotesInput" placeholder="Receipt remarks or voucher code...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closePaymentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="savePaymentBtn">
+            <i class="fas fa-receipt"></i>
+            <span>Pay & Generate Receipt</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 3: INVOICE RECEIPT MODAL
+  ========================================================= -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3><i class="fas fa-receipt" style="color: var(--rose-gold); margin-right: 8px;"></i> Salon Receipt</h3>
+        <button class="modal-close-btn" onclick="closeReceiptModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="receiptModalContent">
+        <!-- Generated Receipt Contents -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="window.print()">
+          <i class="fas fa-print"></i>
+          <span>Print Receipt</span>
+        </button>
+        <button class="btn btn-primary" onclick="closeReceiptModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+  /* =========================================================
+     PINK BEAUTY SALON - RECEPTION CONTROLLER SCRIPT
+  ========================================================= */
+
+  const API_BASE = "http://localhost:8080";
+
+  const API = {
+    STAFF: `${API_BASE}/api/v1/staff/all`,
+    SERVICES: `${API_BASE}/api/v1/services/all`,
+    APPOINTMENTS: `${API_BASE}/api/v1/appointment/all`,
+    SAVE_APPOINTMENT: `${API_BASE}/api/v1/appointment/save`,
+    UPDATE_APPOINTMENT: `${API_BASE}/api/v1/appointment/update`,
+    PRODUCTS: `${API_BASE}/api/v1/product/all`,
+    PAYMENTS: `${API_BASE}/api/v1/payments/all`,
+    SAVE_PAYMENT: `${API_BASE}/api/v1/payments/save`,
+    FEEDBACK: `${API_BASE}/api/v1/feedback`,
+    CUSTOMERS: `${API_BASE}/api/v1/customers/all`
+  };
+
+  // State Stores
+  let state = {
+    appointments: [],
+    staff: [],
+    services: [],
+    products: [],
+    payments: [],
+    feedback: [],
+    customers: []
+  };
+
+  /* =========================================================
+     AUTH / FETCH HELPER
+  ========================================================= */
+  async function fetchJSON(url, options = {}) {
+    const headers = {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    };
+
+    const token = localStorage.getItem("token") || localStorage.getItem("jwt");
+    if (token && token !== "null" && token !== "undefined") {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    const res = await fetch(url, { ...options, headers });
+    let data = null;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = null;
+    }
+
+    if (!res.ok) {
+      const msg = data?.message || data?.error || data?.body?.message || `HTTP ${res.status}`;
+      throw new Error(msg);
+    }
+
+    if (data && data.body !== undefined) {
+      return data.body;
+    }
+    return data;
+  }
+
+  /* =========================================================
+     AUTHENTICATION & USER SESSION
+  ========================================================= */
+  function checkReceptionSession() {
+    let userName = localStorage.getItem("userName");
+    let userRole = localStorage.getItem("userRole");
+    const token = localStorage.getItem("token");
+
+    if (!userName || !userRole) {
+      const stored = localStorage.getItem("loggedInUser");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed.userName) userName = parsed.userName;
+          if (parsed.userRole) userRole = parsed.userRole;
+        } catch (e) {}
+      }
+    }
+
+    // Role check: If not logged in, redirect
+    if (!token && !userName) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const finalName = userName || "Salon Receptionist";
+    const nameParts = finalName.trim().split(/\s+/);
+    let initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]) : finalName.substring(0, 2);
+    initials = initials.toUpperCase();
+
+    document.getElementById("profileUserName").textContent = finalName;
+    document.getElementById("profileAvatar").textContent = initials;
+    document.getElementById("welcomeGreeting").textContent = `Welcome to Reception Desk, ${finalName}`;
+
+    // Setup Logout Handlers
+    const logout = () => {
+      if (confirm("Are you sure you want to log out of the Reception Desk?")) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("loggedInUser");
+        sessionStorage.clear();
+        window.location.href = "login.html";
+      }
+    };
+
+    const topbarLogout = document.getElementById("topbarLogoutBtn");
+    if (topbarLogout) topbarLogout.addEventListener("click", logout);
+  }
+
+  /* =========================================================
+     LIVE CLOCK
+  ========================================================= */
+  function startLiveClock() {
+    function update() {
+      const now = new Date();
+      const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      document.getElementById("liveClockText").textContent = now.toLocaleString('en-US', options);
+    }
+    update();
+    setInterval(update, 1000);
+  }
+
+  /* =========================================================
+     TAB SWITCHING
+  ========================================================= */
+  function switchTab(tabId) {
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
+    });
+
+    document.querySelectorAll(".tab-pane").forEach(pane => {
+      pane.classList.remove("active");
+    });
+
+    const targetPane = document.getElementById(`pane-${tabId}`);
+    if (targetPane) {
+      targetPane.classList.add("active");
+    }
+  }
+
+  /* =========================================================
+     LOAD ALL DASHBOARD DATA
+  ========================================================= */
+  async function loadDashboardData() {
+    try {
+      const [customers, staff, services, appointments, products, payments, feedback] = await Promise.allSettled([
+        fetchJSON(API.CUSTOMERS),
+        fetchJSON(API.STAFF),
+        fetchJSON(API.SERVICES),
+        fetchJSON(API.APPOINTMENTS),
+        fetchJSON(API.PRODUCTS),
+        fetchJSON(API.PAYMENTS),
+        fetchJSON(API.FEEDBACK)
+      ]);
+
+      if (customers.status === "fulfilled" && Array.isArray(customers.value)) state.customers = customers.value;
+      if (staff.status === "fulfilled" && Array.isArray(staff.value)) state.staff = staff.value;
+      if (services.status === "fulfilled" && Array.isArray(services.value)) state.services = services.value;
+      if (appointments.status === "fulfilled" && Array.isArray(appointments.value)) state.appointments = appointments.value;
+      if (products.status === "fulfilled" && Array.isArray(products.value)) state.products = products.value;
+      if (payments.status === "fulfilled" && Array.isArray(payments.value)) state.payments = payments.value;
+      if (feedback.status === "fulfilled" && Array.isArray(feedback.value)) state.feedback = feedback.value;
+
+      updateKPIs();
+      renderAppointments();
+      renderStaff();
+      renderServices();
+      renderProducts();
+      renderPayments();
+      renderFeedback();
+      populateModalDropdowns();
+
+    } catch (err) {
+      console.error("Error loading dashboard data:", err);
+      showToast("Error loading reception data. Verify backend is running.", "error");
+    }
+  }
+
+  /* =========================================================
+     KPI METRICS
+  ========================================================= */
+  function updateKPIs() {
+    const todayStr = new Date().toISOString().split("T")[0];
+
+    // Today's appointments
+    const todayAppts = state.appointments.filter(a => {
+      const d = a.appointmentDate ? String(a.appointmentDate).split("T")[0] : "";
+      return d === todayStr;
+    });
+    document.getElementById("kpiTodayAppointments").textContent = todayAppts.length || state.appointments.length;
+
+    // Staff count
+    document.getElementById("kpiStaffCount").textContent = state.staff.length;
+    document.getElementById("staffRosterCountBadge").textContent = `${state.staff.length} Staff Members`;
+
+    // Services count
+    document.getElementById("kpiServicesCount").textContent = state.services.length;
+    document.getElementById("servicesCountBadge").textContent = `${state.services.length} Services`;
+
+    // Today's revenue
+    const todayPayments = state.payments.filter(p => {
+      const d = p.paymentDate ? String(p.paymentDate).split("T")[0] : "";
+      return d === todayStr;
+    });
+    const todayRev = (todayPayments.length ? todayPayments : state.payments).reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+    document.getElementById("kpiTodayRevenue").textContent = formatCurrency(todayRev);
+
+    // Products in stock
+    const inStock = state.products.reduce((acc, p) => acc + (Number(p.stockQuantity) || 0), 0);
+    document.getElementById("kpiProductsCount").textContent = `${state.products.length} Items`;
+
+    // Feedback rating
+    if (state.feedback.length > 0) {
+      const avg = state.feedback.reduce((sum, f) => sum + (Number(f.rating) || 5), 0) / state.feedback.length;
+      document.getElementById("kpiFeedbackScore").textContent = `${avg.toFixed(1)} ★`;
+    } else {
+      document.getElementById("kpiFeedbackScore").textContent = `5.0 ★`;
+    }
+  }
+
+  /* =========================================================
+     TAB 1: RENDER APPOINTMENTS
+  ========================================================= */
+  function renderAppointments() {
+    const tbody = document.getElementById("appointmentTableBody");
+    const searchVal = document.getElementById("appointmentSearch").value.toLowerCase().trim();
+    const statusVal = document.getElementById("appointmentStatusFilter").value;
+    const dateVal = document.getElementById("appointmentDateFilter").value;
+
+    let filtered = [...state.appointments];
+
+    if (statusVal !== "ALL") {
+      filtered = filtered.filter(a => String(a.status).toUpperCase() === statusVal);
+    }
+
+    if (dateVal) {
+      filtered = filtered.filter(a => {
+        const d = a.appointmentDate ? String(a.appointmentDate).split("T")[0] : "";
+        return d === dateVal;
+      });
+    }
+
+    if (searchVal) {
+      filtered = filtered.filter(a => {
+        const cName = (a.customerName || "").toLowerCase();
+        const sName = (a.serviceName || "").toLowerCase();
+        const stName = (a.staffName || "").toLowerCase();
+        const phone = (a.customerPhone || "").toLowerCase();
+        return cName.includes(searchVal) || sName.includes(searchVal) || stName.includes(searchVal) || phone.includes(searchVal);
+      });
+    }
+
+    if (!filtered.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <i class="fas fa-calendar-xmark"></i>
+              <strong>No appointments found</strong>
+              <span>No scheduled bookings match your selected criteria.</span>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(a => {
+      const initial = (a.customerName || "C").trim().charAt(0).toUpperCase();
+      const statusClass = getStatusBadgeClass(a.status);
+      const formattedPrice = a.servicePrice ? formatCurrency(a.servicePrice) : (a.price ? formatCurrency(a.price) : "-");
+      const appDate = a.appointmentDate ? String(a.appointmentDate).split("T")[0] : "-";
+      const appTime = a.startTime ? String(a.startTime).substring(0, 5) : "";
+
+      const canCheckout = (a.status !== "CANCELLED");
+
+      return `
+        <tr>
+          <td><strong style="color: var(--dark-rose); font-size: 11px;">#APP-${a.appointmentId || a.id}</strong></td>
+          <td>
+            <div class="customer-cell">
+              <div class="avatar-small">${initial}</div>
+              <div>
+                <span class="cell-title">${escapeHTML(a.customerName || "Customer")}</span>
+                <span class="cell-subtitle"><i class="fas fa-phone-alt" style="font-size: 8px;"></i> ${escapeHTML(a.customerPhone || "No Phone")}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="cell-title">${escapeHTML(a.serviceName || "Treatment")}</span>
+            <span class="cell-subtitle" style="color: var(--rose-gold); font-weight: 600;">${formattedPrice}</span>
+          </td>
+          <td>
+            <span class="cell-title"><i class="fas fa-user-check" style="font-size: 9px; color: var(--champagne); margin-right: 4px;"></i>${escapeHTML(a.staffName || "Assigned Stylist")}</span>
+          </td>
+          <td>
+            <span class="cell-title">${appDate}</span>
+            <span class="cell-subtitle">${appTime ? `<i class="far fa-clock"></i> ${appTime}` : ""}</span>
+          </td>
+          <td>
+            <span class="status ${statusClass}">${escapeHTML(a.status || "SCHEDULED")}</span>
+          </td>
+          <td>
+            <div style="display: flex; gap: 6px;">
+              ${canCheckout ? `
+                <button class="btn btn-white" style="min-height: 28px; padding: 0 10px; font-size: 9.5px;" onclick="checkoutAppointmentDirect(${a.appointmentId || a.id})" title="Take Payment">
+                  <i class="fas fa-cash-register" style="color: var(--success);"></i> Pay
+                </button>
+              ` : ""}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function filterAppointments() {
+    renderAppointments();
+  }
+
+  function resetAppointmentFilters() {
+    document.getElementById("appointmentSearch").value = "";
+    document.getElementById("appointmentStatusFilter").value = "ALL";
+    document.getElementById("appointmentDateFilter").value = "";
+    renderAppointments();
+  }
+
+  /* =========================================================
+     TAB 2: RENDER STAFF MEMBERS
+  ========================================================= */
+  function renderStaff() {
+    const container = document.getElementById("staffGridContainer");
+    const searchVal = document.getElementById("staffSearch").value.toLowerCase().trim();
+    const posVal = document.getElementById("staffPositionFilter").value;
+
+    // Populate positions in dropdown if empty
+    const posSelect = document.getElementById("staffPositionFilter");
+    if (posSelect.options.length <= 1) {
+      const positions = [...new Set(state.staff.map(s => s.position).filter(Boolean))];
+      positions.forEach(pos => {
+        const opt = document.createElement("option");
+        opt.value = pos;
+        opt.textContent = pos;
+        posSelect.appendChild(opt);
+      });
+    }
+
+    let filtered = [...state.staff];
+
+    if (posVal !== "ALL") {
+      filtered = filtered.filter(s => s.position === posVal);
+    }
+
+    if (searchVal) {
+      filtered = filtered.filter(s => {
+        const name = (s.staffName || "").toLowerCase();
+        const code = (s.staffCode || "").toLowerCase();
+        const pos = (s.position || "").toLowerCase();
+        return name.includes(searchVal) || code.includes(searchVal) || pos.includes(searchVal);
+      });
+    }
+
+    if (!filtered.length) {
+      container.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <i class="fas fa-user-slash"></i>
+          <strong>No Staff Members Found</strong>
+          <span>Try adjusting your search or position filter.</span>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = filtered.map(s => {
+      const initial = (s.staffName || "S").trim().substring(0, 2).toUpperCase();
+      return `
+        <div class="staff-card">
+          <div class="staff-card-top">
+            <div class="staff-avatar">${initial}</div>
+            <div class="staff-meta">
+              <strong>${escapeHTML(s.staffName || "Staff Member")}</strong>
+              <span class="staff-position">${escapeHTML(s.position || "Stylist & Specialist")}</span>
+              <div style="margin-top: 4px;">
+                <span class="status status-active" style="font-size: 8px;">On Duty</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-info-list">
+            <div class="staff-info-item">
+              <i class="fas fa-id-badge"></i>
+              <span>Code: <strong>${escapeHTML(s.staffCode || "STF-" + (s.staffId || ""))}</strong></span>
+            </div>
+            <div class="staff-info-item">
+              <i class="fas fa-phone"></i>
+              <span>${escapeHTML(s.staffPhone || "Phone not provided")}</span>
+            </div>
+            <div class="staff-info-item">
+              <i class="fas fa-envelope"></i>
+              <span>${escapeHTML(s.staffEmail || "Email not listed")}</span>
+            </div>
+          </div>
+
+          <div class="staff-action-bar">
+            <button class="btn btn-primary" style="width: 100%; min-height: 32px; font-size: 10px;" onclick="bookWithStaff(${s.staffId})">
+              <i class="fas fa-calendar-plus"></i>
+              <span>Book Appointment</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function filterStaff() {
+    renderStaff();
+  }
+
+  function bookWithStaff(staffId) {
+    openAppointmentModal();
+    const select = document.getElementById("appStaffSelect");
+    if (select) select.value = staffId;
+  }
+
+  /* =========================================================
+     TAB 3: RENDER SERVICES
+  ========================================================= */
+  function renderServices() {
+    const container = document.getElementById("servicesGridContainer");
+    const searchVal = document.getElementById("serviceSearch").value.toLowerCase().trim();
+    const catVal = document.getElementById("serviceCategoryFilter").value;
+
+    // Populate category dropdown
+    const catSelect = document.getElementById("serviceCategoryFilter");
+    if (catSelect.options.length <= 1) {
+      const categories = [...new Set(state.services.map(s => s.category).filter(Boolean))];
+      categories.forEach(cat => {
+        const opt = document.createElement("option");
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
+      });
+    }
+
+    let filtered = [...state.services];
+
+    if (catVal !== "ALL") {
+      filtered = filtered.filter(s => s.category === catVal);
+    }
+
+    if (searchVal) {
+      filtered = filtered.filter(s => {
+        const name = (s.serviceName || s.name || "").toLowerCase();
+        const desc = (s.description || "").toLowerCase();
+        return name.includes(searchVal) || desc.includes(searchVal);
+      });
+    }
+
+    if (!filtered.length) {
+      container.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <i class="fas fa-hand-sparkles"></i>
+          <strong>No Services Found</strong>
+          <span>Try adjusting your search criteria.</span>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = filtered.map(s => {
+      const priceFormatted = formatCurrency(Number(s.price || 0));
+      const duration = s.duration || s.durationMinutes || "45";
+
+      return `
+        <div class="service-card">
+          <div class="service-card-top">
+            <div class="service-icon-box">
+              <i class="fas fa-spa"></i>
+            </div>
+            <div class="service-price-pill">${priceFormatted}</div>
+          </div>
+
+          <div class="service-body">
+            <span class="role-badge receptionist" style="font-size: 8px;">${escapeHTML(s.category || "Treatment")}</span>
+            <h4>${escapeHTML(s.serviceName || s.name || "Treatment")}</h4>
+            <p>${escapeHTML(s.description || "Luxury salon treatment performed with premium products by salon specialists.")}</p>
+          </div>
+
+          <div class="service-footer">
+            <span><i class="far fa-clock" style="margin-right: 4px;"></i> ${duration} mins</span>
+            <button class="btn btn-outline" style="min-height: 28px; padding: 0 10px; font-size: 9.5px;" onclick="bookWithService(${s.serviceId || s.id})">
+              <i class="fas fa-plus"></i> Book
+            </button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function filterServices() {
+    renderServices();
+  }
+
+  function bookWithService(serviceId) {
+    openAppointmentModal();
+    const select = document.getElementById("appServiceSelect");
+    if (select) {
+      select.value = serviceId;
+      handleServiceSelectionChange();
+    }
+  }
+
+  /* =========================================================
+     TAB 4: RENDER PRODUCTS & INVENTORY
+  ========================================================= */
+  function renderProducts() {
+    const tbody = document.getElementById("productTableBody");
+    const searchVal = document.getElementById("productSearch").value.toLowerCase().trim();
+    const stockFilter = document.getElementById("productStockFilter").value;
+
+    let filtered = [...state.products];
+
+    if (stockFilter === "IN_STOCK") {
+      filtered = filtered.filter(p => (Number(p.stockQuantity) || 0) > 5);
+    } else if (stockFilter === "LOW_STOCK") {
+      filtered = filtered.filter(p => {
+        const q = Number(p.stockQuantity) || 0;
+        return q > 0 && q <= 5;
+      });
+    } else if (stockFilter === "OUT_OF_STOCK") {
+      filtered = filtered.filter(p => (Number(p.stockQuantity) || 0) <= 0);
+    }
+
+    if (searchVal) {
+      filtered = filtered.filter(p => {
+        const name = (p.productName || "").toLowerCase();
+        const sku = (p.sku || "").toLowerCase();
+        const brand = (p.brand || "").toLowerCase();
+        return name.includes(searchVal) || sku.includes(searchVal) || brand.includes(searchVal);
+      });
+    }
+
+    if (!filtered.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <i class="fas fa-box-open"></i>
+              <strong>No Products Found</strong>
+              <span>No retail items match the current filters.</span>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(p => {
+      const qty = Number(p.stockQuantity) || 0;
+      let statusHtml = "";
+      if (qty > 5) {
+        statusHtml = `<span class="status status-active">In Stock</span>`;
+      } else if (qty > 0) {
+        statusHtml = `<span class="status status-low-stock">Low Stock (${qty})</span>`;
+      } else {
+        statusHtml = `<span class="status status-out-of-stock">Out of Stock</span>`;
+      }
+
+      return `
+        <tr>
+          <td>
+            <div class="customer-cell">
+              <div class="avatar-small" style="background: linear-gradient(135deg, #E8C07D, #B76E79);"><i class="fas fa-box"></i></div>
+              <div>
+                <span class="cell-title">${escapeHTML(p.productName || "Product")}</span>
+                <span class="cell-subtitle">SKU: ${escapeHTML(p.sku || "PROD-" + (p.productId || ""))}</span>
+              </div>
+            </div>
+          </td>
+          <td>${escapeHTML(p.category || "General")}</td>
+          <td>${escapeHTML(p.brand || "Pink Luxury")}</td>
+          <td><strong>${formatCurrency(Number(p.sellingPrice || 0))}</strong></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <strong>${qty}</strong>
+              <span style="font-size: 9px; color: var(--muted);">units</span>
+            </div>
+          </td>
+          <td>${statusHtml}</td>
+          <td>
+            <a href="inventoryMangement.html" class="btn btn-white" style="min-height: 28px; padding: 0 10px; font-size: 9px;">
+              <i class="fas fa-arrow-right"></i> Manage
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function filterProducts() {
+    renderProducts();
+  }
+
+  /* =========================================================
+     TAB 5: RENDER PAYMENTS
+  ========================================================= */
+  function renderPayments() {
+    const tbody = document.getElementById("paymentTableBody");
+    const searchVal = document.getElementById("paymentSearch").value.toLowerCase().trim();
+    const methodFilter = document.getElementById("paymentMethodFilter").value;
+
+    let filtered = [...state.payments];
+
+    if (methodFilter !== "ALL") {
+      filtered = filtered.filter(p => String(p.paymentMethod).toUpperCase() === methodFilter);
+    }
+
+    if (searchVal) {
+      filtered = filtered.filter(p => {
+        const cName = (p.customerName || "").toLowerCase();
+        const invNum = (p.invoiceNumber || "").toLowerCase();
+        const ref = (p.transactionReference || "").toLowerCase();
+        return cName.includes(searchVal) || invNum.includes(searchVal) || ref.includes(searchVal);
+      });
+    }
+
+    if (!filtered.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8">
+            <div class="empty-state">
+              <i class="fas fa-file-invoice"></i>
+              <strong>No Payments Recorded</strong>
+              <span>No transactions match the selected filter.</span>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(p => {
+      const invNum = p.invoiceNumber || `INV-${p.paymentId || p.id}`;
+      const pDate = p.paymentDate ? String(p.paymentDate).split("T")[0] : "-";
+      const pMethod = p.paymentMethod || "CASH";
+
+      return `
+        <tr>
+          <td><strong style="color: var(--rose-gold); font-size: 11px;">#${escapeHTML(invNum)}</strong></td>
+          <td>
+            <span class="cell-title">${escapeHTML(p.customerName || "Guest")}</span>
+            <span class="cell-subtitle">${escapeHTML(p.customerPhone || "No Phone")}</span>
+          </td>
+          <td>${escapeHTML(p.serviceName || "Treatment Service")}</td>
+          <td><span class="role-badge receptionist" style="font-size: 8px;">${escapeHTML(pMethod)}</span></td>
+          <td><strong style="color: var(--dark-rose);">${formatCurrency(Number(p.amount || 0))}</strong></td>
+          <td>${pDate}</td>
+          <td><span class="status status-active">PAID</span></td>
+          <td>
+            <button class="btn btn-white" style="min-height: 28px; padding: 0 10px; font-size: 9.5px;" onclick="viewReceipt(${p.paymentId || p.id})">
+              <i class="fas fa-eye"></i> Receipt
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function filterPayments() {
+    renderPayments();
+  }
+
+  /* =========================================================
+     TAB 6: RENDER FEEDBACK
+  ========================================================= */
+  function renderFeedback() {
+    const container = document.getElementById("feedbackGridContainer");
+    const searchVal = document.getElementById("feedbackSearch").value.toLowerCase().trim();
+    const ratingFilter = document.getElementById("feedbackRatingFilter").value;
+
+    let filtered = [...state.feedback];
+
+    if (ratingFilter !== "ALL") {
+      filtered = filtered.filter(f => Number(f.rating) === Number(ratingFilter));
+    }
+
+    if (searchVal) {
+      filtered = filtered.filter(f => {
+        const cName = (f.customerName || "").toLowerCase();
+        const comment = (f.comment || "").toLowerCase();
+        return cName.includes(searchVal) || comment.includes(searchVal);
+      });
+    }
+
+    if (!filtered.length) {
+      container.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <i class="fas fa-comments"></i>
+          <strong>No Client Feedback Found</strong>
+          <span>Client ratings and testimonials will appear here.</span>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = filtered.map(f => {
+      const starsCount = Number(f.rating) || 5;
+      const starsHtml = "★".repeat(starsCount) + "☆".repeat(Math.max(0, 5 - starsCount));
+      const fDate = f.feedbackDate ? String(f.feedbackDate).split("T")[0] : "Recently";
+
+      return `
+        <div class="feedback-card">
+          <div class="feedback-card-header">
+            <span class="cell-title">${escapeHTML(f.customerName || "Salon Guest")}</span>
+            <div class="stars">${starsHtml}</div>
+          </div>
+          <p class="feedback-text">"${escapeHTML(f.comment || "Exceptional service and warm hospitality at Pink Beauty Salon.")}"</p>
+          <div class="feedback-meta">
+            <span><i class="fas fa-shield-heart" style="color: var(--rose-gold); margin-right: 4px;"></i> Verified Client</span>
+            <span><i class="far fa-calendar-alt"></i> ${fDate}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function filterFeedback() {
+    renderFeedback();
+  }
+
+  /* =========================================================
+     POPULATE MODAL DROPDOWNS
+  ========================================================= */
+  function populateModalDropdowns() {
+    // Customers dropdown in Appointment Modal
+    const custSelect = document.getElementById("appCustomerSelect");
+    if (custSelect) {
+      custSelect.innerHTML = `<option value="">-- Choose Customer --</option>` +
+        state.customers.map(c => `
+          <option value="${c.customerId || c.id}">${escapeHTML(c.name || c.customerName)} (${escapeHTML(c.phone || c.contactNo || "No Phone")})</option>
+        `).join("");
+    }
+
+    // Services dropdown in Appointment Modal
+    const srvSelect = document.getElementById("appServiceSelect");
+    if (srvSelect) {
+      srvSelect.innerHTML = `<option value="">-- Choose Service --</option>` +
+        state.services.map(s => `
+          <option value="${s.serviceId || s.id}" data-price="${s.price || 0}" data-duration="${s.duration || 45}">
+            ${escapeHTML(s.serviceName || s.name)} - ${formatCurrency(Number(s.price || 0))}
+          </option>
+        `).join("");
+    }
+
+    // Staff dropdown in Appointment Modal
+    const stfSelect = document.getElementById("appStaffSelect");
+    if (stfSelect) {
+      stfSelect.innerHTML = `<option value="">-- Choose Staff Member --</option>` +
+        state.staff.map(s => `
+          <option value="${s.staffId || s.id}">${escapeHTML(s.staffName)} - ${escapeHTML(s.position || "Specialist")}</option>
+        `).join("");
+    }
+
+    // Populate Appointment select in Payment Modal
+    populatePaymentAppointmentSelect();
+  }
+
+  function populatePaymentAppointmentSelect() {
+    const payAppSelect = document.getElementById("payAppointmentSelect");
+    if (!payAppSelect) return;
+
+    payAppSelect.innerHTML = `<option value="">-- Choose Appointment --</option>` +
+      state.appointments.map(a => `
+        <option value="${a.appointmentId || a.id}">
+          #APP-${a.appointmentId || a.id} - ${escapeHTML(a.customerName || "Customer")} (${escapeHTML(a.serviceName || "Treatment")})
+        </option>
+      `).join("");
+  }
+
+  /* =========================================================
+     MODAL CONTROLS: CUSTOMER
+  ========================================================= */
+  let wasAppointmentModalOpenBeforeCustomer = false;
+
+  function openCustomerModal(fromAppointment = false) {
+    wasAppointmentModalOpenBeforeCustomer = fromAppointment;
+    document.getElementById("customerForm").reset();
+    document.getElementById("customerModal").classList.add("show");
+  }
+
+  function closeCustomerModal() {
+    document.getElementById("customerModal").classList.remove("show");
+  }
+
+  async function handleSaveCustomer(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("custNameInput").value.trim();
+    const phone = document.getElementById("custPhoneInput").value.trim();
+    let email = document.getElementById("custEmailInput").value.trim();
+    const gender = document.getElementById("custGenderSelect").value;
+    const address = document.getElementById("custAddressInput").value.trim();
+    const notes = document.getElementById("custNotesInput").value.trim();
+
+    if (!name || !phone) {
+      showToast("Customer name and mobile phone are required.", "error");
+      return;
+    }
+
+    if (!email) {
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      email = `${cleanPhone || 'guest' + Date.now()}@pinkbeautysalon.lk`;
+    }
+
+    const payload = {
+      customerName: name,
+      customerPhone: phone,
+      customerEmail: email,
+      gender: gender,
+      address: address,
+      notes: notes,
+      status: "Active"
+    };
+
+    const submitBtn = document.getElementById("saveCustomerBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
+
+    try {
+      const res = await fetchJSON(`${API_BASE}/api/v1/customers/save`, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      showToast("Customer registered successfully!", "success");
+      closeCustomerModal();
+
+      // Refresh customers list
+      const customersRes = await fetchJSON(API.CUSTOMERS);
+      if (Array.isArray(customersRes)) {
+        state.customers = customersRes;
+        populateModalDropdowns();
+      }
+
+      // Auto-select newly created customer
+      const newCustId = res.customerId || res.id;
+      if (newCustId) {
+        const appCustSelect = document.getElementById("appCustomerSelect");
+        if (appCustSelect) {
+          appCustSelect.value = newCustId;
+        }
+      }
+
+    } catch (err) {
+      console.error("Save customer error:", err);
+      showToast(err.message || "Failed to save customer", "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="fas fa-check"></i> <span>Register Customer</span>`;
+    }
+  }
+
+  /* =========================================================
+     MODAL CONTROLS: APPOINTMENT
+  ========================================================= */
+  function openAppointmentModal() {
+    document.getElementById("appointmentForm").reset();
+    document.getElementById("appDateInput").value = new Date().toISOString().split("T")[0];
+    document.getElementById("appointmentModal").classList.add("show");
+  }
+
+  function closeAppointmentModal() {
+    document.getElementById("appointmentModal").classList.remove("show");
+  }
+
+  function handleServiceSelectionChange() {
+    // Automatically select or update estimates if needed
+  }
+
+  async function handleSaveAppointment(e) {
+    e.preventDefault();
+
+    const customerId = document.getElementById("appCustomerSelect").value;
+    const serviceId = document.getElementById("appServiceSelect").value;
+    const staffId = document.getElementById("appStaffSelect").value;
+    const appointmentDate = document.getElementById("appDateInput").value;
+    const startTimeRaw = document.getElementById("appTimeInput").value;
+    const notes = document.getElementById("appNotesInput").value;
+
+    if (!customerId || !serviceId || !staffId || !appointmentDate) {
+      showToast("Please complete all required appointment fields.", "error");
+      return;
+    }
+
+    const startTime = startTimeRaw.length === 5 ? `${startTimeRaw}:00` : startTimeRaw;
+
+    const payload = {
+      customerId: Number(customerId),
+      serviceId: Number(serviceId),
+      staffId: Number(staffId),
+      appointmentDate: appointmentDate,
+      startTime: startTime,
+      notes: notes
+    };
+
+    const submitBtn = document.getElementById("saveAppointmentBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
+
+    try {
+      await fetchJSON(API.SAVE_APPOINTMENT, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      showToast("Appointment booked successfully!", "success");
+      closeAppointmentModal();
+      await loadDashboardData();
+    } catch (err) {
+      console.error("Save appointment error:", err);
+      showToast(err.message || "Failed to book appointment", "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="fas fa-check"></i> <span>Confirm Booking</span>`;
+    }
+  }
+
+  /* =========================================================
+     MODAL CONTROLS: PAYMENT & CHECKOUT
+  ========================================================= */
+  function openPaymentModal() {
+    document.getElementById("paymentForm").reset();
+    populatePaymentAppointmentSelect();
+    document.getElementById("payCustomerName").textContent = "-";
+    document.getElementById("payServiceName").textContent = "-";
+    document.getElementById("payStaffName").textContent = "-";
+    document.getElementById("paymentModal").classList.add("show");
+  }
+
+  function closePaymentModal() {
+    document.getElementById("paymentModal").classList.remove("show");
+  }
+
+  function checkoutAppointmentDirect(appointmentId) {
+    openPaymentModal();
+    const select = document.getElementById("payAppointmentSelect");
+    if (select) {
+      select.value = appointmentId;
+      handlePaymentAppointmentChange();
+    }
+  }
+
+  function handlePaymentAppointmentChange() {
+    const appId = Number(document.getElementById("payAppointmentSelect").value);
+    const appointment = state.appointments.find(a => (a.appointmentId || a.id) === appId);
+
+    if (appointment) {
+      document.getElementById("payCustomerName").textContent = appointment.customerName || "Customer";
+      document.getElementById("payServiceName").textContent = appointment.serviceName || "Treatment";
+      document.getElementById("payStaffName").textContent = appointment.staffName || "Assigned Stylist";
+
+      const price = Number(appointment.servicePrice || appointment.price || 0);
+      document.getElementById("payAmountInput").value = price > 0 ? price : "";
+    } else {
+      document.getElementById("payCustomerName").textContent = "-";
+      document.getElementById("payServiceName").textContent = "-";
+      document.getElementById("payStaffName").textContent = "-";
+      document.getElementById("payAmountInput").value = "";
+    }
+  }
+
+  async function handleSavePayment(e) {
+    e.preventDefault();
+
+    const appId = Number(document.getElementById("payAppointmentSelect").value);
+    const amount = Number(document.getElementById("payAmountInput").value);
+    const method = document.getElementById("payMethodSelect").value;
+    const notes = document.getElementById("payNotesInput").value;
+
+    if (!appId || !amount || amount <= 0) {
+      showToast("Please select an appointment and enter a valid amount.", "error");
+      return;
+    }
+
+    const app = state.appointments.find(a => (a.appointmentId || a.id) === appId);
+
+    const payload = {
+      appointmentId: appId,
+      customerId: app ? app.customerId : null,
+      serviceId: app ? app.serviceId : null,
+      staffId: app ? app.staffId : null,
+      amount: amount,
+      paymentMethod: method,
+      paymentStatus: "PAID",
+      notes: notes,
+      paymentDate: new Date().toISOString().split("T")[0]
+    };
+
+    const submitBtn = document.getElementById("savePaymentBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
+
+    try {
+      const res = await fetchJSON(API.SAVE_PAYMENT, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      showToast("Payment processed & invoice created!", "success");
+      closePaymentModal();
+      await loadDashboardData();
+
+      // Show receipt
+      viewReceipt(res.paymentId || res.id || 0, res);
+
+    } catch (err) {
+      console.error("Save payment error:", err);
+      showToast(err.message || "Failed to process payment", "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="fas fa-receipt"></i> <span>Pay & Generate Receipt</span>`;
+    }
+  }
+
+  /* =========================================================
+     RECEIPT VIEWER
+  ========================================================= */
+  function viewReceipt(paymentId, directData = null) {
+    const payment = directData || state.payments.find(p => (p.paymentId || p.id) === paymentId);
+
+    if (!payment) {
+      showToast("Payment record not found.", "error");
+      return;
+    }
+
+    const content = document.getElementById("receiptModalContent");
+    const invNumber = payment.invoiceNumber || `INV-${payment.paymentId || payment.id || Date.now()}`;
+    const pDate = payment.paymentDate ? String(payment.paymentDate).split("T")[0] : new Date().toISOString().split("T")[0];
+
+    content.innerHTML = `
+      <div class="invoice-receipt">
+        <div class="invoice-receipt-header">
+          <h2>Pink Beauty Salon</h2>
+          <p style="color: var(--muted); font-size: 9px; margin-top: 2px;">Luxury Salon & Aesthetic Wellness Concierge</p>
+          <strong style="color: var(--dark-rose); display: block; margin-top: 6px;">Official Payment Receipt</strong>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: var(--muted);">Receipt #:</span>
+          <strong>${escapeHTML(invNumber)}</strong>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: var(--muted);">Date:</span>
+          <span>${pDate}</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: var(--muted);">Customer:</span>
+          <strong>${escapeHTML(payment.customerName || "Salon Guest")}</strong>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: var(--muted);">Service:</span>
+          <span>${escapeHTML(payment.serviceName || "Treatment Service")}</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: var(--muted);">Payment Method:</span>
+          <span class="role-badge receptionist" style="font-size: 8px;">${escapeHTML(payment.paymentMethod || "CASH")}</span>
+        </div>
+
+        <div style="border-top: 1px dashed var(--border); margin-top: 12px; padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 13px;">Total Paid:</strong>
+          <strong style="font-size: 15px; color: var(--rose-gold);">${formatCurrency(Number(payment.amount || 0))}</strong>
+        </div>
+
+        <div style="text-align: center; margin-top: 18px; color: var(--muted); font-size: 9px;">
+          <p>Thank you for choosing Pink Beauty Salon!</p>
+          <p style="margin-top: 2px;">We look forward to pampering you again soon.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("receiptModal").classList.add("show");
+  }
+
+  function closeReceiptModal() {
+    document.getElementById("receiptModal").classList.remove("show");
+  }
+
+  /* =========================================================
+     HELPERS & FORMATTERS
+  ========================================================= */
+  function formatCurrency(num) {
+    const val = Number(num) || 0;
+    return "LKR " + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function getStatusBadgeClass(status) {
+    const s = String(status || "").toUpperCase();
+    if (s === "CONFIRMED") return "status-confirmed";
+    if (s === "COMPLETED") return "status-completed";
+    if (s === "CANCELLED") return "status-cancelled";
+    return "status-scheduled";
+  }
+
+  function escapeHTML(str) {
+    return String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function showToast(message, type = "success") {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    const icon = type === "success" ? "fa-circle-check" : "fa-circle-exclamation";
+
+    toast.innerHTML = `
+      <div class="toast-icon">
+        <i class="fas ${icon}"></i>
+      </div>
+      <div class="toast-content">
+        <strong>${type === "success" ? "Success" : "Notice"}</strong>
+        <span>${escapeHTML(message)}</span>
+      </div>
+    `;
+
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(25px)";
+      toast.style.transition = "all .25s ease";
+      setTimeout(() => toast.remove(), 250);
+    }, 3200);
+  }
+
+  /* =========================================================
+     INIT
+  ========================================================= */
+  document.addEventListener("DOMContentLoaded", () => {
+    checkReceptionSession();
+    startLiveClock();
+    loadDashboardData();
+  });
+  </script>
+
+  <!-- Unified Luxury Sidebar Script -->
+  <script src="js/unified-sidebar.js"></script>
+
+</body>
+</html>

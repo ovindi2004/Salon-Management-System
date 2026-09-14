@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalTime;
 
@@ -23,5 +24,6 @@ public class StaffWorkingHour {
 
     @ManyToOne
     @JoinColumn(name = "staff_id")
+    @ToString.Exclude
     private Staff staff;
 }

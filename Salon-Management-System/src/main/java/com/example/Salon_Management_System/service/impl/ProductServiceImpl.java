@@ -1,5 +1,6 @@
-package com.example.Salon_Management_System.service;
+package com.example.Salon_Management_System.service.impl;
 
+import com.example.Salon_Management_System.service.ProductService;
 import com.example.Salon_Management_System.dto.ProductDTO;
 import com.example.Salon_Management_System.entity.Product;
 import com.example.Salon_Management_System.enumiration.ProductStatus;
@@ -18,9 +19,6 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
 
-    // ==========================================
-    // SAVE PRODUCT
-    // ==========================================
     @Override
     public ProductDTO saveProduct(ProductDTO dto) {
 
@@ -66,9 +64,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // GET ALL PRODUCTS
-    // ==========================================
     @Override
     public List<ProductDTO> getAllProducts() {
 
@@ -80,9 +75,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // GET PRODUCT BY ID
-    // ==========================================
     @Override
     public ProductDTO getProductById(Long productId) {
 
@@ -99,9 +91,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // UPDATE PRODUCT
-    // ==========================================
     @Override
     public ProductDTO updateProduct(
             Long productId,
@@ -155,9 +144,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // DELETE PRODUCT
-    // ==========================================
     @Override
     public void deleteProduct(Long productId) {
 
@@ -174,9 +160,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // SEARCH PRODUCTS
-    // ==========================================
     @Override
     public List<ProductDTO> searchProducts(
             String keyword
@@ -196,11 +179,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // UPDATE STOCK
-    //
-    // adjustment = add / remove / set
-    // ==========================================
     @Override
     public ProductDTO updateStock(
             Long productId,
@@ -269,11 +247,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // UPDATE PRODUCT STATUS
-    //
-    // status = ACTIVE / INACTIVE
-    // ==========================================
     @Override
     public ProductDTO updateStatus(
             Long productId,
@@ -320,9 +293,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // TOTAL PRODUCT COUNT
-    // ==========================================
     @Override
     public long getTotalProducts() {
 
@@ -330,9 +300,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // LOW STOCK COUNT
-    // ==========================================
     @Override
     public long getLowStockCount() {
 
@@ -342,9 +309,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // OUT OF STOCK COUNT
-    // ==========================================
     @Override
     public long getOutOfStockCount() {
 
@@ -354,9 +318,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // INVENTORY VALUE
-    // ==========================================
     @Override
     public Double getInventoryValue() {
 
@@ -369,12 +330,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // GET LOW STOCK PRODUCTS
-    //
-    // stock > 0
-    // stock <= reorder level
-    // ==========================================
     @Override
     public List<ProductDTO> getLowStockProducts() {
 
@@ -386,11 +341,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // GET OUT OF STOCK PRODUCTS
-    //
-    // stock = 0
-    // ==========================================
     @Override
     public List<ProductDTO> getOutOfStockProducts() {
 
@@ -402,9 +352,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    // ==========================================
-    // GENERATE NEXT SKU
-    // ==========================================
     private String generateNextSku() {
 
         String prefix = "PBS-PRD-";
@@ -454,9 +401,6 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    // ==========================================
-    // CONVERT ENTITY → DTO
-    // ==========================================
     private ProductDTO convertToDTO(
             Product product
     ) {

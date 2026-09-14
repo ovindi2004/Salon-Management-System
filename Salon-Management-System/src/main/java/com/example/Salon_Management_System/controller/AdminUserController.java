@@ -89,7 +89,6 @@ public class AdminUserController {
         if(!blank(r.getStatus()))parseStatus(r.getStatus());
     }
     private void apply(AdminUserRequestDTO r,User u,boolean create){
-        // The existing UserService methods are untouched. This controller only adapts this page's field names to User.
         u.setUserName(r.getUsername()); u.setUserEmail(r.getEmail()); u.setUserPhone(r.getPhone()); u.setUserAddress(r.getAddress());
         u.setRole(parseRole(r.getRole())); u.setStatus(blank(r.getStatus())?UserStatus.Active:parseStatus(r.getStatus()));
         if(create){u.setUserPassword(passwordEncoder.encode(r.getPassword()));u.setPasswordChanged(false);}

@@ -42,5 +42,7 @@ public class StaffDTO {
 
     private Long userId;
 
+    private String username;
+
     private List<String> services;
 }

@@ -18,10 +18,6 @@ public class SettingsServiceImpl implements SettingsService {
     private final SettingsRepository settingsRepository;
 
 
-    // =========================================================
-    // SAVE SETTINGS
-    // =========================================================
-
     @Override
     public SettingsResponseDTO saveSettings(SettingsSaveDTO dto) {
 
@@ -51,10 +47,6 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
 
-    // =========================================================
-    // GET SETTINGS
-    // =========================================================
-
     @Override
     @Transactional(readOnly = true)
     public SettingsResponseDTO getSettings() {
@@ -72,10 +64,6 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
 
-    // =========================================================
-    // GET SETTINGS BY ID
-    // =========================================================
-
     @Override
     @Transactional(readOnly = true)
     public SettingsResponseDTO getSettingsById(Long settingsId) {
@@ -90,10 +78,6 @@ public class SettingsServiceImpl implements SettingsService {
         return mapToResponseDTO(settings);
     }
 
-
-    // =========================================================
-    // UPDATE SETTINGS
-    // =========================================================
 
     @Override
     public SettingsResponseDTO updateSettings(SettingsUpdateDTO dto) {
@@ -130,10 +114,6 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
 
-    // =========================================================
-    // DELETE SETTINGS
-    // =========================================================
-
     @Override
     public void deleteSettings(Long settingsId) {
 
@@ -146,10 +126,6 @@ public class SettingsServiceImpl implements SettingsService {
         settingsRepository.deleteById(settingsId);
     }
 
-
-    // =========================================================
-    // ENTITY → RESPONSE DTO
-    // =========================================================
 
     private SettingsResponseDTO mapToResponseDTO(Settings settings) {
 

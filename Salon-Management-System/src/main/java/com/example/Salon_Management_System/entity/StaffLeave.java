@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -30,5 +31,6 @@ public class StaffLeave {
 
     @ManyToOne
     @JoinColumn(name = "staff_id")
+    @ToString.Exclude
     private Staff staff;
 }

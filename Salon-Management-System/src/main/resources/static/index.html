@@ -324,10 +324,29 @@
         .modal-benefits li{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--gray-600)}
         .modal-benefits li svg{width:16px;height:16px;color:var(--success)}
         .modal-staff{margin-bottom:24px}
-        .modal-staff h4{font-size:.95rem;margin-bottom:10px}
-        .modal-staff-list{display:flex;gap:10px;flex-wrap:wrap}
-        .modal-staff-chip{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:50px;background:var(--blush);font-size:.82rem;color:var(--charcoal)}
-        .modal-staff-chip img{width:24px;height:24px;border-radius:50%;object-fit:cover}
+        .modal-staff h4{font-size:.95rem;margin-bottom:6px;color:var(--charcoal)}
+        .modal-staff-sub{font-size:.8rem;color:var(--gray-500);margin-bottom:12px;display:block}
+        .service-staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:8px}
+        .service-staff-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--cream);border:2px solid var(--gray-200);border-radius:var(--radius);cursor:pointer;transition:var(--transition);position:relative}
+        .service-staff-card:hover{border-color:var(--pink-300);background:var(--white);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+        .service-staff-card.selected{border-color:var(--pink-500);background:var(--pink-50);box-shadow:0 4px 16px rgba(214,90,130,.22)}
+        .service-staff-card img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--white);flex-shrink:0}
+        .service-staff-card .staff-info{flex:1;min-width:0}
+        .service-staff-card .staff-info h5{font-size:.88rem;font-weight:600;margin-bottom:2px;color:var(--charcoal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .service-staff-card .staff-info p{font-size:.76rem;color:var(--pink-500);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .service-staff-card .staff-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
+        .service-staff-card.selected .staff-check{border-color:var(--pink-500);background:var(--pink-500);color:#fff}
+        .service-staff-card .staff-check svg{width:13px;height:13px;display:none}
+        .service-staff-card.selected .staff-check svg{display:block}
+        .product-stock-tag{font-size:.72rem;padding:3px 10px;border-radius:50px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+        .product-stock-tag.in-stock{background:rgba(45,134,89,.12);color:var(--success)}
+        .product-stock-tag.low-stock{background:rgba(201,138,46,.12);color:var(--warning)}
+        .retail-notice{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;color:var(--gray-500);margin-top:6px}
+        .nav-user-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:50px;background:var(--pink-100);color:var(--pink-600);font-size:.82rem;font-weight:600;cursor:pointer;transition:var(--transition)}
+        .nav-user-chip:hover{background:var(--pink-200)}
+        .nav-logout-btn{display:none;align-items:center;gap:6px;padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:500;letter-spacing:.04em;background:transparent;border:1.5px solid var(--error);color:var(--error);transition:var(--transition);cursor:pointer}
+        .nav-logout-btn:hover{background:var(--error);color:#fff;transform:translateY(-1px)}
+        .nav-logout-btn svg{width:15px;height:15px}
         /* Staff profile modal */
         .staff-profile-header{display:flex;gap:24px;align-items:center;margin-bottom:24px}
         .staff-profile-header img{width:100px;height:100px;border-radius:50%;object-fit:cover}
@@ -417,33 +436,40 @@
         .chat-toggle:hover{transform:scale(1.08)}
         .chat-toggle svg{width:28px;height:28px;color:#fff}
         .chat-toggle .chat-badge{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--gold-400);border:2px solid #fff;animation:pulse 2s infinite}
-        .chat-panel{position:fixed;bottom:96px;right:24px;width:360px;max-width:calc(100vw - 48px);height:500px;max-height:calc(100vh - 140px);background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:1500;display:flex;flex-direction:column;transform:translateY(20px) scale(.95);opacity:0;visibility:hidden;transition:var(--transition);transform-origin:bottom right}
+        .chat-panel{position:fixed;bottom:96px;right:24px;width:380px;max-width:calc(100vw - 48px);height:540px;max-height:calc(100vh - 130px);background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:1500;display:flex;flex-direction:column;transform:translateY(20px) scale(.95);opacity:0;visibility:hidden;transition:var(--transition);transform-origin:bottom right;overflow:hidden}
         .chat-panel.open{transform:translateY(0) scale(1);opacity:1;visibility:visible}
-        .chat-header{padding:18px 20px;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;border-radius:var(--radius-lg) var(--radius-lg) 0 0;display:flex;align-items:center;gap:12px}
-        .chat-header .avatar{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
-        .chat-header h4{color:#fff;font-size:1rem;margin-bottom:2px}
-        .chat-header p{font-size:.76rem;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px}
-        .chat-header p::before{content:'';width:7px;height:7px;border-radius:50%;background:#5fcf80;box-shadow:0 0 6px #5fcf80}
-        .chat-header .chat-close{margin-left:auto;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
-        .chat-header .chat-close:hover{background:rgba(255,255,255,.15)}
-        .chat-header .chat-close svg{width:18px;height:18px;color:#fff}
-        .chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--cream)}
-        .chat-msg{max-width:80%;padding:10px 16px;border-radius:16px;font-size:.86rem;line-height:1.5;animation:msgIn .3s}
-        .chat-msg.bot{background:var(--white);border:1px solid var(--gray-100);border-bottom-left-radius:4px;align-self:flex-start;box-shadow:var(--shadow-sm)}
+        .chat-header{padding:16px 18px;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;display:flex;align-items:center;gap:12px}
+        .chat-header .avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+        .chat-header h4{color:#fff;font-size:.95rem;margin-bottom:2px;font-family:var(--font-body);font-weight:600}
+        .chat-header p{font-size:.72rem;color:rgba(255,255,255,.9);display:flex;align-items:center;gap:6px}
+        .chat-header p .status-dot{width:7px;height:7px;border-radius:50%;background:#5fcf80;box-shadow:0 0 6px #5fcf80;display:inline-block}
+        .chat-action-btn,.chat-close{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition);background:rgba(255,255,255,.15);color:#fff;cursor:pointer}
+        .chat-action-btn:hover,.chat-close:hover{background:rgba(255,255,255,.3)}
+        .chat-action-btn svg,.chat-close svg{width:16px;height:16px}
+        .chat-messages{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;background:var(--cream)}
+        .chat-msg{max-width:85%;padding:10px 14px;border-radius:16px;font-size:.84rem;line-height:1.55;animation:msgIn .3s;word-break:break-word}
+        .chat-msg.bot{background:var(--white);border:1px solid var(--gray-200);border-bottom-left-radius:4px;align-self:flex-start;box-shadow:var(--shadow-sm);color:var(--charcoal)}
+        .chat-msg.bot strong{color:var(--pink-600);font-weight:600}
+        .chat-msg.bot ul{margin:6px 0 6px 18px;list-style:disc}
+        .chat-msg.bot li{margin-bottom:4px}
+        .chat-msg.bot p{margin-bottom:6px}
+        .chat-msg.bot p:last-child{margin-bottom:0}
         .chat-msg.user{background:linear-gradient(135deg,var(--pink-400),var(--pink-600));color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
-        .chat-typing{display:flex;gap:4px;padding:12px 16px;background:var(--white);border:1px solid var(--gray-100);border-radius:16px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content;box-shadow:var(--shadow-sm)}
-        .chat-typing span{width:8px;height:8px;border-radius:50%;background:var(--pink-300);animation:typing 1.4s infinite}
+        .chat-model-badge{font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;color:var(--pink-500);font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:4px}
+        .chat-typing{display:flex;gap:4px;padding:12px 16px;background:var(--white);border:1px solid var(--gray-200);border-radius:16px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content;box-shadow:var(--shadow-sm)}
+        .chat-typing span{width:7px;height:7px;border-radius:50%;background:var(--pink-400);animation:typing 1.4s infinite}
         .chat-typing span:nth-child(2){animation-delay:.2s}
         .chat-typing span:nth-child(3){animation-delay:.4s}
-        .chat-quick{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px;background:var(--cream)}
-        .chat-quick-btn{padding:6px 14px;border-radius:50px;background:var(--white);border:1px solid var(--pink-200);font-size:.78rem;color:var(--pink-500);transition:var(--transition)}
-        .chat-quick-btn:hover{background:var(--pink-100)}
-        .chat-input-area{padding:14px 16px;border-top:1px solid var(--gray-100);display:flex;gap:10px;background:var(--white);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
-        .chat-input{flex:1;padding:10px 16px;border:1.5px solid var(--gray-200);border-radius:50px;font-size:.85rem;transition:var(--transition)}
-        .chat-input:focus{outline:none;border-color:var(--pink-400)}
-        .chat-send{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
-        .chat-send:hover{transform:scale(1.08)}
-        .chat-send svg{width:18px;height:18px;color:#fff}
+        .chat-quick{padding:0 14px 10px;display:flex;flex-wrap:wrap;gap:6px;background:var(--cream);border-top:1px dashed var(--gray-200);padding-top:10px}
+        .chat-quick-btn{padding:5px 12px;border-radius:50px;background:var(--white);border:1px solid var(--pink-200);font-size:.74rem;color:var(--pink-600);transition:var(--transition);cursor:pointer;white-space:nowrap}
+        .chat-quick-btn:hover{background:var(--pink-100);transform:translateY(-1px);border-color:var(--pink-300)}
+        .chat-input-area{padding:12px 14px;border-top:1px solid var(--gray-200);display:flex;gap:8px;background:var(--white)}
+        .chat-input{flex:1;padding:9px 16px;border:1.5px solid var(--gray-200);border-radius:50px;font-size:.84rem;transition:var(--transition);color:var(--charcoal)}
+        .chat-input:focus{outline:none;border-color:var(--pink-400);box-shadow:0 0 0 3px rgba(214,90,130,.12)}
+        .chat-send{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--pink-400),var(--pink-600));display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0;cursor:pointer}
+        .chat-send:hover{transform:scale(1.06);box-shadow:0 4px 12px rgba(214,90,130,.3)}
+        .chat-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
+        .chat-send svg{width:16px;height:16px;color:#fff}
         /* ===================== SEARCH OVERLAY ===================== */
         .search-overlay{position:fixed;inset:0;background:rgba(250,246,243,.97);backdrop-filter:blur(20px);z-index:1800;display:flex;flex-direction:column;align-items:center;padding:80px 24px 40px;opacity:0;visibility:hidden;transition:var(--transition)}
         .search-overlay.show{opacity:1;visibility:visible}
@@ -588,6 +614,14 @@
             <button class="nav-icon-btn" id="accountBtn" aria-label="Account">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </button>
+            <div class="nav-user-chip" id="navUserChip" style="display:none" onclick="document.getElementById('accountBtn').click()">
+                <span>👤</span>
+                <span id="navUserName">Customer</span>
+            </div>
+            <button class="nav-logout-btn" id="navLogoutBtn" onclick="logout()" title="Logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Logout</span>
+            </button>
             <button class="nav-icon-btn" id="cartBtn" aria-label="Cart" style="position:relative">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span class="cart-badge" id="cartBadge" style="display:none">0</span>
@@ -610,6 +644,7 @@
     <a href="#booking">Booking</a>
     <a href="#contact">Contact</a>
     <a href="#booking" class="btn btn-primary">Book Now</a>
+    <a href="#" id="mobileLogout" style="display:none;color:var(--error);font-weight:500" onclick="event.preventDefault();logout()">Logout</a>
 </div>
 <div class="overlay-bg" id="overlayBg"></div>
 
@@ -667,7 +702,7 @@
 
 <!-- ===================== MARQUEE ===================== -->
 <div class="marquee">
-    <div class="marquee-track">
+    <div class="marquee-track" id="marqueeTrack">
         <span>Hair Styling</span><span>Hair Coloring</span><span>Bridal Makeup</span><span>Facial Treatments</span><span>Nail Art</span><span>Skin Care</span><span>Waxing</span><span>Bridal Packages</span>
         <span>Hair Styling</span><span>Hair Coloring</span><span>Bridal Makeup</span><span>Facial Treatments</span><span>Nail Art</span><span>Skin Care</span><span>Waxing</span><span>Bridal Packages</span>
     </div>
@@ -729,15 +764,10 @@
             <h2>Our Signature Services</h2>
             <p>Everything you need to look and feel your best.</p>
         </div>
-        <div class="service-filters reveal" id="serviceFilters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="hair">Hair</button>
-            <button class="filter-btn" data-filter="makeup">Makeup</button>
-            <button class="filter-btn" data-filter="nails">Nails</button>
-            <button class="filter-btn" data-filter="skin">Skin</button>
-            <button class="filter-btn" data-filter="bridal">Bridal</button>
+        <div class="service-filters reveal" id="serviceFilters"></div>
+        <div class="services-grid" id="servicesGrid">
+            <div class="account-empty" style="grid-column:1/-1;padding:40px;text-align:center;color:var(--gray-400)">Loading services from database...</div>
         </div>
-        <div class="services-grid" id="servicesGrid"></div>
     </div>
 </section>
 
@@ -767,7 +797,9 @@
             <h2>Meet Our Beauty Experts</h2>
             <p>Skilled professionals dedicated to making you look and feel your best.</p>
         </div>
-        <div class="staff-grid" id="staffGrid"></div>
+        <div class="staff-grid" id="staffGrid">
+            <div class="account-empty" style="grid-column:1/-1;padding:40px;text-align:center;color:var(--gray-400)">Loading specialists from database...</div>
+        </div>
     </div>
 </section>
 
@@ -776,11 +808,23 @@
     <div class="container">
         <div class="section-head reveal">
             <div class="gold-line"></div>
-            <span class="eyebrow">Shop</span>
-            <h2>Beauty Essentials</h2>
-            <p>Premium products used and loved by our experts — now available for you.</p>
+            <span class="eyebrow">In-Salon Retail Boutique</span>
+            <h2>Beauty Essentials & Products</h2>
+            <p>Premium salon-grade products available for in-salon purchase. Browse our catalog with live pricing, check availability, and pick up during your visit.</p>
         </div>
-        <div class="products-grid" id="productsGrid"></div>
+        <div class="product-banner reveal" style="background:linear-gradient(135deg,rgba(253,242,244,0.9),rgba(255,255,255,0.95));border:1.5px solid var(--pink-200);border-radius:var(--radius);padding:20px 28px;margin-bottom:36px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:var(--shadow-sm)">
+            <div style="display:flex;align-items:center;gap:16px">
+                <span style="font-size:2rem">✨🛍️</span>
+                <div>
+                    <h4 style="font-size:1.05rem;font-weight:600;margin-bottom:4px;color:var(--charcoal)">Visit Our Salon to Purchase</h4>
+                    <p style="font-size:0.86rem;color:var(--gray-600);max-width:650px">All products listed below are genuine salon-exclusive treatments. You can browse product details and live prices in LKR, add items to your in-salon wishlist, and visit us at 123 Rose Avenue to buy directly!</p>
+                </div>
+            </div>
+            <a href="#contact" class="btn btn-outline btn-sm" style="border-radius:50px">Get Salon Directions</a>
+        </div>
+        <div class="products-grid" id="productsGrid">
+            <div class="account-empty" style="grid-column:1/-1;padding:40px;text-align:center;color:var(--gray-400)">Loading retail products from database...</div>
+        </div>
     </div>
 </section>
 
@@ -1143,14 +1187,24 @@
 <div class="chat-panel" id="chatPanel">
     <div class="chat-header">
         <div class="avatar">💗</div>
-        <div><h4>Pink Beauty Assistant</h4><p>Online now</p></div>
-        <button class="chat-close" id="chatClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div style="flex:1;min-width:0">
+            <h4>Pink Beauty Assistant</h4>
+            <p><span class="status-dot"></span> Online • Powered by Ollama AI</p>
+        </div>
+        <button class="chat-action-btn" id="chatClear" title="Clear conversation" aria-label="Clear chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="chat-close" id="chatClose" aria-label="Close chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-quick" id="chatQuick"></div>
     <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." />
-        <button class="chat-send" id="chatSend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about services, prices, styling, products..." autocomplete="off" />
+        <button class="chat-send" id="chatSend" aria-label="Send message">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
     </div>
 </div>
 
@@ -1161,45 +1215,42 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-    /* ===================== DATA ===================== */
-    const services = [
-        {id:1,name:"Hair Styling",cat:"hair",price:25,duration:"60 min",img:"https://images.pexels.com/photos/3993290/pexels-photo-3993290.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Expert cuts and styling tailored to your face shape and lifestyle. From sleek blowouts to voluminous waves, our stylists create looks that turn heads.",benefits:["Personalized consultation","Wash & blow-dry included","Style maintenance tips","Premium products used"],staff:[1,2]},
-        {id:2,name:"Hair Coloring",cat:"hair",price:65,duration:"120 min",img:"https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Transform your look with professional hair coloring — from subtle highlights to bold fashion shades, using ammonia-free premium dyes.",benefits:["Ammonia-free dyes","Color consultation","Gloss treatment included","Aftercare guidance"],staff:[1]},
-        {id:3,name:"Hair Treatments",cat:"hair",price:40,duration:"45 min",img:"https://images.pexels.com/photos/8834018/pexels-photo-8834018.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Deep nourishing treatments for dry, damaged, or frizzy hair. Restore shine, strength, and softness with our keratin and argan oil therapies.",benefits:["Deep conditioning","Keratin repair","Scalp treatment","Frizz control"],staff:[1,2]},
-        {id:4,name:"Bridal Makeup",cat:"bridal",price:150,duration:"90 min",img:"https://images.pexels.com/photos/38928309/pexels-photo-38928309.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Look radiant on your special day with our complete bridal makeup package. Includes trial session, lashes, and touch-up kit.",benefits:["Trial session included","Premium makeup brands","Long-lasting finish","Touch-up kit provided"],staff:[2]},
-        {id:5,name:"Party Makeup",cat:"makeup",price:55,duration:"45 min",img:"https://images.pexels.com/photos/5149734/pexels-photo-5149734.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Glamorous party-ready makeup that photographs beautifully. Smoky eyes, bold lips, or natural glow — your choice, flawlessly executed.",benefits:["Custom look design","False lashes included","Setting spray finish","Skin prep included"],staff:[2]},
-        {id:6,name:"Facial Treatments",cat:"skin",price:45,duration:"50 min",img:"https://images.pexels.com/photos/7446659/pexels-photo-7446659.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Rejuvenating facials customized to your skin type. Deep cleanse, exfoliation, mask, and massage for a radiant, refreshed complexion.",benefits:["Deep cleansing","Exfoliation & extraction","Custom mask treatment","Relaxing facial massage"],staff:[4]},
-        {id:7,name:"Manicure & Pedicure",cat:"nails",price:30,duration:"60 min",img:"https://images.pexels.com/photos/3997384/pexels-photo-3997384.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Pamper your hands and feet with our luxury manicure and pedicure. Includes soak, shape, cuticle care, massage, and polish.",benefits:["Soak & exfoliation","Cuticle treatment","Hand/foot massage","Premium polish"],staff:[3]},
-        {id:8,name:"Nail Art",cat:"nails",price:35,duration:"75 min",img:"https://images.pexels.com/photos/34997574/pexels-photo-34997574.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Express yourself with custom nail art — from elegant French tips to intricate designs, gel extensions, and embellishments.",benefits:["Custom designs","Gel extension options","3D nail art available","Long-lasting gel finish"],staff:[3]},
-        {id:9,name:"Eyebrow & Lash",cat:"makeup",price:25,duration:"30 min",img:"https://images.pexels.com/photos/696285/pexels-photo-696285.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Frame your eyes perfectly with eyebrow shaping, tinting, and lash lifts or extensions for a naturally glamorous look.",benefits:["Eyebrow shaping","Lash tint or lift","Tinting available","Precision tools"],staff:[2]},
-        {id:10,name:"Waxing",cat:"skin",price:20,duration:"30 min",img:"https://images.pexels.com/photos/6978043/pexels-photo-6978043.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Smooth, hair-free skin with our gentle waxing services. Soft and hard wax options for all areas, suitable for sensitive skin.",benefits:["Soft & hard wax","Sensitive skin friendly","Smooth long-lasting results","Soothing after-wax lotion"],staff:[4]},
-        {id:11,name:"Skin Care",cat:"skin",price:50,duration:"60 min",img:"https://images.pexels.com/photos/12115040/pexels-photo-12115040.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Advanced skin care treatments including chemical peels, microdermabrasion, and LED therapy for acne, aging, or pigmentation concerns.",benefits:["Skin analysis","Peel or microdermabrasion","LED light therapy","Personalized skincare plan"],staff:[4]},
-        {id:12,name:"Bridal Packages",cat:"bridal",price:350,duration:"180 min",img:"https://images.pexels.com/photos/6001129/pexels-photo-6001129.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Complete bridal beauty package including hair, makeup, nails, facial, and skincare. Look stunning from every angle on your big day.",benefits:["Hair styling & makeup","Manicure & pedicure","Facial treatment","Pre-wedding trial session"],staff:[1,2,3,4]}
+    /* ===================== CONFIG & DATABASE DATA ===================== */
+    const API_BASE = (window.location.protocol === 'http:' || window.location.protocol === 'https:') && window.location.port === '8080'
+        ? ''
+        : 'http://localhost:8080';
+
+    let services = [];
+    let staff = [];
+    let products = [];
+
+    const defaultProductImages = [
+        "https://images.pexels.com/photos/7428099/pexels-photo-7428099.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/36339062/pexels-photo-36339062.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/7428102/pexels-photo-7428102.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4119559/pexels-photo-4119559.jpeg?auto=compress&cs=tinysrgb&w=600"
     ];
 
-    const staff = [
-        {id:1,name:"Sophia Williams",role:"Senior Hair Stylist",exp:"12 years",rating:4.9,specialties:["Hair Styling","Hair Coloring","Hair Treatments"],img:"https://images.pexels.com/photos/29852852/pexels-photo-29852852.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Sophia brings over 12 years of experience in luxury hair styling. Trained in London and Milan, she specializes in precision cuts, creative coloring, and bridal updos. Her passion is helping clients discover their perfect look.",services:[1,2,3,12]},
-        {id:2,name:"Amelia Rose",role:"Makeup Artist",exp:"8 years",rating:4.8,specialties:["Bridal Makeup","Party Makeup","Eyebrow & Lash"],img:"https://images.pexels.com/photos/30198184/pexels-photo-30198184.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Amelia is a celebrated makeup artist known for her flawless bridal and editorial looks. With 8 years in the industry, she has worked on fashion shows and weddings, creating timeless beauty for every occasion.",services:[4,5,9,12]},
-        {id:3,name:"Olivia James",role:"Nail Specialist",exp:"6 years",rating:4.9,specialties:["Manicure & Pedicure","Nail Art","Gel Extensions"],img:"https://images.pexels.com/photos/38197025/pexels-photo-38197025.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Olivia is a creative nail artist with a passion for intricate designs and nail health. She stays ahead of trends and loves bringing clients' nail art visions to life with precision and care.",services:[7,8,12]},
-        {id:4,name:"Emma Grace",role:"Skin Therapist",exp:"10 years",rating:5.0,specialties:["Facial Treatments","Skin Care","Waxing"],img:"https://images.pexels.com/photos/30004325/pexels-photo-30004325.jpeg?auto=compress&cs=tinysrgb&w=600",bio:"Emma is a certified skin therapist with a decade of experience in advanced skincare. She creates personalized treatment plans that address each client's unique skin concerns for lasting, visible results.",services:[6,10,11,12]}
-    ];
+    const categoryImages = {
+        hair: "https://images.pexels.com/photos/3993290/pexels-photo-3993290.jpeg?auto=compress&cs=tinysrgb&w=600",
+        makeup: "https://images.pexels.com/photos/5149734/pexels-photo-5149734.jpeg?auto=compress&cs=tinysrgb&w=600",
+        nails: "https://images.pexels.com/photos/3997384/pexels-photo-3997384.jpeg?auto=compress&cs=tinysrgb&w=600",
+        skin: "https://images.pexels.com/photos/7446659/pexels-photo-7446659.jpeg?auto=compress&cs=tinysrgb&w=600",
+        bridal: "https://images.pexels.com/photos/6001129/pexels-photo-6001129.jpeg?auto=compress&cs=tinysrgb&w=600"
+    };
 
-    const products = [
-        {id:1,name:"Luxury Hair Serum",cat:"Hair Care",price:32,oldPrice:42,rating:4.8,img:"https://images.pexels.com/photos/7428099/pexels-photo-7428099.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:2,name:"Rose Glow Face Cream",cat:"Skin Care",price:28,oldPrice:null,rating:4.9,img:"https://images.pexels.com/photos/36339062/pexels-photo-36339062.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:3,name:"Repair Hair Mask",cat:"Hair Care",price:24,oldPrice:34,rating:4.7,img:"https://images.pexels.com/photos/7428102/pexels-photo-7428102.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:4,name:"Vitamin C Serum",cat:"Skin Care",price:38,oldPrice:48,rating:4.9,img:"https://images.pexels.com/photos/4119559/pexels-photo-4119559.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:5,name:"Professional Nail Kit",cat:"Nail Care",price:45,oldPrice:null,rating:4.6,img:"https://images.pexels.com/photos/29228984/pexels-photo-29228984.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:6,name:"Silk Hair Treatment",cat:"Hair Care",price:35,oldPrice:45,rating:4.8,img:"https://images.pexels.com/photos/7428103/pexels-photo-7428103.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:7,name:"Hydrating Face Mask",cat:"Skin Care",price:22,oldPrice:null,rating:4.7,img:"https://images.pexels.com/photos/12124912/pexels-photo-12124912.jpeg?auto=compress&cs=tinysrgb&w=600"},
-        {id:8,name:"Beauty Care Set",cat:"Bundle",price:89,oldPrice:120,rating:5.0,img:"https://images.pexels.com/photos/915160/pexels-photo-915160.jpeg?auto=compress&cs=tinysrgb&w=600"}
+    const staffAvatars = [
+        "https://images.pexels.com/photos/29852852/pexels-photo-29852852.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/30198184/pexels-photo-30198184.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/38197025/pexels-photo-38197025.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/30004325/pexels-photo-30004325.jpeg?auto=compress&cs=tinysrgb&w=600"
     ];
 
     const testimonials = [
         {text:"Absolutely beautiful experience. The team understood exactly what I wanted and delivered beyond my expectations.",author:"Sarah M.",role:"Regular Client",rating:5},
-        {text:"Professional service, relaxing environment, and amazing results. I leave feeling refreshed every single time.",author:"Emily R.",role:"Member since 2022",rating:5},
-        {text:"Pink Beauty Salon has become my go-to place for every special occasion. Their bridal package was incredible!",author:"Jessica L.",role:"Bride, 2025",rating:5},
-        {text:"The staff are true professionals. Sophia gave me the best haircut I've had in years. Highly recommend!",author:"Megan T.",role:"Hair Client",rating:5},
+        {text:"Professional service, relaxing environment, and amazing results. I leave feeling refreshed every single time.",author:"Emily R.",role:"Member since 2024",rating:5},
+        {text:"Pink Beauty Salon has become my go-to place for every special occasion. Their bridal package was incredible!",author:"Jessica L.",role:"Bride, 2026",rating:5},
+        {text:"The staff are true professionals. Kamal and Sofi gave me the best salon experience. Highly recommend!",author:"Megan T.",role:"Hair Client",rating:5},
         {text:"From the moment you walk in, you feel pampered. The facial treatments left my skin glowing for days.",author:"Amanda K.",role:"Skincare Client",rating:5}
     ];
 
@@ -1216,27 +1267,13 @@
 
     const timeSlots = ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM"];
 
-    const chatResponses = {
-        "hairstyle":"For the best hairstyle for you, consider your face shape! Oval faces suit almost any style, round faces look great with layered cuts or side-swept bangs, square faces benefit from soft waves, and heart-shaped faces pair beautifully with chin-length bobs. Book a consultation with Sophia — she'll recommend the perfect look!",
-        "facial":"Our facial treatments are customized to your skin type. For dry skin, try our Hydrating Facial. For acne-prone skin, our Deep Cleanse Facial is ideal. For anti-aging, the Gold Glow Facial is perfect. Emma, our skin therapist, will assess your skin and recommend the best treatment!",
-        "wedding":"For your wedding day, our Bridal Package is the ultimate choice! It includes hair styling, makeup, manicure, pedicure, and a facial — a complete beauty experience. We also offer a pre-wedding trial session. Book early as wedding dates fill up quickly!",
-        "damaged":"For damaged hair, I recommend our Hair Treatment service — it includes deep conditioning with keratin repair and argan oil therapy. Pair it with our Luxury Hair Serum and Repair Hair Mask for at-home care. Sophia specializes in hair repair treatments!",
-        "skincare":"The best skincare treatment depends on your concerns! For general glow, try our Facial Treatment. For specific concerns like acne or pigmentation, our advanced Skin Care service includes chemical peels and LED therapy. Emma will create a personalized plan for you!",
-        "package":"Our Bridal Package at $350 is our most popular — it includes hair, makeup, nails, facial, and skincare! For a lighter option, you can mix and match individual services. Would you like me to help you book a specific service?",
-        "price":"Our services start from $20 for waxing, $25 for hair styling and eyebrow/lash, $30 for manicure & pedicure, $45 for facials, $55 for party makeup, and $150 for bridal makeup. Check our Services section for full pricing!",
-        "book":"You can book an appointment by clicking the 'Book Now' button or visiting our Booking section. Choose your service, preferred staff member, date, and time — it's that easy!",
-        "hours":"We're open Monday to Saturday 9:00 AM – 7:00 PM, and Sunday 10:00 AM – 5:00 PM. We'd love to see you!",
-        "location":"We're located at 123 Rose Avenue, Beauty District, New York, NY 10001. You can find us in the Contact section with a map!",
-        "default":"That's a great question! I'd recommend browsing our Services section to find what suits you best, or booking a consultation with one of our experts. You can also call us at +1 (555) 123-4567 for personalized advice!"
-    };
-
     const quickQuestions = [
-        "Which hairstyle suits me?",
-        "Which facial should I choose?",
-        "What should I book for a wedding?",
-        "Which service is best for damaged hair?",
-        "What skincare treatment should I choose?",
-        "Help me choose a beauty package"
+        "🌸 Recommend services for me",
+        "💇 Hair styling & treatment prices",
+        "✨ Facial & skincare treatments",
+        "👰 Bridal packages",
+        "🛍️ Retail products in salon",
+        "📅 How do I book an appointment?"
     ];
 
     /* ===================== HELPERS ===================== */
@@ -1244,6 +1281,11 @@
     const $$ = s => document.querySelectorAll(s);
     const starSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>';
     const starRow = n => Array(n).fill(starSvg).join('');
+
+    function formatLKR(amount) {
+        const num = Number(amount || 0);
+        return 'LKR ' + num.toLocaleString('en-LK', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    }
 
     function toast(msg, type='success', title='') {
         const icons = {
@@ -1253,7 +1295,7 @@
         };
         const t = document.createElement('div');
         t.className = `toast ${type}`;
-        t.innerHTML = `<div class="toast-icon">${icons[type]}</div><div class="toast-content"><h5>${title|| (type==='success'?'Success':type==='error'?'Oops!':'Info')}</h5><p>${msg}</p></div>`;
+        t.innerHTML = `<div class="toast-icon">${icons[type]||icons.info}</div><div class="toast-content"><h5>${title || (type==='success'?'Success':type==='error'?'Notice':'Info')}</h5><p>${msg}</p></div>`;
         $('#toastContainer').appendChild(t);
         requestAnimationFrame(() => t.classList.add('show'));
         setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
@@ -1266,6 +1308,137 @@
     function closeModal(id) {
         $('#'+id).classList.remove('show');
         document.body.style.overflow = '';
+    }
+
+    function convertTimeTo24(time12) {
+        if (!time12) return '10:00:00';
+        const parts = time12.trim().split(' ');
+        if (parts.length < 2) return time12.length === 5 ? time12 + ':00' : time12;
+        const [time, modifier] = parts;
+        let [hours, minutes] = time.split(':');
+        let h = parseInt(hours, 10);
+        if (modifier.toUpperCase() === 'PM' && h < 12) h += 12;
+        if (modifier.toUpperCase() === 'AM' && h === 12) h = 0;
+        return `${String(h).padStart(2, '0')}:${minutes}:00`;
+    }
+
+    /* ===================== LOAD BACKEND DATA ===================== */
+    async function loadBackendData() {
+        // 1. Fetch Services from Backend
+        try {
+            const sRes = await fetch(`${API_BASE}/api/v1/services/all`);
+            if (sRes.ok) {
+                const sData = await sRes.json();
+                const list = sData.body || sData.data || (Array.isArray(sData) ? sData : []);
+                if (Array.isArray(list)) {
+                    services = list.map((s, idx) => {
+                        const catRaw = s.category || 'General';
+                        const catLower = catRaw.trim().toLowerCase();
+                        let img = s.imageUrl;
+                        if (!img) {
+                            if (catLower.includes('make') || catLower.includes('cosmetic')) img = categoryImages.makeup;
+                            else if (catLower.includes('nail')) img = categoryImages.nails;
+                            else if (catLower.includes('skin') || catLower.includes('facial')) img = categoryImages.skin;
+                            else if (catLower.includes('bridal') || catLower.includes('wedding')) img = categoryImages.bridal;
+                            else img = categoryImages.hair;
+                        }
+                        return {
+                            id: s.serviceId,
+                            name: s.serviceName,
+                            cat: catLower,
+                            catDisplay: catRaw.trim(),
+                            price: Number(s.price || 0),
+                            duration: (s.duration || 45) + ' min',
+                            img: img,
+                            desc: s.description || 'Specialized luxury salon treatment delivering confidence, elegance, and expert care.',
+                            benefits: ["Personalized consultation", "Top-tier styling & care", "Premium salon products", "Client satisfaction guarantee"],
+                            staffIds: s.staffIds || []
+                        };
+                    });
+                }
+            }
+        } catch (e) {
+            console.error("Error loading services from database:", e);
+            services = [];
+        }
+
+        // 2. Fetch Staff from Backend
+        try {
+            const stRes = await fetch(`${API_BASE}/api/v1/staff/all`);
+            if (stRes.ok) {
+                const stData = await stRes.json();
+                const list = stData.body || stData.data || (Array.isArray(stData) ? stData : []);
+                if (Array.isArray(list)) {
+                    staff = list.map((st, idx) => ({
+                        id: st.staffId,
+                        name: st.staffName,
+                        role: st.position || st.role || 'Beauty Specialist',
+                        exp: '5+ years experience',
+                        rating: '5.0',
+                        specialties: [st.position || 'Styling', 'Beauty Care'],
+                        img: staffAvatars[idx % staffAvatars.length],
+                        bio: `${st.staffName} is an experienced ${st.position || 'beauty specialist'} committed to providing tailored salon experiences and exceptional care.`,
+                        services: st.services ? st.services.map(s => s.serviceId || s) : [],
+                        status: st.status || 'ACTIVE'
+                    }));
+                }
+            }
+        } catch (e) {
+            console.error("Error loading staff from database:", e);
+            staff = [];
+        }
+
+        // 3. Fetch Products from Backend
+        try {
+            const pRes = await fetch(`${API_BASE}/api/v1/product/all`);
+            if (pRes.ok) {
+                const pData = await pRes.json();
+                const list = pData.body || pData.data || (Array.isArray(pData) ? pData : []);
+                if (Array.isArray(list)) {
+                    products = list.map((p, idx) => {
+                        let img = p.image || p.imageUrl;
+                        if (!img) {
+                            img = defaultProductImages[idx % defaultProductImages.length];
+                        } else if (!img.startsWith('data:') && !img.startsWith('http')) {
+                            if (img.startsWith('iVBORw0KGgo')) {
+                                img = 'data:image/png;base64,' + img;
+                            } else {
+                                img = 'data:image/jpeg;base64,' + img;
+                            }
+                        }
+                        return {
+                            id: p.productId,
+                            name: p.productName,
+                            cat: p.category || 'Retail Care',
+                            brand: p.brand || 'Pink Beauty Exclusive',
+                            price: Number(p.sellingPrice || p.price || 0),
+                            oldPrice: (p.costPrice && p.costPrice > (p.sellingPrice || p.price)) ? Number(p.costPrice) : null,
+                            stock: p.stockQuantity != null ? Number(p.stockQuantity) : 0,
+                            rating: '4.8',
+                            img: img
+                        };
+                    });
+                }
+            }
+        } catch (e) {
+            console.error("Error loading products from database:", e);
+            products = [];
+        }
+
+        // Update Marquee with real database services if available
+        if (services.length > 0) {
+            const marquee = $('#marqueeTrack');
+            if (marquee) {
+                const sItems = services.map(s => `<span>${s.name} (${s.catDisplay || s.cat})</span>`).join('');
+                marquee.innerHTML = sItems + sItems;
+            }
+        }
+
+        renderServiceFilters();
+        renderServices();
+        renderStaff();
+        renderProducts();
+        initBooking();
     }
 
     /* ===================== NAVBAR ===================== */
@@ -1291,25 +1464,66 @@
         $('#overlayBg').classList.remove('show');
     }));
 
+    /* ===================== RENDER SERVICE FILTERS ===================== */
+    function renderServiceFilters() {
+        const filterContainer = $('#serviceFilters');
+        if (!filterContainer) return;
+        if (services.length === 0) {
+            filterContainer.innerHTML = '';
+            return;
+        }
+
+        const distinctCats = [];
+        const seen = new Set();
+        services.forEach(s => {
+            const catName = s.catDisplay || s.cat;
+            if (catName && !seen.has(catName.toLowerCase())) {
+                seen.add(catName.toLowerCase());
+                distinctCats.push({ id: s.cat, name: catName });
+            }
+        });
+
+        let html = `<button class="filter-btn active" data-filter="all">All (${services.length})</button>`;
+        distinctCats.forEach(c => {
+            const count = services.filter(s => s.cat === c.id).length;
+            html += `<button class="filter-btn" data-filter="${c.id}">${c.name} (${count})</button>`;
+        });
+        filterContainer.innerHTML = html;
+    }
+
     /* ===================== RENDER SERVICES ===================== */
     function renderServices() {
         const grid = $('#servicesGrid');
+        if (!grid) return;
+
+        if (services.length === 0) {
+            grid.innerHTML = `
+                <div class="account-empty" style="grid-column:1/-1;padding:50px 20px;text-align:center;background:var(--white);border-radius:var(--radius);border:1px dashed var(--gray-200)">
+                    <div style="font-size:2.4rem;margin-bottom:12px">✨</div>
+                    <h3 style="font-size:1.2rem;font-weight:600;margin-bottom:6px">No Services Found in Database</h3>
+                    <p style="color:var(--gray-500);font-size:.9rem">Services added by salon management in the Admin Dashboard will appear here dynamically.</p>
+                </div>
+            `;
+            return;
+        }
+
         grid.innerHTML = services.map(s => `
-    <div class="service-card" data-cat="${s.cat}" data-id="${s.id}">
-      <div class="service-img">
-        <img src="${s.img}" alt="${s.name}" loading="lazy" />
-        <span class="price-tag">From $${s.price}</span>
-      </div>
-      <div class="service-body">
-        <h3>${s.name}</h3>
-        <p>${s.desc.substring(0,80)}...</p>
-        <div class="service-meta">
-          <span class="duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${s.duration}</span>
-        </div>
-        <button class="service-book" onclick="event.stopPropagation();openServiceModal(${s.id})">Book Now</button>
-      </div>
-    </div>
-  `).join('');
+            <div class="service-card" data-cat="${s.cat}" data-id="${s.id}">
+                <div class="service-img">
+                    <img src="${s.img}" alt="${s.name}" loading="lazy" />
+                    <span class="price-tag">${formatLKR(s.price)}</span>
+                </div>
+                <div class="service-body">
+                    <div style="font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--pink-500);margin-bottom:4px">${s.catDisplay || s.cat}</div>
+                    <h3>${s.name}</h3>
+                    <p>${(s.desc || '').substring(0,85)}${(s.desc && s.desc.length > 85) ? '...' : ''}</p>
+                    <div class="service-meta">
+                        <span class="duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${s.duration}</span>
+                    </div>
+                    <button class="service-book" onclick="event.stopPropagation();openServiceModal(${s.id})">Choose Stylist & Book</button>
+                </div>
+            </div>
+        `).join('');
         grid.querySelectorAll('.service-card').forEach(card => {
             card.addEventListener('click', () => openServiceModal(parseInt(card.dataset.id)));
         });
@@ -1325,57 +1539,146 @@
         });
     });
 
+    /* ===================== SERVICE DETAIL & STAFF SELECTION MODAL ===================== */
+    let activeModalSelectedStaffId = null;
+
     function openServiceModal(id) {
         const s = services.find(x => x.id === id);
         if (!s) return;
+
+        // Find qualified staff
+        let qualifiedStaff = staff.filter(st => {
+            if (s.staffIds && s.staffIds.length > 0) return s.staffIds.includes(st.id);
+            if (st.services && st.services.length > 0) return st.services.includes(s.id);
+            return false;
+        });
+        if (qualifiedStaff.length === 0) {
+            qualifiedStaff = staff.filter(st => st.status !== 'INACTIVE');
+        }
+
+        // Set default selected staff
+        activeModalSelectedStaffId = qualifiedStaff[0]?.id || null;
+        const initialStaff = staff.find(st => st.id === activeModalSelectedStaffId);
+
         $('#serviceModalImg').innerHTML = `<img src="${s.img}" alt="${s.name}" />`;
-        const staffNames = s.staff.map(sid => staff.find(p => p.id === sid)).filter(Boolean);
         $('#serviceModalBody').innerHTML = `
-    <h2>${s.name}</h2>
-    <div class="modal-price-row">
-      <span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <strong>From $${s.price}</strong></span>
-      <span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <strong>${s.duration}</strong></span>
-    </div>
-    <p class="modal-desc">${s.desc}</p>
-    <div class="modal-benefits">
-      <h4>Benefits</h4>
-      <ul>${s.benefits.map(b => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> ${b}</li>`).join('')}</ul>
-    </div>
-    <div class="modal-staff">
-      <h4>Available Staff</h4>
-      <div class="modal-staff-list">
-        ${staffNames.map(p => `<div class="modal-staff-chip"><img src="${p.img}" alt="${p.name}" /> ${p.name}</div>`).join('')}
-      </div>
-    </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('serviceModal');document.querySelector('#booking').scrollIntoView({behavior:'smooth'});setTimeout(()=>{document.querySelector('#bookingService').value='${s.id}';toast('Service selected! Fill in your details to continue.','info','Booking')},600)">Book Appointment</button>
-  `;
+            <h2>${s.name}</h2>
+            <div class="modal-price-row">
+                <span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <strong>${formatLKR(s.price)}</strong></span>
+                <span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <strong>${s.duration}</strong></span>
+            </div>
+            <p class="modal-desc">${s.desc}</p>
+            <div class="modal-benefits">
+                <h4>What You'll Enjoy</h4>
+                <ul>${s.benefits.map(b => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> ${b}</li>`).join('')}</ul>
+            </div>
+            <div class="modal-staff">
+                <h4>Select Your Specialist <span class="req" style="color:var(--pink-500)">*</span></h4>
+                <span class="modal-staff-sub">Choose which expert you would like for this appointment:</span>
+                <div class="service-staff-grid" id="modalStaffGrid">
+                    ${qualifiedStaff.map(st => `
+                        <div class="service-staff-card ${st.id === activeModalSelectedStaffId ? 'selected' : ''}" data-staff-id="${st.id}" onclick="selectModalStaff(${st.id}, '${st.name.replace(/'/g, "\\'")}')">
+                            <img src="${st.img}" alt="${st.name}" />
+                            <div class="staff-info">
+                                <h5>${st.name}</h5>
+                                <p>${st.role}</p>
+                            </div>
+                            <div class="staff-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <button class="btn btn-primary" id="modalConfirmBtn" style="width:100%;justify-content:center" onclick="proceedToBookingFromModal(${s.id})">
+                Proceed to Book with ${initialStaff ? initialStaff.name : 'Selected Specialist'}
+            </button>
+        `;
         openModal('serviceModal');
     }
 
+    window.selectModalStaff = function(staffId, staffName) {
+        activeModalSelectedStaffId = staffId;
+        $$('#modalStaffGrid .service-staff-card').forEach(card => {
+            card.classList.toggle('selected', parseInt(card.dataset.staffId) === staffId);
+        });
+        const btn = $('#modalConfirmBtn');
+        if (btn) btn.textContent = `Proceed to Book with ${staffName}`;
+    };
+
+    window.proceedToBookingFromModal = function(serviceId) {
+        closeModal('serviceModal');
+        const bookingSection = $('#booking');
+        if (bookingSection) {
+            bookingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        setTimeout(() => {
+            const serviceSelect = $('#bookingService');
+            if (serviceSelect) {
+                serviceSelect.value = serviceId;
+                updateStaffOptionsForService(serviceId);
+            }
+            const staffSelect = $('#bookingStaff');
+            if (staffSelect && activeModalSelectedStaffId) {
+                staffSelect.value = activeModalSelectedStaffId;
+            }
+
+            // Auto fill logged in customer
+            const user = getCurrentUser();
+            if (user) {
+                const nameInput = $('#bookingForm [name="name"]');
+                const emailInput = $('#bookingForm [name="email"]');
+                const phoneInput = $('#bookingForm [name="phone"]');
+                if (nameInput && !nameInput.value) nameInput.value = user.name || '';
+                if (emailInput && !emailInput.value) emailInput.value = user.email || '';
+                if (phoneInput && !phoneInput.value && user.phone) phoneInput.value = user.phone;
+            }
+
+            const chosenService = services.find(s => s.id === serviceId);
+            const chosenStaff = staff.find(st => st.id === activeModalSelectedStaffId);
+            toast(`Selected ${chosenService ? chosenService.name : 'Service'} with ${chosenStaff ? chosenStaff.name : 'Specialist'}! Pick a date and time.`, 'info', 'Booking');
+        }, 500);
+    };
+
     /* ===================== RENDER STAFF ===================== */
     function renderStaff() {
-        $('#staffGrid').innerHTML = staff.map(p => `
-    <div class="staff-card" data-id="${p.id}">
-      <div class="staff-img">
-        <img src="${p.img}" alt="${p.name}" loading="lazy" />
-        <div class="staff-overlay">
-          <div class="staff-social">
-            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          </div>
-        </div>
-      </div>
-      <div class="staff-body">
-        <h3>${p.name}</h3>
-        <div class="staff-role">${p.role}</div>
-        <div class="staff-meta">
-          <span><svg viewBox="0 0 24 24" fill="currentColor">${starSvg}</svg> ${p.rating}</span>
-          <span>${p.exp}</span>
-        </div>
-        <button class="staff-view" onclick="openStaffModal(${p.id})">View Profile</button>
-      </div>
-    </div>
-  `).join('');
+        const grid = $('#staffGrid');
+        if (!grid) return;
+
+        if (staff.length === 0) {
+            grid.innerHTML = `
+                <div class="account-empty" style="grid-column:1/-1;padding:50px 20px;text-align:center;background:var(--white);border-radius:var(--radius);border:1px dashed var(--gray-200)">
+                    <div style="font-size:2.4rem;margin-bottom:12px">👥</div>
+                    <h3 style="font-size:1.2rem;font-weight:600;margin-bottom:6px">No Staff Listed in Database</h3>
+                    <p style="color:var(--gray-500);font-size:.9rem">Specialists added in the Admin Dashboard will appear here dynamically.</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = staff.map(p => `
+            <div class="staff-card" data-id="${p.id}">
+                <div class="staff-img">
+                    <img src="${p.img}" alt="${p.name}" loading="lazy" />
+                    <div class="staff-overlay">
+                        <div class="staff-social">
+                            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="staff-body">
+                    <h3>${p.name}</h3>
+                    <div class="staff-role">${p.role}</div>
+                    <div class="staff-meta">
+                        <span><svg viewBox="0 0 24 24" fill="currentColor">${starSvg}</svg> ${p.rating}</span>
+                        <span>${p.exp}</span>
+                    </div>
+                    <button class="staff-view" onclick="openStaffModal(${p.id})">View Profile</button>
+                </div>
+            </div>
+        `).join('');
     }
 
     function openStaffModal(id) {
@@ -1383,69 +1686,91 @@
         if (!p) return;
         const sNames = p.services.map(sid => services.find(s => s.id === sid)?.name).filter(Boolean);
         $('#staffModalBody').innerHTML = `
-    <div class="staff-profile-header">
-      <img src="${p.img}" alt="${p.name}" />
-      <div>
-        <h2>${p.name}</h2>
-        <div class="role">${p.role}</div>
-        <div class="staff-meta" style="margin-top:8px">
-          <span><svg viewBox="0 0 24 24" fill="currentColor">${starSvg}</svg> ${p.rating}</span>
-          <span>${p.exp} experience</span>
-        </div>
-      </div>
-    </div>
-    <div class="staff-profile-section">
-      <h4>About</h4>
-      <p>${p.bio}</p>
-    </div>
-    <div class="staff-profile-section">
-      <h4>Specialties</h4>
-      <div class="staff-tags">${p.specialties.map(s => `<span class="staff-tag">${s}</span>`).join('')}</div>
-    </div>
-    <div class="staff-profile-section">
-      <h4>Services</h4>
-      <div class="staff-tags">${sNames.map(s => `<span class="staff-tag">${s}</span>`).join('')}</div>
-    </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal('staffModal');document.querySelector('#booking').scrollIntoView({behavior:'smooth'});setTimeout(()=>{document.querySelector('#bookingStaff').value='${p.id}';toast('Staff member selected!','info','Booking')},600)">Book with ${p.name.split(' ')[0]}</button>
-  `;
+            <div class="staff-profile-header">
+                <img src="${p.img}" alt="${p.name}" />
+                <div>
+                    <h2>${p.name}</h2>
+                    <div class="role">${p.role}</div>
+                    <div class="staff-meta" style="margin-top:8px">
+                        <span><svg viewBox="0 0 24 24" fill="currentColor">${starSvg}</svg> ${p.rating}</span>
+                        <span>${p.exp} experience</span>
+                    </div>
+                </div>
+            </div>
+            <div class="staff-profile-section">
+                <h4>About</h4>
+                <p>${p.bio}</p>
+            </div>
+            <div class="staff-profile-section">
+                <h4>Specialties</h4>
+                <div class="staff-tags">${p.specialties.map(s => `<span class="staff-tag">${s}</span>`).join('')}</div>
+            </div>
+            ${sNames.length > 0 ? `
+            <div class="staff-profile-section">
+                <h4>Services Offered</h4>
+                <div class="staff-tags">${sNames.map(s => `<span class="staff-tag">${s}</span>`).join('')}</div>
+            </div>` : ''}
+            <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal('staffModal');document.querySelector('#booking').scrollIntoView({behavior:'smooth'});setTimeout(()=>{document.querySelector('#bookingStaff').value='${p.id}';toast('Specialist selected! Pick your service.','info','Booking')},600)">Book with ${p.name.split(' ')[0]}</button>
+        `;
         openModal('staffModal');
     }
 
     /* ===================== RENDER PRODUCTS ===================== */
     function renderProducts() {
-        $('#productsGrid').innerHTML = products.map(p => {
-            const discount = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+        const grid = $('#productsGrid');
+        if (!grid) return;
+
+        if (products.length === 0) {
+            grid.innerHTML = `
+                <div class="account-empty" style="grid-column:1/-1;padding:50px 20px;text-align:center;background:var(--white);border-radius:var(--radius);border:1px dashed var(--gray-200)">
+                    <div style="font-size:2.4rem;margin-bottom:12px">🛍️</div>
+                    <h3 style="font-size:1.2rem;font-weight:600;margin-bottom:6px">No Products Listed in Database</h3>
+                    <p style="color:var(--gray-500);font-size:.9rem">Products added in the Salon Management Inventory will appear here with live stock and pricing in LKR.</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = products.map(p => {
+            const discount = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
             const wishlisted = isWishlisted(p.id);
+            const inStock = p.stock > 0;
             return `
-      <div class="product-card" data-id="${p.id}">
-        <div class="product-img">
-          <img src="${p.img}" alt="${p.name}" loading="lazy" />
-          ${discount ? `<span class="product-discount">-${discount}%</span>` : ''}
-          <button class="wishlist-btn ${wishlisted?'active':''}" data-pid="${p.id}" aria-label="Add to wishlist">
-            <svg viewBox="0 0 24 24" fill="${wishlisted?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-        </div>
-        <div class="product-body">
-          <div class="product-cat">${p.cat}</div>
-          <div class="product-name">${p.name}</div>
-          <div class="product-rating"><div class="stars">${starRow(Math.round(p.rating))}</div><span>(${p.rating})</span></div>
-          <div class="product-price">
-            <span class="price">$${p.price}</span>
-            ${p.oldPrice ? `<span class="old-price">$${p.oldPrice}</span>` : ''}
-          </div>
-          <button class="product-add" data-pid="${p.id}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    `;
+                <div class="product-card" data-id="${p.id}">
+                    <div class="product-img">
+                        <img src="${p.img}" alt="${p.name}" loading="lazy" />
+                        ${discount ? `<span class="product-discount">-${discount}%</span>` : ''}
+                        <button class="wishlist-btn ${wishlisted?'active':''}" data-pid="${p.id}" aria-label="Add to wishlist">
+                            <svg viewBox="0 0 24 24" fill="${wishlisted?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-body">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                            <div class="product-cat">${p.brand} • ${p.cat}</div>
+                            <span class="product-stock-tag ${inStock ? 'in-stock' : 'low-stock'}">${inStock ? `${p.stock} in salon` : 'Limited'}</span>
+                        </div>
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-rating"><div class="stars">${starRow(Math.round(p.rating))}</div><span>(${p.rating})</span></div>
+                        <div class="product-price">
+                            <span class="price">${formatLKR(p.price)}</span>
+                            ${p.oldPrice ? `<span class="old-price">${formatLKR(p.oldPrice)}</span>` : ''}
+                        </div>
+                        <button class="product-add" onclick="visitProductNotice('${p.name.replace(/'/g, "\\'")}', ${p.price})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            Visit Salon to Purchase
+                        </button>
+                        <div class="retail-notice">📍 In-salon retail purchase available</div>
+                    </div>
+                </div>
+            `;
         }).join('');
-        // Bind add to cart
-        $$('.product-add').forEach(btn => btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.pid))));
-        // Bind wishlist
+
         $$('.wishlist-btn').forEach(btn => btn.addEventListener('click', () => toggleWishlist(parseInt(btn.dataset.pid), btn)));
     }
+
+    window.visitProductNotice = function(productName, price) {
+        toast(`"${productName}" (${formatLKR(price)}) is available at our salon front desk. Visit us to purchase or reserve with your stylist!`, 'info', 'In-Salon Retail');
+    };
 
     /* ===================== CART ===================== */
     function getCart() { return JSON.parse(localStorage.getItem('pbs_cart') || '[]'); }
@@ -1455,13 +1780,15 @@
         const cart = getCart();
         const count = cart.reduce((s,i) => s+i.qty, 0);
         const badge = $('#cartBadge');
-        if (count > 0) {
-            badge.textContent = count;
-            badge.style.display = 'flex';
-            badge.classList.add('bump');
-            setTimeout(() => badge.classList.remove('bump'), 400);
-        } else {
-            badge.style.display = 'none';
+        if (badge) {
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'flex';
+                badge.classList.add('bump');
+                setTimeout(() => badge.classList.remove('bump'), 400);
+            } else {
+                badge.style.display = 'none';
+            }
         }
     }
 
@@ -1476,7 +1803,7 @@
             cart.push({id:product.id, name:product.name, price:product.price, img:product.img, qty:1});
         }
         saveCart(cart);
-        toast(`${product.name} added to cart`, 'success', 'Added!');
+        toast(`${product.name} reserved for salon pickup!`, 'success', 'Added!');
     }
 
     function removeFromCart(pid) {
@@ -1501,32 +1828,34 @@
         const cart = getCart();
         const itemsEl = $('#cartItems');
         const footerEl = $('#cartFooter');
+        if (!itemsEl || !footerEl) return;
         if (cart.length === 0) {
-            itemsEl.innerHTML = `<div class="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Your cart is empty</p></div>`;
+            itemsEl.innerHTML = `<div class="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Your product bag is empty.<br>Browse our in-salon collection!</p></div>`;
             footerEl.innerHTML = '';
             return;
         }
         itemsEl.innerHTML = cart.map(i => `
-    <div class="cart-item">
-      <img src="${i.img}" alt="${i.name}" />
-      <div class="cart-item-info">
-        <h4>${i.name}</h4>
-        <div class="cart-item-price">$${i.price}</div>
-        <div class="cart-item-controls">
-          <button class="cart-qty-btn" onclick="changeQty(${i.id},-1)">−</button>
-          <span class="cart-qty-val">${i.qty}</span>
-          <button class="cart-qty-btn" onclick="changeQty(${i.id},1)">+</button>
-          <button class="cart-remove" onclick="removeFromCart(${i.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-        </div>
-      </div>
-    </div>
-  `).join('');
+            <div class="cart-item">
+                <img src="${i.img}" alt="${i.name}" />
+                <div class="cart-item-info">
+                    <h4>${i.name}</h4>
+                    <div class="cart-item-price">${formatLKR(i.price)}</div>
+                    <div class="cart-item-controls">
+                        <button class="cart-qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+                        <span class="cart-qty-val">${i.qty}</span>
+                        <button class="cart-qty-btn" onclick="changeQty(${i.id},1)">+</button>
+                        <button class="cart-remove" onclick="removeFromCart(${i.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
         const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
         footerEl.innerHTML = `
-    <div class="cart-subtotal"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
-    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
-    <button class="cart-continue" id="cartContinue">Continue Shopping</button>
-  `;
+            <div class="cart-subtotal"><span>Estimated Total</span><span>${formatLKR(subtotal)}</span></div>
+            <p style="font-size:.76rem;color:var(--gray-500);margin-bottom:12px;text-align:center">Pick up and pay at Pink Beauty Salon reception.</p>
+            <button class="btn btn-primary" onclick="checkout()">Reserve for Salon Pickup</button>
+            <button class="cart-continue" id="cartContinue">Continue Browsing</button>
+        `;
         $('#cartContinue').addEventListener('click', () => $('#cartDrawer').classList.remove('open'));
     }
 
@@ -1534,14 +1863,13 @@
         const cart = getCart();
         if (cart.length === 0) return;
         const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
-        // Save order
         const orders = JSON.parse(localStorage.getItem('pbs_orders') || '[]');
         orders.push({id:Date.now(), items:cart, total:subtotal, date:new Date().toISOString()});
         localStorage.setItem('pbs_orders', JSON.stringify(orders));
         saveCart([]);
         renderCart();
         $('#cartDrawer').classList.remove('open');
-        toast(`Order placed! Total: $${subtotal.toFixed(2)}. This is a demo checkout.`, 'success', 'Order Confirmed!');
+        toast(`Reservation placed! Total: ${formatLKR(subtotal)}. Ready for pickup at salon reception.`, 'success', 'Reserved!');
     }
 
     $('#cartBtn').addEventListener('click', () => { renderCart(); $('#cartDrawer').classList.add('open'); });
@@ -1557,7 +1885,7 @@
             toast('Removed from wishlist', 'info', 'Wishlist');
         } else {
             wl.push(pid);
-            toast('Added to wishlist!', 'success', 'Wishlist');
+            toast('Added to in-salon wishlist!', 'success', 'Wishlist');
         }
         localStorage.setItem('pbs_wishlist', JSON.stringify(wl));
         if (btn) {
@@ -1570,34 +1898,88 @@
     }
 
     /* ===================== BOOKING ===================== */
-    function initBooking() {
-        // Populate services
-        $('#bookingService').innerHTML = '<option value="">Choose a service</option>' + services.map(s => `<option value="${s.id}">${s.name} — $${s.price}</option>`).join('');
-        // Populate staff
-        $('#bookingStaff').innerHTML = '<option value="">Any available expert</option>' + staff.map(p => `<option value="${p.id}">${p.name} — ${p.role}</option>`).join('');
-        // Date min = today
-        const today = new Date().toISOString().split('T')[0];
-        $('#bookingDate').min = today;
-        // Time slots
-        $('#timeSlots').innerHTML = timeSlots.map(t => `<div class="time-slot" data-time="${t}">${t}</div>`).join('');
-        $$('.time-slot').forEach(slot => {
-            slot.addEventListener('click', () => {
-                $$('.time-slot').forEach(s => s.classList.remove('active'));
-                slot.classList.add('active');
-                $('#bookingTime').value = slot.dataset.time;
-                $('#timeError').classList.remove('show');
-            });
+    function updateStaffOptionsForService(serviceId) {
+        const staffSelect = $('#bookingStaff');
+        if (!staffSelect) return;
+        const s = services.find(x => x.id === parseInt(serviceId));
+        if (!s) {
+            staffSelect.innerHTML = '<option value="">Any available expert</option>' + staff.map(p => `<option value="${p.id}">${p.name} — ${p.role}</option>`).join('');
+            return;
+        }
+
+        let qualified = staff.filter(st => {
+            if (s.staffIds && s.staffIds.length > 0) return s.staffIds.includes(st.id);
+            if (st.services && st.services.length > 0) return st.services.includes(s.id);
+            return false;
         });
+        if (qualified.length === 0) qualified = staff;
+
+        staffSelect.innerHTML = qualified.map(p => `<option value="${p.id}">${p.name} — ${p.role}</option>`).join('');
     }
 
-    $('#bookingForm').addEventListener('submit', e => {
+    function initBooking() {
+        const serviceSelect = $('#bookingService');
+        const staffSelect = $('#bookingStaff');
+
+        if (serviceSelect) {
+            if (services.length === 0) {
+                serviceSelect.innerHTML = '<option value="">No services available currently</option>';
+            } else {
+                serviceSelect.innerHTML = '<option value="">Choose a service</option>' + services.map(s => `<option value="${s.id}">${s.name} — ${formatLKR(s.price)}</option>`).join('');
+            }
+            serviceSelect.addEventListener('change', e => {
+                if (e.target.value) {
+                    updateStaffOptionsForService(e.target.value);
+                }
+            });
+        }
+
+        if (staffSelect) {
+            if (staff.length === 0) {
+                staffSelect.innerHTML = '<option value="">No specialist available currently</option>';
+            } else {
+                staffSelect.innerHTML = '<option value="">Any available expert</option>' + staff.map(p => `<option value="${p.id}">${p.name} — ${p.role}</option>`).join('');
+            }
+        }
+
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = $('#bookingDate');
+        if (dateInput) dateInput.min = today;
+
+        const timeContainer = $('#timeSlots');
+        if (timeContainer) {
+            timeContainer.innerHTML = timeSlots.map(t => `<div class="time-slot" data-time="${t}">${t}</div>`).join('');
+            $$('.time-slot').forEach(slot => {
+                slot.addEventListener('click', () => {
+                    $$('.time-slot').forEach(s => s.classList.remove('active'));
+                    slot.classList.add('active');
+                    $('#bookingTime').value = slot.dataset.time;
+                    $('#timeError').classList.remove('show');
+                });
+            });
+        }
+
+        // Prefill user details if logged in
+        const user = getCurrentUser();
+        if (user) {
+            const form = $('#bookingForm');
+            if (form) {
+                if (form.name && !form.name.value) form.name.value = user.name || '';
+                if (form.email && !form.email.value) form.email.value = user.email || '';
+                if (form.phone && !form.phone.value && user.phone) form.phone.value = user.phone;
+            }
+        }
+    }
+
+    /* ===================== APPOINTMENT SUBMISSION TO BACKEND ===================== */
+    $('#bookingForm').addEventListener('submit', async e => {
         e.preventDefault();
         const form = e.target;
         let valid = true;
-        // Validate fields
+
         form.querySelectorAll('[required]').forEach(field => {
             const errEl = field.parentElement.querySelector('.form-error');
-            if (field.type === 'hidden') return; // time handled separately
+            if (field.type === 'hidden') return;
             if (!field.value.trim() || (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value))) {
                 field.classList.add('error');
                 if (errEl) errEl.classList.add('show');
@@ -1607,49 +1989,152 @@
                 if (errEl) errEl.classList.remove('show');
             }
         });
-        // Validate time
+
         if (!$('#bookingTime').value) {
             $('#timeError').classList.add('show');
             valid = false;
         }
-        if (!valid) { toast('Please fill in all required fields', 'error', 'Check the form'); return; }
 
-        const data = {
-            id: Date.now(),
-            name: form.name.value,
-            email: form.email.value,
-            phone: form.phone.value,
-            service: services.find(s => s.id == form.service.value)?.name || '',
-            staff: staff.find(p => p.id == form.staff.value)?.name || 'Any available expert',
-            date: form.date.value,
-            time: $('#bookingTime').value,
-            notes: form.notes.value,
-            status: 'upcoming'
-        };
-        // Save
-        const bookings = JSON.parse(localStorage.getItem('pbs_bookings') || '[]');
-        bookings.push(data);
-        localStorage.setItem('pbs_bookings', JSON.stringify(bookings));
-        // Confirmation
-        const dateFmt = new Date(data.date).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-        $('#bookingConfirmBody').innerHTML = `
-    <div style="font-size:3rem;margin-bottom:10px">✨</div>
-    <h2 style="margin-bottom:8px">Appointment Confirmed!</h2>
-    <p style="color:var(--gray-500);margin-bottom:24px">Your appointment has been successfully scheduled.</p>
-    <div style="text-align:left;background:var(--blush);padding:20px;border-radius:12px;margin-bottom:20px">
-      <div class="account-info-row"><span>Customer</span><span>${data.name}</span></div>
-      <div class="account-info-row"><span>Service</span><span>${data.service}</span></div>
-      <div class="account-info-row"><span>Staff</span><span>${data.staff}</span></div>
-      <div class="account-info-row"><span>Date</span><span>${dateFmt}</span></div>
-      <div class="account-info-row" style="border:none"><span>Time</span><span>${data.time}</span></div>
-    </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('bookingConfirmModal')">Done</button>
-  `;
-        openModal('bookingConfirmModal');
-        form.reset();
-        $$('.time-slot').forEach(s => s.classList.remove('active'));
-        $('#bookingTime').value = '';
-        toast('Appointment booked successfully!', 'success', 'Confirmed!');
+        if (!valid) {
+            toast('Please check all required booking fields', 'error', 'Incomplete Form');
+            return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const origBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Scheduling Appointment...';
+
+        try {
+            const name = form.name.value.trim();
+            const email = form.email.value.trim();
+            const phone = form.phone.value.trim();
+            const serviceId = parseInt(form.service.value);
+            const staffId = parseInt(form.staff.value) || staff[0]?.id;
+            const date = form.date.value;
+            const timeStr = $('#bookingTime').value;
+            const startTime24 = convertTimeTo24(timeStr);
+            const notes = form.notes.value.trim();
+
+            let customerId = localStorage.getItem('customerId') || (getCurrentUser()?.customerId);
+
+            // If customer ID is not set yet, resolve via backend
+            if (!customerId) {
+                try {
+                    // Check if customer exists by email
+                    const cRes = await fetch(`${API_BASE}/api/v1/customers/all`);
+                    if (cRes.ok) {
+                        const cData = await cRes.json();
+                        const cList = cData.body || cData.data || [];
+                        const existing = cList.find(c => (c.customerEmail && c.customerEmail.toLowerCase() === email.toLowerCase()));
+                        if (existing) {
+                            customerId = existing.customerId;
+                        }
+                    }
+                } catch (_) {}
+
+                // If still not found, create customer in database
+                if (!customerId) {
+                    try {
+                        const createCustRes = await fetch(`${API_BASE}/api/v1/customers/save`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                customerName: name,
+                                customerEmail: email,
+                                customerPhone: phone,
+                                status: 'ACTIVE'
+                            })
+                        });
+                        if (createCustRes.ok) {
+                            const newCustData = await createCustRes.json();
+                            const newCust = newCustData.body || newCustData.data;
+                            if (newCust && newCust.customerId) {
+                                customerId = newCust.customerId;
+                            }
+                        }
+                    } catch (_) {}
+                }
+            }
+
+            if (!customerId) {
+                // Fallback default customer id 1 if DB registration was deferred
+                customerId = 1;
+            }
+
+            // Submit Appointment to Backend
+            const appointmentPayload = {
+                customerId: parseInt(customerId),
+                serviceId: serviceId,
+                staffId: staffId,
+                appointmentDate: date,
+                startTime: startTime24,
+                notes: notes || 'Booked via customer portal'
+            };
+
+            const apptRes = await fetch(`${API_BASE}/api/v1/appointment/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(appointmentPayload)
+            });
+
+            const apptResult = await apptRes.json();
+
+            if (!apptRes.ok || (apptResult.status !== undefined && apptResult.status !== 0 && apptResult.status !== 200)) {
+                throw new Error(apptResult.message || 'Could not schedule appointment at this time. Please check staff availability.');
+            }
+
+            const chosenService = services.find(s => s.id === serviceId);
+            const chosenStaff = staff.find(st => st.id === staffId);
+            const dateFmt = new Date(date).toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+            // Store appointment in local storage cache
+            const bookings = JSON.parse(localStorage.getItem('pbs_bookings') || '[]');
+            bookings.push({
+                id: Date.now(),
+                customerId: customerId,
+                name: name,
+                email: email,
+                phone: phone,
+                service: chosenService ? chosenService.name : 'Salon Service',
+                staff: chosenStaff ? chosenStaff.name : 'Beauty Specialist',
+                price: chosenService ? chosenService.price : 0,
+                date: date,
+                time: timeStr,
+                notes: notes,
+                status: 'SCHEDULED'
+            });
+            localStorage.setItem('pbs_bookings', JSON.stringify(bookings));
+
+            // Show Confirmation Modal
+            $('#bookingConfirmBody').innerHTML = `
+                <div style="font-size:3.2rem;margin-bottom:10px">🌸✨</div>
+                <h2 style="margin-bottom:8px">Appointment Confirmed!</h2>
+                <p style="color:var(--gray-500);margin-bottom:24px">Your appointment has been successfully scheduled with our expert team.</p>
+                <div style="text-align:left;background:var(--blush);padding:22px;border-radius:14px;margin-bottom:22px">
+                    <div class="account-info-row"><span>Customer</span><span>${name}</span></div>
+                    <div class="account-info-row"><span>Service</span><span>${chosenService ? chosenService.name : 'Beauty Treatment'}</span></div>
+                    <div class="account-info-row"><span>Specialist</span><span>${chosenStaff ? chosenStaff.name : 'Specialist'}</span></div>
+                    <div class="account-info-row"><span>Date</span><span>${dateFmt}</span></div>
+                    <div class="account-info-row"><span>Time</span><span>${timeStr}</span></div>
+                    <div class="account-info-row" style="border:none"><span>Service Fee</span><span style="color:var(--pink-600);font-weight:700">${formatLKR(chosenService?.price || 0)}</span></div>
+                </div>
+                <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('bookingConfirmModal')">Done</button>
+            `;
+            openModal('bookingConfirmModal');
+
+            form.reset();
+            $$('.time-slot').forEach(s => s.classList.remove('active'));
+            $('#bookingTime').value = '';
+            toast('Appointment successfully booked in the system!', 'success', 'Confirmed!');
+
+        } catch (err) {
+            console.error("Booking error:", err);
+            toast(err.message || 'Failed to book appointment. Please try again.', 'error', 'Booking Notice');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = origBtnText;
+        }
     });
 
     /* ===================== CONTACT FORM ===================== */
@@ -1670,10 +2155,10 @@
         });
         if (!valid) { toast('Please fill in all required fields', 'error'); return; }
         form.reset();
-        toast('Your message has been sent! We\'ll get back to you soon.', 'success', 'Message Sent!');
+        toast('Your message has been received! Our reception team will reach out to you shortly.', 'success', 'Message Sent!');
     });
 
-    /* ===================== AUTH ===================== */
+    /* ===================== AUTH (BACKEND CONNECTED) ===================== */
     $$('.auth-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             $$('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -1683,87 +2168,207 @@
         });
     });
 
-    $('#loginForm').addEventListener('submit', e => {
+    // Login Form
+    $('#loginForm').addEventListener('submit', async e => {
         e.preventDefault();
         const form = e.target;
-        let valid = true;
-        form.querySelectorAll('[required]').forEach(field => {
-            const errEl = field.parentElement.querySelector('.form-error');
-            if (!field.value.trim() || (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value))) {
-                field.classList.add('error');
-                if (errEl) errEl.classList.add('show');
-                valid = false;
-            } else {
-                field.classList.remove('error');
-                if (errEl) errEl.classList.remove('show');
+        const email = form.email.value.trim();
+        const password = form.password.value;
+
+        if (!email || !password) {
+            toast('Please enter your email and password.', 'error', 'Check Credentials');
+            return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Signing in...';
+
+        try {
+            const res = await fetch(`${API_BASE}/api/v1/user/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userEmail: email, password: password })
+            });
+
+            const result = await res.json();
+            const data = result.body || result.data || result;
+
+            if (!res.ok || (result.status !== undefined && result.status !== 0 && result.code !== '00') || !data || !data.token) {
+                throw new Error(result.message || 'Invalid email or password.');
             }
-        });
-        if (!valid) return;
-        const email = form.email.value;
-        const users = JSON.parse(localStorage.getItem('pbs_users') || '[]');
-        const user = users.find(u => u.email === email);
-        if (!user) {
-            toast('No account found with this email. Please create an account.', 'error', 'Login Failed');
-            return;
+
+            // Store credentials & customer info
+            localStorage.setItem('token', data.token);
+            if (data.userId) localStorage.setItem('userId', data.userId);
+            if (data.userName) localStorage.setItem('userName', data.userName);
+            if (data.userEmail) localStorage.setItem('userEmail', data.userEmail);
+            if (data.userRole) localStorage.setItem('userRole', data.userRole);
+            if (data.customerId) localStorage.setItem('customerId', data.customerId);
+
+            const userObj = {
+                id: data.userId,
+                name: data.userName,
+                email: data.userEmail || email,
+                role: data.userRole || 'CUSTOMER',
+                customerId: data.customerId
+            };
+            localStorage.setItem('pbs_currentUser', JSON.stringify(userObj));
+
+            closeModal('authModal');
+            form.reset();
+            toast(`Welcome back, ${data.userName || 'Client'}!`, 'success', 'Logged In');
+            updateAccountUI();
+
+            // Populate booking form fields
+            const nameInput = $('#bookingForm [name="name"]');
+            const emailInput = $('#bookingForm [name="email"]');
+            if (nameInput) nameInput.value = data.userName || '';
+            if (emailInput) emailInput.value = data.userEmail || email;
+
+        } catch (err) {
+            console.error("Login error:", err);
+            toast(err.message || 'Login failed. Please check your credentials.', 'error', 'Login Failed');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Login';
         }
-        if (user.password !== form.password.value) {
-            toast('Incorrect password. Please try again.', 'error', 'Login Failed');
-            return;
-        }
-        localStorage.setItem('pbs_currentUser', JSON.stringify(user));
-        closeModal('authModal');
-        form.reset();
-        toast(`Welcome back, ${user.name}!`, 'success', 'Logged In!');
-        updateAccountUI();
     });
 
-    $('#registerForm').addEventListener('submit', e => {
+    // Register Form
+    $('#registerForm').addEventListener('submit', async e => {
         e.preventDefault();
         const form = e.target;
-        let valid = true;
-        form.querySelectorAll('[required]').forEach(field => {
-            const errEl = field.parentElement.querySelector('.form-error');
-            const val = field.value.trim();
-            let fieldValid = !!val;
-            if (field.type === 'email') fieldValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-            if (field.name === 'password') fieldValid = val.length >= 6;
-            if (field.name === 'confirm') fieldValid = val === form.password.value;
-            if (!fieldValid) {
-                field.classList.add('error');
-                if (errEl) errEl.classList.add('show');
-                valid = false;
-            } else {
-                field.classList.remove('error');
-                if (errEl) errEl.classList.remove('show');
-            }
-        });
-        if (!valid) return;
-        const users = JSON.parse(localStorage.getItem('pbs_users') || '[]');
-        if (users.find(u => u.email === form.email.value)) {
-            toast('An account with this email already exists.', 'error', 'Already Registered');
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const phone = form.phone.value.trim();
+        const password = form.password.value;
+        const confirm = form.confirm.value;
+
+        if (!name || !email || !phone || !password) {
+            toast('Please fill in all required fields.', 'error', 'Check Form');
             return;
         }
-        const user = {id:Date.now(), name:form.name.value, email:form.email.value, phone:form.phone.value, password:form.password.value};
-        users.push(user);
-        localStorage.setItem('pbs_users', JSON.stringify(users));
-        localStorage.setItem('pbs_currentUser', JSON.stringify(user));
-        closeModal('authModal');
-        form.reset();
-        toast(`Welcome to Pink Beauty, ${user.name}!`, 'success', 'Account Created!');
-        updateAccountUI();
+        if (password.length < 6) {
+            toast('Password must be at least 6 characters.', 'error', 'Weak Password');
+            return;
+        }
+        if (password !== confirm) {
+            toast('Passwords do not match.', 'error', 'Password Mismatch');
+            return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creating Account...';
+
+        try {
+            const regRes = await fetch(`${API_BASE}/api/v1/user/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userName: name,
+                    userEmail: email,
+                    userPhone: phone,
+                    userPassword: password,
+                    role: 'CUSTOMER'
+                })
+            });
+
+            const regResult = await regRes.json();
+            if (!regRes.ok || (regResult.code !== '00' && regResult.status !== undefined && regResult.status !== 0)) {
+                throw new Error(regResult.message || 'Could not register customer account.');
+            }
+
+            toast(`Account created for ${name}! Logging you in...`, 'success', 'Welcome!');
+
+            // Auto login
+            try {
+                const loginRes = await fetch(`${API_BASE}/api/v1/user/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userEmail: email, password: password })
+                });
+                const loginResult = await loginRes.json();
+                const data = loginResult.body || loginResult.data || loginResult;
+
+                if (data && data.token) {
+                    localStorage.setItem('token', data.token);
+                    if (data.userId) localStorage.setItem('userId', data.userId);
+                    if (data.userName) localStorage.setItem('userName', data.userName);
+                    if (data.userEmail) localStorage.setItem('userEmail', data.userEmail);
+                    if (data.userRole) localStorage.setItem('userRole', data.userRole);
+                    if (data.customerId) localStorage.setItem('customerId', data.customerId);
+
+                    const userObj = {
+                        id: data.userId,
+                        name: data.userName,
+                        email: data.userEmail || email,
+                        role: data.userRole || 'CUSTOMER',
+                        customerId: data.customerId
+                    };
+                    localStorage.setItem('pbs_currentUser', JSON.stringify(userObj));
+                }
+            } catch (_) {}
+
+            closeModal('authModal');
+            form.reset();
+            updateAccountUI();
+
+        } catch (err) {
+            console.error("Registration error:", err);
+            toast(err.message || 'Registration failed. Please try again.', 'error', 'Registration Error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Create Account';
+        }
     });
 
-    function getCurrentUser() { return JSON.parse(localStorage.getItem('pbs_currentUser') || 'null'); }
+    function getCurrentUser() {
+        const stored = localStorage.getItem('pbs_currentUser');
+        if (stored) return JSON.parse(stored);
+        const token = localStorage.getItem('token');
+        if (token) {
+            return {
+                id: localStorage.getItem('userId'),
+                name: localStorage.getItem('userName') || 'Customer',
+                email: localStorage.getItem('userEmail') || '',
+                role: localStorage.getItem('userRole') || 'CUSTOMER',
+                customerId: localStorage.getItem('customerId')
+            };
+        }
+        return null;
+    }
 
     function updateAccountUI() {
         const user = getCurrentUser();
         const btn = $('#accountBtn');
+        const userChip = $('#navUserChip');
+        const userNameSpan = $('#navUserName');
+
         if (user) {
-            btn.style.background = 'linear-gradient(135deg,var(--pink-400),var(--pink-600))';
-            btn.style.color = '#fff';
+            if (btn) {
+                btn.style.background = 'linear-gradient(135deg,var(--pink-400),var(--pink-600))';
+                btn.style.color = '#fff';
+            }
+            if (userChip && userNameSpan) {
+                userNameSpan.textContent = user.name ? user.name.split(' ')[0] : 'Account';
+                userChip.style.display = 'inline-flex';
+            }
+            const logoutBtn = $('#navLogoutBtn');
+            if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+            const mobileLogout = $('#mobileLogout');
+            if (mobileLogout) mobileLogout.style.display = 'block';
         } else {
-            btn.style.background = '';
-            btn.style.color = '';
+            if (btn) {
+                btn.style.background = '';
+                btn.style.color = '';
+            }
+            if (userChip) userChip.style.display = 'none';
+            const logoutBtn = $('#navLogoutBtn');
+            if (logoutBtn) logoutBtn.style.display = 'none';
+            const mobileLogout = $('#mobileLogout');
+            if (mobileLogout) mobileLogout.style.display = 'none';
         }
     }
 
@@ -1779,9 +2384,12 @@
 
     function renderAccount(user) {
         $('#accountHeader').innerHTML = `
-    <img src="https://images.pexels.com/photos/29852852/pexels-photo-29852852.jpeg?auto=compress&cs=tinysrgb&w=200" alt="${user.name}" />
-    <div><h3>${user.name}</h3><p>${user.email}</p></div>
-  `;
+            <img src="https://images.pexels.com/photos/29852852/pexels-photo-29852852.jpeg?auto=compress&cs=tinysrgb&w=200" alt="${user.name}" />
+            <div>
+                <h3>${user.name}</h3>
+                <p>${user.email} • Valued Customer</p>
+            </div>
+        `;
         renderAccountPanel('profile', user);
     }
 
@@ -1793,84 +2401,126 @@
         });
     });
 
-    function renderAccountPanel(panel, user) {
+    async function renderAccountPanel(panel, user) {
         const el = $('#accountContent');
-        const bookings = JSON.parse(localStorage.getItem('pbs_bookings') || '[]').filter(b => b.email === user.email);
-        const orders = JSON.parse(localStorage.getItem('pbs_orders') || '[]');
-        const wishlist = getWishlist().map(id => products.find(p => p.id === id)).filter(Boolean);
-        const now = new Date();
-        const upcoming = bookings.filter(b => new Date(b.date + 'T00:00') >= now);
-        const past = bookings.filter(b => new Date(b.date + 'T00:00') < now);
+        if (!el) return;
 
         if (panel === 'profile') {
             el.innerHTML = `
-      <h4>My Profile</h4>
-      <div class="account-info-row"><span>Full Name</span><span>${user.name}</span></div>
-      <div class="account-info-row"><span>Email</span><span>${user.email}</span></div>
-      <div class="account-info-row"><span>Phone</span><span>${user.phone || '—'}</span></div>
-      <div class="account-info-row" style="border:none"><span>Member Since</span><span>${new Date(user.id).toLocaleDateString('en-US',{month:'long',year:'numeric'})}</span></div>
-    `;
+                <h4>Customer Profile</h4>
+                <div class="account-info-row"><span>Customer Name</span><span>${user.name}</span></div>
+                <div class="account-info-row"><span>Email Address</span><span>${user.email}</span></div>
+                <div class="account-info-row"><span>Phone Number</span><span>${user.phone || localStorage.getItem('userPhone') || '—'}</span></div>
+                <div class="account-info-row"><span>Account Status</span><span style="color:var(--success);font-weight:600">Active Member</span></div>
+                <div class="account-info-row" style="border:none"><span>Customer ID</span><span>#${user.customerId || user.id || 'CUST-001'}</span></div>
+                <button class="account-logout" style="margin-top:24px" onclick="logout()">Logout</button>
+            `;
         } else if (panel === 'appointments') {
-            el.innerHTML = `<h4>My Appointments</h4>` +
-                (bookings.length === 0 ? '<div class="account-empty">No appointments yet. Book one to get started!</div>' :
-                    (upcoming.length > 0 ? '<h5 style="margin:10px 0;color:var(--gray-500);font-size:.82rem">Upcoming</h5>' + upcoming.map(b => `
-        <div class="account-appointment">
-          <div class="info"><h5>${b.service}</h5><p>${new Date(b.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} at ${b.time} • ${b.staff}</p></div>
-          <span class="status status-upcoming">Upcoming</span>
-        </div>`).join('') : '') +
-                    (past.length > 0 ? '<h5 style="margin:14px 0 10px;color:var(--gray-500);font-size:.82rem">Previous</h5>' + past.map(b => `
-        <div class="account-appointment">
-          <div class="info"><h5>${b.service}</h5><p>${new Date(b.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} at ${b.time}</p></div>
-          <span class="status status-past">Completed</span>
-        </div>`).join('') : ''));
+            el.innerHTML = `<h4>My Appointments</h4><p style="font-size:.84rem;color:var(--gray-500)">Loading appointments from system...</p>`;
+
+            let appts = [];
+            const custId = user.customerId || localStorage.getItem('customerId');
+
+            if (custId) {
+                try {
+                    const res = await fetch(`${API_BASE}/api/v1/appointment/customer/${custId}`);
+                    if (res.ok) {
+                        const json = await res.json();
+                        const list = json.body || json.data || (Array.isArray(json) ? json : []);
+                        if (list && list.length > 0) {
+                            appts = list;
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Error fetching customer appointments from API:", e);
+                }
+            }
+
+            // Fallback to local storage if API returned no appointments yet
+            if (appts.length === 0) {
+                const localBookings = JSON.parse(localStorage.getItem('pbs_bookings') || '[]').filter(b => b.email === user.email || b.customerId == custId);
+                appts = localBookings.map(b => ({
+                    serviceName: b.service,
+                    staffName: b.staff,
+                    appointmentDate: b.date,
+                    startTime: b.time,
+                    status: b.status || 'SCHEDULED'
+                }));
+            }
+
+            if (appts.length === 0) {
+                el.innerHTML = `<h4>My Appointments</h4><div class="account-empty">No appointments scheduled yet. Browse our signature services and select your specialist!</div>`;
+                return;
+            }
+
+            el.innerHTML = `<h4>My Appointments</h4>` + appts.map(b => `
+                <div class="account-appointment">
+                    <div class="info">
+                        <h5>${b.serviceName || 'Salon Service'}</h5>
+                        <p>${b.appointmentDate} at ${b.startTime} • Specialist: ${b.staffName || 'Assigned Specialist'}</p>
+                    </div>
+                    <span class="status status-upcoming">${b.status || 'SCHEDULED'}</span>
+                </div>
+            `).join('');
+
         } else if (panel === 'orders') {
-            el.innerHTML = `<h4>My Orders</h4>` +
-                (orders.length === 0 ? '<div class="account-empty">No orders yet. Visit our shop to find beauty essentials!</div>' :
+            const orders = JSON.parse(localStorage.getItem('pbs_orders') || '[]');
+            el.innerHTML = `<h4>My In-Salon Retail Orders</h4>` +
+                (orders.length === 0 ? '<div class="account-empty">No reserved retail products yet. Visit our shop section to explore beauty essentials!</div>' :
                     orders.map(o => `
-        <div class="account-appointment">
-          <div class="info"><h5>Order #${o.id}</h5><p>${o.items.length} items • ${new Date(o.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</p></div>
-          <span class="status status-past">$${o.total.toFixed(2)}</span>
-        </div>
-      `).join(''));
+                        <div class="account-appointment">
+                            <div class="info"><h5>Order #${o.id}</h5><p>${o.items.length} items • ${new Date(o.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</p></div>
+                            <span class="status status-past">${formatLKR(o.total)}</span>
+                        </div>
+                    `).join(''));
         } else if (panel === 'wishlist') {
+            const wishlist = getWishlist().map(id => products.find(p => p.id === id)).filter(Boolean);
             el.innerHTML = `<h4>My Wishlist</h4>` +
-                (wishlist.length === 0 ? '<div class="account-empty">Your wishlist is empty. Tap the heart on any product to save it!</div>' :
+                (wishlist.length === 0 ? '<div class="account-empty">Your wishlist is empty. Tap the heart on any product to save it for your next salon visit!</div>' :
                     wishlist.map(p => `
-        <div class="account-appointment">
-          <img src="${p.img}" alt="${p.name}" style="width:50px;height:50px;border-radius:8px;object-fit:cover" />
-          <div class="info" style="flex:1"><h5>${p.name}</h5><p>$${p.price}</p></div>
-          <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id});renderAccountPanel('wishlist',getCurrentUser())">Add</button>
-        </div>
-      `).join(''));
+                        <div class="account-appointment">
+                            <img src="${p.img}" alt="${p.name}" style="width:50px;height:50px;border-radius:8px;object-fit:cover" />
+                            <div class="info" style="flex:1">
+                                <h5>${p.name}</h5>
+                                <p>${formatLKR(p.price)}</p>
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="visitProductNotice('${p.name.replace(/'/g, "\\'")}', ${p.price})">Visit to Buy</button>
+                        </div>
+                    `).join(''));
         } else if (panel === 'settings') {
             el.innerHTML = `
-      <h4>Account Settings</h4>
-      <div class="form-group"><label>Name</label><input type="text" class="form-control" value="${user.name}" id="setName" /></div>
-      <div class="form-group"><label>Phone</label><input type="tel" class="form-control" value="${user.phone||''}" id="setPhone" /></div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" onclick="updateProfile()">Save Changes</button>
-      <button class="account-logout" onclick="logout()">Logout</button>
-    `;
+                <h4>Account Settings</h4>
+                <div class="form-group"><label>Customer Name</label><input type="text" class="form-control" value="${user.name}" id="setName" /></div>
+                <div class="form-group"><label>Phone Number</label><input type="tel" class="form-control" value="${user.phone || localStorage.getItem('userPhone') || ''}" id="setPhone" /></div>
+                <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:12px" onclick="updateProfile()">Save Profile</button>
+                <button class="account-logout" onclick="logout()">Logout</button>
+            `;
         }
     }
 
     function updateProfile() {
         const user = getCurrentUser();
-        user.name = $('#setName').value;
-        user.phone = $('#setPhone').value;
+        if (!user) return;
+        user.name = $('#setName').value.trim();
+        user.phone = $('#setPhone').value.trim();
+        localStorage.setItem('userName', user.name);
+        localStorage.setItem('userPhone', user.phone);
         localStorage.setItem('pbs_currentUser', JSON.stringify(user));
-        const users = JSON.parse(localStorage.getItem('pbs_users') || '[]');
-        const idx = users.findIndex(u => u.id === user.id);
-        if (idx >= 0) users[idx] = user;
-        localStorage.setItem('pbs_users', JSON.stringify(users));
         renderAccount(user);
-        toast('Profile updated successfully!', 'success', 'Saved!');
+        toast('Profile updated successfully!', 'success', 'Saved');
         updateAccountUI();
     }
 
     function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('customerId');
         localStorage.removeItem('pbs_currentUser');
         closeModal('accountModal');
-        toast('You have been logged out.', 'info', 'Goodbye!');
+        toast('You have successfully logged out.', 'info', 'Goodbye');
         updateAccountUI();
     }
 
@@ -1880,72 +2530,88 @@
     const searchInput = $('#searchInput');
     const searchResults = $('#searchResults');
 
-    searchBtn.addEventListener('click', () => { searchOverlay.classList.add('show'); setTimeout(() => searchInput.focus(), 200); });
-    $('#searchClose').addEventListener('click', () => searchOverlay.classList.remove('show'));
+    if (searchBtn) searchBtn.addEventListener('click', () => { searchOverlay.classList.add('show'); setTimeout(() => searchInput.focus(), 200); });
+    if ($('#searchClose')) $('#searchClose').addEventListener('click', () => searchOverlay.classList.remove('show'));
 
-    searchInput.addEventListener('input', () => {
-        const q = searchInput.value.trim().toLowerCase();
-        if (!q) { searchResults.innerHTML = ''; return; }
-        const sResults = services.filter(s => s.name.toLowerCase().includes(q) || s.cat.includes(q)).map(s => ({type:'Service', name:s.name, sub:`From $${s.price}`, img:s.img, id:s.id}));
-        const pResults = products.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q)).map(p => ({type:'Product', name:p.name, sub:`$${p.price}`, img:p.img, id:p.id}));
-        const stResults = staff.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q)).map(p => ({type:'Staff', name:p.name, sub:p.role, img:p.img, id:p.id}));
-        const all = [...sResults, ...pResults, ...stResults];
-        if (all.length === 0) {
-            searchResults.innerHTML = `<div class="search-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><p>No results found for "${q}"</p></div>`;
-            return;
-        }
-        searchResults.innerHTML = all.map(r => `
-    <div class="search-result" data-type="${r.type}" data-id="${r.id}">
-      <img src="${r.img}" alt="${r.name}" />
-      <div><h4>${r.name}</h4><p>${r.type} • ${r.sub}</p></div>
-    </div>
-  `).join('');
-        searchResults.querySelectorAll('.search-result').forEach(item => {
-            item.addEventListener('click', () => {
-                searchOverlay.classList.remove('show');
-                searchInput.value = '';
-                const type = item.dataset.type;
-                const id = parseInt(item.dataset.id);
-                if (type === 'Service') openServiceModal(id);
-                else if (type === 'Staff') openStaffModal(id);
-                else if (type === 'Product') { addToCart(id); $('#cartBtn').click(); }
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            if (!q) { searchResults.innerHTML = ''; return; }
+            const sResults = services.filter(s => s.name.toLowerCase().includes(q) || s.cat.includes(q)).map(s => ({type:'Service', name:s.name, sub:`From ${formatLKR(s.price)}`, img:s.img, id:s.id}));
+            const pResults = products.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q)).map(p => ({type:'Product', name:p.name, sub:formatLKR(p.price), img:p.img, id:p.id}));
+            const stResults = staff.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q)).map(p => ({type:'Staff', name:p.name, sub:p.role, img:p.img, id:p.id}));
+            const all = [...sResults, ...pResults, ...stResults];
+            if (all.length === 0) {
+                searchResults.innerHTML = `<div class="search-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><p>No results found for "${q}"</p></div>`;
+                return;
+            }
+            searchResults.innerHTML = all.map(r => `
+                <div class="search-result" data-type="${r.type}" data-id="${r.id}">
+                    <img src="${r.img}" alt="${r.name}" />
+                    <div><h4>${r.name}</h4><p>${r.type} • ${r.sub}</p></div>
+                </div>
+            `).join('');
+            searchResults.querySelectorAll('.search-result').forEach(item => {
+                item.addEventListener('click', () => {
+                    searchOverlay.classList.remove('show');
+                    searchInput.value = '';
+                    const type = item.dataset.type;
+                    const id = parseInt(item.dataset.id);
+                    if (type === 'Service') openServiceModal(id);
+                    else if (type === 'Staff') openStaffModal(id);
+                    else if (type === 'Product') {
+                        const prod = products.find(x => x.id === id);
+                        visitProductNotice(prod ? prod.name : 'Product', prod ? prod.price : 0);
+                    }
+                });
             });
         });
-    });
+    }
 
     /* ===================== TESTIMONIALS ===================== */
     let testimonialIndex = 0;
     function renderTestimonials() {
-        $('#testimonialTrack').innerHTML = testimonials.map(t => `
-    <div class="testimonial-slide">
-      <div class="testimonial-stars">${starRow(t.rating)}</div>
-      <p class="testimonial-quote">"${t.text}"</p>
-      <div class="testimonial-author">${t.author}</div>
-      <div class="testimonial-role">${t.role}</div>
-    </div>
-  `).join('');
-        $('#testimonialNav').innerHTML = testimonials.map((_,i) => `<div class="testimonial-dot ${i===0?'active':''}" data-i="${i}"></div>`).join('');
+        const track = $('#testimonialTrack');
+        const nav = $('#testimonialNav');
+        if (!track || !nav) return;
+        track.innerHTML = testimonials.map(t => `
+            <div class="testimonial-slide">
+                <div class="testimonial-stars">${starRow(t.rating)}</div>
+                <p class="testimonial-quote">"${t.text}"</p>
+                <div class="testimonial-author">${t.author}</div>
+                <div class="testimonial-role">${t.role}</div>
+            </div>
+        `).join('');
+        nav.innerHTML = testimonials.map((_,i) => `<div class="testimonial-dot ${i===0?'active':''}" data-i="${i}"></div>`).join('');
         $$('.testimonial-dot').forEach(d => d.addEventListener('click', () => goToTestimonial(parseInt(d.dataset.i))));
     }
+
     function goToTestimonial(i) {
         testimonialIndex = (i + testimonials.length) % testimonials.length;
-        $('#testimonialTrack').style.transform = `translateX(-${testimonialIndex*100}%)`;
+        const track = $('#testimonialTrack');
+        if (track) track.style.transform = `translateX(-${testimonialIndex*100}%)`;
         $$('.testimonial-dot').forEach((d, idx) => d.classList.toggle('active', idx === testimonialIndex));
     }
-    $('#testimonialPrev').addEventListener('click', () => goToTestimonial(testimonialIndex - 1));
-    $('#testimonialNext').addEventListener('click', () => goToTestimonial(testimonialIndex + 1));
+
+    if ($('#testimonialPrev')) $('#testimonialPrev').addEventListener('click', () => goToTestimonial(testimonialIndex - 1));
+    if ($('#testimonialNext')) $('#testimonialNext').addEventListener('click', () => goToTestimonial(testimonialIndex + 1));
     let testimonialTimer = setInterval(() => goToTestimonial(testimonialIndex + 1), 5000);
-    $('#testimonialSlider').addEventListener('mouseenter', () => clearInterval(testimonialTimer));
-    $('#testimonialSlider').addEventListener('mouseleave', () => { testimonialTimer = setInterval(() => goToTestimonial(testimonialIndex + 1), 5000); });
+    const sliderEl = $('#testimonialSlider');
+    if (sliderEl) {
+        sliderEl.addEventListener('mouseenter', () => clearInterval(testimonialTimer));
+        sliderEl.addEventListener('mouseleave', () => { testimonialTimer = setInterval(() => goToTestimonial(testimonialIndex + 1), 5000); });
+    }
 
     /* ===================== GALLERY ===================== */
     function renderGallery() {
-        $('#galleryGrid').innerHTML = galleryImages.map((g, i) => `
-    <div class="gallery-item ${g.cls}" data-i="${i}">
-      <img src="${g.img}" alt="${g.label}" loading="lazy" />
-      <div class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
-    </div>
-  `).join('');
+        const grid = $('#galleryGrid');
+        if (!grid) return;
+        grid.innerHTML = galleryImages.map((g, i) => `
+            <div class="gallery-item ${g.cls}" data-i="${i}">
+                <img src="${g.img}" alt="${g.label}" loading="lazy" />
+                <div class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+            </div>
+        `).join('');
         $$('.gallery-item').forEach(item => {
             item.addEventListener('click', () => openLightbox(parseInt(item.dataset.i)));
         });
@@ -1958,71 +2624,191 @@
         $('#lightboxImg').alt = galleryImages[i].label;
         $('#lightbox').classList.add('show');
     }
-    $('#lightboxClose').addEventListener('click', () => $('#lightbox').classList.remove('show'));
-    $('#lightboxPrev').addEventListener('click', () => openLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length));
-    $('#lightboxNext').addEventListener('click', () => openLightbox((lightboxIndex + 1) % galleryImages.length));
-    $('#lightbox').addEventListener('click', e => { if (e.target === $('#lightbox')) $('#lightbox').classList.remove('show'); });
+    if ($('#lightboxClose')) $('#lightboxClose').addEventListener('click', () => $('#lightbox').classList.remove('show'));
+    if ($('#lightboxPrev')) $('#lightboxPrev').addEventListener('click', () => openLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length));
+    if ($('#lightboxNext')) $('#lightboxNext').addEventListener('click', () => openLightbox((lightboxIndex + 1) % galleryImages.length));
+    if ($('#lightbox')) $('#lightbox').addEventListener('click', e => { if (e.target === $('#lightbox')) $('#lightbox').classList.remove('show'); });
 
-    /* ===================== CHATBOT ===================== */
-    function getChatResponse(msg) {
-        const lower = msg.toLowerCase();
-        if (lower.includes('hairstyle') || lower.includes('hair style') || lower.includes('hair cut')) return chatResponses.hairstyle;
-        if (lower.includes('facial')) return chatResponses.facial;
-        if (lower.includes('wedding') || lower.includes('bridal')) return chatResponses.wedding;
-        if (lower.includes('damage') || lower.includes('damaged')) return chatResponses.damaged;
-        if (lower.includes('skincare') || lower.includes('skin care') || lower.includes('skin')) return chatResponses.skincare;
-        if (lower.includes('package')) return chatResponses.package;
-        if (lower.includes('price') || lower.includes('cost') || lower.includes('how much')) return chatResponses.price;
-        if (lower.includes('book') || lower.includes('appointment')) return chatResponses.book;
-        if (lower.includes('hour') || lower.includes('open') || lower.includes('time')) return chatResponses.hours;
-        if (lower.includes('location') || lower.includes('where') || lower.includes('address')) return chatResponses.location;
-        return chatResponses.default;
+    /* ===================== OLLAMA POWERED AI CHATBOT ===================== */
+    let chatHistory = [];
+    let isChatWaiting = false;
+
+    function formatMarkdown(text) {
+        if (!text) return '';
+        let escaped = text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        // Convert bold **text**
+        escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        // Convert italic *text*
+        escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        const lines = escaped.split('\n');
+        let inList = false;
+        let html = '';
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line.startsWith('• ') || line.startsWith('- ') || line.startsWith('* ')) {
+                if (!inList) { html += '<ul>'; inList = true; }
+                html += `<li>${line.substring(2)}</li>`;
+            } else {
+                if (inList) { html += '</ul>'; inList = false; }
+                if (line) {
+                    html += `<p>${line}</p>`;
+                }
+            }
+        }
+        if (inList) html += '</ul>';
+        return html || escaped.replace(/\n/g, '<br>');
     }
 
     function initChat() {
-        $('#chatMessages').innerHTML = `<div class="chat-msg bot">Hi! I'm your Pink Beauty Assistant 💗 How can I help you today?</div>`;
-        $('#chatQuick').innerHTML = quickQuestions.map(q => `<button class="chat-quick-btn">${q}</button>`).join('');
-        $$('.chat-quick-btn').forEach(btn => btn.addEventListener('click', () => sendChatMessage(btn.textContent)));
+        const msgContainer = $('#chatMessages');
+        const quickContainer = $('#chatQuick');
+        if (msgContainer && msgContainer.children.length === 0) {
+            msgContainer.innerHTML = `
+                <div class="chat-msg bot">
+                    <div class="chat-model-badge">✨ Pink Beauty AI • Ollama qwen2.5:3b</div>
+                    <p>Hello! Welcome to <strong>Pink Beauty Salon</strong> 💗</p>
+                    <p>I am your personal AI Beauty Consultant, powered by local Ollama AI. Ask me about our signature treatments, live prices in LKR, specialists, retail products, or booking an appointment!</p>
+                </div>
+            `;
+        }
+        if (quickContainer) {
+            quickContainer.innerHTML = quickQuestions.map(q => `<button class="chat-quick-btn" type="button">${q}</button>`).join('');
+            $$('.chat-quick-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let promptText = btn.textContent;
+                    promptText = promptText.replace(/^[\p{Emoji}\s]+/u, '').trim();
+                    sendChatMessage(promptText);
+                });
+            });
+        }
     }
 
-    function sendChatMessage(msg) {
-        if (!msg.trim()) return;
+    function clearChat() {
+        chatHistory = [];
+        const msgContainer = $('#chatMessages');
+        if (msgContainer) {
+            msgContainer.innerHTML = `
+                <div class="chat-msg bot">
+                    <div class="chat-model-badge">✨ Pink Beauty AI • Ollama qwen2.5:3b</div>
+                    <p>Chat cleared! 🌸 How may I assist you with our salon services today?</p>
+                </div>
+            `;
+        }
+        toast('Chat history cleared', 'info', 'Assistant');
+    }
+
+    async function sendChatMessage(msg) {
+        msg = (msg || '').trim();
+        if (!msg || isChatWaiting) return;
+
         const messages = $('#chatMessages');
-        messages.innerHTML += `<div class="chat-msg user">${msg}</div>`;
+        const input = $('#chatInput');
+        const sendBtn = $('#chatSend');
+        if (!messages) return;
+
+        // User Message Bubble
+        const userDiv = document.createElement('div');
+        userDiv.className = 'chat-msg user';
+        userDiv.textContent = msg;
+        messages.appendChild(userDiv);
         messages.scrollTop = messages.scrollHeight;
-        // Typing indicator
+
+        if (input) input.value = '';
+
+        chatHistory.push({ role: 'user', content: msg });
+
+        isChatWaiting = true;
+        if (sendBtn) sendBtn.disabled = true;
+
+        // Typing Indicator
         const typing = document.createElement('div');
         typing.className = 'chat-typing';
+        typing.id = 'chatTypingIndicator';
         typing.innerHTML = '<span></span><span></span><span></span>';
         messages.appendChild(typing);
         messages.scrollTop = messages.scrollHeight;
-        setTimeout(() => {
+
+        try {
+            const res = await fetch(`${API_BASE}/api/v1/chatbot/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: msg,
+                    history: chatHistory.slice(-6)
+                })
+            });
+
+            if (!res.ok) {
+                throw new Error(`Server returned HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            const payload = data.body || data.data || data;
+            const replyText = payload.reply || "Thank you for reaching out to Pink Beauty Salon! How else can I assist you?";
+            const modelLabel = payload.model ? `Ollama ${payload.model}` : "Pink Beauty AI";
+
+            chatHistory.push({ role: 'assistant', content: replyText });
             typing.remove();
-            messages.innerHTML += `<div class="chat-msg bot">${getChatResponse(msg)}</div>`;
+
+            const botDiv = document.createElement('div');
+            botDiv.className = 'chat-msg bot';
+            botDiv.innerHTML = `
+                <div class="chat-model-badge">✨ ${modelLabel}</div>
+                <div>${formatMarkdown(replyText)}</div>
+            `;
+            messages.appendChild(botDiv);
             messages.scrollTop = messages.scrollHeight;
-        }, 800 + Math.random() * 600);
+
+        } catch (err) {
+            console.error("Chatbot communication error:", err);
+            typing.remove();
+
+            const errDiv = document.createElement('div');
+            errDiv.className = 'chat-msg bot';
+            errDiv.innerHTML = `
+                <div class="chat-model-badge" style="color:var(--pink-500)">✨ Salon Assistant</div>
+                <p>Hello! I am ready to help you with our signature salon services, live pricing in LKR, retail products, and appointments. Feel free to browse our services or call us at <strong>+94 11 234 5678</strong>!</p>
+            `;
+            messages.appendChild(errDiv);
+            messages.scrollTop = messages.scrollHeight;
+        } finally {
+            isChatWaiting = false;
+            if (sendBtn) sendBtn.disabled = false;
+            if (input) input.focus();
+        }
     }
 
-    $('#chatToggle').addEventListener('click', () => {
-        $('#chatPanel').classList.toggle('open');
-        const badge = $('#chatToggle .chat-badge');
-        if (badge) badge.style.display = 'none';
-    });
-    $('#chatClose').addEventListener('click', () => $('#chatPanel').classList.remove('open'));
-    $('#chatSend').addEventListener('click', () => {
-        const input = $('#chatInput');
-        sendChatMessage(input.value);
-        input.value = '';
-    });
-    $('#chatInput').addEventListener('keypress', e => {
-        if (e.key === 'Enter') {
-            sendChatMessage(e.target.value);
-            e.target.value = '';
-        }
-    });
+    if ($('#chatToggle')) {
+        $('#chatToggle').addEventListener('click', () => {
+            $('#chatPanel').classList.toggle('open');
+            const badge = $('#chatToggle .chat-badge');
+            if (badge) badge.style.display = 'none';
+        });
+    }
+    if ($('#chatClose')) $('#chatClose').addEventListener('click', () => $('#chatPanel').classList.remove('open'));
+    if ($('#chatClear')) $('#chatClear').addEventListener('click', clearChat);
+    if ($('#chatSend')) {
+        $('#chatSend').addEventListener('click', () => {
+            const input = $('#chatInput');
+            if (input) sendChatMessage(input.value);
+        });
+    }
+    if ($('#chatInput')) {
+        $('#chatInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                sendChatMessage(e.target.value);
+            }
+        });
+    }
 
     /* ===================== BACK TO TOP ===================== */
-    $('#backTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+    if ($('#backTop')) $('#backTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
     /* ===================== MODAL CLOSE ===================== */
     $$('.modal-close').forEach(btn => {
@@ -2036,15 +2822,15 @@
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
             $$('.modal-overlay').forEach(m => { if (m.classList.contains('show')) { m.classList.remove('show'); document.body.style.overflow=''; }});
-            $('#searchOverlay').classList.remove('show');
-            $('#lightbox').classList.remove('show');
-            $('#chatPanel').classList.remove('open');
+            if ($('#searchOverlay')) $('#searchOverlay').classList.remove('show');
+            if ($('#lightbox')) $('#lightbox').classList.remove('show');
+            if ($('#chatPanel')) $('#chatPanel').classList.remove('open');
         }
     });
 
     /* ===================== OFFER ===================== */
     function claimOffer() {
-        toast('20% OFF offer claimed! Use code GLOW20 at booking.', 'success', 'Offer Claimed!');
+        toast('20% OFF coupon activated! Enjoy your beauty session with us.', 'success', 'Offer Claimed!');
     }
 
     /* ===================== SCROLL REVEAL ===================== */
@@ -2052,7 +2838,6 @@
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Animate stat counters
                 if (entry.target.querySelector('[data-count]')) {
                     entry.target.querySelectorAll('[data-count]').forEach(el => {
                         if (el.dataset.done) return;
@@ -2076,20 +2861,15 @@
     }, { threshold: 0.15 });
 
     /* ===================== INIT ===================== */
-    renderServices();
-    renderStaff();
-    renderProducts();
+    loadBackendData();
     renderTestimonials();
     renderGallery();
-    initBooking();
     initChat();
     updateCartBadge();
     updateAccountUI();
 
-    // Observe reveal elements
     $$('.reveal').forEach(el => observer.observe(el));
 
-    // Smooth scroll for anchor links
     $$('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
             const target = a.getAttribute('href');

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class Payment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "invoice_id", nullable = false)
+    @ToString.Exclude
     private Invoice invoice;
 
 
@@ -33,18 +35,10 @@ public class Payment {
     private BigDecimal amount;
 
 
-    // ============================================================
-    // PAYMENT METHOD
-    // ============================================================
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentMethod paymentMethod;
 
-
-    // ============================================================
-    // PAYMENT STATUS
-    // ============================================================
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -52,25 +46,13 @@ public class Payment {
             PaymentStatus.PENDING;
 
 
-    // ============================================================
-    // PAYMENT DATE
-    // ============================================================
-
     @Column(nullable = false)
     private LocalDate paymentDate;
 
 
-    // ============================================================
-    // TRANSACTION REFERENCE
-    // ============================================================
-
     @Column(length = 100)
     private String transactionReference;
 
-
-    // ============================================================
-    // NOTES
-    // ============================================================
 
     @Column(length = 1000)
     private String notes;

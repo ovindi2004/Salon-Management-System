@@ -15,6 +15,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Unified Luxury Sidebar -->
+  <link rel="stylesheet" href="css/unified-sidebar.css" />
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -2249,98 +2251,99 @@
 <div class="app-layout">
 
   <!-- =========================================================
-       SIDEBAR
+       UNIFIED SIDEBAR
   ========================================================== -->
-  <aside class="sidebar">
-
-    <div class="brand">
-      <div class="brand-logo">
-        <i class="fa-solid fa-spa"></i>
+  <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+          <div class="brand-logo">
+              <i class="fas fa-spa"></i>
+          </div>
+          <div class="brand-info">
+              <h2>Pink Beauty</h2>
+              <span>LUXURY SALON</span>
+          </div>
       </div>
 
-      <div class="brand-text">
-        <h2>PINK BEAUTY</h2>
-        <span>Luxury Beauty Salon</span>
+      <nav class="sidebar-nav">
+          <div class="nav-section-title">MAIN</div>
+
+          <a href="dashboard.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+              <i class="fas fa-chart-line"></i>
+              <span>Dashboard</span>
+          </a>
+
+          <a href="customerManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+              <i class="fas fa-users"></i>
+              <span>Customer Management</span>
+          </a>
+
+          <a href="staffManagement.html" class="nav-item" data-roles="ADMIN">
+              <i class="fas fa-user-tie"></i>
+              <span>Staff Management</span>
+          </a>
+
+          <a href="serviceManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+              <i class="fas fa-hand-sparkles"></i>
+              <span>Service Management</span>
+          </a>
+
+          <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+              <i class="fas fa-calendar-check"></i>
+              <span>Appointment Management</span>
+          </a>
+
+          <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
+
+          <a href="productManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+              <i class="fas fa-box"></i>
+              <span>Product Management</span>
+          </a>
+
+          <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+              <i class="fas fa-warehouse"></i>
+              <span>Inventory Management</span>
+          </a>
+
+          <a href="paymentMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+              <i class="fas fa-file-invoice-dollar"></i>
+              <span>Payments & Invoices</span>
+          </a>
+
+          <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+              <i class="fas fa-star"></i>
+              <span>Feedback & Ratings</span>
+          </a>
+
+          <a href="report.html" class="nav-item active" data-roles="ADMIN">
+              <i class="fas fa-chart-pie"></i>
+              <span>Reports & Analytics</span>
+          </a>
+
+          <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
+
+          <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+              <i class="fas fa-user-shield"></i>
+              <span>User Management</span>
+          </a>
+
+          <a href="settings.html" class="nav-item" data-roles="ADMIN">
+              <i class="fas fa-sliders"></i>
+              <span>Settings</span>
+          </a>
+      </nav>
+
+      <div class="sidebar-footer">
+          <div class="sidebar-user">
+              <div class="user-avatar" id="sidebarAvatar">PB</div>
+              <div class="user-details">
+                  <strong id="sidebarUserName">Salon Manager</strong>
+                  <span id="sidebarUserRole">Administrator</span>
+              </div>
+              <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Logout">
+                  <i class="fas fa-right-from-bracket"></i>
+              </button>
+          </div>
       </div>
-    </div>
-
-    <div class="sidebar-section-title">
-      MAIN MENU
-    </div>
-
-    <nav class="sidebar-nav">
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-grid-2"></i>
-        <span>Dashboard</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-users-gear"></i>
-        <span>User Management</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-user-group"></i>
-        <span>Customer Management</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-user-tie"></i>
-        <span>Staff Management</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-regular fa-calendar-check"></i>
-        <span>Appointment Management</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-credit-card"></i>
-        <span>Payment Management</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-scissors"></i>
-        <span>Service Management</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-comments"></i>
-        <span>Feedback & Ratings</span>
-      </a>
-
-      <a href="ReportManagement.html" class="nav-item active">
-        <i class="fa-solid fa-chart-line"></i>
-        <span>Reports & Analytics</span>
-      </a>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-gear"></i>
-        <span>Settings</span>
-      </a>
-
-      <div class="sidebar-profile">
-        <div class="profile-avatar">
-          A
-        </div>
-
-        <div class="profile-info">
-          <strong>Admin</strong>
-          <span>Administrator</span>
-        </div>
-
-        <button class="profile-menu">
-          <i class="fa-solid fa-ellipsis"></i>
-        </button>
-      </div>
-
-    </div>
-
   </aside>
 
 
@@ -3728,29 +3731,46 @@ async function loadDashboard() {
 
 async function fetchJSON(url, options = {}) {
 
-    const response = await fetch(url, options);
+    const headers = {
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+    };
+
+    const token = localStorage.getItem("token") || localStorage.getItem("jwt");
+    if (token && token !== "null" && token !== "undefined") {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, {
+        ...options,
+        headers
+    });
+
+    let data = null;
+
+    try {
+        data = await response.json();
+    } catch (e) {
+        data = null;
+    }
 
     if (!response.ok) {
 
-        let message = `HTTP ${response.status}`;
-
-        try {
-
-            const errorData = await response.text();
-
-            if (errorData) {
-                message = errorData;
-            }
-
-        } catch (e) {
-            // Ignore response parsing errors.
-        }
+        let message =
+            data?.message ||
+            data?.error ||
+            data?.body?.message ||
+            `HTTP ${response.status}`;
 
         throw new Error(message);
 
     }
 
-    return response.json();
+    if (data && data.body !== undefined) {
+        return data.body;
+    }
+
+    return data;
 
 }
 
@@ -4895,7 +4915,9 @@ const empty =
 tbody.innerHTML = "";
 
 
-if (!reports.length) {
+const list = Array.isArray(reports) ? reports : [];
+
+if (!list.length) {
 
   empty.style.display = "block";
 
@@ -4911,10 +4933,10 @@ empty.style.display = "none";
 
 
 document.getElementById("reportCount").textContent =
-        `${reports.length} reports`;
+        `${list.length} reports`;
 
 
-reports.forEach(report => {
+list.forEach(report => {
 
   const row =
           document.createElement("tr");
@@ -5884,6 +5906,9 @@ function showToast(message, type = "success") {
 window.viewReport = viewReport;
 window.deleteReport = deleteReport;
 </script>
+
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 
 </body>
 </html>

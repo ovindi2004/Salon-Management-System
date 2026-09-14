@@ -72,17 +72,20 @@ public class Customer {
             unique = true
     )
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
 
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Appointment> appointments = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Feedback> feedbacks =
             new ArrayList<>();
 }

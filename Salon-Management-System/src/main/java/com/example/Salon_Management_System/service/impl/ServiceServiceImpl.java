@@ -268,7 +268,8 @@ public class ServiceServiceImpl implements ServiceService {
     private  ServiceDTO convertToDTO(SalonService service){
         log.info("Converting service to DTO: {}", service);
         try{
-            List<Long> staffIds = new ArrayList<>();            if(service.getStaff() == null){
+            List<Long> staffIds = new ArrayList<>();
+            if (service.getStaff() != null) {
                 staffIds = service.getStaff()
                         .stream()
                         .map(Staff::getStaffId)

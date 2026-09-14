@@ -5,7 +5,9 @@ import com.example.Salon_Management_System.enumiration.StaffStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -51,8 +53,10 @@ public class Staff {
     @Column(length = 20)
     private StaffAvailability availability;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private User user;
 
 
@@ -61,14 +65,17 @@ public class Staff {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private List<StaffWorkingHour> workingHours = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<StaffLeave> leaves = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Appointment> appointments =
             new ArrayList<>();
 }

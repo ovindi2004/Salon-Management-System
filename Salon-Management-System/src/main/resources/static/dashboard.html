@@ -16,6 +16,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Unified Luxury Sidebar -->
+  <link rel="stylesheet" href="css/unified-sidebar.css" />
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
@@ -586,7 +588,7 @@
   }
 
   .profile-details strong {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .profile-details span {
@@ -595,7 +597,42 @@
 
     color: var(--muted);
 
-    font-size: 8px;
+    font-size: 9px;
+  }
+
+  .role-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 12px;
+    font-size: 8.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    width: fit-content;
+  }
+
+  .role-badge.admin {
+    background: rgba(183, 110, 121, 0.15);
+    color: #9A5862;
+    border: 1px solid rgba(183, 110, 121, 0.35);
+  }
+
+  .role-badge.receptionist {
+    background: rgba(232, 192, 125, 0.2);
+    color: #b88a2f;
+    border: 1px solid rgba(232, 192, 125, 0.45);
+  }
+
+  .role-badge.staff {
+    background: rgba(58, 153, 117, 0.15);
+    color: #2e7d5e;
+    border: 1px solid rgba(58, 153, 117, 0.35);
+  }
+
+  .role-badge.customer {
+    background: rgba(94, 133, 170, 0.15);
+    color: #436688;
+    border: 1px solid rgba(94, 133, 170, 0.35);
   }
 
 
@@ -2561,79 +2598,97 @@
 
     <div class="nav-section-title">MAIN</div>
 
-    <a href="Dashboard.html" class="nav-item active">
+    <a href="dashboard.html" class="nav-item active" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
       <i class="fas fa-chart-line"></i>
       <span>Dashboard</span>
     </a>
 
-    <a href="CustomerManagement.html" class="nav-item">
+    <a href="customerManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
       <i class="fas fa-users"></i>
       <span>Customer Management</span>
     </a>
 
-    <a href="StaffManagement.html" class="nav-item">
+    <a href="staffManagement.html" class="nav-item" data-roles="ADMIN">
       <i class="fas fa-user-tie"></i>
       <span>Staff Management</span>
     </a>
 
-    <a href="ServiceManagement.html" class="nav-item">
+    <a href="serviceManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
       <i class="fas fa-hand-sparkles"></i>
       <span>Service Management</span>
     </a>
 
-    <a href="AppointmentManagement.html" class="nav-item">
+    <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
       <i class="fas fa-calendar-check"></i>
       <span>Appointment Management</span>
     </a>
 
 
-    <div class="nav-section-title">BUSINESS</div>
+    <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
 
-    <a href="ProductManagement.html" class="nav-item">
+    <a href="productManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
       <i class="fas fa-box"></i>
       <span>Product Management</span>
     </a>
 
-    <a href="InvoiceManagement.html" class="nav-item">
-      <i class="fas fa-file-invoice-dollar"></i>
-      <span>Invoice Management</span>
+    <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+      <i class="fas fa-warehouse"></i>
+      <span>Inventory Management</span>
     </a>
 
-    <a href="FeedbackManagement.html" class="nav-item">
+    <a href="paymentMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+      <i class="fas fa-file-invoice-dollar"></i>
+      <span>Payments & Invoices</span>
+    </a>
+
+    <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
       <i class="fas fa-star"></i>
       <span>Feedback & Ratings</span>
     </a>
 
-    <a href="Reports.html" class="nav-item">
+    <a href="report.html" class="nav-item" data-roles="ADMIN">
       <i class="fas fa-chart-pie"></i>
       <span>Reports & Analytics</span>
     </a>
 
 
-    <div class="nav-section-title">SYSTEM</div>
+    <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
 
-    <a href="Settings.html" class="nav-item">
+    <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+      <i class="fas fa-user-shield"></i>
+      <span>User Management</span>
+    </a>
+
+    <a href="settings.html" class="nav-item" data-roles="ADMIN">
       <i class="fas fa-sliders"></i>
       <span>Settings</span>
     </a>
 
   </nav>
 
-  <div class="sidebar-user">
+  <div class="sidebar-footer">
 
-    <div class="user-avatar" id="sidebarAvatar">
-      PB
-    </div>
+    <div class="sidebar-user">
 
-    <div class="user-details">
+      <div class="user-avatar" id="sidebarAvatar">
+        PB
+      </div>
 
-      <strong id="sidebarUserName">
-        Salon Manager
-      </strong>
+      <div class="user-details" style="flex: 1; min-width: 0;">
 
-      <span id="sidebarUserRole">
-            Administrator
+        <strong id="sidebarUserName" style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          Salon Manager
+        </strong>
+
+        <span id="sidebarUserRole">
+          Administrator
         </span>
+
+      </div>
+
+      <button id="sidebarLogoutBtn" title="Logout" style="background: none; border: none; color: rgba(255,255,255,.6); cursor: pointer; padding: 6px; font-size: 14px; transition: color .2s; border-radius: 6px;" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='rgba(255,255,255,.6)'">
+        <i class="fas fa-right-from-bracket"></i>
+      </button>
 
     </div>
 
@@ -2704,11 +2759,18 @@
 
           <span id="profileUserRole">
             Administrator
-        </span>
+          </span>
 
         </div>
 
       </div>
+
+      <button class="icon-button"
+              id="topbarLogoutBtn"
+              title="Logout"
+              style="color: #c65d68; margin-left: 4px;">
+        <i class="fas fa-right-from-bracket"></i>
+      </button>
 
     </div>
 
@@ -3288,7 +3350,7 @@
         </div>
 
 
-        <a href="AppointmentManagement.html"
+        <a href="appointmentManagement.html"
            class="view-link">
 
           View All
@@ -3364,7 +3426,7 @@
           </div>
 
 
-          <a href="ServiceManagement.html"
+          <a href="serviceManagement.html"
              class="view-link">
 
             View All
@@ -3404,7 +3466,7 @@
           </div>
 
 
-          <a href="StaffManagement.html"
+          <a href="staffManagement.html"
              class="view-link">
 
             View All
@@ -3453,7 +3515,7 @@
       <div class="quick-actions">
 
 
-        <a href="AppointmentManagement.html"
+        <a href="appointmentManagement.html"
            class="quick-action">
 
           <div class="quick-icon pink">
@@ -3467,7 +3529,7 @@
         </a>
 
 
-        <a href="CustomerManagement.html"
+        <a href="customerManagement.html"
            class="quick-action">
 
           <div class="quick-icon gold">
@@ -3481,7 +3543,7 @@
         </a>
 
 
-        <a href="ProductManagement.html"
+        <a href="productManagement.html"
            class="quick-action">
 
           <div class="quick-icon purple">
@@ -3495,21 +3557,21 @@
         </a>
 
 
-        <a href="InvoiceManagement.html"
+        <a href="paymentMangement.html"
            class="quick-action">
 
           <div class="quick-icon green">
             <i class="fas fa-file-invoice"></i>
           </div>
 
-          <strong>Invoices</strong>
+          <strong>Invoices & Payments</strong>
 
           <span>Manage billing</span>
 
         </a>
 
 
-        <a href="Reports.html"
+        <a href="report.html"
            class="quick-action">
 
           <div class="quick-icon blue">
@@ -3523,7 +3585,7 @@
         </a>
 
 
-        <a href="FeedbackManagement.html"
+        <a href="feedback.html"
            class="quick-action">
 
           <div class="quick-icon rose">
@@ -3562,8 +3624,7 @@
    API CONFIGURATION
 ========================================================= */
 
-const API_BASE_URL =
-        "http://localhost:8080/api/v1/dashboard";
+const API_BASE_URL = "http://localhost:8080/api/v1/dashboard";
 
 
 /* =========================================================
@@ -3609,11 +3670,18 @@ function initializeDates() {
                   1
           );
 
+  const lastDay =
+          new Date(
+                  today.getFullYear(),
+                  today.getMonth() + 1,
+                  0
+          );
+
   document.getElementById("fromDate").value =
           formatInputDate(firstDay);
 
   document.getElementById("toDate").value =
-          formatInputDate(today);
+          formatInputDate(lastDay);
 
   updateDateDisplay(today);
 }
@@ -3785,7 +3853,7 @@ function initializeEvents() {
           () => {
 
             window.location.href =
-                    "AppointmentManagement.html";
+                    "appointmentManagement.html";
 
           }
   );
@@ -3798,7 +3866,7 @@ function initializeEvents() {
           () => {
 
             window.location.href =
-                    "Reports.html";
+                    "report.html";
 
           }
   );
@@ -3948,8 +4016,14 @@ async function loadDashboard(
             `&toDate=${encodeURIComponent(toDate)}`;
 
 
+    const headers = { "Accept": "application/json" };
+    const token = localStorage.getItem("token");
+    if (token) {
+      headers["Authorization"] = "Bearer " + token;
+    }
+
     const response =
-            await fetch(url);
+            await fetch(url, { headers });
 
 
     if (!response.ok) {
@@ -3961,8 +4035,12 @@ async function loadDashboard(
     }
 
 
-    dashboardData =
+    const result =
             await response.json();
+
+    // Extract DTO from CommonResponse wrapper ({ code: 0, data: {...}, message: "..." })
+    dashboardData =
+            (result && result.data !== undefined) ? result.data : result;
 
 
     renderDashboard(
@@ -5600,120 +5678,134 @@ function showToast(
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
+/* =========================================================
+   USER SESSION & ROLE-BASED ACCESS CONTROL
+========================================================= */
 
-  const userName = localStorage.getItem("userName");
-  const userRole = localStorage.getItem("userRole");
+function applyUserSessionAndRoles() {
 
-  /*
-   * If no logged-in user is found
-   */
-  if (!userName) {
-    return;
+  let userName = localStorage.getItem("userName");
+  let userRole = localStorage.getItem("userRole");
+
+  // Fallback to loggedInUser JSON object
+  if (!userName || !userRole) {
+    const stored = localStorage.getItem("loggedInUser");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (parsed.userName) userName = parsed.userName;
+        if (parsed.userRole) userRole = parsed.userRole;
+      } catch (e) {
+        console.warn("Could not parse loggedInUser", e);
+      }
+    }
   }
 
-  /*
-   * Convert backend role to display text
-   */
-  let displayRole = "User";
+  // Normalize project roles: Customer, Staff, Reception, Admin (Backend: OWNER, STAFF, CUSTOMER, RECEPTIONIST)
+  const rawRole = (userRole || "").trim().toUpperCase();
+  let normalizedRole = "ADMIN";
+  let displayRole = "Administrator";
+  let badgeClass = "admin";
 
-  switch (userRole) {
-
-    case "OWNER":
-      displayRole = "Administrator";
-      break;
-
-    case "RECEPTIONIST":
-      displayRole = "Receptionist";
-      break;
-
-    case "STAFF":
-      displayRole = "Staff";
-      break;
-
-    case "CUSTOMER":
-      displayRole = "Customer";
-      break;
-
-    default:
-      displayRole = userRole || "User";
+  if (rawRole === "OWNER" || rawRole === "ADMIN" || rawRole === "ADMINISTRATOR") {
+    normalizedRole = "ADMIN";
+    displayRole = "Administrator";
+    badgeClass = "admin";
+  } else if (rawRole === "RECEPTIONIST" || rawRole === "RECEPTION") {
+    normalizedRole = "RECEPTIONIST";
+    displayRole = "Receptionist";
+    badgeClass = "receptionist";
+    const curPath = window.location.pathname.toLowerCase();
+    if (curPath.endsWith("/dashboard.html") || curPath.endsWith("dashboard.html")) {
+      window.location.href = "receptionDashboard.html";
+      return;
+    }
+  } else if (rawRole === "STAFF") {
+    normalizedRole = "STAFF";
+    displayRole = "Staff";
+    badgeClass = "staff";
+  } else if (rawRole === "CUSTOMER") {
+    normalizedRole = "CUSTOMER";
+    displayRole = "Customer";
+    badgeClass = "customer";
+  } else if (rawRole) {
+    normalizedRole = rawRole;
+    displayRole = userRole;
   }
 
+  const finalName = userName || "Salon Manager";
 
-  /*
-   * Create initials
-   *
-   * Example:
-   * Ovindi Jayawardena → OJ
-   * Oshan → OS
-   */
-  const nameParts = userName.trim().split(/\s+/);
-
+  // Create initials
+  const nameParts = finalName.trim().split(/\s+/);
   let initials = "";
-
   if (nameParts.length >= 2) {
-    initials =
-            nameParts[0].charAt(0) +
-            nameParts[nameParts.length - 1].charAt(0);
+    initials = nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0);
   } else {
     initials = nameParts[0].substring(0, 2);
   }
-
   initials = initials.toUpperCase();
 
+  // Top Right Profile
+  const profileName = document.getElementById("profileUserName");
+  const profileRole = document.getElementById("profileUserRole");
+  const profileAvatar = document.getElementById("profileAvatar");
 
-  /*
-   * TOP RIGHT PROFILE
-   */
-  const profileName =
-          document.getElementById("profileUserName");
-
-  const profileRole =
-          document.getElementById("profileUserRole");
-
-  const profileAvatar =
-          document.getElementById("profileAvatar");
-
-
-  if (profileName) {
-    profileName.textContent = userName;
-  }
-
+  if (profileName) profileName.textContent = finalName;
   if (profileRole) {
     profileRole.textContent = displayRole;
+    profileRole.className = `role-badge ${badgeClass}`;
+  }
+  if (profileAvatar) profileAvatar.textContent = initials;
+
+  // Sidebar Profile
+  const sidebarUserName = document.getElementById("sidebarUserName");
+  const sidebarUserRole = document.getElementById("sidebarUserRole");
+  const sidebarAvatar = document.getElementById("sidebarAvatar");
+
+  if (sidebarUserName) sidebarUserName.textContent = finalName;
+  if (sidebarUserRole) sidebarUserRole.textContent = displayRole;
+  if (sidebarAvatar) sidebarAvatar.textContent = initials;
+
+  // Apply Role-Based Visibility for Navigation Items
+  const roleProtectedElements = document.querySelectorAll(".sidebar-nav [data-roles]");
+  roleProtectedElements.forEach(elem => {
+    const allowedRoles = elem.getAttribute("data-roles").split(",").map(r => r.trim().toUpperCase());
+    if (allowedRoles.includes(normalizedRole)) {
+      elem.style.display = "";
+    } else {
+      elem.style.display = "none";
+    }
+  });
+
+  // Logout Handler
+  const performLogout = () => {
+    if (confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("loggedInUser");
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    }
+  };
+
+  const topbarLogout = document.getElementById("topbarLogoutBtn");
+  if (topbarLogout) {
+    topbarLogout.addEventListener("click", performLogout);
   }
 
-  if (profileAvatar) {
-    profileAvatar.textContent = initials;
+  const sidebarLogout = document.getElementById("sidebarLogoutBtn");
+  if (sidebarLogout) {
+    sidebarLogout.addEventListener("click", performLogout);
   }
+}
 
+document.addEventListener("DOMContentLoaded", applyUserSessionAndRoles);
+</script>
 
-  /*
-   * SIDEBAR USER
-   */
-  const sidebarUserName =
-          document.getElementById("sidebarUserName");
-
-  const sidebarUserRole =
-          document.getElementById("sidebarUserRole");
-
-  const sidebarAvatar =
-          document.getElementById("sidebarAvatar");
-
-
-  if (sidebarUserName) {
-    sidebarUserName.textContent = userName;
-  }
-
-  if (sidebarUserRole) {
-    sidebarUserRole.textContent = displayRole;
-  }
-
-  if (sidebarAvatar) {
-    sidebarAvatar.textContent = initials;
-  }
-
-});</script>
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 
 </body>
 </html>

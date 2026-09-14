@@ -11,9 +11,12 @@ import com.example.Salon_Management_System.entity.User;
 import com.example.Salon_Management_System.enumiration.LeaveStatus;
 import com.example.Salon_Management_System.enumiration.StaffAvailability;
 import com.example.Salon_Management_System.enumiration.StaffStatus;
+import com.example.Salon_Management_System.enumiration.UserRole;
+import com.example.Salon_Management_System.enumiration.UserStatus;
 import com.example.Salon_Management_System.repository.StaffLeaveRepository;
 import com.example.Salon_Management_System.repository.StaffRepository;
 import com.example.Salon_Management_System.repository.StaffWorkingHourRepository;
+import com.example.Salon_Management_System.repository.UserRepository;
 import com.example.Salon_Management_System.service.StaffService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,7 @@ public class StaffServiceImpl implements StaffService {
     private final StaffRepository staffRepository;
     private final StaffWorkingHourRepository workingHourRepository;
     private final StaffLeaveRepository leaveRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -82,19 +86,33 @@ public class StaffServiceImpl implements StaffService {
         staff.setAvailability(StaffAvailability.AVAILABLE);
 
         if (dto.getUsername() != null && !dto.getUsername().isBlank()) {
+            if (userRepository.existsByUserEmail(dto.getStaffEmail())) {
+                throw new RuntimeException("A user account with email " + dto.getStaffEmail() + " already exists");
+            }
 
             User user = new User();
-
-            user.setUserName(dto.getUsername());
-            user.setUserEmail(dto.getStaffEmail());
+            user.setUserName(dto.getUsername().trim());
+            user.setUserEmail(dto.getStaffEmail().trim());
+            user.setUserPhone(dto.getStaffPhone());
+            user.setUserDob(dto.getDateOfBirth());
+            user.setUserAddress(dto.getAddress());
+            user.setUserGender(dto.getGender());
+            user.setRole(UserRole.STAFF);
+            user.setStatus(staff.getStatus() == StaffStatus.INACTIVE ? UserStatus.Inactive : UserStatus.Active);
+            user.setPasswordChanged(false);
 
             if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
                 user.setUserPassword(
-                        passwordEncoder.encode(dto.getPassword())
+                        passwordEncoder.encode(dto.getPassword().trim())
+                );
+            } else {
+                user.setUserPassword(
+                        passwordEncoder.encode("Staff@123")
                 );
             }
 
-            staff.setUser(user);
+            User savedUser = userRepository.save(user);
+            staff.setUser(savedUser);
         }
 
         Staff savedStaff = staffRepository.save(staff);
@@ -165,23 +183,51 @@ public class StaffServiceImpl implements StaffService {
         }
 
         if (staff.getUser() != null) {
-
             User user = staff.getUser();
 
-            if (dto.getUsername() != null &&
-                    !dto.getUsername().isBlank()) {
-
-                user.setUserName(dto.getUsername());
+            if (dto.getUsername() != null && !dto.getUsername().isBlank()) {
+                user.setUserName(dto.getUsername().trim());
             }
 
-            user.setUserEmail(dto.getStaffEmail());
+            user.setUserEmail(dto.getStaffEmail().trim());
+            user.setUserPhone(dto.getStaffPhone());
+            user.setUserDob(dto.getDateOfBirth());
+            user.setUserAddress(dto.getAddress());
+            user.setUserGender(dto.getGender());
+            user.setStatus(staff.getStatus() == StaffStatus.INACTIVE ? UserStatus.Inactive : UserStatus.Active);
 
-            if (dto.getPassword() != null &&
-                    !dto.getPassword().isBlank()) {
-
+            if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
                 user.setUserPassword(
-                        passwordEncoder.encode(dto.getPassword())
+                        passwordEncoder.encode(dto.getPassword().trim())
                 );
+            }
+
+            userRepository.save(user);
+        } else if (dto.getUsername() != null && !dto.getUsername().isBlank()) {
+            if (!userRepository.existsByUserEmail(dto.getStaffEmail())) {
+                User user = new User();
+                user.setUserName(dto.getUsername().trim());
+                user.setUserEmail(dto.getStaffEmail().trim());
+                user.setUserPhone(dto.getStaffPhone());
+                user.setUserDob(dto.getDateOfBirth());
+                user.setUserAddress(dto.getAddress());
+                user.setUserGender(dto.getGender());
+                user.setRole(UserRole.STAFF);
+                user.setStatus(staff.getStatus() == StaffStatus.INACTIVE ? UserStatus.Inactive : UserStatus.Active);
+                user.setPasswordChanged(false);
+
+                if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+                    user.setUserPassword(
+                            passwordEncoder.encode(dto.getPassword().trim())
+                    );
+                } else {
+                    user.setUserPassword(
+                            passwordEncoder.encode("Staff@123")
+                    );
+                }
+
+                User savedUser = userRepository.save(user);
+                staff.setUser(savedUser);
             }
         }
 
@@ -375,13 +421,18 @@ public class StaffServiceImpl implements StaffService {
     }
 
     private String generateStaffCode() {
-
         long count = staffRepository.count() + 1;
+        String code = String.format("PBS-%03d", count);
+        List<Staff> all = staffRepository.findAll();
+        while (codeExists(code, all)) {
+            count++;
+            code = String.format("PBS-%03d", count);
+        }
+        return code;
+    }
 
-        return String.format(
-                "PBS-%03d",
-                count
-        );
+    private boolean codeExists(String code, List<Staff> list) {
+        return list.stream().anyMatch(s -> code.equalsIgnoreCase(s.getStaffCode()));
     }
 
     private void createDefaultWorkingHours(
@@ -445,6 +496,7 @@ public class StaffServiceImpl implements StaffService {
 
         if (staff.getUser() != null) {
             dto.setUserId(staff.getUser().getUserId());
+            dto.setUsername(staff.getUser().getUserName());
         }
 
         dto.setServices(new ArrayList<>());

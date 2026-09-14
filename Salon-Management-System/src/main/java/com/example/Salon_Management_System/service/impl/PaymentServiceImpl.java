@@ -28,10 +28,6 @@ public class PaymentServiceImpl implements PaymentService {
     private final InvoiceRepository invoiceRepository;
 
 
-    // =========================================================
-    // CREATE PAYMENT
-    // =========================================================
-
     @Override
     public PaymentDTO createPayment(PaymentDTO dto) {
 
@@ -56,10 +52,6 @@ public class PaymentServiceImpl implements PaymentService {
                 );
 
 
-        // =====================================================
-        // AMOUNT VALIDATION
-        // =====================================================
-
         if (dto.getAmount() == null) {
 
             throw new RuntimeException(
@@ -74,10 +66,6 @@ public class PaymentServiceImpl implements PaymentService {
             );
         }
 
-
-        // =====================================================
-        // CHECK BALANCE
-        // =====================================================
 
         BigDecimal currentBalance =
                 BigDecimal.valueOf(
@@ -94,10 +82,6 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
 
-        // =====================================================
-        // PAYMENT METHOD
-        // =====================================================
-
         if (dto.getPaymentMethod() == null) {
 
             throw new RuntimeException(
@@ -105,10 +89,6 @@ public class PaymentServiceImpl implements PaymentService {
             );
         }
 
-
-        // =====================================================
-        // CREATE PAYMENT
-        // =====================================================
 
         Payment payment = new Payment();
 
@@ -156,20 +136,12 @@ public class PaymentServiceImpl implements PaymentService {
                 paymentRepository.save(payment);
 
 
-        // =====================================================
-        // UPDATE INVOICE PAYMENT SUMMARY
-        // =====================================================
-
         updateInvoicePaymentSummary(invoice);
 
 
         return convertToDTO(savedPayment);
     }
 
-
-    // =========================================================
-    // GET PAYMENT BY ID
-    // =========================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -193,10 +165,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // =========================================================
-    // GET ALL PAYMENTS
-    // =========================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<PaymentDTO> getAllPayments() {
@@ -207,10 +175,6 @@ public class PaymentServiceImpl implements PaymentService {
                 .toList();
     }
 
-
-    // =========================================================
-    // UPDATE PAYMENT
-    // =========================================================
 
     @Override
     public PaymentDTO updatePayment(
@@ -244,10 +208,6 @@ public class PaymentServiceImpl implements PaymentService {
                 payment.getInvoice();
 
 
-        // =====================================================
-        // AMOUNT
-        // =====================================================
-
         if (dto.getAmount() != null) {
 
             if (dto.getAmount().signum() <= 0) {
@@ -263,10 +223,6 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
 
-        // =====================================================
-        // PAYMENT METHOD
-        // =====================================================
-
         if (dto.getPaymentMethod() != null) {
 
             payment.setPaymentMethod(
@@ -274,10 +230,6 @@ public class PaymentServiceImpl implements PaymentService {
             );
         }
 
-
-        // =====================================================
-        // PAYMENT STATUS
-        // =====================================================
 
         if (dto.getPaymentStatus() != null) {
 
@@ -287,10 +239,6 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
 
-        // =====================================================
-        // PAYMENT DATE
-        // =====================================================
-
         if (dto.getPaymentDate() != null) {
 
             payment.setPaymentDate(
@@ -298,10 +246,6 @@ public class PaymentServiceImpl implements PaymentService {
             );
         }
 
-
-        // =====================================================
-        // OTHER DETAILS
-        // =====================================================
 
         payment.setTransactionReference(
                 dto.getTransactionReference()
@@ -312,17 +256,9 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
 
-        // =====================================================
-        // SAVE
-        // =====================================================
-
         Payment updatedPayment =
                 paymentRepository.save(payment);
 
-
-        // =====================================================
-        // UPDATE INVOICE
-        // =====================================================
 
         updateInvoicePaymentSummary(invoice);
 
@@ -330,10 +266,6 @@ public class PaymentServiceImpl implements PaymentService {
         return convertToDTO(updatedPayment);
     }
 
-
-    // =========================================================
-    // DELETE PAYMENT
-    // =========================================================
 
     @Override
     public void deletePayment(Long id) {
@@ -362,10 +294,6 @@ public class PaymentServiceImpl implements PaymentService {
         updateInvoicePaymentSummary(invoice);
     }
 
-
-    // =========================================================
-    // REFUND PAYMENT
-    // =========================================================
 
     @Override
     public PaymentDTO refundPayment(Long id) {
@@ -413,10 +341,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // =========================================================
-    // GET PAYMENTS BY DATE RANGE
-    // =========================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<PaymentDTO> getPaymentsByDateRange(
@@ -446,10 +370,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // =========================================================
-    // GET PAYMENTS BY INVOICE
-    // =========================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<PaymentDTO> getPaymentsByInvoice(
@@ -470,10 +390,6 @@ public class PaymentServiceImpl implements PaymentService {
                 .toList();
     }
 
-
-    // =========================================================
-    // GET PAYMENTS BY STATUS
-    // =========================================================
 
     @Override
     @Transactional(readOnly = true)
@@ -513,10 +429,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // =========================================================
-    // GET PAYMENTS BY METHOD
-    // =========================================================
-
     @Override
     @Transactional(readOnly = true)
     public List<PaymentDTO> getPaymentsByMethod(
@@ -554,10 +466,6 @@ public class PaymentServiceImpl implements PaymentService {
                 .toList();
     }
 
-
-    // =========================================================
-    // UPDATE INVOICE PAYMENT SUMMARY
-    // =========================================================
 
     private void updateInvoicePaymentSummary(
             Invoice invoice
@@ -617,10 +525,6 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
 
-        // =====================================================
-        // UPDATE INVOICE STATUS
-        // =====================================================
-
         if (invoice.getStatus() != InvoiceStatus.DRAFT) {
 
             if (totalPaid <= 0) {
@@ -659,10 +563,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // =========================================================
-    // CONVERT PAYMENT ENTITY → DTO
-    // =========================================================
-
     private PaymentDTO convertToDTO(
             Payment payment
     ) {
@@ -670,10 +570,6 @@ public class PaymentServiceImpl implements PaymentService {
         PaymentDTO dto =
                 new PaymentDTO();
 
-
-        // =====================================================
-        // PAYMENT
-        // =====================================================
 
         dto.setPaymentId(
                 payment.getPaymentId()
@@ -704,10 +600,6 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
 
-        // =====================================================
-        // INVOICE
-        // =====================================================
-
         Invoice invoice =
                 payment.getInvoice();
 
@@ -725,42 +617,59 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
 
-        // =====================================================
-        // APPOINTMENT
-        // =====================================================
-
         Appointment appointment =
                 invoice.getAppointment();
 
-        if (appointment == null) {
-            return dto;
+        if (appointment != null) {
+            dto.setAppointmentId(
+                    appointment.getAppointmentId()
+            );
+
+            dto.setAppointmentDate(
+                    appointment.getAppointmentDate()
+            );
+
+            dto.setAppointmentTime(
+                    appointment.getStartTime() != null
+                            ? appointment.getStartTime().toString()
+                            : null
+            );
+
+            if (appointment.getService() != null) {
+                dto.setServiceId(
+                        appointment.getService()
+                                .getServiceId()
+                );
+
+                dto.setServiceName(
+                        appointment.getService()
+                                .getServiceName()
+                );
+
+                dto.setServicePrice(
+                        appointment.getService()
+                                .getPrice()
+                );
+            }
+
+            if (appointment.getStaff() != null) {
+                dto.setStaffId(
+                        appointment.getStaff()
+                                .getStaffId()
+                );
+
+                dto.setStaffName(
+                        appointment.getStaff()
+                                .getStaffName()
+                );
+            }
         }
 
-
-        dto.setAppointmentId(
-                appointment.getAppointmentId()
-        );
-
-        dto.setAppointmentDate(
-                appointment.getAppointmentDate()
-        );
-
-        dto.setAppointmentTime(
-                appointment.getStartTime() != null
-                        ? appointment.getStartTime().toString()
-                        : null
-        );
-
-
-        // =====================================================
-        // CUSTOMER
-        // =====================================================
-
-        Customer customer =
-                appointment.getCustomer();
+        Customer customer = (appointment != null && appointment.getCustomer() != null)
+                ? appointment.getCustomer()
+                : invoice.getCustomer();
 
         if (customer != null) {
-
             dto.setCustomerId(
                     customer.getCustomerId()
             );
@@ -773,48 +682,6 @@ public class PaymentServiceImpl implements PaymentService {
                     customer.getCustomerPhone()
             );
         }
-
-
-        // =====================================================
-        // SERVICE
-        // =====================================================
-
-        if (appointment.getService() != null) {
-
-            dto.setServiceId(
-                    appointment.getService()
-                            .getServiceId()
-            );
-
-            dto.setServiceName(
-                    appointment.getService()
-                            .getServiceName()
-            );
-
-            dto.setServicePrice(
-                    appointment.getService()
-                            .getPrice()
-            );
-        }
-
-
-        // =====================================================
-        // STAFF
-        // =====================================================
-
-        if (appointment.getStaff() != null) {
-
-            dto.setStaffId(
-                    appointment.getStaff()
-                            .getStaffId()
-            );
-
-            dto.setStaffName(
-                    appointment.getStaff()
-                            .getStaffName()
-            );
-        }
-
 
         return dto;
     }

@@ -17,4 +17,8 @@ public class UserDataDTO {
     private String token;
 
     private UserRole userRole;
+
+    private Long customerId;
+
+    private String userEmail;
 }

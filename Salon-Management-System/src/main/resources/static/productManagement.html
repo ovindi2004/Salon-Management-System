@@ -17,6 +17,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Unified Luxury Sidebar -->
+    <link rel="stylesheet" href="css/unified-sidebar.css" />
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -964,87 +966,98 @@
 
 <body>
 
-<!-- ================= SIDEBAR ================= -->
-
+<!-- ================= UNIFIED SIDEBAR ================= -->
 <aside class="sidebar" id="sidebar">
-
-    <div class="brand">
+    <div class="sidebar-header">
         <div class="brand-logo">
-            <i class="fa-solid fa-spa"></i>
+            <i class="fas fa-spa"></i>
         </div>
-
-        <div class="brand-text">
+        <div class="brand-info">
             <h2>Pink Beauty</h2>
-            <span>Luxury Beauty Meets Smart Technology</span>
+            <span>LUXURY SALON</span>
         </div>
     </div>
 
-    <div class="nav-section">
+    <nav class="sidebar-nav">
+        <div class="nav-section-title">MAIN</div>
 
-        <div class="nav-title">Main</div>
-
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-chart-pie"></i>
-            Dashboard
+        <a href="dashboard.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-users"></i>
-            User Management
+        <a href="customerManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-users"></i>
+            <span>Customer Management</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-user-group"></i>
-            Customer Management
+        <a href="staffManagement.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-user-tie"></i>
+            <span>Staff Management</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-user-tie"></i>
-            Staff Management
+        <a href="serviceManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>Service Management</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-calendar-check"></i>
-            Appointment Management
+        <a href="appointmentManagement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF,CUSTOMER">
+            <i class="fas fa-calendar-check"></i>
+            <span>Appointment Management</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-money-bill-wave"></i>
-            Payment Management
+        <div class="nav-section-title" data-roles="ADMIN,RECEPTIONIST">BUSINESS</div>
+
+        <a href="productManagement.html" class="nav-item active" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-box"></i>
+            <span>Product Management</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-scissors"></i>
-            Service Management
+        <a href="inventoryMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-warehouse"></i>
+            <span>Inventory Management</span>
         </a>
 
-        <a href="#" class="nav-link active">
-            <i class="fa-solid fa-box"></i>
-            Product Management
+        <a href="paymentMangement.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Payments & Invoices</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-file-invoice"></i>
-            Invoice Management
+        <a href="feedback.html" class="nav-item" data-roles="ADMIN,RECEPTIONIST,STAFF">
+            <i class="fas fa-star"></i>
+            <span>Feedback & Ratings</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-star"></i>
-            Feedback & Ratings
+        <a href="report.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-chart-pie"></i>
+            <span>Reports & Analytics</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-chart-line"></i>
-            Reports & Analytics
+        <div class="nav-section-title" data-roles="ADMIN">SYSTEM</div>
+
+        <a href="userMangemnt.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-user-shield"></i>
+            <span>User Management</span>
         </a>
 
-        <a href="#" class="nav-link">
-            <i class="fa-solid fa-gear"></i>
-            Settings
+        <a href="settings.html" class="nav-item" data-roles="ADMIN">
+            <i class="fas fa-sliders"></i>
+            <span>Settings</span>
         </a>
+    </nav>
 
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="sidebarAvatar">PB</div>
+            <div class="user-details">
+                <strong id="sidebarUserName">Salon Manager</strong>
+                <span id="sidebarUserRole">Administrator</span>
+            </div>
+            <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Logout">
+                <i class="fas fa-right-from-bracket"></i>
+            </button>
+        </div>
     </div>
-
 </aside>
 
 <div class="sidebar-scrim" id="sidebarScrim"></div>
@@ -5284,6 +5297,8 @@
 
 </script>
 
+<!-- Unified Luxury Sidebar Script -->
+<script src="js/unified-sidebar.js"></script>
 
 </body>
 </html>

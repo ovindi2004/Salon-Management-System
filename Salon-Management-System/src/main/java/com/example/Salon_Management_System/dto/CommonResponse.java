@@ -19,4 +19,13 @@ public class CommonResponse {
         this.message = message;
         this.body = body;
     }
+
+    public Object getData() {
+        return body;
+    }
+
+    public void setData(Object data) {
+        this.body = data;
+    }
 }
+

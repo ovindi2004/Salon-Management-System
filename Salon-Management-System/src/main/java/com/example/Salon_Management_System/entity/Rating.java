@@ -28,10 +28,6 @@ public class Rating {
     private LocalDate ratingDate;
 
 
-    // ============================================================
-    // PRE PERSIST
-    // ============================================================
-
     @PrePersist
     public void onCreate() {
 

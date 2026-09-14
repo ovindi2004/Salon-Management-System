@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,13 +42,16 @@ public class SalonService {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "service_staff", joinColumns = @JoinColumn(name = "service_id"), inverseJoinColumns = @JoinColumn(name = "staff_id"))
+    @ToString.Exclude
     private List<Staff> staff = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "service")
+    @ToString.Exclude
     private List<Appointment> appointments = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "service")
+    @ToString.Exclude
     private List<InvoiceItem> invoiceItems = new ArrayList<>();
 }
